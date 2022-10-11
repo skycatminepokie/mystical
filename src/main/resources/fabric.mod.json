@@ -15,10 +15,11 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "skycat.mystical.client.MysticalClient"
     ],
     "main": [
-      "skycat.mystical.Mystical"
+    ],
+    "server": [
+      "skycat.mystical.MysticalServer"
     ]
   },
   "mixins": [
