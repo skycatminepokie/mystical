@@ -1,4 +1,7 @@
 package skycat.mystical;
 
-public class MysticalSave {
+
+
+public class Settings {
+
 }
