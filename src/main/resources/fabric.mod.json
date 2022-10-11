@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "mystical",
+  "version": "${version}",
+  "name": "Mystical",
+  "description": "",
+  "authors": [
+    "skycatminepokie"
+  ],
+  "contact": {
+    "website": "https://github.com/skycatminepokie"
+  },
+  "license": "MIT",
+  "icon": "assets/mystical/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "skycat.mystical.client.MysticalClient"
+    ],
+    "main": [
+      "skycat.mystical.Mystical"
+    ]
+  },
+  "mixins": [
+    "mystical.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
