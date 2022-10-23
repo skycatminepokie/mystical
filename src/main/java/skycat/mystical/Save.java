@@ -27,11 +27,11 @@ public class Save {
     public void save(File saveFile) throws IOException {
         if (!saveFile.exists()) {
             saveFile.createNewFile();
-            Utils.log("Created new save file for Mystical.", Settings.LoggingSettings.getNewSaveLogLevel());
+            Utils.log("Created new save file for Mystical.", Settings.LoggingSettings.getNewSaveFileCreated());
         }
         try (PrintWriter printWriter = new PrintWriter(saveFile)) {
             GSON.toJson(this, printWriter);
-            Utils.log("Mystical saved.", Settings.LoggingSettings.getSavingLogLevel());
+            Utils.log("Mystical saved.", Settings.LoggingSettings.getSaving());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
