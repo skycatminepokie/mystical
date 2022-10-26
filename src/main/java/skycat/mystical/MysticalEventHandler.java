@@ -2,6 +2,7 @@ package skycat.mystical;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
+import skycat.mystical.server.MinecraftServerTimerAccess;
 
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted {
     MinecraftServer server; // TODO: maybe shouldn't just be package-private

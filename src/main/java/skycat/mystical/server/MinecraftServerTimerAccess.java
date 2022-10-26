@@ -1,4 +1,4 @@
-package skycat.mystical;
+package skycat.mystical.server;
 
 
 // CREDIT: Daomephsta#0044 for help on fabric discord (and fabric bot too)

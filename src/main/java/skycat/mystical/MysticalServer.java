@@ -18,6 +18,5 @@ public class MysticalServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
-
     }
 }
