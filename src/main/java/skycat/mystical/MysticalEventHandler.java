@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted {
-    MinecraftServer server;
+    MinecraftServer server; // TODO: maybe shouldn't just be package-private
     MinecraftServerTimerAccess timerAccess;
 
     @Override
@@ -16,12 +16,12 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     }
 
     public void doNighttimeEvents() {
+        Utils.log("Doing nighttime stuff");
         try {
             setNightTimer();
-            Utils.log("Doing nighttime stuff");
         } catch (NullPointerException e) {
             Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), Settings.LoggingSettings.getNightTimerSetFailed());
-            // TODO: Try again later
+            // TODO: Try again later?
         }
     }
 
