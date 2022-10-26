@@ -18,6 +18,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void doNighttimeEvents() {
         try {
             setNightTimer();
+            Utils.log("Doing nighttime stuff");
         } catch (NullPointerException e) {
             Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), Settings.LoggingSettings.getNightTimerSetFailed());
             // TODO: Try again later
@@ -36,7 +37,14 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         if (timerAccess == null) {
             throw new NullPointerException("timerAccess was null in setNightTimer.");
         }
-        long timerLength = 18000 - (server.getOverworld().getTimeOfDay() % 24000);
+        long timerLength;
+        long currentTime = server.getOverworld().getTimeOfDay() % 24000;
+        if (currentTime > 18000) { // If we've passed midnight
+            timerLength = (24000 - currentTime) + 18000; // (time left in this day) + (time from morning til midnight) = time until tomorrow's midnight
+        } else { // It's before midnight
+             timerLength = 18000 - currentTime; // midnight - (current time) = time until midnight
+        }
+
         if (timerLength == 0) { // So that we don't get repeating events if this is fired twice in a tick.
             timerLength = 18000;
         }
