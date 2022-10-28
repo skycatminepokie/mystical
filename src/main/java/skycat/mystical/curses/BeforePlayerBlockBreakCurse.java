@@ -8,10 +8,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BeforePlayerBlockBreakCurse extends Curse implements PlayerBlockBreakEvents.Before {
-    private PlayerBlockBreakEvents.Before callback;
+    private final PlayerBlockBreakEvents.Before callback;
 
-    public BeforePlayerBlockBreakCurse(PlayerBlockBreakEvents.Before callback, String name, double difficultyMultiplier) {
+    public BeforePlayerBlockBreakCurse(PlayerBlockBreakEvents.Before callback, double difficultyMultiplier) {
         this.callback = callback;
+        this.difficultyMultiplier = difficultyMultiplier;
     }
 
     @Override
