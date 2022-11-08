@@ -4,7 +4,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
 
-public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted {
+import java.io.IOException;
+
+public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
     MinecraftServer server; // TODO: maybe shouldn't just be package-private
     MinecraftServerTimerAccess timerAccess;
 
@@ -23,6 +25,16 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         } catch (NullPointerException e) {
             Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), Settings.LoggingSettings.getNightTimerSetFailed());
             // TODO: Try again later?
+        }
+    }
+
+    @Override
+    public void onServerStopping(MinecraftServer server) {
+        Utils.log("stopping and saving");
+        try {
+            MysticalServer.getSAVE().save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
