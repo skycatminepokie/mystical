@@ -13,6 +13,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import skycat.mystical.Utils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -56,6 +57,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
                 new Curse<>(PlayerBlockBreakEvents.BEFORE, ((world, player, pos, state, blockEntity) -> {
                     if (state.getBlock().equals(Blocks.GRASS_BLOCK)) {
                         player.addExhaustion(1.0f);
+                        Utils.log("Grass block curse");
                     }
                     return true;
                 }

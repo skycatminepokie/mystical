@@ -1,5 +1,8 @@
 package skycat.mystical;
 
+import lombok.Getter;
+import skycat.mystical.curses.CurseHandler;
+
 import java.io.*;
 
 import static skycat.mystical.MysticalServer.GSON;
@@ -10,6 +13,7 @@ import static skycat.mystical.MysticalServer.LOGGER;
  */
 public class Save {
     Settings settings = new Settings(true); // Make a new one if it isn't loaded by GSON
+    @Getter CurseHandler curseHandler = new CurseHandler();
     public static final File SAVE_FILE = new File("mysticalSave.json");
 
     public static Save load() {

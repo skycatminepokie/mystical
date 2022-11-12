@@ -25,7 +25,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void doNighttimeEvents() {
         // TODO: Dispel curses, bring potential new ones
         Utils.log("Doing nighttime stuff");
-        MysticalServer.getCURSE_HANDLER().doNighttimeEvents();
+        MysticalServer.getSAVE().curseHandler.doNighttimeEvents();
 
         try {
             setNightTimer();
@@ -37,7 +37,6 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void onServerStopping(MinecraftServer server) {
-        // TODO Update curse fulfillment
         Utils.log("stopping and saving");
         try {
             MysticalServer.getSAVE().save();
