@@ -27,6 +27,10 @@ public class Curse<T> {
         enabled = false;
     }
 
+    public void enable(){
+        enabled = true;
+    }
+
     /**
      * @deprecated in favor of registering only one of each listener in CurseHandler
      */
