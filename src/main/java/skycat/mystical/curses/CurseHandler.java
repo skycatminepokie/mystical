@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping {
-    public final ArrayList<Curse<?>> curses = new ArrayList<>();
+    public final ArrayList<ArrayList> curseArrayLists = new ArrayList<>(); // WARN scuffed as all get out
     public final ArrayList<Curse<EntitySleepEvents.StartSleeping>> startSleepingCurses = new ArrayList<>();
 
     public CurseHandler() {
@@ -23,6 +23,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
                 new CurseRemovalCondition<>(Stats.MINED, Blocks.STONE, 10, 0),
                 1.0);
         startSleepingCurses.add(curse);
+        curseArrayLists.add(startSleepingCurses);
     }
 
     public void doNighttimeEvents() {
@@ -37,22 +38,24 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
             } // TODO probably delete disabled curses
         }
     }
-    
-    /**
-     * Update curses and their removal conditions. Will not remove the effects of curses.
-     */
-    public void updateCurseFulfillment() { // TODO
 
-    }
-
-    public <T> void statIncreased(Stat<T> stat, int amount) { // TODO
-
+    public <T> void onStatIncreased(Stat<T> stat, int amount) {
+        for (ArrayList<Curse<?>> curses : curseArrayLists) { // TODO fix warning
+            for (Curse<?> curse : curses) {
+                CurseRemovalCondition<?> removalCondition = curse.removalCondition;
+                if (removalCondition.statType.equals(stat.getType())) {
+                    removalCondition.fulfill(amount);
+                }
+            }
+        }
     }
 
     public void removeFulfilledCurses() {
-        for (Curse<?> curse : curses) {
-            if (curse.removalCondition.isFulfilled()) {
-                curse.disable();
+        for (ArrayList<Curse<?>> curses : curseArrayLists) { // TODO fix warning
+            for (Curse<?> curse : curses) {
+                if (curse.removalCondition.isFulfilled()) {
+                    curse.disable();
+                }
             }
         }
     }

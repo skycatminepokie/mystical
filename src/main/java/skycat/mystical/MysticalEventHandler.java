@@ -25,11 +25,13 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void doNighttimeEvents() {
         // TODO: Dispel curses, bring potential new ones
         Utils.log("Doing nighttime stuff");
+        MysticalServer.getCURSE_HANDLER().doNighttimeEvents();
+
         try {
             setNightTimer();
         } catch (NullPointerException e) {
             Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), Settings.LoggingSettings.getNightTimerSetFailed());
-            // TODO: Try again later?
+            // TODO Try again later?
         }
     }
 
