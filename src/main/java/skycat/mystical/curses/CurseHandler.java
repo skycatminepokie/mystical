@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping {
     public final ArrayList<Curse<?>> curses = new ArrayList<>();
+    public final ArrayList<Curse<EntitySleepEvents.StartSleeping>> startSleepingCurses = new ArrayList<>();
 
     public CurseHandler() {
         // Initialize curses
@@ -21,7 +22,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
                 },
                 new CurseRemovalCondition<>(Stats.MINED, Blocks.STONE, 10, 0),
                 1.0);
-        curses.add(curse);
+        startSleepingCurses.add(curse);
     }
 
     public void doNighttimeEvents() {
@@ -30,20 +31,13 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
-        for (Curse<EntitySleepEvents.StartSleeping> curse : getCursesOfType(EntitySleepEvents.StartSleeping.class)) {
+        for (Curse<EntitySleepEvents.StartSleeping> curse : startSleepingCurses) {
             if (curse.enabled) {
                 curse.callback.onStartSleeping(entity, sleepingPos);
             } // TODO probably delete disabled curses
         }
     }
-
-    public <T> ArrayList<Curse<T>> getCursesOfType(Class<T> clazz) { // TODO
-        ArrayList<Curse<T>> matchingCurses = new ArrayList<>();
-        return matchingCurses;
-    }
-
-
-
+    
     /**
      * Update curses and their removal conditions. Will not remove the effects of curses.
      */
