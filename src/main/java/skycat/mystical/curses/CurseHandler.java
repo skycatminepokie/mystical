@@ -1,49 +1,65 @@
 package skycat.mystical.curses;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.stat.Stat;
-import skycat.mystical.MysticalServer;
+import net.minecraft.stat.Stats;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
-public class CurseHandler {
-    public final ArrayList<Curse> curses = new ArrayList<>();
-    public HashMap<UUID, HashMap<Stat<?>, Double>> lastStats = new HashMap<>();
+public class CurseHandler implements EntitySleepEvents.StartSleeping {
+    public final ArrayList<Curse<?>> curses = new ArrayList<>();
 
     public CurseHandler() {
         // Initialize curses
-        Curse curse = new Curse<>(EntitySleepEvents.START_SLEEPING, (entity, sleepingPos) -> entity.kill(), 1.0);
-        curse.register();
+        Curse<EntitySleepEvents.StartSleeping> curse = new Curse<>(
+                EntitySleepEvents.START_SLEEPING,
+                (entity, sleepingPos) -> {
+                    entity.kill();
+                },
+                new CurseRemovalCondition<>(Stats.MINED, Blocks.STONE, 10, 0),
+                1.0);
         curses.add(curse);
-
     }
 
     public void doNighttimeEvents() {
-        updateCurseFulfillment();
+        removeFulfilledCurses();
     }
+
+    @Override
+    public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
+        for (Curse<EntitySleepEvents.StartSleeping> curse : getCursesOfType(EntitySleepEvents.StartSleeping.class)) {
+            if (curse.enabled) {
+                curse.callback.onStartSleeping(entity, sleepingPos);
+            } // TODO probably delete disabled curses
+        }
+    }
+
+    public <T> ArrayList<Curse<T>> getCursesOfType(Class<T> clazz) {
+        ArrayList<Curse<T>> matchingCurses = new ArrayList<>();
+        return matchingCurses;
+    }
+
+
 
     /**
      * Update curses and their removal conditions. Will not remove the effects of curses.
      */
     public void updateCurseFulfillment() {
-        // For each player
-        // For each curse in use by a stat
-        // Find diff
-        // Save
-        for (UUID playerUUID : lastStats.keySet()) {
-            if (MysticalServer.getEVENT_HANDLER().getServer().getPlayerManager().getPlayer(playerUUID) != null) {
 
+    }
+
+    public <T> void statIncreased(Stat<T> stat, int amount) {}
+
+    public void removeFulfilledCurses() {
+        for (Curse<?> curse : curses) {
+            if (curse.removalCondition.isFulfilled()) {
+                curse.disable();
             }
         }
     }
-
-    public void removeFulfilledCurses() {
-
-    }
-
-    // TODO Needs to update amount fulfilled of curses each night and when players disconnect
 
     // Get random curse
     // Get random curse, but weight chances based on difficulty

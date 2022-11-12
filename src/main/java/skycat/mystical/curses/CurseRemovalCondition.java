@@ -28,4 +28,7 @@ public class CurseRemovalCondition <T> {
         return amountFulfilled >= amountRequired;
     }
 
+    public boolean isFulfilled() {
+        return amountFulfilled >= amountRequired;
+    }
 }
