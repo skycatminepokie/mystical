@@ -1,5 +1,6 @@
 package skycat.mystical;
 
+import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
@@ -7,7 +8,7 @@ import skycat.mystical.server.MinecraftServerTimerAccess;
 import java.io.IOException;
 
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
-    MinecraftServer server; // TODO: maybe shouldn't just be package-private
+    @Getter MinecraftServer server; // TODO: maybe shouldn't just be package-private
     MinecraftServerTimerAccess timerAccess;
 
     @Override
@@ -18,7 +19,11 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), Settings.LoggingSettings.getTimeOfDayAtStartup());
     }
 
+    // TODO: Get stats when player connects (for use with curse fulfillment
+    // TODO: Update curse fulfillment on player disconnect
+
     public void doNighttimeEvents() {
+        // TODO: Dispel curses, bring potential new ones
         Utils.log("Doing nighttime stuff");
         try {
             setNightTimer();
@@ -30,6 +35,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void onServerStopping(MinecraftServer server) {
+        // TODO Update curse fulfillment
         Utils.log("stopping and saving");
         try {
             MysticalServer.getSAVE().save();
