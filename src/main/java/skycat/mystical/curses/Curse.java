@@ -27,6 +27,9 @@ public class Curse<T> {
         enabled = false;
     }
 
+    /**
+     * @deprecated in favor of registering only one of each listener in CurseHandler
+     */
     public void register() {
         event.register(callback);
     }

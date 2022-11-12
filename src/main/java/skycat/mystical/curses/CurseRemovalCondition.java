@@ -22,6 +22,13 @@ public class CurseRemovalCondition <T> {
         this.amountFulfilled = amountFulfilled;
     }
 
+    public CurseRemovalCondition(StatType<T> statType, T statObject, double amountRequired) {
+        this.statType = statType;
+        this.statObject = statObject;
+        this.amountRequired = amountRequired;
+        this.amountFulfilled = 0;
+    }
+
     /**
      * Fulfill the condition, in part or in whole
      * @param amountToFulfill How many actions have been recorded/fulfilled

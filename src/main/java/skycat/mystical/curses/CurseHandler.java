@@ -37,7 +37,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
         }
     }
 
-    public <T> ArrayList<Curse<T>> getCursesOfType(Class<T> clazz) {
+    public <T> ArrayList<Curse<T>> getCursesOfType(Class<T> clazz) { // TODO
         ArrayList<Curse<T>> matchingCurses = new ArrayList<>();
         return matchingCurses;
     }
@@ -47,11 +47,13 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
     /**
      * Update curses and their removal conditions. Will not remove the effects of curses.
      */
-    public void updateCurseFulfillment() {
+    public void updateCurseFulfillment() { // TODO
 
     }
 
-    public <T> void statIncreased(Stat<T> stat, int amount) {}
+    public <T> void statIncreased(Stat<T> stat, int amount) { // TODO
+
+    }
 
     public void removeFulfilledCurses() {
         for (Curse<?> curse : curses) {
