@@ -2,7 +2,9 @@ package skycat.mystical.curses;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -10,11 +12,12 @@ import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CurseHandler implements EntitySleepEvents.StartSleeping {
+public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before {
     public final ArrayList<ArrayList> curseArrayLists = new ArrayList<>(); // WARN scuffed as all get out
     public final ArrayList<Curse<EntitySleepEvents.StartSleeping>> startSleepingCurses = new ArrayList<>();
     public final ArrayList<Curse<PlayerBlockBreakEvents.Before>> beforeBreakBlockCurses = new ArrayList<>();
@@ -39,9 +42,44 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping {
                 new CurseRemovalCondition<>(Stats.CRAFTED, Items.BEETROOT_SOUP, 10, 0),
                 1.0)
         );
+        beforeBreakBlockCurses.add(
+                new Curse<>(PlayerBlockBreakEvents.BEFORE, (world, player, pos, state, blockEntity) -> {
+                    if (state.getBlock().equals(Blocks.ANDESITE)) {
+                        player.addExhaustion(0.05f);
+                        player.sendMessage(Text.of("oof"), true);
+                        return false;
+                    }
+                    return true;
+                }, new CurseRemovalCondition<>(Stats.CRAFTED, Items.BARREL, 20), 1.0)
+        );
+        beforeBreakBlockCurses.add(
+                new Curse<>(PlayerBlockBreakEvents.BEFORE, ((world, player, pos, state, blockEntity) -> {
+                    if (state.getBlock().equals(Blocks.GRASS_BLOCK)) {
+                        player.addExhaustion(1.0f);
+                    }
+                    return true;
+                }
+                ), new CurseRemovalCondition<>(Stats.USED, Items.ENDER_EYE, 1), 1.0)
+        );
 
         disableCurses(startSleepingCurses);
+        enableRandom(startSleepingCurses);
+        disableCurses(beforeBreakBlockCurses);
+        enableRandom(beforeBreakBlockCurses);
         curseArrayLists.add(startSleepingCurses);
+        curseArrayLists.add(beforeBreakBlockCurses);
+    }
+
+    @Override
+    public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        for (Curse<PlayerBlockBreakEvents.Before> curse : beforeBreakBlockCurses) {
+            if (curse.enabled) {
+                if (!curse.callback.beforeBlockBreak(world, player, pos, state, blockEntity)) {
+                    return false; // Cancel it if something says to
+                }
+            } // TODO probably delete disabled curses
+        }
+        return true; // Don't cancel
     }
 
     private <T extends ArrayList<Curse<S>>,S> void disableCurses(T curseList) {

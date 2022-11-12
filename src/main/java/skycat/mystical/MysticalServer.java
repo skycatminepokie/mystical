@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import skycat.mystical.curses.CurseHandler;
@@ -23,5 +24,6 @@ public class MysticalServer implements DedicatedServerModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
         EntitySleepEvents.START_SLEEPING.register(CURSE_HANDLER);
+        PlayerBlockBreakEvents.BEFORE.register(CURSE_HANDLER);
     }
 }
