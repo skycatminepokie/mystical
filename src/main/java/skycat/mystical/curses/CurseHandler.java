@@ -18,7 +18,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
 
     public CurseHandler() {
-        initializeCurses();
+        initializeConsequences();
+        initializeRemovalConditions();
     }
 
     @Override
@@ -36,8 +37,12 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         removeFulfilledCurses();
     }
 
-    private void initializeCurses() {
+    private void initializeConsequences() {
+        // Pool of consequences goes here
+    }
 
+    private void initializeRemovalConditions() {
+        // Pool of removal conditions goes here
     }
 
     @Override
@@ -68,6 +73,14 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
             if (curse.consequence.callback.getClass().equals(clazz)) {
                 matchingCurses.add(curse);
             }
+        }
+        return matchingCurses;
+    }
+
+    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
+        ArrayList<Curse> matchingCurses = new ArrayList<>();
+        for (Curse curse : activeCurses) {
+            // TODO
         }
         return matchingCurses;
     }
