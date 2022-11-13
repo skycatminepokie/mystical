@@ -23,6 +23,12 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     @Override
     public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        for (Curse curse : cursesOfConsequence(PlayerBlockBreakEvents.Before.class)) {
+            boolean cancel = !((PlayerBlockBreakEvents.Before)curse.consequence.callback).beforeBlockBreak(world, player, pos, state, blockEntity);
+            if (cancel) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -64,8 +70,4 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         }
         return matchingCurses;
     }
-
-    // Get random curse
-    // Get random curse, but weight chances based on difficulty
-    // Get random curse, but weight chances to get close to a difficulty
 }
