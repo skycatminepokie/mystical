@@ -52,7 +52,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     private void removeFulfilledCurses() {
-
+        // CREDIT https://stackoverflow.com/a/1196612, then IntelliJ being like hey do this instead
+        activeCurses.removeIf(curse -> curse.removalCondition.isFulfilled());
     }
 
     /**
