@@ -8,14 +8,25 @@ import net.minecraft.stat.StatType;
 public class CurseRemovalCondition <T> {
     public double amountRequired;
     public double amountFulfilled;
-    StatType<T> statType;
-    T stat;
+    StatType<T> statType; // MINED, BROKEN, etc.
+    /**
+     * The object that the stat is interested in. For example, if
+     * {@code T} is a {@link net.minecraft.block.Block}, this could be {@link net.minecraft.block.Blocks#STONE}
+     */
+    T statObject;
 
-    public CurseRemovalCondition(StatType<T> statType, T stat, double amountRequired, double amountFulfilled) {
+    public CurseRemovalCondition(StatType<T> statType, T statObject, double amountRequired, double amountFulfilled) {
         this.statType = statType;
-        this.stat = stat;
+        this.statObject = statObject;
         this.amountRequired = amountRequired;
         this.amountFulfilled = amountFulfilled;
+    }
+
+    public CurseRemovalCondition(StatType<T> statType, T statObject, double amountRequired) {
+        this.statType = statType;
+        this.statObject = statObject;
+        this.amountRequired = amountRequired;
+        this.amountFulfilled = 0;
     }
 
     /**
@@ -28,4 +39,7 @@ public class CurseRemovalCondition <T> {
         return amountFulfilled >= amountRequired;
     }
 
+    public boolean isFulfilled() {
+        return amountFulfilled >= amountRequired;
+    }
 }

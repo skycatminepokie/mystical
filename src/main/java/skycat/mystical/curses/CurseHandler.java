@@ -1,49 +1,132 @@
 package skycat.mystical.curses;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.stat.Stat;
-import skycat.mystical.MysticalServer;
+import net.minecraft.stat.Stats;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import skycat.mystical.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.Random;
 
-public class CurseHandler {
-    public final ArrayList<Curse> curses = new ArrayList<>();
-    public HashMap<UUID, HashMap<Stat<?>, Double>> lastStats = new HashMap<>();
+public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before {
+    public final ArrayList<ArrayList> curseArrayLists = new ArrayList<>(); // WARN scuffed as all get out
+    public final ArrayList<Curse<EntitySleepEvents.StartSleeping>> startSleepingCurses = new ArrayList<>();
+    public final ArrayList<Curse<PlayerBlockBreakEvents.Before>> beforeBreakBlockCurses = new ArrayList<>();
 
     public CurseHandler() {
         // Initialize curses
-        Curse curse = new Curse<>(EntitySleepEvents.START_SLEEPING, (entity, sleepingPos) -> entity.kill(), 1.0);
-        curse.register();
-        curses.add(curse);
+        startSleepingCurses.add(new Curse<>(
+                EntitySleepEvents.START_SLEEPING,
+                (entity, sleepingPos) -> {
+                    entity.kill();
+                },
+                new CurseRemovalCondition<>(Stats.MINED, Blocks.STONE, 1000, 0),
+                1.0));
+        startSleepingCurses.add(new Curse<>(
+                EntitySleepEvents.START_SLEEPING,
+                (entity, sleepingPos) -> {
+                    entity.wakeUp();
+                    if (entity.isPlayer()) {
+                        ((PlayerEntity)entity).sendMessage(Text.of("Bruh you need beetroot slurp"), false);
+                    }
+                },
+                new CurseRemovalCondition<>(Stats.CRAFTED, Items.BEETROOT_SOUP, 10, 0),
+                1.0)
+        );
+        beforeBreakBlockCurses.add(
+                new Curse<>(PlayerBlockBreakEvents.BEFORE, (world, player, pos, state, blockEntity) -> {
+                    if (state.getBlock().equals(Blocks.ANDESITE)) {
+                        player.addExhaustion(0.05f);
+                        player.sendMessage(Text.of("oof"), true);
+                        return false;
+                    }
+                    return true;
+                }, new CurseRemovalCondition<>(Stats.CRAFTED, Items.BARREL, 20), 1.0)
+        );
+        beforeBreakBlockCurses.add(
+                new Curse<>(PlayerBlockBreakEvents.BEFORE, ((world, player, pos, state, blockEntity) -> {
+                    if (state.getBlock().equals(Blocks.GRASS_BLOCK)) {
+                        player.addExhaustion(1.0f);
+                        Utils.log("Grass block curse");
+                    }
+                    return true;
+                }
+                ), new CurseRemovalCondition<>(Stats.USED, Items.ENDER_EYE, 1), 1.0)
+        );
 
+        disableCurses(startSleepingCurses);
+        enableRandom(startSleepingCurses);
+        disableCurses(beforeBreakBlockCurses);
+        enableRandom(beforeBreakBlockCurses);
+        curseArrayLists.add(startSleepingCurses);
+        curseArrayLists.add(beforeBreakBlockCurses);
+    }
+
+    @Override
+    public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        for (Curse<PlayerBlockBreakEvents.Before> curse : beforeBreakBlockCurses) {
+            if (curse.enabled) {
+                if (!curse.callback.beforeBlockBreak(world, player, pos, state, blockEntity)) {
+                    return false; // Cancel it if something says to
+                }
+            } // TODO probably delete disabled curses
+        }
+        return true; // Don't cancel
+    }
+
+    private <T extends ArrayList<Curse<S>>,S> void disableCurses(T curseList) {
+        for (Curse<?> curse : curseList) {
+            curse.disable();
+        }
+    }
+
+    private <T extends ArrayList<Curse<S>>, S> void enableRandom(T curseList) {
+        curseList.get(new Random().nextInt(0, curseList.size())).enable();
     }
 
     public void doNighttimeEvents() {
-        updateCurseFulfillment();
+        removeFulfilledCurses();
     }
 
-    /**
-     * Update curses and their removal conditions. Will not remove the effects of curses.
-     */
-    public void updateCurseFulfillment() {
-        // For each player
-        // For each curse in use by a stat
-        // Find diff
-        // Save
-        for (UUID playerUUID : lastStats.keySet()) {
-            if (MysticalServer.getEVENT_HANDLER().getServer().getPlayerManager().getPlayer(playerUUID) != null) {
+    @Override
+    public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
+        for (Curse<EntitySleepEvents.StartSleeping> curse : startSleepingCurses) {
+            if (curse.enabled) {
+                curse.callback.onStartSleeping(entity, sleepingPos);
+            } // TODO probably delete disabled curses
+        }
+    }
 
+    public <T> void onStatIncreased(Stat<T> stat, int amount) {
+        for (ArrayList<Curse<?>> curses : curseArrayLists) { // TODO fix warning
+            for (Curse<?> curse : curses) {
+                CurseRemovalCondition<?> removalCondition = curse.removalCondition;
+                if (removalCondition.statType.equals(stat.getType())) {
+                    removalCondition.fulfill(amount);
+                }
             }
         }
     }
 
     public void removeFulfilledCurses() {
-
+        for (ArrayList<Curse<?>> curses : curseArrayLists) { // TODO fix warning
+            for (Curse<?> curse : curses) {
+                if (curse.removalCondition.isFulfilled()) {
+                    curse.disable();
+                }
+            }
+        }
     }
-
-    // TODO Needs to update amount fulfilled of curses each night and when players disconnect
 
     // Get random curse
     // Get random curse, but weight chances based on difficulty
