@@ -9,13 +9,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import skycat.mystical.LogLevel;
+import skycat.mystical.Utils;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before {
     ArrayList<Curse> activeCurses = new ArrayList<>();
     ArrayList<CurseConsequence> consequences = new ArrayList<>();
     ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
+    Random random = new Random();
 
     public CurseHandler() {
         initializeConsequences();
@@ -83,5 +87,34 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
             // TODO
         }
         return matchingCurses;
+    }
+
+    /**
+     * Get a new curse, with consequence and removal condition randomly selected
+     * @return A new curse
+     */
+    private Curse makeNewCurse() {
+        if (removalConditions.size() == 0) { // Ideally, this should not be reachable without editing the pool manually.
+            Utils.log("Tried to make a new curse, but the size of the removal condition pool was 0.", LogLevel.WARN);
+            return null;
+        }
+        if (consequences.size() == 0) { // Ideally, this should not be reachable without editing the pool manually.
+            Utils.log("Tried to make a new curse, but the size of the consequences pool was 0.", LogLevel.WARN);
+            return null;
+        }
+        Utils.log("Making a new random curse.", LogLevel.DEBUG);
+        return new Curse(
+          consequences.get(random.nextInt(0, consequences.size())),
+          removalConditions.get(random.nextInt(0, removalConditions.size()))
+        );
+    }
+
+    /**
+     * Get a new curse, targeting a difficulty (consequence difficulty * removal difficulty).
+     * @param difficultyTarget
+     * @return A new curse
+     */
+    private Curse makeNewCurse(int difficultyTarget) {
+        return null; // TODO
     }
 }
