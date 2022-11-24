@@ -1,7 +1,9 @@
 package skycat.mystical.curses;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.item.v1.CustomDamageHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -10,9 +12,12 @@ import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.LogLevel;
+import skycat.mystical.MysticalServer;
+import skycat.mystical.Settings;
 import skycat.mystical.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before {
@@ -43,6 +48,11 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     private void initializeConsequences() {
         // Pool of consequences goes here
+        Collections.addAll(consequences,
+                new CurseConsequence<CustomDamageHandler>((stack, amount, entity, breakCallback) -> amount * Settings.damageMultiplierMultiplier),
+                new CurseConsequence<ServerEntityEvents.EquipmentChange>(
+                        (livingEntity, equipmentSlot, previousStack, currentStack) -> currentStack.damage(Settings.curseEquipmentChangeDamage, MysticalServer.MC_RANDOM, null))
+        );
     }
 
     private void initializeRemovalConditions() {

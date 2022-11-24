@@ -1,6 +1,7 @@
 package skycat.mystical;
 
 import lombok.Getter;
+import lombok.Setter;
 import skycat.mystical.curses.CurseHandler;
 
 import java.io.*;
@@ -12,7 +13,7 @@ import static skycat.mystical.MysticalServer.LOGGER;
  * The main save file for Mystical. Includes information related to the game state, as well as a {@link Settings}.
  */
 public class Save {
-    Settings settings = new Settings(true); // Make a new one if it isn't loaded by GSON
+    @Getter @Setter Settings settings = new Settings(true); // Make a new one if it isn't loaded by GSON
     @Getter CurseHandler curseHandler = new CurseHandler();
     public static final File SAVE_FILE = new File("mysticalSave.json");
 

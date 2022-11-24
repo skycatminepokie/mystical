@@ -22,4 +22,7 @@ public class Settings {
         @Getter @Setter public static LogLevel timeOfDayAtStartup = LogLevel.INFO;
 
     }
+
+    @Getter @Setter public static int damageMultiplierMultiplier = 2; // Multiplier that is used by the damage multiplier curse
+    @Getter @Setter public static int curseEquipmentChangeDamage = 25;
 }
