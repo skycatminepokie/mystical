@@ -1,8 +1,8 @@
 package skycat.mystical.curses;
 
 public class Curse {
-    CurseConsequence consequence;
-    CurseRemovalCondition removalCondition;
+    public CurseConsequence consequence;
+    public CurseRemovalCondition removalCondition;
     boolean enabled;
 
     public Curse(CurseConsequence consequence, CurseRemovalCondition removalCondition) {

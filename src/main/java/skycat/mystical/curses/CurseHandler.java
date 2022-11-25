@@ -5,12 +5,14 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.item.v1.CustomDamageHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stat;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.LogLevel;
@@ -72,6 +74,10 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     private void initializeRemovalConditions() {
         // Pool of removal conditions goes here
+        Collections.addAll(removalConditions,
+                new TypedRemovalCondition<>(Stats.MINED, Blocks.COBBLESTONE)
+
+        );
     }
 
     @Override
@@ -89,7 +95,9 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
-        // TODO
+        for (Curse curse : cursesOfConditions(stat)) {
+            curse.removalCondition.fulfill(amount);
+        }
     }
 
     private void removeFulfilledCurses() {
@@ -115,10 +123,22 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : activeCurses) {
-            // TODO
+        for (Curse curse : activeCurses) { // TODO: Identified removal conditions
+            CurseRemovalCondition removalCondition = curse.removalCondition;
+            if (removalCondition.getClass().equals(TypedRemovalCondition.class)) {
+                TypedRemovalCondition typedRemovalCondition = ((TypedRemovalCondition) removalCondition);
+                if (typedRemovalCondition.statValue.getClass().equals(stat.getClass()) &&
+                        typedRemovalCondition.statType.equals(stat.getType())
+                ) {
+                    matchingCurses.add(curse);
+                }
+            }
         }
         return matchingCurses;
+    }
+
+    public void activateNewCurse() {
+        activeCurses.add(makeNewCurse());
     }
 
     /**
@@ -134,7 +154,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
             Utils.log("Tried to make a new curse, but the size of the consequences pool was 0.", LogLevel.WARN);
             return null;
         }
-        Utils.log("Making a new random curse.", LogLevel.DEBUG);
+        Utils.log("Making a new random curse.", LogLevel.INFO);
         return new Curse(
           consequences.get(random.nextInt(0, consequences.size())),
           removalConditions.get(random.nextInt(0, removalConditions.size()))

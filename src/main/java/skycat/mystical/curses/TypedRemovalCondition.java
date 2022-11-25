@@ -6,4 +6,8 @@ public class TypedRemovalCondition<T> extends CurseRemovalCondition {
     StatType<T> statType; // ex MINED
     T statValue; // ex Blocks.COBBLESTONE
 
+    public TypedRemovalCondition(StatType<T> statType, T statValue) {
+        this.statType = statType;
+        this.statValue = statValue;
+    }
 }
