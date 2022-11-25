@@ -22,6 +22,8 @@ public class MysticalServer implements DedicatedServerModInitializer {
     @Getter public static final Random RANDOM = new Random();
     @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // WARN: Probably a horrible way to do this
 
+    public static final skycat.mystical.MysticalConfig CONFIG = skycat.mystical.MysticalConfig.createAndLoad();
+
     @Override
     public void onInitializeServer() {
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);

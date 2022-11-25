@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import skycat.mystical.curses.CurseHandler;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import static skycat.mystical.MysticalServer.GSON;
-import static skycat.mystical.MysticalServer.LOGGER;
 
 /**
  * The main save file for Mystical. Includes information related to the game state, as well as a {@link Settings}.
@@ -18,7 +20,9 @@ public class Save {
     public static final File SAVE_FILE = new File("mysticalSave.json");
 
     public static Save load() {
+        /*
         try (FileReader fileReader = new FileReader(SAVE_FILE)) {
+
             return GSON.fromJson(fileReader, Save.class);
         } catch (FileNotFoundException e) {
             LOGGER.info("No Mystical save file found, creating a new one.");
@@ -27,6 +31,8 @@ public class Save {
             LOGGER.error("IOException thrown while trying to load Mystical save file. Throwing error.");
             throw new RuntimeException(e);
         }
+        */
+        return new Save(); // STOPSHIP
     }
 
     public void save(File saveFile) throws IOException {

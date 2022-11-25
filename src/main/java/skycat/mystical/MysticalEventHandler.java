@@ -5,8 +5,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
 
-import java.io.IOException;
-
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
     @Getter MinecraftServer server; // TODO: maybe shouldn't just be package-private
     MinecraftServerTimerAccess timerAccess;
@@ -37,12 +35,15 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void onServerStopping(MinecraftServer server) {
-        Utils.log("stopping and saving");
+        /*
+        Utils.log("stopping and saving"); // STOPSHIP
         try {
             MysticalServer.getSAVE().save();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+         */
     }
 
     /**
