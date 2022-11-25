@@ -6,8 +6,10 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.item.v1.CustomDamageHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,8 +21,9 @@ import skycat.mystical.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.function.Consumer;
 
-public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before {
+public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
     ArrayList<Curse> activeCurses = new ArrayList<>();
     ArrayList<CurseConsequence> consequences = new ArrayList<>();
     ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
@@ -42,6 +45,18 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         return true;
     }
 
+    @Override
+    public int damage(ItemStack stack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
+        int maxDamage = 0;
+        for (Curse curse : cursesOfConsequence(CustomDamageHandler.class)) {
+            int newDamage = ((CustomDamageHandler)curse.consequence.callback).damage(stack, amount, entity, breakCallback);
+            if (newDamage > maxDamage) {
+                maxDamage = newDamage;
+            }
+        }
+        return maxDamage;
+    }
+
     public void doNighttimeEvents() {
         removeFulfilledCurses();
     }
@@ -60,6 +75,13 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     @Override
+    public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
+        for (Curse curse : cursesOfConsequence(ServerEntityEvents.EquipmentChange.class)) {
+            ((ServerEntityEvents.EquipmentChange)curse.consequence.callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
+        }
+    }
+
+    @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
         for (Curse curse : cursesOfConsequence(EntitySleepEvents.StartSleeping.class)) {
             ((EntitySleepEvents.StartSleeping)curse.consequence.callback).onStartSleeping(entity, sleepingPos);
@@ -67,7 +89,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
-
+        // TODO
     }
 
     private void removeFulfilledCurses() {
