@@ -75,7 +75,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     private void initializeRemovalConditions() {
         // Pool of removal conditions goes here
         Collections.addAll(removalConditions,
-                new TypedRemovalCondition<>(Stats.MINED, Blocks.COBBLESTONE)
+                new TypedRemovalCondition<>(Stats.MINED, Blocks.COBBLESTONE, 10)
 
         );
     }
@@ -95,9 +95,12 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
+        Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
+        /*
         for (Curse curse : cursesOfConditions(stat)) {
             curse.removalCondition.fulfill(amount);
         }
+         */
     }
 
     private void removeFulfilledCurses() {
@@ -124,15 +127,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
         for (Curse curse : activeCurses) { // TODO: Identified removal conditions
-            CurseRemovalCondition removalCondition = curse.removalCondition;
-            if (removalCondition.getClass().equals(TypedRemovalCondition.class)) {
-                TypedRemovalCondition typedRemovalCondition = ((TypedRemovalCondition) removalCondition);
-                if (typedRemovalCondition.statValue.getClass().equals(stat.getClass()) &&
-                        typedRemovalCondition.statType.equals(stat.getType())
-                ) {
-                    matchingCurses.add(curse);
-                }
-            }
+
         }
         return matchingCurses;
     }

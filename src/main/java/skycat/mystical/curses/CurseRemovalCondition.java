@@ -20,4 +20,9 @@ public abstract class CurseRemovalCondition {
     public boolean isFulfilled() {
         return amountFulfilled >= amountRequired;
     }
+
+    public CurseRemovalCondition(double amountRequired, double amountFulfilled) {
+        this.amountRequired = amountRequired;
+        this.amountFulfilled = amountFulfilled;
+    }
 }
