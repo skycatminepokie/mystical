@@ -15,6 +15,7 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     maven { url 'https://maven.wispforest.io' }
+    maven { url "https://cursemaven.com" }
 }
 
 dependencies {
@@ -36,6 +37,8 @@ dependencies {
 
     annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
     include "io.wispforest:owo-sentinel:${project.owo_version}"
+
+    modRuntimeOnly("curse.maven:modmenu-308702:4100232")
 }
 
 processResources {
