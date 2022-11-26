@@ -97,12 +97,10 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
         Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
-        // TODO
-        /*
+        // TODO untested
         for (Curse curse : cursesOfConditions(stat)) {
             curse.removalCondition.fulfill(amount);
         }
-         */
     }
 
     private void removeFulfilledCurses() {
@@ -126,10 +124,16 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         return matchingCurses;
     }
 
-    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
+    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) { // TODO untested
         ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : activeCurses) { // TODO: Identified removal conditions
-
+        for (Curse curse : activeCurses) {
+            if (curse.removalCondition.getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
+                TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.removalCondition;
+                if (removalCondition.statType.equals(stat.getType()) && // Same statType, so values are the same class
+                                removalCondition.statValue.equals(stat.getValue())) { // Values are the same (ex Blocks.COBBLESTONE and Blocks.COBBLESTONE)
+                    matchingCurses.add(curse);
+                }
+            }
         }
         return matchingCurses;
     }
