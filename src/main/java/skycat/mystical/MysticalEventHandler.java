@@ -16,7 +16,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         this.server = server;
         timerAccess = ((MinecraftServerTimerAccess) server);
         setNightTimer();
-        Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), CONFIG.timeOfDayAtStartup());
+        Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), CONFIG.timeOfDayAtStartupLogLevel());
     }
 
     // TODO: Get stats when player connects (for use with curse fulfillment
@@ -30,7 +30,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         try {
             setNightTimer();
         } catch (NullPointerException e) {
-            Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), CONFIG.nightTimerSetFailed());
+            Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), CONFIG.failedToSetNightTimerLogLevel());
             // TODO Try again later?
         }
     }

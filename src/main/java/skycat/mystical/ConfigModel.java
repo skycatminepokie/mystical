@@ -9,6 +9,7 @@ import skycat.mystical.curses.CurseRemovalCondition;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("unused") // They are used by owo-config
 @Config(name = "mysticalConfig", wrapperName = "MysticalConfig")
 public class ConfigModel {
     public LogLevel newSaveFileCreatedLogLevel = LogLevel.INFO;

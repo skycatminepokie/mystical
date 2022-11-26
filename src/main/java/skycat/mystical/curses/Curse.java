@@ -5,7 +5,7 @@ public class Curse {
     public CurseRemovalCondition removalCondition;
     boolean enabled;
 
-    public Curse(CurseConsequence consequence, CurseRemovalCondition removalCondition) {
+    public Curse(@SuppressWarnings("rawtypes") CurseConsequence consequence, CurseRemovalCondition removalCondition) {
         this.consequence = consequence;
         this.removalCondition = removalCondition;
     }

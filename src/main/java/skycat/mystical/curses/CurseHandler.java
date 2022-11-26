@@ -28,7 +28,7 @@ import static skycat.mystical.MysticalServer.CONFIG;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
     ArrayList<Curse> activeCurses = new ArrayList<>();
-    ArrayList<CurseConsequence> consequences = new ArrayList<>();
+    @SuppressWarnings("rawtypes") ArrayList<CurseConsequence> consequences = new ArrayList<>();
     ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
     Random random = new Random();
 
@@ -67,7 +67,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     private void initializeConsequences() {
         // Pool of consequences goes here
         Collections.addAll(consequences,
-                new CurseConsequence<CustomDamageHandler>((stack, amount, entity, breakCallback) -> amount * CONFIG.damageMultiplierCurseValue()),
+                new CurseConsequence<CustomDamageHandler>((stack, amount, entity, breakCallback) -> amount * CONFIG.curseDamageMultiplier()),
                 new CurseConsequence<ServerEntityEvents.EquipmentChange>(
                         (livingEntity, equipmentSlot, previousStack, currentStack) -> currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null))
         );
@@ -97,6 +97,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
         Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
+        // TODO
         /*
         for (Curse curse : cursesOfConditions(stat)) {
             curse.removalCondition.fulfill(amount);
@@ -159,7 +160,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     /**
      * Get a new curse, targeting a difficulty (consequence difficulty * removal difficulty).
-     * @param difficultyTarget
+     * @param difficultyTarget The desired difficulty of the curse. Likely will not be exact.
      * @return A new curse
      */
     private Curse makeNewCurse(int difficultyTarget) {
