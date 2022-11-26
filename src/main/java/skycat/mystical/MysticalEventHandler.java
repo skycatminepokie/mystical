@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
 
+import static skycat.mystical.MysticalServer.CONFIG;
+
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
     @Getter MinecraftServer server; // TODO: maybe shouldn't just be package-private
     MinecraftServerTimerAccess timerAccess;
@@ -14,7 +16,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         this.server = server;
         timerAccess = ((MinecraftServerTimerAccess) server);
         setNightTimer();
-        Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), Settings.LoggingSettings.getTimeOfDayAtStartup());
+        Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), CONFIG.timeOfDayAtStartup());
     }
 
     // TODO: Get stats when player connects (for use with curse fulfillment
@@ -23,12 +25,12 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void doNighttimeEvents() {
         // TODO: Dispel curses, bring potential new ones
         Utils.log("Doing nighttime stuff");
-        MysticalServer.getSAVE().curseHandler.doNighttimeEvents();
+        MysticalServer.CONFIG.curseHandler().doNighttimeEvents();
 
         try {
             setNightTimer();
         } catch (NullPointerException e) {
-            Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), Settings.LoggingSettings.getNightTimerSetFailed());
+            Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), CONFIG.nightTimerSetFailed());
             // TODO Try again later?
         }
     }

@@ -17,13 +17,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.LogLevel;
 import skycat.mystical.MysticalServer;
-import skycat.mystical.Settings;
 import skycat.mystical.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.function.Consumer;
+
+import static skycat.mystical.MysticalServer.CONFIG;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
     ArrayList<Curse> activeCurses = new ArrayList<>();
@@ -66,9 +67,9 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     private void initializeConsequences() {
         // Pool of consequences goes here
         Collections.addAll(consequences,
-                new CurseConsequence<CustomDamageHandler>((stack, amount, entity, breakCallback) -> amount * Settings.damageMultiplierMultiplier),
+                new CurseConsequence<CustomDamageHandler>((stack, amount, entity, breakCallback) -> amount * CONFIG.damageMultiplierCurseValue()),
                 new CurseConsequence<ServerEntityEvents.EquipmentChange>(
-                        (livingEntity, equipmentSlot, previousStack, currentStack) -> currentStack.damage(Settings.curseEquipmentChangeDamage, MysticalServer.MC_RANDOM, null))
+                        (livingEntity, equipmentSlot, previousStack, currentStack) -> currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null))
         );
     }
 
