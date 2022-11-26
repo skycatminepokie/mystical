@@ -34,7 +34,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void onServerStopping(MinecraftServer server) {
-        // WARN: Does nothing
+        CONFIG.save();
     }
 
     /**

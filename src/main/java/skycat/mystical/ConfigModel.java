@@ -12,6 +12,8 @@ import java.util.ArrayList;
 @SuppressWarnings("unused") // They are used by owo-config
 @Config(name = "mysticalConfig", wrapperName = "MysticalConfig")
 public class ConfigModel {
+    @ExcludeFromScreen
+    public CurseHandler curseHandler = new CurseHandler();
     public LogLevel newSaveFileCreatedLogLevel = LogLevel.INFO;
     public LogLevel newSettingsFileCreatedLogLevel = LogLevel.INFO;
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -20,9 +22,5 @@ public class ConfigModel {
     public ArrayList<Curse> activeCurses = new ArrayList<>();
     public ArrayList<CurseConsequence> consequences = new ArrayList<>();
     public ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
-    @ExcludeFromScreen
-    public CurseHandler curseHandler = new CurseHandler();
-
-    public int curseDamageMultiplier = 2;
     public int curseEquipmentChangeDamage = 25;
 }

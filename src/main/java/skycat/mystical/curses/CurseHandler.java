@@ -67,9 +67,12 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     private void initializeConsequences() {
         // Pool of consequences goes here
         Collections.addAll(consequences,
-                new CurseConsequence<CustomDamageHandler>((stack, amount, entity, breakCallback) -> amount * CONFIG.curseDamageMultiplier()),
                 new CurseConsequence<ServerEntityEvents.EquipmentChange>(
-                        (livingEntity, equipmentSlot, previousStack, currentStack) -> currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null))
+                        (livingEntity, equipmentSlot, previousStack, currentStack) -> {
+                            if (livingEntity.isPlayer()) {
+                                currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
+                            }
+                        })
         );
     }
 
@@ -96,8 +99,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
-        Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
-        // TODO untested
+        // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
         for (Curse curse : cursesOfConditions(stat)) {
             curse.removalCondition.fulfill(amount);
         }
@@ -124,7 +126,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         return matchingCurses;
     }
 
-    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) { // TODO untested
+    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
         for (Curse curse : activeCurses) {
             if (curse.removalCondition.getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
