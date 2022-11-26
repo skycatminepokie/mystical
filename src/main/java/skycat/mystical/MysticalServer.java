@@ -1,7 +1,5 @@
 package skycat.mystical;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -15,7 +13,6 @@ import java.util.Random;
 
 
 public class MysticalServer implements DedicatedServerModInitializer {
-    @Getter public static final Gson GSON = new GsonBuilder().setPrettyPrinting().setVersion(1.0).create();
     @Getter public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
 
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();

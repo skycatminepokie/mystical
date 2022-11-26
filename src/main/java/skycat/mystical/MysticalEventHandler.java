@@ -8,8 +8,8 @@ import skycat.mystical.server.MinecraftServerTimerAccess;
 import static skycat.mystical.MysticalServer.CONFIG;
 
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
-    @Getter MinecraftServer server; // TODO: maybe shouldn't just be package-private
-    MinecraftServerTimerAccess timerAccess;
+    @Getter private MinecraftServer server;
+    private MinecraftServerTimerAccess timerAccess;
 
     @Override
     public void onServerStarted(MinecraftServer server) {
@@ -18,9 +18,6 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         setNightTimer();
         Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), CONFIG.timeOfDayAtStartupLogLevel());
     }
-
-    // TODO: Get stats when player connects (for use with curse fulfillment
-    // TODO: Update curse fulfillment on player disconnect
 
     public void doNighttimeEvents() {
         // TODO: Dispel curses, bring potential new ones
@@ -37,15 +34,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void onServerStopping(MinecraftServer server) {
-        /*
-        Utils.log("stopping and saving"); // STOPSHIP
-        try {
-            MysticalServer.getSAVE().save();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
+        // WARN: Does nothing
     }
 
     /**
