@@ -3,9 +3,7 @@ package skycat.mystical;
 import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.ExcludeFromScreen;
 import skycat.mystical.curses.Curse;
-import skycat.mystical.curses.CurseConsequence;
 import skycat.mystical.curses.CurseHandler;
-import skycat.mystical.curses.CurseRemovalCondition;
 
 import java.util.ArrayList;
 
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 @Config(name = "mysticalConfig", wrapperName = "MysticalConfig")
 public class ConfigModel {
     @ExcludeFromScreen
-    public CurseHandler curseHandler = new CurseHandler();
+    public CurseHandler curseHandler = new CurseHandler(); // STOPSHIP Saving does not like this (I think)
     public LogLevel newSaveFileCreatedLogLevel = LogLevel.INFO;
     public LogLevel newSettingsFileCreatedLogLevel = LogLevel.INFO;
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
