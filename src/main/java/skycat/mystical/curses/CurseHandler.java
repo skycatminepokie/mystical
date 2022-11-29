@@ -11,6 +11,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
@@ -64,14 +65,26 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     private void initializeConsequences() {
         // Pool of consequences goes here
         Collections.addAll(consequences,
-                new CurseConsequence<ServerEntityEvents.EquipmentChange>(
+                new CurseConsequence<ServerEntityEvents.EquipmentChange>( // DamageEquipmentOnChangeCurse
                         (livingEntity, equipmentSlot, previousStack, currentStack) -> {
                             if (livingEntity.isPlayer()) {
-                                if (currentStack.getDamage() + CONFIG.DamageEquipmentOnChangeCurse.damageAmount() < currentStack.getMaxDamage()) { // Don't break it more than possible TODO: check if this allows going to 0 dmg
-                                    currentStack.damage(CONFIG.DamageEquipmentOnChangeCurse.damageAmount(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
+                                if (currentStack.getDamage() + CONFIG.damageEquipmentOnChangeCurse.damageAmount() < currentStack.getMaxDamage()) { // Don't break it more than possible TODO: check if this allows going to 0 dmg
+                                    currentStack.damage(CONFIG.damageEquipmentOnChangeCurse.damageAmount(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
                                 }
                             }
-                        }, ServerEntityEvents.EquipmentChange.class)
+                        }, ServerEntityEvents.EquipmentChange.class),
+                new CurseConsequence<EntitySleepEvents.StartSleeping>( // PreventSleepingCurse
+                        ((entity, sleepingPos) -> {
+                            if (entity.isPlayer()) {
+                                entity.wakeUp();
+                                if (CONFIG.preventSleepingCurse.sendMessageToPlayer()) {
+                                    Utils.sendMessageToPlayer((ServerPlayerEntity) entity, CONFIG.preventSleepingCurse.message(), CONFIG.preventSleepingCurse.actionBar());
+                                }
+                            } else if (!CONFIG.preventSleepingCurse.playersOnly()) {
+                                entity.wakeUp();
+                            }
+                            Utils.log("preventSleepingCurse triggered", CONFIG.preventSleepingCurse.logLevel());
+                        }), EntitySleepEvents.StartSleeping.class)
         );
     }
 

@@ -1,5 +1,7 @@
 package skycat.mystical;
 
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import org.slf4j.Logger;
 
 public class Utils {
@@ -23,6 +25,26 @@ public class Utils {
             case ERROR: logger.error(msg); return logger.isErrorEnabled();
             default: return false; // case OFF
         }
+    }
+
+    public static void sendMessageToPlayer(ServerPlayerEntity player, String msg) {
+        sendMessageToPlayer(player, textOf(msg)); // Converts String to Text
+    }
+
+    public static void sendMessageToPlayer(ServerPlayerEntity player, String msg, boolean actionBar) {
+        sendMessageToPlayer(player, textOf(msg), actionBar); // Converts String to Text
+    }
+
+    public static void sendMessageToPlayer(ServerPlayerEntity player, Text msg) {
+        sendMessageToPlayer(player, msg, false); // Assumes actionBar = false
+    }
+
+    public static void sendMessageToPlayer(ServerPlayerEntity player, Text msg, boolean actionBar) {
+        player.sendMessage(msg, actionBar);
+    }
+
+    public static Text textOf(String str) {
+        return Text.of(str);
     }
 
 }

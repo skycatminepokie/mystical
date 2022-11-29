@@ -17,8 +17,9 @@ public class ConfigModel {
     // TODO Curse toggles
     @SectionHeader("Curses")
     @Nest
-    public DamageEquipmentOnChangeCurse DamageEquipmentOnChangeCurse = new DamageEquipmentOnChangeCurse();
-
+    public DamageEquipmentOnChangeCurse damageEquipmentOnChangeCurse = new DamageEquipmentOnChangeCurse();
+    @Nest
+    public PreventSleepingCurse preventSleepingCurse = new PreventSleepingCurse();
     // @SectionHeader("Cures")
 
     @SectionHeader("Logging")
@@ -30,8 +31,22 @@ public class ConfigModel {
 
     public static class DamageEquipmentOnChangeCurse {
         public boolean enabled = true; // Not implemented
-        public int damageAmount = 5; // Not implemented
-        public boolean notifyPlayer = false; // Not implemented
+        public int damageAmount = 5;
+        public boolean playersOnly = false; // Not implemented
+        public boolean sendMessageToPlayer = true; // Not implemented
+        public boolean actionBar = true; // Not implemented
+        public String message = "Whoops!"; // Not implemented
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
     }
+
+    public static class PreventSleepingCurse {
+        public boolean enabled = true; // Not implemented
+        public boolean playersOnly = false;
+        public boolean sendMessageToPlayer = true;
+        public boolean actionBar = true;
+        public String message = "No sleeping :)";
+        public LogLevel logLevel = LogLevel.OFF;
+    }
+
+
 }

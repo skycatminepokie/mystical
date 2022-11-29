@@ -30,5 +30,8 @@ public class MysticalServer implements DedicatedServerModInitializer {
         EntitySleepEvents.START_SLEEPING.register(CURSE_HANDLER);
         PlayerBlockBreakEvents.BEFORE.register(CURSE_HANDLER);
         ServerEntityEvents.EQUIPMENT_CHANGE.register(CURSE_HANDLER);
+        CURSE_HANDLER.activateNewCurse();
+        CURSE_HANDLER.activateNewCurse();
+        CURSE_HANDLER.activateNewCurse();
     }
 }
