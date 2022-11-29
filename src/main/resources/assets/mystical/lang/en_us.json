@@ -3,6 +3,6 @@
   "text.config.mysticalConfig.option.nightTimerSetFailed": "Night timer set failure",
   "text.config.mysticalConfig.option.saving": "When saving",
   "text.config.mysticalConfig.option.timeOfDayAtStartup": "Startup time of day",
-  "text.config.mysticalConfig.option.damageMultiplierCurseValue": "Damage multiplier curse value",
-  "text.config.mysticalConfig.option.damageMultiplierCurseValue.tooltip": "For curses that multiply damage taken by items, \nmultiply the damage by this amount."
+  "text.config.mysticalConfig.option.removeDisabledCurses": "Remove disabled curses",
+  "text.config.mysticalConfig.option.removeDisabledCurses.tooltip": "When disabling a curse, delete active curses that match."
 }

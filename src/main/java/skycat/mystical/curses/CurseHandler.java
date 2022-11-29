@@ -67,8 +67,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
                 new CurseConsequence<ServerEntityEvents.EquipmentChange>(
                         (livingEntity, equipmentSlot, previousStack, currentStack) -> {
                             if (livingEntity.isPlayer()) {
-                                if (currentStack.getDamage() + CONFIG.curseEquipmentChangeDamage() < currentStack.getMaxDamage()) { // Don't break it more than possible TODO: check if this allows going to 0 dmg
-                                    currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
+                                if (currentStack.getDamage() + CONFIG.DamageEquipmentOnChangeCurse.damageAmount() < currentStack.getMaxDamage()) { // Don't break it more than possible TODO: check if this allows going to 0 dmg
+                                    currentStack.damage(CONFIG.DamageEquipmentOnChangeCurse.damageAmount(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
                                 }
                             }
                         }, ServerEntityEvents.EquipmentChange.class)
@@ -144,6 +144,10 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         ArrayList<Curse> newCurses = CONFIG.activeCurses();
         newCurses.add(makeNewCurse());
         CONFIG.activeCurses(newCurses);
+    }
+
+    public int removeDisabledCurses() {
+        return 0; // TODO
     }
 
     /**
