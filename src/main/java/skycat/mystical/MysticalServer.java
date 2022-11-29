@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.util.math.random.CheckedRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import skycat.mystical.curses.CurseHandler;
 
 import java.util.Random;
 
@@ -19,16 +20,16 @@ public class MysticalServer implements DedicatedServerModInitializer {
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
     @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // WARN: Probably a horrible way to do this
-
     public static final skycat.mystical.MysticalConfig CONFIG = skycat.mystical.MysticalConfig.createAndLoad();
+    public static final CurseHandler CURSE_HANDLER = new CurseHandler();
 
     @Override
     public void onInitializeServer() {
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
-        EntitySleepEvents.START_SLEEPING.register(CONFIG.curseHandler());
-        PlayerBlockBreakEvents.BEFORE.register(CONFIG.curseHandler());
-        ServerEntityEvents.EQUIPMENT_CHANGE.register(CONFIG.curseHandler());
-        CONFIG.curseHandler().activateNewCurse();
+        EntitySleepEvents.START_SLEEPING.register(CURSE_HANDLER);
+        PlayerBlockBreakEvents.BEFORE.register(CURSE_HANDLER);
+        ServerEntityEvents.EQUIPMENT_CHANGE.register(CURSE_HANDLER);
+        CURSE_HANDLER.activateNewCurse(); // WARN debug
     }
 }

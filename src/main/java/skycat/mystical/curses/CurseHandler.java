@@ -21,16 +21,13 @@ import skycat.mystical.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.function.Consumer;
 
 import static skycat.mystical.MysticalServer.CONFIG;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
-    ArrayList<Curse> activeCurses = new ArrayList<>();
     @SuppressWarnings("rawtypes") ArrayList<CurseConsequence> consequences = new ArrayList<>();
     ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
-    Random random = new Random();
 
     public CurseHandler() {
         initializeConsequences();
@@ -70,9 +67,9 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
                 new CurseConsequence<ServerEntityEvents.EquipmentChange>(
                         (livingEntity, equipmentSlot, previousStack, currentStack) -> {
                             if (livingEntity.isPlayer()) {
-                                currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
+                                currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected WARN: Allows negative values, may cause int limit problems
                             }
-                        })
+                        }, ServerEntityEvents.EquipmentChange.class)
         );
     }
 
@@ -98,6 +95,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         }
     }
 
+    @SuppressWarnings("unused") // Used by StatHandlerMixin
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
         // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
         for (Curse curse : cursesOfConditions(stat)) {
@@ -107,7 +105,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     private void removeFulfilledCurses() {
         // CREDIT https://stackoverflow.com/a/1196612, then IntelliJ being like hey do this instead
-        activeCurses.removeIf(curse -> curse.removalCondition.isFulfilled());
+        CONFIG.activeCurses().removeIf(curse -> curse.removalCondition.isFulfilled());
     }
 
     /**
@@ -118,8 +116,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
      */
     public <T> ArrayList<Curse> cursesOfConsequence(Class<T> clazz) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : activeCurses) {
-            if (curse.consequence.callback.getClass().equals(clazz)) {
+        for (Curse curse : CONFIG.activeCurses()) {
+            if (curse.consequence.callbackType.equals(clazz)) {
                 matchingCurses.add(curse);
             }
         }
@@ -128,7 +126,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : activeCurses) {
+        for (Curse curse : CONFIG.activeCurses()) {
             if (curse.removalCondition.getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
                 TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.removalCondition;
                 if (removalCondition.statType.equals(stat.getType()) && // Same statType, so values are the same class
@@ -141,7 +139,9 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     public void activateNewCurse() {
-        activeCurses.add(makeNewCurse());
+        ArrayList<Curse> newCurses = CONFIG.activeCurses();
+        newCurses.add(makeNewCurse());
+        CONFIG.activeCurses(newCurses);
     }
 
     /**
@@ -159,8 +159,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         }
         Utils.log("Making a new random curse.", LogLevel.INFO);
         return new Curse(
-          consequences.get(random.nextInt(0, consequences.size())),
-          removalConditions.get(random.nextInt(0, removalConditions.size()))
+          consequences.get(MysticalServer.getRANDOM().nextInt(0, consequences.size())),
+          removalConditions.get(MysticalServer.getRANDOM().nextInt(0, removalConditions.size()))
         );
     }
 
