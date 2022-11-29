@@ -15,4 +15,5 @@ public class ConfigModel {
     public LogLevel timeOfDayAtStartupLogLevel = LogLevel.DEBUG;
     public ArrayList<Curse> activeCurses = new ArrayList<>();
     public int curseEquipmentChangeDamage = 5;
+    // TODO Curse toggles
 }
