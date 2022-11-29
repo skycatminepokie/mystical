@@ -67,7 +67,9 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
                 new CurseConsequence<ServerEntityEvents.EquipmentChange>(
                         (livingEntity, equipmentSlot, previousStack, currentStack) -> {
                             if (livingEntity.isPlayer()) {
-                                currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected WARN: Allows negative values, may cause int limit problems
+                                if (currentStack.getDamage() + CONFIG.curseEquipmentChangeDamage() < currentStack.getMaxDamage()) { // Don't break it more than possible TODO: check if this allows going to 0 dmg
+                                    currentStack.damage(CONFIG.curseEquipmentChangeDamage(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
+                                }
                             }
                         }, ServerEntityEvents.EquipmentChange.class)
         );
