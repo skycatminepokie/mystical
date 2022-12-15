@@ -23,8 +23,8 @@ import java.util.function.Consumer;
 import static skycat.mystical.MysticalServer.CONFIG;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
-    CurseConsequences[] consequenceEnums = CurseConsequences.values();
-    CurseRemovalConditions[] removalConditionEnums = CurseRemovalConditions.values();
+    CurseConsequenceEnum[] consequenceEnums = CurseConsequenceEnum.values();
+    CurseRemovalConditionEnum[] removalConditionEnums = CurseRemovalConditionEnum.values();
 
     public CurseHandler() {
     }

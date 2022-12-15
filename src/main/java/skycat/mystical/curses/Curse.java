@@ -1,11 +1,11 @@
 package skycat.mystical.curses;
 
 public class Curse {
-    private final CurseConsequences consequenceEnum;
+    private final CurseConsequenceEnum consequenceEnum;
     public CurseRemovalCondition removalCondition;
     boolean enabled;
 
-    public Curse(CurseConsequences consequenceEnum, CurseRemovalCondition removalCondition) {
+    public Curse(CurseConsequenceEnum consequenceEnum, CurseRemovalCondition removalCondition) {
         this.consequenceEnum = consequenceEnum;
         this.removalCondition = removalCondition;
     }
