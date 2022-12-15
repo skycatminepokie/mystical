@@ -1,8 +1,10 @@
-package skycat.mystical;
+package skycat.mystical.util;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
+import skycat.mystical.LogLevel;
+import skycat.mystical.MysticalServer;
 
 public class Utils {
     public static boolean log(String msg) {

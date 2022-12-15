@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 import skycat.mystical.MysticalServer;
-import skycat.mystical.Utils;
+import skycat.mystical.util.Utils;
 
 import static skycat.mystical.MysticalServer.CONFIG;
 

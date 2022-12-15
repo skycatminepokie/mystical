@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.LogLevel;
 import skycat.mystical.MysticalServer;
-import skycat.mystical.Utils;
+import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
