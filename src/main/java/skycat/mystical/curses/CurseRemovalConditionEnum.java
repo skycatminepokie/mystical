@@ -6,11 +6,10 @@ import net.minecraft.stat.Stats;
 import java.util.HashMap;
 
 public enum CurseRemovalConditionEnum {
-    MINE_COBBLESTONE(new TypedRemovalCondition<>(Stats.MINED, Blocks.COBBLESTONE, 10));
+    MINE_COBBLESTONE("MINE_COBBLESTONE");
+    public final String removalCondition;
 
-    public final CurseRemovalCondition removalCondition;
-
-    CurseRemovalConditionEnum(CurseRemovalCondition removalConditionEnum) {
+    CurseRemovalConditionEnum(String removalConditionEnum) {
         this.removalCondition = removalConditionEnum;
     }
     private static final HashMap<CurseRemovalConditionEnum, CurseRemovalCondition> lookupMap = new HashMap<>();

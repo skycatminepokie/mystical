@@ -38,7 +38,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     @Override
     public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         for (Curse curse : cursesOfConsequence(PlayerBlockBreakEvents.Before.class)) {
-            boolean cancel = !((PlayerBlockBreakEvents.Before) curse.getConsequenceEnum().callback).beforeBlockBreak(world, player, pos, state, blockEntity);
+            boolean cancel = !((PlayerBlockBreakEvents.Before) curse.getConsequence().callback).beforeBlockBreak(world, player, pos, state, blockEntity);
             if (cancel) {
                 return false;
             }
@@ -49,8 +49,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
         for (Curse curse : CONFIG.activeCurses()) {
-            if (curse.removalCondition.getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
-                TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.removalCondition;
+            if (curse.getRemovalCondition().getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
+                TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.getRemovalCondition();
                 if (removalCondition.statType.equals(stat.getType()) && // Same statType, so values are the same class
                     removalCondition.statValue.equals(stat.getValue())) { // Values are the same (ex Blocks.COBBLESTONE and Blocks.COBBLESTONE)
                     matchingCurses.add(curse);
@@ -70,7 +70,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public <T> ArrayList<Curse> cursesOfConsequence(Class<T> clazz) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
         for (Curse curse : CONFIG.activeCurses()) {
-            if (curse.getConsequenceEnum().callbackType.equals(clazz)) {
+            if (curse.getConsequence().callbackType.equals(clazz)) {
                 matchingCurses.add(curse);
             }
         }
@@ -81,7 +81,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public int damage(ItemStack stack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
         int maxDamage = 0;
         for (Curse curse : cursesOfConsequence(CustomDamageHandler.class)) {
-            int newDamage = ((CustomDamageHandler) curse.getConsequenceEnum().callback).damage(stack, amount, entity, breakCallback);
+            int newDamage = ((CustomDamageHandler) curse.getConsequence().callback).damage(stack, amount, entity, breakCallback);
             if (newDamage > maxDamage) {
                 maxDamage = newDamage;
             }
@@ -110,7 +110,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         Utils.log("Making a new random curse.", LogLevel.INFO);
         return new Curse(
                 consequenceEnums[MysticalServer.getRANDOM().nextInt(0, consequenceEnums.length)],
-                removalConditionEnums[MysticalServer.getRANDOM().nextInt(0, removalConditionEnums.length)].removalCondition
+                removalConditionEnums[MysticalServer.getRANDOM().nextInt(0, removalConditionEnums.length)]
         );
     }
 
@@ -127,14 +127,14 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     @Override
     public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
         for (Curse curse : cursesOfConsequence(ServerEntityEvents.EquipmentChange.class)) {
-            ((ServerEntityEvents.EquipmentChange) curse.getConsequenceEnum().callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
+            ((ServerEntityEvents.EquipmentChange) curse.getConsequence().callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
         }
     }
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
         for (Curse curse : cursesOfConsequence(EntitySleepEvents.StartSleeping.class)) {
-            ((EntitySleepEvents.StartSleeping) curse.getConsequenceEnum().callback).onStartSleeping(entity, sleepingPos);
+            ((EntitySleepEvents.StartSleeping) curse.getConsequence().callback).onStartSleeping(entity, sleepingPos);
         }
     }
 
@@ -142,7 +142,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
         // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
         for (Curse curse : cursesOfConditions(stat)) {
-            curse.removalCondition.fulfill(amount);
+            curse.getRemovalCondition().fulfill(amount);
         }
     }
 
@@ -153,7 +153,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     private void removeFulfilledCurses() {
         ArrayList<Curse> activeCurses = CONFIG.activeCurses();
         // CREDIT https://stackoverflow.com/a/1196612, then IntelliJ being like hey do this instead
-        CONFIG.activeCurses().removeIf(curse -> curse.removalCondition.isFulfilled());
+        CONFIG.activeCurses().removeIf(curse -> curse.getRemovalCondition().isFulfilled());
         CONFIG.activeCurses(activeCurses);
     }
 }
