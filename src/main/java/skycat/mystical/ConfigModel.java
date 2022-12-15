@@ -14,7 +14,6 @@ public class ConfigModel {
     public ArrayList<Curse> activeCurses = new ArrayList<>();
     public boolean removeDisabledCurses = true; // Not implemented
 
-    // TODO Curse toggles
     @SectionHeader("Curses")
     @Nest
     public DamageEquipmentOnChangeCurse damageEquipmentOnChangeCurse = new DamageEquipmentOnChangeCurse();

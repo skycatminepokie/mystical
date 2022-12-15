@@ -23,8 +23,8 @@ import java.util.function.Consumer;
 import static skycat.mystical.MysticalServer.CONFIG;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
-    CurseConsequences[] consequences = CurseConsequences.values();
-    CurseRemovalConditions[] removalConditions = CurseRemovalConditions.values();
+    CurseConsequences[] consequenceEnums = CurseConsequences.values();
+    CurseRemovalConditions[] removalConditionEnums = CurseRemovalConditions.values();
 
     public CurseHandler() {
     }
@@ -38,7 +38,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     @Override
     public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         for (Curse curse : cursesOfConsequence(PlayerBlockBreakEvents.Before.class)) {
-            boolean cancel = !((PlayerBlockBreakEvents.Before) curse.consequence.callback).beforeBlockBreak(world, player, pos, state, blockEntity);
+            boolean cancel = !((PlayerBlockBreakEvents.Before) curse.getConsequenceEnum().callback).beforeBlockBreak(world, player, pos, state, blockEntity);
             if (cancel) {
                 return false;
             }
@@ -70,7 +70,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public <T> ArrayList<Curse> cursesOfConsequence(Class<T> clazz) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
         for (Curse curse : CONFIG.activeCurses()) {
-            if (curse.consequence.callbackType.equals(clazz)) {
+            if (curse.getConsequenceEnum().callbackType.equals(clazz)) {
                 matchingCurses.add(curse);
             }
         }
@@ -81,7 +81,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public int damage(ItemStack stack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
         int maxDamage = 0;
         for (Curse curse : cursesOfConsequence(CustomDamageHandler.class)) {
-            int newDamage = ((CustomDamageHandler) curse.consequence.callback).damage(stack, amount, entity, breakCallback);
+            int newDamage = ((CustomDamageHandler) curse.getConsequenceEnum().callback).damage(stack, amount, entity, breakCallback);
             if (newDamage > maxDamage) {
                 maxDamage = newDamage;
             }
@@ -99,18 +99,18 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
      * @return A new curse
      */
     private Curse makeNewCurse() {
-        if (removalConditions.length == 0) { // Ideally, this should not be reachable without editing the pool manually.
+        if (removalConditionEnums.length == 0) { // Ideally, this should not be reachable without editing the pool manually.
             Utils.log("Tried to make a new curse, but the size of the removal condition pool was 0.", LogLevel.WARN);
             return null;
         }
-        if (consequences.length == 0) { // Ideally, this should not be reachable without editing the pool manually.
+        if (consequenceEnums.length == 0) { // Ideally, this should not be reachable without editing the pool manually.
             Utils.log("Tried to make a new curse, but the size of the consequences pool was 0.", LogLevel.WARN);
             return null;
         }
         Utils.log("Making a new random curse.", LogLevel.INFO);
         return new Curse(
-                consequences[MysticalServer.getRANDOM().nextInt(0, consequences.length)].consequence,
-                removalConditions[MysticalServer.getRANDOM().nextInt(0, removalConditions.length)].removalCondition
+                consequenceEnums[MysticalServer.getRANDOM().nextInt(0, consequenceEnums.length)],
+                removalConditionEnums[MysticalServer.getRANDOM().nextInt(0, removalConditionEnums.length)].removalCondition
         );
     }
 
@@ -127,14 +127,14 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     @Override
     public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
         for (Curse curse : cursesOfConsequence(ServerEntityEvents.EquipmentChange.class)) {
-            ((ServerEntityEvents.EquipmentChange) curse.consequence.callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
+            ((ServerEntityEvents.EquipmentChange) curse.getConsequenceEnum().callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
         }
     }
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
         for (Curse curse : cursesOfConsequence(EntitySleepEvents.StartSleeping.class)) {
-            ((EntitySleepEvents.StartSleeping) curse.consequence.callback).onStartSleeping(entity, sleepingPos);
+            ((EntitySleepEvents.StartSleeping) curse.getConsequenceEnum().callback).onStartSleeping(entity, sleepingPos);
         }
     }
 

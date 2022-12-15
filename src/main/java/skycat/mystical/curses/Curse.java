@@ -1,13 +1,18 @@
 package skycat.mystical.curses;
 
 public class Curse {
-    public CurseConsequence consequence;
+    private final CurseConsequences consequenceEnum;
     public CurseRemovalCondition removalCondition;
     boolean enabled;
 
-    public Curse(@SuppressWarnings("rawtypes") CurseConsequence consequence, CurseRemovalCondition removalCondition) {
-        this.consequence = consequence;
+    public Curse(CurseConsequences consequenceEnum, CurseRemovalCondition removalCondition) {
+        this.consequenceEnum = consequenceEnum;
         this.removalCondition = removalCondition;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public CurseConsequence getConsequenceEnum() {
+        return consequenceEnum.consequence;
     }
 
     public void disable() {
@@ -17,4 +22,5 @@ public class Curse {
     public void enable(){
         enabled = true;
     }
+
 }
