@@ -19,16 +19,16 @@ import java.util.Random;
 
 @Getter
 public class MysticalServer implements DedicatedServerModInitializer {
-    public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
-    public static final Gson GSON = new GsonBuilder()
+    @Getter public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
+    @Getter public static final Gson GSON = new GsonBuilder()
             .setVersion(0.1)
             .registerTypeAdapter(Block.class, new BlockSerializer())
             .create();
-    public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
-    public static final Random RANDOM = new Random();
-    public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // WARN: Probably not a great way to do this
-    public static final skycat.mystical.MysticalConfig CONFIG = skycat.mystical.MysticalConfig.createAndLoad();
-    public static final CurseHandler CURSE_HANDLER = new CurseHandler();
+    @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
+    @Getter public static final Random RANDOM = new Random();
+    @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // WARN: Probably not a great way to do this
+    @Getter public static final skycat.mystical.MysticalConfig CONFIG = skycat.mystical.MysticalConfig.createAndLoad();
+    @Getter public static final CurseHandler CURSE_HANDLER = new CurseHandler();
 
     @Override
     public void onInitializeServer() {
