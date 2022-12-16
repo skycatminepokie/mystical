@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
+import skycat.mystical.util.Utils;
 
 import static skycat.mystical.MysticalServer.CONFIG;
 
@@ -33,6 +34,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void onServerStopping(MinecraftServer server) {
+        // CONFIG.activeCurses(null); // STOPSHIP
         CONFIG.save();
     }
 

@@ -1,20 +1,38 @@
 package skycat.mystical.curses;
 
 public class Curse {
-    public CurseConsequence consequence;
-    public CurseRemovalCondition removalCondition;
+    private final CurseConsequenceEnum consequenceEnum;
+    private final CurseRemovalConditionEnum removalConditionEnum;
     boolean enabled;
 
-    public Curse(@SuppressWarnings("rawtypes") CurseConsequence consequence, CurseRemovalCondition removalCondition) {
-        this.consequence = consequence;
-        this.removalCondition = removalCondition;
+    public Curse(CurseConsequenceEnum consequenceEnum, CurseRemovalConditionEnum removalConditionEnum) {
+        this.consequenceEnum = consequenceEnum;
+        this.removalConditionEnum = removalConditionEnum;
     }
 
     public void disable() {
         enabled = false;
     }
 
-    public void enable(){
+    public void enable() {
         enabled = true;
     }
+
+    @SuppressWarnings("rawtypes")
+    public CurseConsequence getConsequence() {
+        return CurseConsequenceEnum.lookup(consequenceEnum);
+    }
+
+    public CurseConsequenceEnum getConsequenceEnum() {
+        return consequenceEnum;
+    }
+
+    public CurseRemovalCondition getRemovalCondition() {
+        return CurseRemovalConditionEnum.lookup(removalConditionEnum);
+    }
+
+    public CurseRemovalConditionEnum getRemovalConditionEnum() {
+        return removalConditionEnum;
+    }
+
 }

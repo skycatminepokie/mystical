@@ -5,40 +5,40 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.item.v1.CustomDamageHandler;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
-import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.LogLevel;
 import skycat.mystical.MysticalServer;
-import skycat.mystical.Utils;
+import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.function.Consumer;
 
 import static skycat.mystical.MysticalServer.CONFIG;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
-    @SuppressWarnings("rawtypes") ArrayList<CurseConsequence> consequences = new ArrayList<>();
-    ArrayList<CurseRemovalCondition> removalConditions = new ArrayList<>();
+    CurseConsequenceEnum[] consequenceEnums = CurseConsequenceEnum.values();
+    CurseRemovalConditionEnum[] removalConditionEnums = CurseRemovalConditionEnum.values();
 
     public CurseHandler() {
-        initializeConsequences();
-        initializeRemovalConditions();
+    }
+
+    public void activateNewCurse() {
+        ArrayList<Curse> newCurses = CONFIG.activeCurses();
+        newCurses.add(makeNewCurse());
+        CONFIG.activeCurses(newCurses);
     }
 
     @Override
     public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         for (Curse curse : cursesOfConsequence(PlayerBlockBreakEvents.Before.class)) {
-            boolean cancel = !((PlayerBlockBreakEvents.Before)curse.consequence.callback).beforeBlockBreak(world, player, pos, state, blockEntity);
+            boolean cancel = !((PlayerBlockBreakEvents.Before) curse.getConsequence().callback).beforeBlockBreak(world, player, pos, state, blockEntity);
             if (cancel) {
                 return false;
             }
@@ -46,11 +46,42 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         return true;
     }
 
+    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
+        ArrayList<Curse> matchingCurses = new ArrayList<>();
+        for (Curse curse : CONFIG.activeCurses()) {
+            if (curse.getRemovalCondition().getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
+                TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.getRemovalCondition();
+                if (removalCondition.statType.equals(stat.getType()) && // Same statType, so values are the same class
+                    removalCondition.statValue.equals(stat.getValue())) { // Values are the same (ex Blocks.COBBLESTONE and Blocks.COBBLESTONE)
+                    matchingCurses.add(curse);
+                }
+            }
+        }
+        return matchingCurses;
+    }
+
+    /**
+     * Get active curses with consequences of type clazz
+     *
+     * @param clazz The type of consequence
+     * @param <T>   Consequence type
+     * @return A new ArrayList
+     */
+    public <T> ArrayList<Curse> cursesOfConsequence(Class<T> clazz) {
+        ArrayList<Curse> matchingCurses = new ArrayList<>();
+        for (Curse curse : CONFIG.activeCurses()) {
+            if (curse.getConsequence().callbackType.equals(clazz)) {
+                matchingCurses.add(curse);
+            }
+        }
+        return matchingCurses;
+    }
+
     @Override
     public int damage(ItemStack stack, int amount, LivingEntity entity, Consumer<LivingEntity> breakCallback) {
         int maxDamage = 0;
         for (Curse curse : cursesOfConsequence(CustomDamageHandler.class)) {
-            int newDamage = ((CustomDamageHandler)curse.consequence.callback).damage(stack, amount, entity, breakCallback);
+            int newDamage = ((CustomDamageHandler) curse.getConsequence().callback).damage(stack, amount, entity, breakCallback);
             if (newDamage > maxDamage) {
                 maxDamage = newDamage;
             }
@@ -62,51 +93,48 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         removeFulfilledCurses();
     }
 
-    private void initializeConsequences() {
-        // Pool of consequences goes here
-        Collections.addAll(consequences,
-                new CurseConsequence<ServerEntityEvents.EquipmentChange>( // DamageEquipmentOnChangeCurse
-                        (livingEntity, equipmentSlot, previousStack, currentStack) -> {
-                            if (livingEntity.isPlayer()) {
-                                if (currentStack.getDamage() + CONFIG.damageEquipmentOnChangeCurse.damageAmount() < currentStack.getMaxDamage()) { // Don't break it more than possible TODO: check if this allows going to 0 dmg
-                                    currentStack.damage(CONFIG.damageEquipmentOnChangeCurse.damageAmount(), MysticalServer.MC_RANDOM, null); // Player is null so that stats aren't affected
-                                }
-                            }
-                        }, ServerEntityEvents.EquipmentChange.class),
-                new CurseConsequence<EntitySleepEvents.StartSleeping>( // PreventSleepingCurse
-                        ((entity, sleepingPos) -> {
-                            if (entity.isPlayer()) {
-                                entity.wakeUp();
-                                if (CONFIG.preventSleepingCurse.sendMessageToPlayer()) {
-                                    Utils.sendMessageToPlayer((ServerPlayerEntity) entity, CONFIG.preventSleepingCurse.message(), CONFIG.preventSleepingCurse.actionBar());
-                                }
-                            } else if (!CONFIG.preventSleepingCurse.playersOnly()) {
-                                entity.wakeUp();
-                            }
-                            Utils.log("preventSleepingCurse triggered", CONFIG.preventSleepingCurse.logLevel());
-                        }), EntitySleepEvents.StartSleeping.class)
+    /**
+     * Get a new curse, with consequence and removal condition randomly selected
+     *
+     * @return A new curse
+     */
+    private Curse makeNewCurse() {
+        if (removalConditionEnums.length == 0) { // Ideally, this should not be reachable without editing the pool manually.
+            Utils.log("Tried to make a new curse, but the size of the removal condition pool was 0.", LogLevel.WARN);
+            return null;
+        }
+        if (consequenceEnums.length == 0) { // Ideally, this should not be reachable without editing the pool manually.
+            Utils.log("Tried to make a new curse, but the size of the consequences pool was 0.", LogLevel.WARN);
+            return null;
+        }
+        Utils.log("Making a new random curse.", LogLevel.INFO);
+        return new Curse(
+                consequenceEnums[MysticalServer.getRANDOM().nextInt(0, consequenceEnums.length)],
+                removalConditionEnums[MysticalServer.getRANDOM().nextInt(0, removalConditionEnums.length)]
         );
     }
 
-    private void initializeRemovalConditions() {
-        // Pool of removal conditions goes here
-        Collections.addAll(removalConditions,
-                new TypedRemovalCondition<>(Stats.MINED, Blocks.COBBLESTONE, 10)
-
-        );
+    /**
+     * Get a new curse, targeting a difficulty (consequence difficulty * removal difficulty).
+     *
+     * @param difficultyTarget The desired difficulty of the curse. Likely will not be exact.
+     * @return A new curse
+     */
+    private Curse makeNewCurse(int difficultyTarget) {
+        return null; // TODO
     }
 
     @Override
     public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
         for (Curse curse : cursesOfConsequence(ServerEntityEvents.EquipmentChange.class)) {
-            ((ServerEntityEvents.EquipmentChange)curse.consequence.callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
+            ((ServerEntityEvents.EquipmentChange) curse.getConsequence().callback).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
         }
     }
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
         for (Curse curse : cursesOfConsequence(EntitySleepEvents.StartSleeping.class)) {
-            ((EntitySleepEvents.StartSleeping)curse.consequence.callback).onStartSleeping(entity, sleepingPos);
+            ((EntitySleepEvents.StartSleeping) curse.getConsequence().callback).onStartSleeping(entity, sleepingPos);
         }
     }
 
@@ -114,81 +142,18 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public <T> void onStatIncreased(Stat<T> stat, int amount) {
         // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
         for (Curse curse : cursesOfConditions(stat)) {
-            curse.removalCondition.fulfill(amount);
+            curse.getRemovalCondition().fulfill(amount);
         }
-    }
-
-    private void removeFulfilledCurses() {
-        // CREDIT https://stackoverflow.com/a/1196612, then IntelliJ being like hey do this instead
-        CONFIG.activeCurses().removeIf(curse -> curse.removalCondition.isFulfilled());
-    }
-
-    /**
-     * Get active curses with consequences of type clazz
-     * @return A new ArrayList
-     * @param clazz The type of consequence
-     * @param <T> Consequence type
-     */
-    public <T> ArrayList<Curse> cursesOfConsequence(Class<T> clazz) {
-        ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : CONFIG.activeCurses()) {
-            if (curse.consequence.callbackType.equals(clazz)) {
-                matchingCurses.add(curse);
-            }
-        }
-        return matchingCurses;
-    }
-
-    public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
-        ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : CONFIG.activeCurses()) {
-            if (curse.removalCondition.getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
-                TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.removalCondition;
-                if (removalCondition.statType.equals(stat.getType()) && // Same statType, so values are the same class
-                                removalCondition.statValue.equals(stat.getValue())) { // Values are the same (ex Blocks.COBBLESTONE and Blocks.COBBLESTONE)
-                    matchingCurses.add(curse);
-                }
-            }
-        }
-        return matchingCurses;
-    }
-
-    public void activateNewCurse() {
-        ArrayList<Curse> newCurses = CONFIG.activeCurses();
-        newCurses.add(makeNewCurse());
-        CONFIG.activeCurses(newCurses);
     }
 
     public int removeDisabledCurses() {
         return 0; // TODO
     }
 
-    /**
-     * Get a new curse, with consequence and removal condition randomly selected
-     * @return A new curse
-     */
-    private Curse makeNewCurse() {
-        if (removalConditions.size() == 0) { // Ideally, this should not be reachable without editing the pool manually.
-            Utils.log("Tried to make a new curse, but the size of the removal condition pool was 0.", LogLevel.WARN);
-            return null;
-        }
-        if (consequences.size() == 0) { // Ideally, this should not be reachable without editing the pool manually.
-            Utils.log("Tried to make a new curse, but the size of the consequences pool was 0.", LogLevel.WARN);
-            return null;
-        }
-        Utils.log("Making a new random curse.", LogLevel.INFO);
-        return new Curse(
-          consequences.get(MysticalServer.getRANDOM().nextInt(0, consequences.size())),
-          removalConditions.get(MysticalServer.getRANDOM().nextInt(0, removalConditions.size()))
-        );
-    }
-
-    /**
-     * Get a new curse, targeting a difficulty (consequence difficulty * removal difficulty).
-     * @param difficultyTarget The desired difficulty of the curse. Likely will not be exact.
-     * @return A new curse
-     */
-    private Curse makeNewCurse(int difficultyTarget) {
-        return null; // TODO
+    private void removeFulfilledCurses() {
+        ArrayList<Curse> activeCurses = CONFIG.activeCurses();
+        // CREDIT https://stackoverflow.com/a/1196612, then IntelliJ being like hey do this instead
+        CONFIG.activeCurses().removeIf(curse -> curse.getRemovalCondition().isFulfilled());
+        CONFIG.activeCurses(activeCurses);
     }
 }
