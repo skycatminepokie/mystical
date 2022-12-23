@@ -1,10 +1,12 @@
 package skycat.mystical;
 
 import io.wispforest.owo.config.annotation.Config;
+import io.wispforest.owo.config.annotation.Modmenu;
 import io.wispforest.owo.config.annotation.Nest;
 import io.wispforest.owo.config.annotation.SectionHeader;
 
 @SuppressWarnings("unused") // They are used by owo-config
+@Modmenu(modId = "mystical")
 @Config(name = "mysticalConfig", wrapperName = "MysticalConfig")
 public class ConfigModel {
     @SectionHeader("General")
@@ -20,7 +22,6 @@ public class ConfigModel {
 
     @SectionHeader("Logging")
     public LogLevel newSaveFileCreatedLogLevel = LogLevel.INFO; // Not implemented
-    public LogLevel newSettingsFileCreatedLogLevel = LogLevel.INFO; // Not implemented
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN; // Not implemented
     public LogLevel savingLogLevel = LogLevel.INFO; // Not implemented
     public LogLevel timeOfDayAtStartupLogLevel = LogLevel.DEBUG; // Not implemented

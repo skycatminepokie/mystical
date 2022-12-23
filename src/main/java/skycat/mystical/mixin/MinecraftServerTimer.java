@@ -10,7 +10,7 @@ import skycat.mystical.server.MinecraftServerTimerAccess;
 
 import java.util.function.BooleanSupplier;
 
-import static skycat.mystical.MysticalServer.EVENT_HANDLER;
+import static skycat.mystical.Mystical.EVENT_HANDLER;
 
 // CREDIT: Daomephsta#0044 for help on fabric discord (and fabric bot too)
 @Mixin(MinecraftServer.class)

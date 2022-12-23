@@ -5,12 +5,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import skycat.mystical.MysticalServer;
+import skycat.mystical.Mystical;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
     @Inject(method = "wakeSleepingPlayers", at = @At("TAIL"))
     private void onWakeSleepingPlayers(CallbackInfo ci) {
-        MysticalServer.getEVENT_HANDLER().doNighttimeEvents(); // TODO: This is a roundabout fix, but you know...
+        Mystical.getEVENT_HANDLER().doNighttimeEvents(); // TODO: This is a roundabout fix, but you know...
     }
 }

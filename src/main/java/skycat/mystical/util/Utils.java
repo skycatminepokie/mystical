@@ -4,11 +4,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import skycat.mystical.LogLevel;
-import skycat.mystical.MysticalServer;
+import skycat.mystical.Mystical;
 
 public class Utils {
     public static boolean log(String msg) {
-        return log(msg, LogLevel.INFO, MysticalServer.LOGGER);
+        return log(msg, LogLevel.INFO, Mystical.LOGGER);
     }
 
     public static boolean log(String msg, Logger logger) {
@@ -16,7 +16,7 @@ public class Utils {
     }
 
     public static boolean log(String msg, LogLevel level) {
-        return log(msg, level, MysticalServer.LOGGER);
+        return log(msg, level, Mystical.LOGGER);
     }
 
     public static boolean log(String msg, LogLevel level, Logger logger) {

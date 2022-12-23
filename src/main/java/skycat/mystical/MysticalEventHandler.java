@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
 import skycat.mystical.util.Utils;
 
-import static skycat.mystical.MysticalServer.CONFIG;
+import static skycat.mystical.Mystical.CONFIG;
 
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
     @Getter private MinecraftServer server;
@@ -23,7 +23,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void doNighttimeEvents() {
         // TODO: Dispel curses, bring potential new ones
         Utils.log("Doing nighttime stuff");
-        MysticalServer.CURSE_HANDLER.doNighttimeEvents();
+        Mystical.CURSE_HANDLER.doNighttimeEvents();
         try {
             setNightTimer();
         } catch (NullPointerException e) {
@@ -35,7 +35,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     @Override
     public void onServerStopping(MinecraftServer server) {
         CONFIG.save();
-        MysticalServer.CURSE_HANDLER.save();
+        Mystical.CURSE_HANDLER.save();
     }
 
     /**

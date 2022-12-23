@@ -14,7 +14,7 @@ import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.LogLevel;
-import skycat.mystical.MysticalServer;
+import skycat.mystical.Mystical;
 import skycat.mystical.util.Utils;
 
 import java.io.File;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-import static skycat.mystical.MysticalServer.GSON;
+import static skycat.mystical.Mystical.GSON;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
     private static final CurseConsequenceEnum[] consequenceEnums = CurseConsequenceEnum.values();
@@ -130,8 +130,8 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         }
         Utils.log("Making a new random curse.", LogLevel.INFO);
         return new Curse(
-                consequenceEnums[MysticalServer.getRANDOM().nextInt(0, consequenceEnums.length)],
-                removalConditionEnums[MysticalServer.getRANDOM().nextInt(0, removalConditionEnums.length)]
+                consequenceEnums[Mystical.getRANDOM().nextInt(0, consequenceEnums.length)],
+                removalConditionEnums[Mystical.getRANDOM().nextInt(0, removalConditionEnums.length)]
         );
     }
 

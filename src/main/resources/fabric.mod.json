@@ -17,9 +17,9 @@
     "client": [
     ],
     "main": [
+      "skycat.mystical.Mystical"
     ],
     "server": [
-      "skycat.mystical.MysticalServer"
     ]
   },
   "mixins": [

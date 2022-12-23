@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import static skycat.mystical.MysticalServer.GSON;
+import static skycat.mystical.Mystical.GSON;
 
 public class HavenManager {
     public HashSet<ChunkPos> havenedChunks = new HashSet<>();
