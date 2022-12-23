@@ -3,23 +3,20 @@ package skycat.mystical;
 import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.Nest;
 import io.wispforest.owo.config.annotation.SectionHeader;
-import skycat.mystical.curses.Curse;
-
-import java.util.ArrayList;
 
 @SuppressWarnings("unused") // They are used by owo-config
 @Config(name = "mysticalConfig", wrapperName = "MysticalConfig")
 public class ConfigModel {
     @SectionHeader("General")
-    public ArrayList<Curse> activeCurses = new ArrayList<>();
     public boolean removeDisabledCurses = true; // Not implemented
+    public boolean allowDuplicateConsequences = false; // Not implemented
+    public boolean allowDuplicateRemovalConditions = false; // Not implemented
 
     @SectionHeader("Curses")
     @Nest
     public DamageEquipmentOnChangeCurse damageEquipmentOnChangeCurse = new DamageEquipmentOnChangeCurse();
     @Nest
     public PreventSleepingCurse preventSleepingCurse = new PreventSleepingCurse();
-    // @SectionHeader("Cures")
 
     @SectionHeader("Logging")
     public LogLevel newSaveFileCreatedLogLevel = LogLevel.INFO; // Not implemented

@@ -17,22 +17,43 @@ import skycat.mystical.LogLevel;
 import skycat.mystical.MysticalServer;
 import skycat.mystical.util.Utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.function.Consumer;
 
-import static skycat.mystical.MysticalServer.CONFIG;
+import static skycat.mystical.MysticalServer.GSON;
 
 public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
-    CurseConsequenceEnum[] consequenceEnums = CurseConsequenceEnum.values();
-    CurseRemovalConditionEnum[] removalConditionEnums = CurseRemovalConditionEnum.values();
+    private static final CurseConsequenceEnum[] consequenceEnums = CurseConsequenceEnum.values();
+    private static final CurseRemovalConditionEnum[] removalConditionEnums = CurseRemovalConditionEnum.values();
+    private static final File SAVE_FILE = new File("config/curseHandler.json");
+    ArrayList<Curse> activeCurses = new ArrayList<>();
 
     public CurseHandler() {
     }
 
+    public static CurseHandler loadOrNew() {
+        try (Scanner scanner = new Scanner(SAVE_FILE)) {
+            return GSON.fromJson(scanner.nextLine(), CurseHandler.class);
+        } catch (IOException e) {
+            // TODO: Logging
+            return new CurseHandler();
+        }
+    }
+
+    public void save() {
+        try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
+            pw.println(GSON.toJson(this));
+        } catch (IOException e) {
+            // TODO: Logging
+        }
+    }
+
     public void activateNewCurse() {
-        ArrayList<Curse> newCurses = CONFIG.activeCurses();
-        newCurses.add(makeNewCurse());
-        CONFIG.activeCurses(newCurses);
+        activeCurses.add(makeNewCurse());
     }
 
     @Override
@@ -48,7 +69,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     public <T> ArrayList<Curse> cursesOfConditions(Stat<T> stat) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : CONFIG.activeCurses()) {
+        for (Curse curse : activeCurses) {
             if (curse.getRemovalCondition().getClass().equals(TypedRemovalCondition.class)) { // TODO: Identified removal conditions
                 TypedRemovalCondition<?> removalCondition = (TypedRemovalCondition<?>) curse.getRemovalCondition();
                 if (removalCondition.statType.equals(stat.getType()) && // Same statType, so values are the same class
@@ -69,7 +90,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
      */
     public <T> ArrayList<Curse> cursesOfConsequence(Class<T> clazz) {
         ArrayList<Curse> matchingCurses = new ArrayList<>();
-        for (Curse curse : CONFIG.activeCurses()) {
+        for (Curse curse : activeCurses) {
             if (curse.getConsequence().callbackType.equals(clazz)) {
                 matchingCurses.add(curse);
             }
@@ -151,9 +172,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     }
 
     private void removeFulfilledCurses() {
-        ArrayList<Curse> activeCurses = CONFIG.activeCurses();
         // CREDIT https://stackoverflow.com/a/1196612, then IntelliJ being like hey do this instead
-        CONFIG.activeCurses().removeIf(curse -> curse.getRemovalCondition().isFulfilled());
-        CONFIG.activeCurses(activeCurses);
+        activeCurses.removeIf(curse -> curse.getRemovalCondition().isFulfilled());
     }
 }
