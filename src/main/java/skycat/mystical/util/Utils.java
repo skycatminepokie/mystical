@@ -1,5 +1,8 @@
 package skycat.mystical.util;
 
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
@@ -47,6 +50,47 @@ public class Utils {
 
     public static Text textOf(String str) {
         return Text.of(str);
+    }
+
+    /**
+     * Gives a status effect to an entity
+     * @param entity The entity to give the status effect to
+     * @param statusEffect The status effect to give
+     * @param length The length of the effect
+     * @param level The level (amplifier) of the effect.
+     */
+    public static void giveStatusEffect(LivingEntity entity, StatusEffect statusEffect, int length, int level) {
+        entity.addStatusEffect(new StatusEffectInstance(statusEffect, length, level));
+    }
+
+    /**
+     * Gives a status effect to an entity
+     * @param entity The entity to give the status effect to
+     * @param statusEffect The status effect to give
+     * @param length The length of the effect
+     * @param addLength If true and the entity already has the effect, it will extend the effect time by {@code length}
+     *                  If false, the longest length (either new or old) will be kept
+     * @param level The level (amplifier) of the effect.
+     * @param addLevel If true and the entity already has the effect, it will increase the effect level by {@code level}
+     *                 If false, the largest level (either new or old) will be kept
+     */
+    public static void giveStatusEffect(LivingEntity entity, StatusEffect statusEffect, int length, boolean addLength, int level, boolean addLevel) {
+        StatusEffectInstance currentEffect = entity.getStatusEffect(statusEffect);
+        if (currentEffect != null) {
+            int currentEffectLength = currentEffect.getDuration();
+            int currentEffectLevel = currentEffect.getAmplifier();
+            if (addLength) {
+                length += currentEffectLength;
+            } else if (currentEffectLength > length) {
+                length = currentEffectLength;
+            }
+            if (addLevel) {
+                level += currentEffectLevel;
+            } else if (currentEffectLevel > level) {
+                level = currentEffectLevel;
+            }
+        }
+        giveStatusEffect(entity, statusEffect, length, level);
     }
 
 }

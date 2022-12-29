@@ -45,5 +45,15 @@ public class ConfigModel {
         public LogLevel logLevel = LogLevel.OFF;
     }
 
+    public static class LevitateWhenBreakingLogsCurse { // Not implemented
+        public boolean enabled = true;
+        public int duration = 3;
+        public int amplifier = 5;
+        public boolean sendMessageToPlayer = false;
+        public boolean actionBar = true;
+        public String message = "";
+        public LogLevel logLevel = LogLevel.OFF;
+    }
+
 
 }

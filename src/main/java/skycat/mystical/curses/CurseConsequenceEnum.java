@@ -2,7 +2,9 @@ package skycat.mystical.curses;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.tag.BlockTags;
 import skycat.mystical.Mystical;
 import skycat.mystical.util.Utils;
 
@@ -13,7 +15,8 @@ import static skycat.mystical.Mystical.CONFIG;
 @SuppressWarnings("rawtypes")
 public enum CurseConsequenceEnum {
     DAMAGE_EQUIPMENT_ON_CHANGE("DAMAGE_EQUIPMENT_ON_CHANGE"),
-    PREVENT_SLEEPING("PREVENT_SLEEPING");
+    PREVENT_SLEEPING("PREVENT_SLEEPING"),
+    LEVITATE_ON_LOG_BREAK("LEVITATE_ON_LOG_BREAK");
 
     public final String id;
     private static final HashMap<CurseConsequenceEnum, CurseConsequence> lookupMap = new HashMap<>();
@@ -38,6 +41,13 @@ public enum CurseConsequenceEnum {
                     }
                     Utils.log("preventSleepingCurse triggered", CONFIG.preventSleepingCurse.logLevel());
                 }), EntitySleepEvents.StartSleeping.class));
+        lookupMap.put(LEVITATE_ON_LOG_BREAK, new CurseConsequence<PlayerBlockBreakEvents.After>(
+                ((world, player, pos, state, blockEntity) -> {
+                    if (state.isIn(BlockTags.LOGS)) {
+                        // Utils.giveStatusEffect(player); TODO make configurable
+                    }
+                })
+                , PlayerBlockBreakEvents.After.class));
     }
 
     CurseConsequenceEnum(String id) {
