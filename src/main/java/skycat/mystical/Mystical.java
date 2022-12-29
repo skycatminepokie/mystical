@@ -32,11 +32,12 @@ public class Mystical implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
-        ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
         EntitySleepEvents.START_SLEEPING.register(CURSE_HANDLER);
+        PlayerBlockBreakEvents.AFTER.register(CURSE_HANDLER);
         PlayerBlockBreakEvents.BEFORE.register(CURSE_HANDLER);
         ServerEntityEvents.EQUIPMENT_CHANGE.register(CURSE_HANDLER);
+        ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
+        ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
         CURSE_HANDLER.activateNewCurse();
         CURSE_HANDLER.activateNewCurse();
         CURSE_HANDLER.activateNewCurse();

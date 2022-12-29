@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 
 import static skycat.mystical.Mystical.GSON;
 
-public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler {
+public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.Before, ServerEntityEvents.EquipmentChange, CustomDamageHandler, PlayerBlockBreakEvents.After {
     private static final CurseConsequenceEnum[] consequenceEnums = CurseConsequenceEnum.values();
     private static final CurseRemovalConditionEnum[] removalConditionEnums = CurseRemovalConditionEnum.values();
     private static final File SAVE_FILE = new File("config/curseHandler.json");
@@ -42,6 +42,11 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
             // TODO: Logging
             return new CurseHandler();
         }
+    }
+
+    @Override
+    public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        cursesOfConsequence(PlayerBlockBreakEvents.Before.class).forEach(curse -> ((PlayerBlockBreakEvents.Before) curse.getConsequence().callback).beforeBlockBreak(world, player, pos, state, blockEntity));
     }
 
     public void save() {
