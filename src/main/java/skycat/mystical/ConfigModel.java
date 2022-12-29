@@ -19,6 +19,8 @@ public class ConfigModel {
     public DamageEquipmentOnChangeCurse damageEquipmentOnChangeCurse = new DamageEquipmentOnChangeCurse();
     @Nest
     public PreventSleepingCurse preventSleepingCurse = new PreventSleepingCurse();
+    @Nest
+    public LevitateWhenBreakingLogsCurse logBreakCurse = new LevitateWhenBreakingLogsCurse();
 
     @SectionHeader("Logging")
     public LogLevel newSaveFileCreatedLogLevel = LogLevel.INFO; // Not implemented
@@ -45,10 +47,12 @@ public class ConfigModel {
         public LogLevel logLevel = LogLevel.OFF;
     }
 
-    public static class LevitateWhenBreakingLogsCurse { // Not implemented
+    public static class LevitateWhenBreakingLogsCurse {
         public boolean enabled = true;
         public int duration = 3;
+        public boolean addDuration = true;
         public int amplifier = 5;
+        public boolean addAmplifier = false;
         public boolean sendMessageToPlayer = false;
         public boolean actionBar = true;
         public String message = "";

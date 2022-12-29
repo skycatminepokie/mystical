@@ -3,6 +3,7 @@ package skycat.mystical.curses;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.BlockTags;
 import skycat.mystical.Mystical;
@@ -44,7 +45,11 @@ public enum CurseConsequenceEnum {
         lookupMap.put(LEVITATE_ON_LOG_BREAK, new CurseConsequence<PlayerBlockBreakEvents.After>(
                 ((world, player, pos, state, blockEntity) -> {
                     if (state.isIn(BlockTags.LOGS)) {
-                        // Utils.giveStatusEffect(player); TODO make configurable
+                        Utils.giveStatusEffect(player, StatusEffects.LEVITATION, CONFIG.logBreakCurse.duration(), CONFIG.logBreakCurse.addDuration(), CONFIG.logBreakCurse.amplifier(), CONFIG.logBreakCurse.addAmplifier());
+                        if (CONFIG.logBreakCurse.sendMessageToPlayer()) {
+                            Utils.sendMessageToPlayer(player, CONFIG.logBreakCurse.message(), CONFIG.logBreakCurse.actionBar());
+                        }
+                        Utils.log(player.getName().getString() + " has broken a log and is now levitating.", CONFIG.logBreakCurse.logLevel());
                     }
                 })
                 , PlayerBlockBreakEvents.After.class));

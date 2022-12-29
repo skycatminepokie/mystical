@@ -3,7 +3,7 @@ package skycat.mystical.util;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import skycat.mystical.LogLevel;
@@ -32,19 +32,19 @@ public class Utils {
         }
     }
 
-    public static void sendMessageToPlayer(ServerPlayerEntity player, String msg) {
+    public static void sendMessageToPlayer(PlayerEntity player, String msg) {
         sendMessageToPlayer(player, textOf(msg)); // Converts String to Text
     }
 
-    public static void sendMessageToPlayer(ServerPlayerEntity player, String msg, boolean actionBar) {
+    public static void sendMessageToPlayer(PlayerEntity player, String msg, boolean actionBar) {
         sendMessageToPlayer(player, textOf(msg), actionBar); // Converts String to Text
     }
 
-    public static void sendMessageToPlayer(ServerPlayerEntity player, Text msg) {
+    public static void sendMessageToPlayer(PlayerEntity player, Text msg) {
         sendMessageToPlayer(player, msg, false); // Assumes actionBar = false
     }
 
-    public static void sendMessageToPlayer(ServerPlayerEntity player, Text msg, boolean actionBar) {
+    public static void sendMessageToPlayer(PlayerEntity player, Text msg, boolean actionBar) {
         player.sendMessage(msg, actionBar);
     }
 
