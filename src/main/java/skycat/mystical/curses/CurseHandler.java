@@ -46,7 +46,7 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
 
     @Override
     public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        cursesOfConsequence(PlayerBlockBreakEvents.Before.class).forEach(curse -> ((PlayerBlockBreakEvents.Before) curse.getConsequence().callback).beforeBlockBreak(world, player, pos, state, blockEntity));
+        cursesOfConsequence(PlayerBlockBreakEvents.After.class).forEach(curse -> ((PlayerBlockBreakEvents.After) curse.getConsequence().callback).afterBlockBreak(world, player, pos, state, blockEntity));
     }
 
     public void save() {
