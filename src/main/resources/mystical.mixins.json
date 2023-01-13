@@ -4,6 +4,7 @@
   "package": "skycat.mystical.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CreeperEntityMixin",
     "MinecraftServerTimer",
     "ServerWorldMixin",
     "StatHandlerMixin"

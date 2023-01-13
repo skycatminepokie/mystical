@@ -49,6 +49,12 @@ public class CurseHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
         cursesOfConsequence(PlayerBlockBreakEvents.After.class).forEach(curse -> ((PlayerBlockBreakEvents.After) curse.getConsequence().callback).afterBlockBreak(world, player, pos, state, blockEntity));
     }
 
+    public int getCreeperExplosionRadius() {
+        int radius = -1; // -1 means "leave unchanged"
+        // TODO
+        return radius;
+    }
+
     public void save() {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
