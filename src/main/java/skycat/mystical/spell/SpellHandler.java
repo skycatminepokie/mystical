@@ -1,8 +1,10 @@
 package skycat.mystical.spell;
 
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.stat.Stat;
-import skycat.mystical.curses.CurseHandler;
+import net.minecraft.util.math.BlockPos;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,16 +14,23 @@ import java.util.Scanner;
 
 import static skycat.mystical.Mystical.GSON;
 
-public class SpellHandler {
+public class SpellHandler implements EntitySleepEvents.StartSleeping {
     private static final File SAVE_FILE = new File("config/spellHandler.json");
     private final ArrayList<Spell> activeSpells = new ArrayList<>();
 
-    public static CurseHandler loadOrNew() {
+    public static SpellHandler loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
-            return GSON.fromJson(scanner.nextLine(), CurseHandler.class);
+            return GSON.fromJson(scanner.nextLine(), SpellHandler.class);
         } catch (IOException e) {
             // TODO: Logging
-            return new CurseHandler();
+            return new SpellHandler();
+        }
+    }
+
+    @Override
+    public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
+        for (Spell spell : spellsOfHandler(EntitySleepEvents.StartSleeping.class)) {
+            ((EntitySleepEvents.StartSleeping) spell.getConsequence()).onStartSleeping(entity, sleepingPos);
         }
     }
 
@@ -34,7 +43,7 @@ public class SpellHandler {
     }
 
     public void activateNewSpell() {
-        // TODO
+        activeSpells.add(SpellGenerator.get());
     }
 
     /**
@@ -46,7 +55,7 @@ public class SpellHandler {
     public <T> ArrayList<Spell> spellsOfHandler(Class<T> clazz) {
         ArrayList<Spell> results = new ArrayList<>();
         for (Spell spell : activeSpells) {
-            if (spell.getClass().equals(clazz)) {
+            if (spell.getEventClass().equals(clazz)) {
                 results.add(spell);
             }
         }

@@ -2,6 +2,7 @@ package skycat.mystical.spell;
 
 import lombok.Getter;
 import lombok.Setter;
+import skycat.mystical.util.EventCallbackEnum;
 
 @Getter @Setter
 public class Spell {
@@ -12,6 +13,16 @@ public class Spell {
      * many events, but {@code eventClass} is the event
      * that it is used for in this instance.
      */
-    private Class<?> eventClass;
+    private EventCallbackEnum callbackType;
     private SpellCure cure;
+
+    public Class<?> getEventClass() {
+        return callbackType.getClazz();
+    }
+
+    public Spell(SpellConsequence consequence, EventCallbackEnum callbackType, SpellCure cure) {
+        this.consequence = consequence;
+        this.callbackType = callbackType;
+        this.cure = cure;
+    }
 }

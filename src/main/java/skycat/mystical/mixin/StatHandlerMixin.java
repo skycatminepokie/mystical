@@ -13,6 +13,6 @@ import skycat.mystical.Mystical;
 public class StatHandlerMixin {
     @Inject(method = "increaseStat", at = @At("HEAD"))
     public void statIncreased(PlayerEntity player, Stat<?> stat, int value, CallbackInfo ci) {
-        Mystical.CURSE_HANDLER.onStatIncreased(stat, value);
+        Mystical.SPELL_HANDLER.onStatIncreased(player, stat, value);
     }
 }
