@@ -1,42 +1,25 @@
 package skycat.mystical.spell;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import lombok.Value;
+import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Getter @Setter
 public class SpellCure {
 
     private double contributionGoal;
+    private ArrayList<CureContribution> contributions = new ArrayList<>();
 
-
-    @Value
-    public static class CureContribution {
-        UUID contributor;
-        LocalDateTime time;
-        double amount;
-
-
-        public CureContribution(@NonNull UUID contributor, @NonNull LocalDateTime time, double amount) {
-            this.contributor = contributor;
-            this.time = time;
-            this.amount = amount;
-        }
-
-        public CureContribution(@NonNull LocalDateTime time, double amount) {
-            this.contributor = null;
-            this.time = time;
-            this.amount = amount;
-        }
-
-        public CureContribution(@NonNull UUID contributor, double amount) {
-            this.contributor = contributor;
-            this.time = null;
-            this.amount = amount;
-        }
+    public void contribute(@Nullable UUID uuid, double amount) {
+        contributions.add(new CureContribution(uuid, LocalDateTime.now(), amount));
+        // TODO: Logging
     }
+
+    @ToString
+    public record CureContribution(@Nullable UUID contributor, @Nullable LocalDateTime time, double amount) { }
 }

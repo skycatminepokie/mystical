@@ -1,5 +1,7 @@
 package skycat.mystical.spell;
 
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.stat.Stat;
 import skycat.mystical.curses.CurseHandler;
 
 import java.io.File;
@@ -35,5 +37,38 @@ public class SpellHandler {
         // TODO
     }
 
+    /**
+     * Get all active spells that are using a specified handler
+     * @param clazz The event handler to search for
+     * @return An ArrayList of spells that have matching consequences
+     * @param <T>
+     */
+    public <T> ArrayList<Spell> spellsOfHandler(Class<T> clazz) {
+        ArrayList<Spell> results = new ArrayList<>();
+        for (Spell spell : activeSpells) {
+            if (spell.getClass().equals(clazz)) {
+                results.add(spell);
+            }
+        }
+        return results;
+    }
 
+    public <T> ArrayList<Spell> spellsOfStatCure(Stat<T> stat) {
+        ArrayList<Spell> results = new ArrayList<>();
+        for (Spell spell : activeSpells) {
+            if (spell.getCure() instanceof StatBackedSpellCure<?> backedSpellCure) {
+                if (backedSpellCure.getStatType().equals(stat.getType()) && backedSpellCure.getStat().equals(stat.getValue())) {
+                    results.add(spell);
+                }
+            }
+        }
+        return results;
+    }
+
+    public <T> void onStatIncreased(PlayerEntity player, Stat<T> stat, int amount) {
+        // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
+        for (Spell spell : spellsOfStatCure(stat)) {
+            spell.getCure().contribute(player.getUuid(), amount);
+        }
+    }
 }
