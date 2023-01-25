@@ -6,7 +6,7 @@ import net.minecraft.stat.StatType;
 
 @Getter
 public class StatBackedSpellCure<T> extends SpellCure {
-    private final Stat<T> stat; // Ex Stats.MINED.getOrCreateStat(Blocks.Cactus); // TODO Serializer
+    private final Stat<T> stat;
 
     public StatBackedSpellCure(double contributionGoal, Stat<T> stat) {
         super(contributionGoal);
