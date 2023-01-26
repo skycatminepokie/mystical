@@ -66,7 +66,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping {
         ArrayList<Spell> results = new ArrayList<>();
         for (Spell spell : activeSpells) {
             if (spell.getCure() instanceof StatBackedSpellCure backedSpellCure) {
-                if (backedSpellCure.getStatType().equals(stat.getType()) && backedSpellCure.getStat().equals(stat.getValue())) {
+                if (backedSpellCure.getStatType().equals(stat.getType()) && backedSpellCure.getStat().getValue().equals(stat.getValue())) {
                     results.add(spell);
                 }
             }
@@ -74,7 +74,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping {
         return results;
     }
 
-    public <T> void onStatIncreased(PlayerEntity player, Stat<T> stat, int amount) {
+    public <T> void onStatIncreased(PlayerEntity player, Stat<T> stat, int amount) { // TODO: This don't work
         // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
         for (Spell spell : spellsOfStatCure(stat)) {
             spell.getCure().contribute(player.getUuid(), amount);
