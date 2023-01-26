@@ -65,7 +65,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping {
     public <T> ArrayList<Spell> spellsOfStatCure(Stat<T> stat) {
         ArrayList<Spell> results = new ArrayList<>();
         for (Spell spell : activeSpells) {
-            if (spell.getCure() instanceof StatBackedSpellCure<?> backedSpellCure) {
+            if (spell.getCure() instanceof StatBackedSpellCure backedSpellCure) {
                 if (backedSpellCure.getStatType().equals(stat.getType()) && backedSpellCure.getStat().equals(stat.getValue())) {
                     results.add(spell);
                 }
