@@ -14,6 +14,9 @@ import java.util.HashMap;
 
 
 public class StatSerializer implements JsonSerializer<Stat<?>>, JsonDeserializer<Stat<?>> {
+    // A somewhat weird way of figuring out what kind of objects are supported by each stat
+    // Probably doesn't work for EntityTypes.
+    // Adapted from Stats.java
     private static final HashMap<StatType, Class> keyClassLookup = new HashMap<>();
     static {
         keyClassLookup.put(Stats.MINED, Block.class);
@@ -29,25 +32,19 @@ public class StatSerializer implements JsonSerializer<Stat<?>>, JsonDeserializer
 
     @Override
     public Stat<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        StatType<?> type = context.deserialize(json.getAsJsonObject().get("type"), StatType.class); // Figure out the type
-        return (type.getOrCreateStat(context.deserialize(json.getAsJsonObject().get("value"), keyClassLookup.get(type)))); // Figure out the stat
-                 // Get the stat from the StatType
+        StatType<?> type = context.deserialize(json.getAsJsonObject().get("type"), StatType.class); // Figure out the stat type
+        return (type.getOrCreateStat(context.deserialize(json.getAsJsonObject().get("value"), keyClassLookup.get(type)))); // Figure out the stat value
     }
 
     @Override
     public JsonElement serialize(Stat<?> src, Type typeOfSrc, JsonSerializationContext context) {
-        Utils.log("Serializing stat.");
-        Utils.log("src: " + src.toString());
-        Utils.log("src.getType(): " + src.getType().toString());
-        Utils.log("src.getValue(): " + src.getValue().toString());
         JsonObject object = new JsonObject();
-        // Deserialize: Registry.STAT_TYPE.get(new Identifier(stattypeid)) // Stats.MINED
         object.add("type", context.serialize(src.getType(), StatType.class));
         // https://stackoverflow.com/questions/4584541/check-if-a-class-object-is-subclass-of-another-class-object-in-java
         // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html#isAssignableFrom(java.lang.Class)
         Class<?> valueClass = src.getValue().getClass();
         Class<?> assignTo;
-        if (Block.class.isAssignableFrom(valueClass)) {
+        if (Block.class.isAssignableFrom(valueClass)) { // Figure out what class we want to serialize as
             assignTo = Block.class;
         } else if (Item.class.isAssignableFrom(valueClass)) {
             assignTo = Item.class;
@@ -60,10 +57,6 @@ public class StatSerializer implements JsonSerializer<Stat<?>>, JsonDeserializer
         }
 
         object.add("value", context.serialize(src.getValue(), assignTo));
-        // object.add("value", context.serialize(src.getValue(), src.getValue().getClass()));
-
-        // object.add("value", new JsonPrimitive("testval"));
-
         return object;
 
     }
