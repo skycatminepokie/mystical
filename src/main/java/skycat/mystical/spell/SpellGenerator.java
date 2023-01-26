@@ -10,7 +10,7 @@ public class SpellGenerator {
         return new Spell(
                 new KillOnSleepConsequence(),
                 EventCallbackEnum.START_SLEEPING,
-                new StatBackedSpellCure<>(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))
+                new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))
         );
     }
 }
