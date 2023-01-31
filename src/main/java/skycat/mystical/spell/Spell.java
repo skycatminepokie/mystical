@@ -2,6 +2,8 @@ package skycat.mystical.spell;
 
 import lombok.Getter;
 import lombok.Setter;
+import skycat.mystical.spell.consequence.SpellConsequence;
+import skycat.mystical.spell.cure.SpellCure;
 import skycat.mystical.util.EventCallbackEnum;
 
 @Getter @Setter

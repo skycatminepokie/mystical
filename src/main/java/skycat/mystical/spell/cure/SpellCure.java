@@ -1,10 +1,11 @@
-package skycat.mystical.spell;
+package skycat.mystical.spell.cure;
 
+import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
-import skycat.mystical.util.SpellCureType;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -27,4 +28,17 @@ public abstract class SpellCure {
     }
 
     public record CureContribution(@Nullable UUID contributor, @Nullable LocalDateTime time, double amount) { }
+
+    public static class Serializer implements JsonSerializer<SpellCure>, JsonDeserializer<SpellCure> {
+        @Override
+        public SpellCure deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            SpellCureType cureType = context.deserialize(json.getAsJsonObject().get("cureType"), SpellCureType.class);
+            return context.deserialize(json, cureType.clazz);
+        }
+
+        @Override
+        public JsonElement serialize(SpellCure src, Type typeOfSrc, JsonSerializationContext context) {
+            return context.serialize(src, src.getCureType().clazz);
+        }
+    }
 }

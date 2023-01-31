@@ -14,10 +14,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import skycat.mystical.spell.SpellConsequence;
-import skycat.mystical.spell.SpellCure;
 import skycat.mystical.spell.SpellHandler;
-import skycat.mystical.util.*;
+import skycat.mystical.spell.consequence.SpellConsequence;
+import skycat.mystical.spell.cure.SpellCure;
+import skycat.mystical.util.BlockSerializer;
+import skycat.mystical.util.LocalDateTimeSerializer;
+import skycat.mystical.util.StatSerializer;
+import skycat.mystical.util.StatTypeSerializer;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -34,8 +37,8 @@ public class Mystical implements ModInitializer {
             .registerTypeAdapter(StatType.class, new StatTypeSerializer())
             .registerTypeAdapter(Stat.class, new StatSerializer())
             .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
-            .registerTypeAdapter(SpellCure.class, new SpellCureSerializer())
-            .registerTypeAdapter(SpellConsequence.class, new SpellConsequenceSerializer())
+            .registerTypeAdapter(SpellCure.class, new SpellCure.Serializer())
+            .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
@@ -48,6 +51,6 @@ public class Mystical implements ModInitializer {
         EntitySleepEvents.START_SLEEPING.register(SPELL_HANDLER);
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
-        SPELL_HANDLER.activateNewSpell(); // WARN: This is for debug
+        SPELL_HANDLER.activateNewSpell(); // STOPSHIP: This is for debug only
     }
 }

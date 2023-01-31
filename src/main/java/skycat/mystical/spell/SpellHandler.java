@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
+import skycat.mystical.spell.cure.StatBackedSpellCure;
 
 import java.io.File;
 import java.io.IOException;

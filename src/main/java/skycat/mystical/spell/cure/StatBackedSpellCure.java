@@ -1,9 +1,8 @@
-package skycat.mystical.spell;
+package skycat.mystical.spell.cure;
 
 import lombok.Getter;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
-import skycat.mystical.util.SpellCureType;
 
 @Getter
 public class StatBackedSpellCure extends SpellCure {
