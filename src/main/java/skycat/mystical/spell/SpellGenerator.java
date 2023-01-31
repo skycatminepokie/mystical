@@ -2,6 +2,8 @@ package skycat.mystical.spell;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.stat.Stats;
+import skycat.mystical.spell.consequence.KillOnSleepConsequence;
+import skycat.mystical.spell.cure.StatBackedSpellCure;
 import skycat.mystical.util.EventCallbackEnum;
 
 public class SpellGenerator {

@@ -1,7 +1,4 @@
-package skycat.mystical.util;
-
-import skycat.mystical.spell.KillOnSleepConsequence;
-import skycat.mystical.spell.SpellConsequence;
+package skycat.mystical.spell.consequence;
 
 public enum SpellConsequenceType {
     KILL_ON_SLEEP(KillOnSleepConsequence.class);
