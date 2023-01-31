@@ -74,7 +74,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping {
         return results;
     }
 
-    public <T> void onStatIncreased(PlayerEntity player, Stat<T> stat, int amount) { // TODO: This don't work
+    public <T> void onStatIncreased(PlayerEntity player, Stat<T> stat, int amount) {
         // Utils.log("stat increased: " + stat.getName() + " amount: " + amount);
         for (Spell spell : spellsOfStatCure(stat)) {
             spell.getCure().contribute(player.getUuid(), amount);

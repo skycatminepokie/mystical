@@ -17,7 +17,7 @@ public class StatSerializer implements JsonSerializer<Stat<?>>, JsonDeserializer
     // A somewhat weird way of figuring out what kind of objects are supported by each stat
     // Probably doesn't work for EntityTypes.
     // Adapted from Stats.java
-    private static final HashMap<StatType, Class> keyClassLookup = new HashMap<>();
+    @SuppressWarnings("rawtypes") private static final HashMap<StatType, Class> keyClassLookup = new HashMap<>();
     static {
         keyClassLookup.put(Stats.MINED, Block.class);
         keyClassLookup.put(Stats.CRAFTED, Item.class);
