@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import skycat.mystical.LogLevel;
 import skycat.mystical.Mystical;
 
+import java.util.List;
+import java.util.Random;
+
 public class Utils {
     public static boolean log(String msg) {
         return log(msg, LogLevel.INFO, Mystical.LOGGER);
@@ -93,4 +96,16 @@ public class Utils {
         giveStatusEffect(entity, statusEffect, length, level);
     }
 
+    /**
+     * Returns a random element from a list
+     *
+     * @param <T>    The type of the list's elements
+     * @param random The Random object to use
+     * @param list   The list of elements
+     * @return A random element from a list
+     */
+    public static <T> T chooseRandom(Random random, List<T> list) {
+
+        return list.get(random.nextInt(0, list.size()));
+    }
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.lang.reflect.Type;
 
 @Getter
-public /* abstract */ class SpellConsequence {
+public abstract class SpellConsequence {
     private final SpellConsequenceType consequenceType;
 
     public SpellConsequence(SpellConsequenceType consequenceType) {
