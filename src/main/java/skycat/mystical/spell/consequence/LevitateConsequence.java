@@ -1,6 +1,7 @@
 package skycat.mystical.spell.consequence;
 
 
+import lombok.NonNull;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -15,10 +16,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import skycat.mystical.util.EventCallbackEnum;
 import skycat.mystical.util.Utils;
 
-public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping, EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
+import java.util.Random;
+
+public class LevitateConsequence extends SpellConsequence implements ConsequenceFactory<LevitateConsequence>, EntitySleepEvents.StartSleeping, EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
     int length;
     int level;
 
@@ -45,6 +49,13 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     @Override
     public void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
 
+    }
+
+    @Override
+    public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
+        // TODO: Take points into account
+        // STOPSHIP Fix
+        return null;
     }
 
 

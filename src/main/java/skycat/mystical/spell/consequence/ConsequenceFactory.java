@@ -1,5 +1,8 @@
 package skycat.mystical.spell.consequence;
 
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Random;
 
 @FunctionalInterface
@@ -10,5 +13,5 @@ public interface ConsequenceFactory<T extends SpellConsequence> {
      * @param points The point target to aim for.
      * @return A new {@link T}.
      */
-    T make(Random random, double points);
+    @NotNull T make(@NonNull Random random, double points);
 }

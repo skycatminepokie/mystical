@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import net.fabricmc.fabric.api.entity.event.v1.*;
 
 public enum EventCallbackEnum {
+    // Easy regex check for correct names: "@SerializedName\("(.*)"\)\n    \1"
     @SerializedName("SLEEP_START")
     SLEEP_START(EntitySleepEvents.StartSleeping.class),
     @SerializedName("ELYTRA_ALLOW")

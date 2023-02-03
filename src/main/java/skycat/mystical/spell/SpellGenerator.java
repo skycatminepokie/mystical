@@ -36,7 +36,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     public static Spell get() {
         return new Spell(
                 new KillOnSleepConsequence(),
-                EventCallbackEnum.START_SLEEPING,
+                EventCallbackEnum.SLEEP_START,
                 new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))
         );
     }
