@@ -1,10 +1,14 @@
 package skycat.mystical.spell;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
 
 import java.io.File;
@@ -15,7 +19,7 @@ import java.util.Scanner;
 
 import static skycat.mystical.Mystical.GSON;
 
-public class SpellHandler implements EntitySleepEvents.StartSleeping {
+public class SpellHandler implements EntitySleepEvents.StartSleeping, PlayerBlockBreakEvents.After, PlayerBlockBreakEvents.Before {
     private static final File SAVE_FILE = new File("config/spellHandler.json");
     private final ArrayList<Spell> activeSpells = new ArrayList<>();
 
@@ -26,6 +30,22 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping {
             // TODO: Logging
             return new SpellHandler();
         }
+    }
+
+    @Override
+    public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        spellsOfHandler(PlayerBlockBreakEvents.After.class).forEach((spell -> ((PlayerBlockBreakEvents.After) spell.getConsequence()).afterBlockBreak(world, player, pos, state, blockEntity)));
+    }
+
+    @Override
+    public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
+        // TODO Make options for when there are collisions
+        boolean shouldCancel = false;
+        for (Spell spell : spellsOfHandler(PlayerBlockBreakEvents.Before.class)) {
+            // Keep these in order. This way, the consequence triggers, even if shouldCancel is true. Otherwise, it gets short-circuited.
+            shouldCancel = ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity) || shouldCancel;
+        }
+        return shouldCancel;
     }
 
     @Override

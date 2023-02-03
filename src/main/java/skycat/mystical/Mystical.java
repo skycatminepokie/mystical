@@ -7,6 +7,7 @@ import lombok.Getter;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
@@ -47,8 +48,10 @@ public class Mystical implements ModInitializer {
     @Override
     public void onInitialize() {
         EntitySleepEvents.START_SLEEPING.register(SPELL_HANDLER);
+        PlayerBlockBreakEvents.AFTER.register(SPELL_HANDLER);
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
         SPELL_HANDLER.activateNewSpell(); // STOPSHIP: This is for debug only
+        ServerLifecycleEvents.START_DATA_PACK_RELOAD.register(EVENT_HANDLER);
     }
 }

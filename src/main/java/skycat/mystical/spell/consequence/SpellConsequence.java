@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.lang.reflect.Type;
 
+@SuppressWarnings("rawtypes")
 @Getter
 public abstract class SpellConsequence {
     private final Class consequenceType;

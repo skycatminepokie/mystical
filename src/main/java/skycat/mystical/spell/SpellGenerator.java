@@ -9,12 +9,12 @@ import skycat.mystical.spell.consequence.ConsequenceFactory;
 import skycat.mystical.spell.consequence.KillOnSleepConsequence;
 import skycat.mystical.spell.consequence.LevitateConsequence;
 import skycat.mystical.spell.consequence.SpellConsequence;
+import skycat.mystical.spell.cure.CureFactory;
 import skycat.mystical.spell.cure.SpellCure;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
 import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
 
 /*
 Notes on randomization scheme:
@@ -26,44 +26,40 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
     This is separate from difficulty, though difficulty will likely be correlated.
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
-    private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
-    private static final ArrayList<SpellCure> cures = new ArrayList<>();
-    private static final ArrayList<Supplier<SpellCure>> cureSuppliers = new ArrayList<>();
+    @SuppressWarnings("rawtypes") private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
+    @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
         consequenceFactories.add(KillOnSleepConsequence.FACTORY);
         consequenceFactories.add(LevitateConsequence.FACTORY);
 
 
-        cures.add(new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS)));
+        cureFactories.add((random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))));
     }
 
     public static Spell get() {
         // WARN: Debug only
-        return new Spell(
-                KillOnSleepConsequence.FACTORY.make(Mystical.getRANDOM(), 0),
-                new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))
-        );
+        return new Spell(getConsequence(0), getCure(0));
     }
 
     // TODO: Weight things
     public static SpellConsequence getConsequence(double points) {
         if (consequenceFactories.isEmpty()) {
-            Utils.log("SpellGenerator found an empty consequence supplier list. Using default consequence."); // TODO note what the default is
-            return KillOnSleepConsequence.FACTORY.make(Mystical.getRANDOM(), 0); // TODO change default
+            Utils.log("SpellGenerator found an empty consequence supplier list. Using default consequence (levitate, 0 pts).");
+            return LevitateConsequence.FACTORY.make(Mystical.getRANDOM(), 0);
         }
         return Utils.chooseRandom(Mystical.getRANDOM(), consequenceFactories).make(Mystical.getRANDOM(), points);
     }
 
-    public static SpellCure getCure() {
-        if (cures.isEmpty()) {
+    public static SpellCure getCure(double points) {
+        if (cureFactories.isEmpty()) {
             Utils.log("SpellGenerator found an empty cure list. Using default cure (mine 10 cactus).");
             return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS));
         }
-        return Utils.chooseRandom(Mystical.getRANDOM(), cures);
+        return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM(), points);
     }
 
-    private static Block getRandomBlock() {
+    private static Block getRandomBlock() { // TODO: Make checked (no unbreakables, configurable rarities, etc)
         var randomBlock = Registry.BLOCK.getRandom(Mystical.getMC_RANDOM());
         if (randomBlock.isPresent()) {
             return randomBlock.get().value();

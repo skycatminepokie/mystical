@@ -69,7 +69,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
             // TODO: Take points into account
             // STOPSHIP Fix
-            return null;
+            return new LevitateConsequence(5, 5, PlayerBlockBreakEvents.After.class);
         }
     }
 }
