@@ -2,6 +2,7 @@ package skycat.mystical;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import skycat.mystical.util.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class HavenManager {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return GSON.fromJson(scanner.nextLine(), HavenManager.class);
         } catch (IOException e) {
-            // TODO: Logging
+            Utils.log("Failed to load haven manager. Maybe it doesn't exist yet?", Mystical.getCONFIG().failedToLoadHavenManager());
             return new HavenManager();
         }
     }
@@ -27,7 +28,8 @@ public class HavenManager {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
         } catch (IOException e) {
-            // TODO: Logging
+            Utils.log("Failed to save haven manager. Dumping info: ");
+            // TODO: Dump info
         }
     }
     public double getFlatHavenCost() {

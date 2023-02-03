@@ -38,7 +38,6 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     }
 
     public static Spell get() {
-        // WARN: Debug only
         return new Spell(getConsequence(0), getCure(0));
     }
 
@@ -64,7 +63,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         if (randomBlock.isPresent()) {
             return randomBlock.get().value();
         }
-        // TODO: Logging
+        Utils.log("Failed to choose a random block. How? No clue. Using a command block instead.", Mystical.CONFIG.failedToGetRandomBlock());
         return Blocks.COMMAND_BLOCK;
     }
 }
