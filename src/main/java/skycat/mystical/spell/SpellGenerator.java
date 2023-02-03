@@ -1,7 +1,9 @@
 package skycat.mystical.spell;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.registry.Registry;
 import skycat.mystical.Mystical;
 import skycat.mystical.spell.consequence.KillOnSleepConsequence;
 import skycat.mystical.spell.consequence.SpellConsequence;
@@ -11,6 +13,7 @@ import skycat.mystical.util.EventCallbackEnum;
 import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 /*
 Notes on randomization scheme:
@@ -22,11 +25,12 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
     This is separate from difficulty, though difficulty will likely be correlated.
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
-    private static final ArrayList<SpellConsequence> consequences = new ArrayList<>();
+    private static final ArrayList<Supplier<SpellConsequence>> consequenceSuppliers = new ArrayList<>();
     private static final ArrayList<SpellCure> cures = new ArrayList<>();
+    private static final ArrayList<Supplier<SpellCure>> cureSuppliers = new ArrayList<>();
 
     static {
-        consequences.add(new KillOnSleepConsequence());
+        consequenceSuppliers.add(()-> new KillOnSleepConsequence());
 
         cures.add(new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS)));
     }
@@ -41,11 +45,11 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
     // TODO: Weight things
     public static SpellConsequence getConsequence() {
-        if (consequences.isEmpty()) {
-            Utils.log("SpellGenerator found an empty consequence list. Using default consequence."); // TODO note what the default is
+        if (consequenceSuppliers.isEmpty()) {
+            Utils.log("SpellGenerator found an empty consequence supplier list. Using default consequence."); // TODO note what the default is
             return new KillOnSleepConsequence(); // TODO change default
         }
-        return Utils.chooseRandom(Mystical.getRANDOM(), consequences);
+        return Utils.chooseRandom(Mystical.getRANDOM(), consequenceSuppliers).get();
     }
 
     public static SpellCure getCure() {
