@@ -11,8 +11,6 @@ public enum EventCallbackEnum {
     EventCallbackEnum(Class<?> clazz) {
         this.clazz = clazz;
     }
-    // Hello! I need to be able to serialize a Class<?>. Here's what I've got:
-    // The problem is, GSON seems to think it needs to sear
 
     public Class<?> getClazz() {
         return clazz;
