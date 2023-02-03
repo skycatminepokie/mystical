@@ -2,15 +2,18 @@ package skycat.mystical.spell.consequence;
 
 import com.google.gson.*;
 import lombok.Getter;
+import skycat.mystical.util.EventCallbackEnum;
 
 import java.lang.reflect.Type;
 
 @Getter
 public abstract class SpellConsequence {
     private final SpellConsequenceType consequenceType;
+    private final EventCallbackEnum callback;
 
-    public SpellConsequence(SpellConsequenceType consequenceType) {
+    public SpellConsequence(SpellConsequenceType consequenceType, EventCallbackEnum callback) {
         this.consequenceType = consequenceType;
+        this.callback = callback;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {

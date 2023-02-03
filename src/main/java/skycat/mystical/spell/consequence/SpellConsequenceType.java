@@ -1,7 +1,8 @@
 package skycat.mystical.spell.consequence;
 
 public enum SpellConsequenceType {
-    KILL_ON_SLEEP(KillOnSleepConsequence.class);
+    KILL_ON_SLEEP(KillOnSleepConsequence.class),
+    LEVITATE(LevitateConsequence.class);
 
     public final Class<? extends SpellConsequence> clazz;
     SpellConsequenceType(Class<? extends SpellConsequence> clazz) {
