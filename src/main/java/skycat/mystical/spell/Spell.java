@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.SpellCure;
-import skycat.mystical.util.EventCallbackEnum;
 
 @Getter @Setter
 public class Spell {
@@ -12,17 +11,13 @@ public class Spell {
     /**
      * The handler the consequence is active for.
      * For example, a consequence may be able to support
-     * many events, but {@code eventClass} is the event
+     * many events, but this is the event
      * that it is used for in this instance.
      */
-    private EventCallbackEnum callbackType;
+    private Class callbackType;
     private SpellCure cure;
 
-    public Class<?> getEventClass() {
-        return callbackType.getClazz();
-    }
-
-    public Spell(SpellConsequence consequence, EventCallbackEnum callbackType, SpellCure cure) {
+    public Spell(SpellConsequence consequence, Class callbackType, SpellCure cure) {
         this.consequence = consequence;
         this.callbackType = callbackType;
         this.cure = cure;

@@ -14,10 +14,10 @@ import java.util.UUID;
 public abstract class SpellCure {
 
     private double contributionGoal;
-    private final SpellCureType cureType;
+    private final Class cureType;
     private ArrayList<CureContribution> contributions = new ArrayList<>();
 
-    public SpellCure(double contributionGoal, SpellCureType cureType) {
+    public SpellCure(double contributionGoal, Class cureType) {
         this.contributionGoal = contributionGoal;
         this.cureType = cureType;
     }
@@ -32,13 +32,13 @@ public abstract class SpellCure {
     public static class Serializer implements JsonSerializer<SpellCure>, JsonDeserializer<SpellCure> {
         @Override
         public SpellCure deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            SpellCureType cureType = context.deserialize(json.getAsJsonObject().get("cureType"), SpellCureType.class);
-            return context.deserialize(json, cureType.clazz);
+            Class cureType = context.deserialize(json.getAsJsonObject().get("cureType"), Class.class);
+            return context.deserialize(json, cureType);
         }
 
         @Override
         public JsonElement serialize(SpellCure src, Type typeOfSrc, JsonSerializationContext context) {
-            return context.serialize(src, src.getCureType().clazz);
+            return context.serialize(src, src.getCureType());
         }
     }
 }

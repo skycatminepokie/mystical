@@ -9,7 +9,7 @@ public class StatBackedSpellCure extends SpellCure {
     private final Stat stat;
 
     public StatBackedSpellCure(double contributionGoal, Stat stat) {
-        super(contributionGoal, SpellCureType.STAT_BACKED);
+        super(contributionGoal, StatBackedSpellCure.class);
         this.stat = stat;
     }
 

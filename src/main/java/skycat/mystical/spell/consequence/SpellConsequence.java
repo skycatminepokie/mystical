@@ -7,9 +7,9 @@ import java.lang.reflect.Type;
 
 @Getter
 public abstract class SpellConsequence {
-    private final SpellConsequenceType consequenceType;
+    private final Class consequenceType;
 
-    public SpellConsequence(SpellConsequenceType consequenceType) {
+    public SpellConsequence(Class consequenceType) {
         this.consequenceType = consequenceType;
     }
 
@@ -18,17 +18,15 @@ public abstract class SpellConsequence {
     }
 
     public static class Serializer implements JsonSerializer<SpellConsequence>, JsonDeserializer<SpellConsequence> {
-
-        // TODO: This could use some nicer workings, like simply using the class name instead of an enum. Same with SpellCure.Serializer.
         @Override
         public SpellConsequence deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            SpellConsequenceType consequenceType = context.deserialize(json.getAsJsonObject().get("consequenceType"), SpellConsequenceType.class);
-            return context.deserialize(json, consequenceType.clazz);
+            Class consequenceType = context.deserialize(json.getAsJsonObject().get("consequenceType"), Class.class);
+            return context.deserialize(json, consequenceType);
         }
 
         @Override
         public JsonElement serialize(SpellConsequence src, Type typeOfSrc, JsonSerializationContext context) {
-            return context.serialize(src, src.getConsequenceType().clazz);
+            return context.serialize(src, src.getConsequenceType());
         }
     }
 }
