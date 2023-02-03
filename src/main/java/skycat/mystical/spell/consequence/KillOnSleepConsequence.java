@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class KillOnSleepConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping {
     public KillOnSleepConsequence() {
-        super(SpellConsequenceType.KILL_ON_SLEEP);
+        super(KillOnSleepConsequence.class);
     }
 
     @Override

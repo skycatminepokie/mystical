@@ -17,10 +17,7 @@ import org.slf4j.LoggerFactory;
 import skycat.mystical.spell.SpellHandler;
 import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.SpellCure;
-import skycat.mystical.util.BlockSerializer;
-import skycat.mystical.util.LocalDateTimeSerializer;
-import skycat.mystical.util.StatSerializer;
-import skycat.mystical.util.StatTypeSerializer;
+import skycat.mystical.util.*;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -39,6 +36,7 @@ public class Mystical implements ModInitializer {
             .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
             .registerTypeAdapter(SpellCure.class, new SpellCure.Serializer())
             .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
+            .registerTypeAdapter(Class.class, new ClassSerializer())
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
