@@ -22,11 +22,11 @@ import skycat.mystical.util.Utils;
 import java.util.Random;
 
 public class LevitateConsequence extends SpellConsequence implements ConsequenceFactory<LevitateConsequence>, EntitySleepEvents.StartSleeping, EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
-    int length;
-    int level;
+    private final int length;
+    private final int level;
 
-    public LevitateConsequence(int length, int level, Class callback) {
-        super(LevitateConsequence.class, callback);
+    public LevitateConsequence(int length, int level, Class callbackType) { // TODO: maybe double-check that it's a valid callbackType
+        super(LevitateConsequence.class, callbackType);
         this.length = length;
         this.level = level;
     }

@@ -56,7 +56,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping {
     public <T> ArrayList<Spell> spellsOfHandler(Class<T> clazz) {
         ArrayList<Spell> results = new ArrayList<>();
         for (Spell spell : activeSpells) {
-            if (spell.getCallbackType().equals(clazz)) {
+            if (spell.getConsequence().getCallbackType().equals(clazz)) {
                 results.add(spell);
             }
         }

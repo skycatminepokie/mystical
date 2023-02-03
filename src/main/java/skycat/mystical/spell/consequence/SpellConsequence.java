@@ -8,11 +8,11 @@ import java.lang.reflect.Type;
 @Getter
 public abstract class SpellConsequence {
     private final Class consequenceType;
-    private final Class callback;
+    private final Class callbackType;
 
-    public SpellConsequence(Class consequenceType, Class callback) {
+    public SpellConsequence(Class consequenceType, Class callbackType) {
         this.consequenceType = consequenceType;
-        this.callback = callback;
+        this.callbackType = callbackType;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {

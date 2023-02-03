@@ -1,8 +1,6 @@
 package skycat.mystical.spell;
 
 import net.minecraft.block.Block;
-import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.registry.Registry;
@@ -11,9 +9,6 @@ import skycat.mystical.spell.consequence.KillOnSleepConsequence;
 import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.SpellCure;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
-import skycat.mystical.util.Utils;
-
-import java.util.ArrayList;
 import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
@@ -40,9 +35,9 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     }
 
     public static Spell get() {
+        // WARN: Debug only
         return new Spell(
-                new KillOnSleepConsequence(),
-               EntitySleepEvents.StartSleeping.class,
+                new KillOnSleepConsequence(), // WARN: bad instantiation practice, should use a factory
                 new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))
         );
     }
