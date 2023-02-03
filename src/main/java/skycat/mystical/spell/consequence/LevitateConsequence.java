@@ -21,9 +21,10 @@ import skycat.mystical.util.Utils;
 
 import java.util.Random;
 
-public class LevitateConsequence extends SpellConsequence implements ConsequenceFactory<LevitateConsequence>, EntitySleepEvents.StartSleeping, EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
+public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping, EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
     private final int length;
     private final int level;
+    public static final ConsequenceFactory<LevitateConsequence> FACTORY = new Factory();
 
     public LevitateConsequence(int length, int level, Class callbackType) { // TODO: maybe double-check that it's a valid callbackType
         super(LevitateConsequence.class, callbackType);
@@ -31,40 +32,44 @@ public class LevitateConsequence extends SpellConsequence implements Consequence
         this.level = level;
     }
 
-    private void levitate(PlayerEntity player) {
-        Utils.giveStatusEffect(player, StatusEffects.LEVITATION, length, level);
+    private void levitate(LivingEntity entity) {
+        Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level);
     }
 
     @Override
     public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-
+        levitate(player);
     }
 
     @Override
     public void afterKilledOtherEntity(ServerWorld world, Entity entity, LivingEntity killedEntity) {
-
+        if (entity.isLiving()) {
+            levitate((LivingEntity) entity);
+        }
     }
 
     @Override
     public void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
-
-    }
-
-    @Override
-    public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
-        // TODO: Take points into account
-        // STOPSHIP Fix
-        return null;
+        levitate(newPlayer);
     }
 
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
-
+        levitate(entity);
     }
 
     @Override
     public void onStopSleeping(LivingEntity entity, BlockPos sleepingPos) {
+        levitate(entity);
+    }
 
+    private static class Factory implements ConsequenceFactory<LevitateConsequence> {
+        @Override
+        public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
+            // TODO: Take points into account
+            // STOPSHIP Fix
+            return null;
+        }
     }
 }

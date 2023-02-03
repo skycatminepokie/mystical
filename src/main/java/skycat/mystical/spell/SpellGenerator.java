@@ -5,7 +5,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.registry.Registry;
 import skycat.mystical.Mystical;
+import skycat.mystical.spell.consequence.ConsequenceFactory;
 import skycat.mystical.spell.consequence.KillOnSleepConsequence;
+import skycat.mystical.spell.consequence.LevitateConsequence;
 import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.SpellCure;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
@@ -24,12 +26,14 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
     This is separate from difficulty, though difficulty will likely be correlated.
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
-    private static final ArrayList<Supplier<SpellConsequence>> consequenceSuppliers = new ArrayList<>();
+    private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
     private static final ArrayList<SpellCure> cures = new ArrayList<>();
     private static final ArrayList<Supplier<SpellCure>> cureSuppliers = new ArrayList<>();
 
     static {
-        consequenceSuppliers.add(()-> new KillOnSleepConsequence());
+        consequenceFactories.add(KillOnSleepConsequence.FACTORY);
+        consequenceFactories.add(LevitateConsequence.FACTORY);
+
 
         cures.add(new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS)));
     }
@@ -37,18 +41,18 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     public static Spell get() {
         // WARN: Debug only
         return new Spell(
-                new KillOnSleepConsequence(), // WARN: bad instantiation practice, should use a factory
+                KillOnSleepConsequence.FACTORY.make(Mystical.getRANDOM(), 0),
                 new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))
         );
     }
 
     // TODO: Weight things
-    public static SpellConsequence getConsequence() {
-        if (consequenceSuppliers.isEmpty()) {
+    public static SpellConsequence getConsequence(double points) {
+        if (consequenceFactories.isEmpty()) {
             Utils.log("SpellGenerator found an empty consequence supplier list. Using default consequence."); // TODO note what the default is
-            return new KillOnSleepConsequence(); // TODO change default
+            return KillOnSleepConsequence.FACTORY.make(Mystical.getRANDOM(), 0); // TODO change default
         }
-        return Utils.chooseRandom(Mystical.getRANDOM(), consequenceSuppliers).get();
+        return Utils.chooseRandom(Mystical.getRANDOM(), consequenceFactories).make(Mystical.getRANDOM(), points);
     }
 
     public static SpellCure getCure() {
