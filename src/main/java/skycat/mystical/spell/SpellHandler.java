@@ -71,7 +71,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
      * Get all active spells that are using a specified handler
      * @param clazz The event handler to search for
      * @return An ArrayList of spells that have matching consequences
-     * @param <T>
+     * @param <T> The type of handlers to return
      */
     public <T> ArrayList<Spell> spellsOfHandler(Class<T> clazz) {
         ArrayList<Spell> results = new ArrayList<>();
