@@ -9,9 +9,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import skycat.mystical.Mystical;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
+import skycat.mystical.util.Utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,8 +29,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
     public static SpellHandler loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return GSON.fromJson(scanner.nextLine(), SpellHandler.class);
-        } catch (IOException e) {
-            // TODO: Logging
+        }
+        catch (FileNotFoundException e) {
+            Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandler());
             return new SpellHandler();
         }
     }

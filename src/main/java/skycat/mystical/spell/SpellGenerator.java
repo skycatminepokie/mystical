@@ -63,7 +63,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         if (randomBlock.isPresent()) {
             return randomBlock.get().value();
         }
-        Utils.log(Utils.translateString("text.mystical.spellGenerator.failedRandomBlock"), Mystical.CONFIG.failedToGetRandomBlock());
+        // Labeled in translation as critical error. Ideally, this should not happen.
+        Utils.log(Utils.translateString("text.mystical.spellGenerator.failedRandomBlock"), Mystical.CONFIG.failedToGetRandomBlockLogLevel());
         return Blocks.COMMAND_BLOCK;
     }
 }

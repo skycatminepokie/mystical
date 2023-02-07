@@ -9,12 +9,14 @@ import io.wispforest.owo.config.annotation.SectionHeader;
 @Config(name = "mysticalConfig", wrapperName = "MysticalConfig")
 public class ConfigModel {
 
-    @SectionHeader("Logging")
+    @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
     public LogLevel timeOfDayAtStartupLogLevel = LogLevel.DEBUG;
-    public LogLevel failedToLoadHavenManager = LogLevel.INFO;
-    public LogLevel failedToSaveHavenManager = LogLevel.INFO;
-    public LogLevel playerContributed = LogLevel.OFF; // Not used
-    public LogLevel failedToGetRandomBlock = LogLevel.ERROR;
+    public LogLevel failedToLoadHavenManagerLogLevel = LogLevel.INFO;
+    public LogLevel failedToSaveHavenManagerLogLevel = LogLevel.INFO;
+    public LogLevel playerContributedLogLevel = LogLevel.OFF; // Not used
+    public LogLevel failedToGetRandomBlockLogLevel = LogLevel.ERROR;
+    public LogLevel failedToLoadSpellHandler = LogLevel.WARN;
+    public LogLevel failedToSaveSpellHandler = LogLevel.ERROR;
 
 }

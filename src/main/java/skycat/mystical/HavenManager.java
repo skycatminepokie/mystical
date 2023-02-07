@@ -19,7 +19,7 @@ public class HavenManager {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return GSON.fromJson(scanner.nextLine(), HavenManager.class);
         } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.havenManager.loadFailed"), Mystical.getCONFIG().failedToLoadHavenManager());
+            Utils.log(Utils.translateString("text.mystical.havenManager.loadFailed"), Mystical.CONFIG.failedToLoadHavenManagerLogLevel());
             return new HavenManager();
         }
     }
@@ -28,7 +28,7 @@ public class HavenManager {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
         } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.havenManager.saveFailed"));
+            Utils.log(Utils.translateString("text.mystical.havenManager.saveFailed"), Mystical.CONFIG.failedToSaveHavenManagerLogLevel());
             // TODO: Dump info
         }
     }
