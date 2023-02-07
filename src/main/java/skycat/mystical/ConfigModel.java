@@ -16,7 +16,7 @@ public class ConfigModel {
     public LogLevel failedToSaveHavenManagerLogLevel = LogLevel.INFO;
     public LogLevel playerContributedLogLevel = LogLevel.OFF; // Not used
     public LogLevel failedToGetRandomBlockLogLevel = LogLevel.ERROR;
-    public LogLevel failedToLoadSpellHandler = LogLevel.WARN;
-    public LogLevel failedToSaveSpellHandler = LogLevel.ERROR;
+    public LogLevel failedToLoadSpellHandlerLogLevel = LogLevel.WARN;
+    public LogLevel failedToSaveSpellHandlerLogLevel = LogLevel.ERROR;
 
 }

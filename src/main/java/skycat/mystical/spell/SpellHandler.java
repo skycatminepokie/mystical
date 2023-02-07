@@ -31,7 +31,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping, PlayerBloc
             return GSON.fromJson(scanner.nextLine(), SpellHandler.class);
         }
         catch (FileNotFoundException e) {
-            Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandler());
+            Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
             return new SpellHandler();
         }
     }
