@@ -16,7 +16,7 @@ public class ClassSerializer implements JsonSerializer<Class>, JsonDeserializer<
         try {
             return Class.forName(json.getAsString());
         } catch (ClassNotFoundException e) {
-            Utils.log("Couldn't deserialize class of name " + json.getAsString());
+            Utils.log(Utils.translateString("text.mystical.classSerializer.failedDeserializeName", json.getAsString())); // TODO Config
             // STOPSHIP big ol errors, dump info
             throw new RuntimeException(e);
         }

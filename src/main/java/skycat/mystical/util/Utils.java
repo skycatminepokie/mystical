@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import skycat.mystical.LogLevel;
@@ -105,7 +106,22 @@ public class Utils {
      * @return A random element from a list
      */
     public static <T> T chooseRandom(Random random, List<T> list) {
-
         return list.get(random.nextInt(0, list.size()));
+    }
+
+    public static MutableText translatable(String path) {
+        return Text.translatable(path);
+    }
+
+    public static MutableText translatable(String path, Object... args) {
+        return Text.translatable(path, args);
+    }
+
+    public static String translateString(String path) {
+        return translatable(path).getString();
+    }
+
+    public static String translateString(String path, Object... args) {
+        return translatable(path, args).getString();
     }
 }

@@ -19,7 +19,7 @@ public class HavenManager {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return GSON.fromJson(scanner.nextLine(), HavenManager.class);
         } catch (IOException e) {
-            Utils.log("Failed to load haven manager. Maybe it doesn't exist yet?", Mystical.getCONFIG().failedToLoadHavenManager());
+            Utils.log(Utils.translateString("text.mystical.havenManager.loadFailed"), Mystical.getCONFIG().failedToLoadHavenManager());
             return new HavenManager();
         }
     }
@@ -28,7 +28,7 @@ public class HavenManager {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
         } catch (IOException e) {
-            Utils.log("Failed to save haven manager. Dumping info: ");
+            Utils.log(Utils.translateString("text.mystical.havenManager.saveFailed"));
             // TODO: Dump info
         }
     }
@@ -122,7 +122,7 @@ public class HavenManager {
     /**
      * Check if a block is inside a havened chunk.
      *
-     * @param blockPos THe block position
+     * @param blockPos The block position
      * @return {@code true} if the chunk is havened
      */
     public boolean isInHavenedChunk(BlockPos blockPos) {

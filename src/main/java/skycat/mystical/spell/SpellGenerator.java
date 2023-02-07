@@ -44,7 +44,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     // TODO: Weight things
     public static SpellConsequence getConsequence(double points) {
         if (consequenceFactories.isEmpty()) {
-            Utils.log("SpellGenerator found an empty consequence supplier list. Using default consequence (levitate, 0 pts).");
+            Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList")); // TODO Config
             return LevitateConsequence.FACTORY.make(Mystical.getRANDOM(), 0);
         }
         return Utils.chooseRandom(Mystical.getRANDOM(), consequenceFactories).make(Mystical.getRANDOM(), points);
@@ -52,7 +52,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
     public static SpellCure getCure(double points) {
         if (cureFactories.isEmpty()) {
-            Utils.log("SpellGenerator found an empty cure list. Using default cure (mine 10 cactus).");
+            Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList")); // TODO config
             return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS));
         }
         return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM(), points);
@@ -63,7 +63,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         if (randomBlock.isPresent()) {
             return randomBlock.get().value();
         }
-        Utils.log("Failed to choose a random block. How? No clue. Using a command block instead.", Mystical.CONFIG.failedToGetRandomBlock());
+        Utils.log(Utils.translateString("text.mystical.spellGenerator.failedRandomBlock"), Mystical.CONFIG.failedToGetRandomBlock());
         return Blocks.COMMAND_BLOCK;
     }
 }
