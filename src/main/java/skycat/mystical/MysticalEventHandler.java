@@ -18,7 +18,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         this.server = server;
         timerAccess = ((MinecraftServerTimerAccess) server);
         setNightTimer();
-        Utils.log("Time of day is " + server.getOverworld().getTimeOfDay(), CONFIG.timeOfDayAtStartupLogLevel());
+        Utils.log(Utils.translateString("text.mystical.eventHandler.timeOfDay", server.getOverworld().getTimeOfDay()), CONFIG.timeOfDayAtStartupLogLevel());
     }
 
     public void doNighttimeEvents() {
@@ -28,7 +28,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         try {
             setNightTimer();
         } catch (NullPointerException e) {
-            Utils.log("Couldn't set timer for night. Reason: " + e.getMessage(), CONFIG.failedToSetNightTimerLogLevel());
+            Utils.log(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", e.getMessage()), CONFIG.failedToSetNightTimerLogLevel());
             // TODO Try again later?
         }
     }

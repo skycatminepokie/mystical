@@ -51,7 +51,7 @@ public class StatSerializer implements JsonSerializer<Stat<?>>, JsonDeserializer
         } else if (Identifier.class.isAssignableFrom(valueClass)) {
             assignTo = Identifier.class;
         } else {
-            Utils.log("Uh-oh. Mystical couldn't serialize a Stat<?> properly.");
+            Utils.log(Utils.translateString("text.mystical.statSerializer.failedSerializeStat")); // TODO: Config
             object.add("value", JsonNull.INSTANCE); // TODO: More errors and logging
             return object;
         }
