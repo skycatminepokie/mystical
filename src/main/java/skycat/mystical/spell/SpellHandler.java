@@ -78,7 +78,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             // Keep these in order. This way, the consequence triggers, even if shouldCancel is true. Otherwise, it gets short-circuited.
             shouldCancel = ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity) || shouldCancel;
         }
-        return shouldCancel;
+        return !shouldCancel;
     }
 
     @Override
