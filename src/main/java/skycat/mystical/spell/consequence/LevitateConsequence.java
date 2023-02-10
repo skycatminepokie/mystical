@@ -19,12 +19,23 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import skycat.mystical.util.Utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
-public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping, EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
+public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
     private final int length;
     private final int level;
+    private static final ArrayList<Class> supportedEvents = new ArrayList<>();
     public static final ConsequenceFactory<LevitateConsequence> FACTORY = new Factory();
+
+    static {
+        Collections.addAll(supportedEvents,
+                EntitySleepEvents.StopSleeping.class,
+                ServerEntityCombatEvents.AfterKilledOtherEntity.class,
+                ServerPlayerEvents.AfterRespawn.class,
+                PlayerBlockBreakEvents.After.class);
+    }
 
     public LevitateConsequence(int length, int level, Class callbackType) { // TODO: maybe double-check that it's a valid callbackType
         super(LevitateConsequence.class, callbackType);
@@ -33,7 +44,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     private void levitate(LivingEntity entity) {
-        Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level);
+        Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level); // TODO: Config
     }
 
     @Override
@@ -53,12 +64,6 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         levitate(newPlayer);
     }
 
-
-    @Override
-    public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
-        levitate(entity);
-    }
-
     @Override
     public void onStopSleeping(LivingEntity entity, BlockPos sleepingPos) {
         levitate(entity);
@@ -68,8 +73,8 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         @Override
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
             // TODO: Take points into account
-            // STOPSHIP Fix
-            return new LevitateConsequence(5, 5, PlayerBlockBreakEvents.After.class);
+            return new LevitateConsequence(5, 5, Utils.chooseRandom(random, supportedEvents));
+            // return new LevitateConsequence(5, 5, EntitySleepEvents.StartSleeping.class); // WARN Debug
         }
     }
 }

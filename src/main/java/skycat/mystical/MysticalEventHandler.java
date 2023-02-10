@@ -68,6 +68,6 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     @Override
     public void startDataPackReload(MinecraftServer server, LifecycledResourceManager resourceManager) {
-        Mystical.SPELL_HANDLER.activateNewSpell(); // WARN Debug
+
     }
 }
