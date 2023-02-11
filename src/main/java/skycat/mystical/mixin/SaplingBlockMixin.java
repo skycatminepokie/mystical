@@ -14,17 +14,19 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import skycat.mystical.Mystical;
 import skycat.mystical.spell.consequence.RandomTreeTypeConsequence;
 
 @Mixin(SaplingBlock.class)
-public class SaplingBlockMixin {
+public abstract class SaplingBlockMixin {
     @Shadow @Final public static IntProperty STAGE;
     @Shadow @Final private SaplingGenerator generator;
 
-    @Inject(method = "generate", at = @At("HEAD"))
+    @Inject(method = "generate", at = @At("HEAD"), cancellable = true)
     public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) {
-        if (state.get(STAGE) != 0) {
+        if (state.get(STAGE) != 0 && Mystical.SPELL_HANDLER.shouldDoRandomTree()) {
             Util.getRandom(RandomTreeTypeConsequence.SAPLING_GENERATORS, random).generate(world, world.getChunkManager().getChunkGenerator(), pos, state, random);
+            ci.cancel();
         }
     }
 }

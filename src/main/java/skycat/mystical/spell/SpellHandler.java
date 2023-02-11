@@ -15,6 +15,8 @@ import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.Mystical;
+import skycat.mystical.spell.consequence.RandomTreeTypeConsequence;
+import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
 import skycat.mystical.util.Utils;
 
@@ -43,6 +45,27 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
             return new SpellHandler();
         }
+    }
+
+    public boolean shouldDoRandomTree() {
+        return !spellsOfConsequenceType(RandomTreeTypeConsequence.class).isEmpty();
+    }
+
+    /**
+     * Used for finding active spells with a particular consequence type.
+     * This is not the same as a handler.
+     * @param clazz The class to check for
+     * @return An ArrayList of matching spells
+     * @see SpellHandler#spellsOfHandler
+     */
+    public ArrayList<Spell> spellsOfConsequenceType(Class<? extends SpellConsequence> clazz) {
+        ArrayList<Spell> results = new ArrayList<>();
+        for (Spell spell : activeSpells) {
+            if (clazz.isAssignableFrom(spell.getConsequence().getClass())) {
+                results.add(spell);
+            }
+        }
+        return results;
     }
 
     public void activateNewSpell() {

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import skycat.mystical.Mystical;
 
 @Mixin(StatHandler.class)
-public class StatHandlerMixin {
+public abstract class StatHandlerMixin {
     @Inject(method = "increaseStat", at = @At("HEAD"))
     public void statIncreased(PlayerEntity player, Stat<?> stat, int value, CallbackInfo ci) {
         Mystical.SPELL_HANDLER.onStatIncreased(player, stat, value);

@@ -14,7 +14,7 @@ import static skycat.mystical.Mystical.EVENT_HANDLER;
 
 // CREDIT: Daomephsta#0044 for help on fabric discord (and fabric bot too)
 @Mixin(MinecraftServer.class)
-public class MinecraftServerTimer implements MinecraftServerTimerAccess {
+public abstract class MinecraftServerTimer implements MinecraftServerTimerAccess {
     @Unique
     private long ticksUntilNight;
 

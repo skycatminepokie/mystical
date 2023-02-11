@@ -4,7 +4,7 @@ import net.minecraft.entity.mob.CreeperEntity;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(CreeperEntity.class)
-public class CreeperEntityMixin {
+public abstract class CreeperEntityMixin {
     /*
     @Shadow private int explosionRadius;
 

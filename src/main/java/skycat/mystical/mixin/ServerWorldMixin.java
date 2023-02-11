@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import skycat.mystical.Mystical;
 
 @Mixin(ServerWorld.class)
-public class ServerWorldMixin {
+public abstract class ServerWorldMixin {
     @Inject(method = "wakeSleepingPlayers", at = @At("TAIL"))
     private void onWakeSleepingPlayers(CallbackInfo ci) {
         Mystical.getEVENT_HANDLER().doNighttimeEvents(); // TODO: This is a roundabout fix, but you know...
