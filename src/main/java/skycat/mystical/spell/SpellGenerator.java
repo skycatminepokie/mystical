@@ -5,16 +5,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.registry.Registry;
 import skycat.mystical.Mystical;
-import skycat.mystical.spell.consequence.ConsequenceFactory;
-import skycat.mystical.spell.consequence.KillOnSleepConsequence;
-import skycat.mystical.spell.consequence.LevitateConsequence;
-import skycat.mystical.spell.consequence.SpellConsequence;
+import skycat.mystical.spell.consequence.*;
 import skycat.mystical.spell.cure.CureFactory;
 import skycat.mystical.spell.cure.SpellCure;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
 import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*
 Notes on randomization scheme:
@@ -30,9 +28,12 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
-        consequenceFactories.add(KillOnSleepConsequence.FACTORY);
-        consequenceFactories.add(LevitateConsequence.FACTORY);
-
+        Collections.addAll(consequenceFactories,
+                KillOnSleepConsequence.FACTORY,
+                LevitateConsequence.FACTORY,
+                RandomTreeTypeConsequence.FACTORY,
+                BigCreeperExplosionConsequence.FACTORY
+        );
 
         cureFactories.add((random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))));
     }

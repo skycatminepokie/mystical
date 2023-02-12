@@ -33,7 +33,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: add a
     public static class Factory implements ConsequenceFactory<RandomTreeTypeConsequence> {
         @Override
         public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {
-            return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, null);
+            return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, RandomTreeTypeConsequence.class);
         }
     }
 }
