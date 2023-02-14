@@ -167,7 +167,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return results;
     }
 
-    public boolean shouldIncreaseCreeperExplosion() {
+    public boolean isBigCreeperExplosionActive() {
         return !spellsOfConsequenceType(BigCreeperExplosionConsequence.class).isEmpty();
     }
 }

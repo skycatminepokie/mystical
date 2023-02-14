@@ -61,5 +61,7 @@
 
   "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
 
-  "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead."
+  "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
+
+  "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power."
 }

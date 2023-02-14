@@ -6,6 +6,7 @@
   "mixins": [
     "BlockFertilizableMixin",
     "CreeperEntityMixin",
+    "FishingBobberEntityMixin",
     "MinecraftServerTimer",
     "SaplingBlockMixin",
     "ServerWorldMixin",

@@ -39,7 +39,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     }
 
     public static Spell get() {
-        return new Spell(getConsequence(0), getCure(0));
+        return new Spell(BigCreeperExplosionConsequence.FACTORY.make(Mystical.getRANDOM(), 100), getCure(0)); // WARN debug
+        // return new Spell(getConsequence(0), getCure(0));
     }
 
     // TODO: Weight things

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import skycat.mystical.Mystical;
+import skycat.mystical.util.Utils;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin {
@@ -17,8 +18,9 @@ public abstract class CreeperEntityMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     void CreeperEntity(EntityType entityType, World world, CallbackInfo ci) {
-        if (Mystical.SPELL_HANDLER.shouldIncreaseCreeperExplosion()) {
-            explosionRadius = 6; // TODO: Make configurable
+        if (Mystical.SPELL_HANDLER.isBigCreeperExplosionActive() && (Mystical.RANDOM.nextDouble(0, 100) < Mystical.CONFIG.bigCreeperExplosionConsequence.chance())) {
+            explosionRadius = (int) (explosionRadius * Mystical.CONFIG.bigCreeperExplosionConsequence.multiplier());
+            Utils.log(Utils.translateString("text.mystical.creeperEntityMixin.fired"), Mystical.CONFIG.bigCreeperExplosionConsequence.logLevel());
         }
     }
 
