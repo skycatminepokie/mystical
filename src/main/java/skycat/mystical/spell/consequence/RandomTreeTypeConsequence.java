@@ -19,17 +19,20 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: add a
     static {
         Collections.addAll(SAPLING_GENERATORS,
                 new AcaciaSaplingGenerator(),
+                new AzaleaSaplingGenerator(),
                 new BirchSaplingGenerator(),
                 new DarkOakSaplingGenerator(),
+                new JungleSaplingGenerator(),
+                new MangroveSaplingGenerator(0.85f), // tallChance from PropaguleBlock
                 new OakSaplingGenerator(),
-                new SpruceSaplingGenerator(),
-                new AzaleaSaplingGenerator(),
-                new JungleSaplingGenerator()
-                );
+                new SpruceSaplingGenerator()
+        );
     }
+
     private RandomTreeTypeConsequence(Class consequenceType, Class callbackType) {
         super(consequenceType, callbackType);
     }
+
     public static class Factory implements ConsequenceFactory<RandomTreeTypeConsequence> {
         @Override
         public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {

@@ -33,6 +33,38 @@ public class ConfigModel {
         @RangeConstraint(min = 0.0001d, max = Double.MAX_VALUE)
         public double weight = 1; // Not implemented
     }
+    
+    public static class RandomTreeTypeConsequence {
+        public boolean enabled = true; // Not implemented
+        @RangeConstraint(min = 0.0001d, max = 100.0d)
+        public double chance = 100.0; // Not implemented
+        public boolean fromAcacia = true; // Not implemented
+        public boolean fromAzalea = true; // Not implemented
+        public boolean fromBirch = true; // Not implemented
+        public boolean fromDarkOak = true; // Not implemented
+        public boolean fromJungle = true; // Not implemented
+        public boolean fromMangrove = true; // Not implemented
+        public boolean fromOak = true; // Not implemented
+        public boolean fromSpruce = true; // Not implemented
+        public boolean toAcacia = true; // Not implemented
+        public boolean toAzalea = true; // Not implemented
+        public boolean toBirch = true; // Not implemented
+        public boolean toDarkOak = true; // Not implemented
+        public boolean toJungle = true; // Not implemented
+        public boolean toMangrove = true; // Not implemented
+        public boolean toOak = true; // Not implemented
+        public boolean toSpruce = true; // Not implemented
+        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        public double weight = 1; // Not implemented
+    }
+
+    public static class LevitateConsequence {
+        public boolean enabled = true; // Not implemented
+        public double chance = 100.0; // Not implemented
+        // TODO: block/event type options
+        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        public double weight = 1; // Not implemented
+    }
 
 
 
