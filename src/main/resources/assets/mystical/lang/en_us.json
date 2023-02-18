@@ -63,5 +63,8 @@
 
   "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
 
-  "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power."
+  "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
+
+  "text.mystical.spellConsequence.default": "Something good or something bad, who knows?",
+  "text.mystical.spellConsequence.randomTreeType": "Saplings grow into random types of trees."
 }

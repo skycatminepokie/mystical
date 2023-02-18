@@ -10,10 +10,16 @@ import java.lang.reflect.Type;
 public abstract class SpellConsequence {
     private final Class consequenceType;
     private final Class callbackType;
+    private final String translationKey;
 
     public SpellConsequence(Class consequenceType, Class callbackType) {
+        this(consequenceType, callbackType, "text.mystical.spellConsequence.default");
+    }
+
+    public SpellConsequence(Class consequenceType, Class callbackType, String translationKey) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
+        this.translationKey = translationKey;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {
