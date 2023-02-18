@@ -2,6 +2,7 @@ package skycat.mystical.spell;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.registry.Registry;
 import skycat.mystical.Mystical;
@@ -35,12 +36,17 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 BigCreeperExplosionConsequence.FACTORY
         );
 
-        cureFactories.add((random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))));
+        Collections.addAll(cureFactories,
+                (random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))),
+                (random, points) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP))),
+                (random, points) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS))),
+                (random, points) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM))),
+                (random, points) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL)))
+        );
     }
 
     public static Spell get() {
-        return new Spell(BigCreeperExplosionConsequence.FACTORY.make(Mystical.getRANDOM(), 100), getCure(0)); // WARN debug
-        // return new Spell(getConsequence(0), getCure(0));
+        return new Spell(getConsequence(0), getCure(0));
     }
 
     // TODO: Weight things

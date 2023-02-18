@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(FishingBobberEntity.class)
-public abstract class FishingBobberEntityMixin {
+public abstract class FishingBobberEntityMixin { // TODO Use this for a consequence
 
 
     /**
