@@ -2,6 +2,8 @@ package skycat.mystical.spell.consequence;
 
 import com.google.gson.*;
 import lombok.Getter;
+import net.minecraft.text.MutableText;
+import skycat.mystical.util.Utils;
 
 import java.lang.reflect.Type;
 
@@ -24,6 +26,14 @@ public abstract class SpellConsequence {
 
     public <T> boolean supportsEvent(Class<T> eventClass) {
         return eventClass.isInstance(this);
+    }
+
+    /**
+     * This is a player-readable description/"recipe" for the consequence.
+     * Override this if you have parameters to add to the translation.
+     */
+    public MutableText getDescription() {
+        return Utils.translatable(translationKey);
     }
 
     public static class Serializer implements JsonSerializer<SpellConsequence>, JsonDeserializer<SpellConsequence> {

@@ -37,11 +37,11 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         );
 
         Collections.addAll(cureFactories,
-                (random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS))),
-                (random, points) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP))),
-                (random, points) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS))),
-                (random, points) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM))),
-                (random, points) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL)))
+                (random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")),
+                (random, points) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")),
+                (random, points) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS), "text.mystical.spellCure.default")),
+                (random, points) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")),
+                (random, points) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default"))
         );
     }
 
@@ -61,7 +61,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     public static SpellCure getCure(double points) {
         if (cureFactories.isEmpty()) {
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList")); // TODO config
-            return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS));
+            return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default");
         }
         return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM(), points);
     }
