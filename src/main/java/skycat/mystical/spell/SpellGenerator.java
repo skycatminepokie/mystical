@@ -38,9 +38,9 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
         Collections.addAll(cureFactories,
                 (random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")),
-                (random, points) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")),
+                // (random, points) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")),
                 (random, points) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS), "text.mystical.spellCure.default")),
-                (random, points) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")),
+                // (random, points) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")),
                 (random, points) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default"))
         );
     }
