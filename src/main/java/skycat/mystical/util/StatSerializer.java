@@ -1,6 +1,7 @@
 package skycat.mystical.util;
 
 import com.google.gson.*;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -32,32 +33,16 @@ public class StatSerializer implements JsonSerializer<Stat<?>>, JsonDeserializer
 
     @Override
     public Stat<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        StatType<?> type = context.deserialize(json.getAsJsonObject().get("type"), StatType.class); // Figure out the stat type
-        return (type.getOrCreateStat(context.deserialize(json.getAsJsonObject().get("value"), keyClassLookup.get(type)))); // Figure out the stat value
+        StatType<?> type = context.deserialize(json, StatType.class); // Figure out the stat type
+        return (Stat<?>) type.getRegistry().getCodec().parse(JsonOps.INSTANCE, json).getOrThrow(false, s -> Utils.log("awful"));
     }
 
     @Override
     public JsonElement serialize(Stat<?> src, Type typeOfSrc, JsonSerializationContext context) {
-        JsonObject object = new JsonObject();
-        object.add("type", context.serialize(src.getType(), StatType.class));
-        // https://stackoverflow.com/questions/4584541/check-if-a-class-object-is-subclass-of-another-class-object-in-java
-        // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html#isAssignableFrom(java.lang.Class)
-        Class<?> valueClass = src.getValue().getClass();
-        Class<?> assignTo;
-        if (Block.class.isAssignableFrom(valueClass)) { // Figure out what class we want to serialize as
-            assignTo = Block.class;
-        } else if (Item.class.isAssignableFrom(valueClass)) {
-            assignTo = Item.class;
-        } else if (Identifier.class.isAssignableFrom(valueClass)) {
-            assignTo = Identifier.class;
-        } else {
-            Utils.log(Utils.translateString("text.mystical.statSerializer.failedSerializeStat")); // TODO: Config
-            object.add("value", JsonNull.INSTANCE); // TODO: More errors and logging
-            return object;
-        }
+        return serializeGeneric(src, typeOfSrc, context);
+    }
 
-        object.add("value", context.serialize(src.getValue(), assignTo));
-        return object;
-
+    public <T> JsonElement serializeGeneric(Stat<T> src, Type typeOfSrc, JsonSerializationContext context) { // ChatGPT is what helped me fix this, believe it or not.
+        return src.getType().getRegistry().getCodec().encodeStart(JsonOps.INSTANCE, src.getValue()).getOrThrow(false, s -> Utils.log("error and awful"));
     }
 }
