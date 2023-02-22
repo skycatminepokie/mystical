@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
+import net.minecraft.stat.Stat;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import skycat.mystical.spell.cure.SpellCure;
 import skycat.mystical.util.BlockSerializer;
 import skycat.mystical.util.ClassSerializer;
 import skycat.mystical.util.LocalDateTimeSerializer;
+import skycat.mystical.util.StatCodec;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -40,6 +42,7 @@ public class Mystical implements ModInitializer {
             .registerTypeAdapter(SpellCure.class, new SpellCure.Serializer())
             .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
             .registerTypeAdapter(Class.class, new ClassSerializer())
+            .registerTypeAdapter(Stat.class, new StatCodec())
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
