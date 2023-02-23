@@ -16,8 +16,8 @@ import java.lang.reflect.Type;
 public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonDeserializer<Stat<?>> { // TODO Use and test
     public static StatCodec INSTANCE = new StatCodec();
     public static Codec<Pair<StatType<?>, Identifier>> TYPE_IDENTIFIER_CODEC = Codec.pair(
-            Registry.STAT_TYPE.getCodec(),
-            Identifier.CODEC
+            Registry.STAT_TYPE.getCodec().fieldOf("type").codec(),
+            Identifier.CODEC.fieldOf("id").codec()
     );
 
     public <T, S> DataResult<T> genericEncode(Stat<S> input, DynamicOps<T> ops, T prefix) {
