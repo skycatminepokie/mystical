@@ -13,7 +13,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.stat.Stat;
-import net.minecraft.stat.StatType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
 import org.slf4j.Logger;
@@ -22,7 +21,10 @@ import skycat.mystical.command.MysticalCommandHandler;
 import skycat.mystical.spell.SpellHandler;
 import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.SpellCure;
-import skycat.mystical.util.*;
+import skycat.mystical.util.BlockSerializer;
+import skycat.mystical.util.ClassSerializer;
+import skycat.mystical.util.LocalDateTimeSerializer;
+import skycat.mystical.util.StatCodec;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -36,12 +38,11 @@ public class Mystical implements ModInitializer {
             .registerTypeAdapter(Block.class, new BlockSerializer())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
             .registerTypeAdapter(UUID.class, new UUIDTypeAdapter())
-            .registerTypeAdapter(StatType.class, new StatTypeSerializer())
-            .registerTypeAdapter(Stat.class, new StatSerializer())
             .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
             .registerTypeAdapter(SpellCure.class, new SpellCure.Serializer())
             .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
             .registerTypeAdapter(Class.class, new ClassSerializer())
+            .registerTypeAdapter(Stat.class, new StatCodec())
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();

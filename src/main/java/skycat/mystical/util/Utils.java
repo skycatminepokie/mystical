@@ -1,11 +1,16 @@
 package skycat.mystical.util;
 
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import skycat.mystical.LogLevel;
 import skycat.mystical.Mystical;
@@ -14,6 +19,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Utils {
+    /**
+     * {@code Registry.STAT_TYPE.getCodec} is for regular StatTypes
+     * {@code Identifier.CODEC} is for custom StatTypes
+     */
+    public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
+    // public static final Codec<Pair<Either<StatType<?>, Identifier>, Stat<?>>> STAT_CODEC = Codec.pair(STAT_TYPE_CODEC, )
+
     public static boolean log(String msg) {
         return log(msg, LogLevel.INFO, Mystical.LOGGER);
     }
