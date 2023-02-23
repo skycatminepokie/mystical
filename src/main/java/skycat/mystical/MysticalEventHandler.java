@@ -2,14 +2,13 @@ package skycat.mystical;
 
 import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.resource.LifecycledResourceManager;
 import net.minecraft.server.MinecraftServer;
 import skycat.mystical.server.MinecraftServerTimerAccess;
 import skycat.mystical.util.Utils;
 
 import static skycat.mystical.Mystical.CONFIG;
 
-public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping, ServerLifecycleEvents.StartDataPackReload {
+public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
     @Getter private MinecraftServer server;
     private MinecraftServerTimerAccess timerAccess;
 
@@ -64,10 +63,5 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         }
         timerAccess.mystical_setTimer(timerLength);
         return timerLength;
-    }
-
-    @Override
-    public void startDataPackReload(MinecraftServer server, LifecycledResourceManager resourceManager) {
-
     }
 }

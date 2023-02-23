@@ -64,6 +64,5 @@ public class Mystical implements ModInitializer {
 
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
-        ServerLifecycleEvents.START_DATA_PACK_RELOAD.register(EVENT_HANDLER);
     }
 }
