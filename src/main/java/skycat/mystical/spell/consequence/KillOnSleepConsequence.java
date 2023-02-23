@@ -12,7 +12,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
     public static final ConsequenceFactory<KillOnSleepConsequence> FACTORY = new Factory();
 
     protected KillOnSleepConsequence() {
-        super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class, "text.mystical.spellConsequence.killOnSleep"); // TODO: TRANSLATE
+        super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class, "text.mystical.spellConsequence.killOnSleep");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
         @Override
         public @NotNull KillOnSleepConsequence make(@NonNull Random random, double points) {
             // TODO: Take points into account
-            return new KillOnSleepConsequence(); // TODO: TRANSLATE
+            return new KillOnSleepConsequence();
         }
     }
 }

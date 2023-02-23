@@ -45,10 +45,10 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public long setNightTimer() throws NullPointerException {
         // CREDIT: Daomephsta#0044 for help on fabric discord
         if (server == null) {
-            throw new NullPointerException("server was null in setNightTimer.");
+            throw new NullPointerException("server was null in setNightTimer."); // TODO: TRANSLATE
         }
         if (timerAccess == null) {
-            throw new NullPointerException("timerAccess was null in setNightTimer.");
+            throw new NullPointerException("timerAccess was null in setNightTimer."); // TODO: TRANSLATE
         }
         long timerLength;
         long currentTime = server.getOverworld().getTimeOfDay() % 24000;

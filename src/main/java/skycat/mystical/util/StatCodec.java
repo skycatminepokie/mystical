@@ -29,7 +29,8 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
         if (result.result().isPresent()) {
             // Success
             try {
-                StatType<S> type = (StatType<S>) result.result().get().getFirst(); // WARN Check cast
+                @SuppressWarnings("unchecked")
+                StatType<S> type = (StatType<S>) result.result().get().getFirst(); // WARN I'm pretty sure this is a safe cast if all the data is valid
                 Stat<S> stat = type.getOrCreateStat(type.getRegistry().get(result.result().get().getSecond()));
                 return stat;
             } catch (ClassCastException e) {
@@ -38,7 +39,7 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
         } else {
             Utils.log("other oof");
         }
-        return null;
+        return null; // WARN error handling
     }
 
     @Override

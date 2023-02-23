@@ -1,17 +1,17 @@
 {
-  "text.config.mysticalConfig.section.Logging": "Logging",
-  "text.config.mysticalConfig.option.failedToSetNightTimerLogLevel": "Failed to set night timer",
-  "text.config.mysticalConfig.option.timeOfDayAtStartupLogLevel": "Time of day at startup",
-  "text.config.mysticalConfig.option.failedToLoadHavenManagerLogLevel": "Failed to load haven manager",
-  "text.config.mysticalConfig.option.failedToSaveHavenManagerLogLevel": "Failed to save haven manager",
-  "text.config.mysticalConfig.option.playerContributedLogLevel": "Player contributed",
   "text.config.mysticalConfig.option.failedToGetRandomBlockLogLevel": "Failed to get a random block",
   "text.config.mysticalConfig.option.failedToGetRandomBlockLogLevel.tooltip": [
     "Mystical tried to choose a random block type, but failed.\n",
     {"translate": "text.mystical.config.criticalError"}
   ],
+  "text.config.mysticalConfig.option.failedToLoadHavenManagerLogLevel": "Failed to load haven manager",
   "text.config.mysticalConfig.option.failedToLoadSpellHandlerLogLevel": "Failed to load spell handler",
+  "text.config.mysticalConfig.option.failedToSaveHavenManagerLogLevel": "Failed to save haven manager",
   "text.config.mysticalConfig.option.failedToSaveSpellHandlerLogLevel": "Failed to save spell handler",
+  "text.config.mysticalConfig.option.failedToSetNightTimerLogLevel": "Failed to set night timer",
+  "text.config.mysticalConfig.option.playerContributedLogLevel": "Player contributed",
+  "text.config.mysticalConfig.option.timeOfDayAtStartupLogLevel": "Time of day at startup",
+  "text.config.mysticalConfig.section.Logging": "Logging",
 
 
   "text.config.mysticalConfig.enum.logLevel.debug": "Debug",
@@ -20,6 +20,11 @@
   "text.config.mysticalConfig.enum.logLevel.off": "No logging",
   "text.config.mysticalConfig.enum.logLevel.warn": "Warn",
 
+  "text.mystical.config.commonError": [
+    {"translate": "text.mystical.config.note"},
+    "This is a common error, for one reason or another. Mystical will handle it for you.",
+    "\nIt's likely that nothing has gone wrong, but the info may be helpful if there's a bigger problem to solve."
+  ],
   "text.mystical.config.criticalError": [
     {"translate": "text.mystical.config.warning"},
     "This is a critical error.",
@@ -35,19 +40,16 @@
     "\nThough this is rare, it still happens, and there's not much we can do.",
     "\nIf you've lost data, ask for help recovering it."
   ],
-  "text.mystical.config.warning": [
-    {"text": "WARNING", "color": "red"}, ": "
-  ],
   "text.mystical.config.note": [
     {"text": "Note", "color": "aqua"}, ": "
   ],
-  "text.mystical.config.commonError": [
-    {"translate": "text.mystical.config.note"},
-    "This is a common error, for one reason or another. Mystical will handle it for you.",
-    "\nIt's likely that nothing has gone wrong, but the info may be helpful if there's a bigger problem to solve."
+  "text.mystical.config.warning": [
+    {"text": "WARNING", "color": "red"}, ": "
   ],
 
   "text.mystical.classSerializer.failedDeserializeName": "Couldn't deserialize class of name %s.",
+
+  "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
 
   "text.mystical.eventHandler.setNightTimerFailed": "Couldn't set timer for night. Reason: %s",
   "text.mystical.eventHandler.timeOfDay": "Time of day is %l.",
@@ -61,11 +63,12 @@
 
   "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
 
-  "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
-
-  "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
-
+  "text.mystical.spellConsequence.bigCreeperExplosion": "Creepers. They explode- but more.",
   "text.mystical.spellConsequence.default": "Something good or something bad, who knows?",
+  "text.mystical.spellConsequence.fishingRodLaunch": "Fishing rods throw things around a lot.",
+  "text.mystical.spellConsequence.killOnSleep": "Sleep = die :)",
+  "text.mystical.spellConsequence.levitate": "Levitate in the air",
   "text.mystical.spellConsequence.randomTreeType": "Saplings grow into random types of trees.",
-  "text.mystical.spellConsequence.fishingRodLaunch": "Fishing rods throw things around a lot."
+
+  "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead."
 }
