@@ -12,7 +12,7 @@ import java.util.Random;
  * Makes saplings grow into random trees.
  * {@link SpellConsequence#callbackType} is ignored!
  */
-public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: add a configurable chance
+public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFIG: add a configurable chance
     public static final ArrayList<SaplingGenerator> SAPLING_GENERATORS = new ArrayList<>();
     public static final Factory FACTORY = new Factory();
 
