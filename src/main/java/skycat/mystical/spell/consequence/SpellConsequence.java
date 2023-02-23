@@ -11,6 +11,10 @@ import java.lang.reflect.Type;
 @Getter
 public abstract class SpellConsequence {
     private final Class consequenceType;
+    // TODO Probably move callbackType to an extended class
+    /**
+     * If there is no relevant callback, this should be the same as consequenceType
+     */
     private final Class callbackType;
     private final String translationKey;
 

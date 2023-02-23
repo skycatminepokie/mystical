@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.Mystical;
 import skycat.mystical.spell.consequence.BigCreeperExplosionConsequence;
+import skycat.mystical.spell.consequence.FishingRodLaunchConsequence;
 import skycat.mystical.spell.consequence.RandomTreeTypeConsequence;
 import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
@@ -50,6 +51,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public boolean shouldDoRandomTree() {
         return !spellsOfConsequenceType(RandomTreeTypeConsequence.class).isEmpty();
+    }
+
+    public boolean shouldDoFishingRodLaunch() {
+        return !spellsOfConsequenceType(FishingRodLaunchConsequence.class).isEmpty();
     }
 
     /**

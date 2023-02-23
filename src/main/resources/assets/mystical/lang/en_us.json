@@ -66,5 +66,6 @@
   "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
 
   "text.mystical.spellConsequence.default": "Something good or something bad, who knows?",
-  "text.mystical.spellConsequence.randomTreeType": "Saplings grow into random types of trees."
+  "text.mystical.spellConsequence.randomTreeType": "Saplings grow into random types of trees.",
+  "text.mystical.spellConsequence.fishingRodLaunch": "Fishing rods throw things around a lot."
 }
