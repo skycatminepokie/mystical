@@ -18,7 +18,7 @@ public abstract class CreeperEntityMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     void CreeperEntity(EntityType entityType, World world, CallbackInfo ci) {
-        if (Mystical.SPELL_HANDLER.isBigCreeperExplosionActive() && (Mystical.RANDOM.nextDouble(0, 100) < Mystical.CONFIG.bigCreeperExplosionConsequence.chance())) {
+        if (Mystical.SPELL_HANDLER.shouldDoBigCreeperExplosion() && (Mystical.RANDOM.nextDouble(0, 100) < Mystical.CONFIG.bigCreeperExplosionConsequence.chance())) {
             explosionRadius = (int) (explosionRadius * Mystical.CONFIG.bigCreeperExplosionConsequence.multiplier()); // WARN This method seems to lag out the game for some reason
             Utils.log(Utils.translateString("text.mystical.creeperEntityMixin.fired"), Mystical.CONFIG.bigCreeperExplosionConsequence.logLevel());
         }

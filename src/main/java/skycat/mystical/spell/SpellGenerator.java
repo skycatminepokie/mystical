@@ -34,7 +34,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 LevitateConsequence.FACTORY,
                 RandomTreeTypeConsequence.FACTORY,
                 BigCreeperExplosionConsequence.FACTORY,
-                FishingRodLaunchConsequence.FACTORY
+                FishingRodLaunchConsequence.FACTORY,
+                CatVariantChangeConsequence.FACTORY
         );
 
         Collections.addAll(cureFactories,

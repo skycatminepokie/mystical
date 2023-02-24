@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BlockFertilizableMixin",
+    "CatEntityMixin",
     "CreeperEntityMixin",
     "FishingBobberEntityMixin",
     "MinecraftServerTimer",

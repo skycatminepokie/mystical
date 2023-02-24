@@ -64,6 +64,7 @@
   "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
 
   "text.mystical.spellConsequence.bigCreeperExplosion": "Creepers. They explode- but more.",
+  "text.mystical.spellConsequence.catVariantChange": "We change coats. Why shouldn't cats do the same?",
   "text.mystical.spellConsequence.default": "Something good or something bad, who knows?",
   "text.mystical.spellConsequence.fishingRodLaunch": "Fishing rods throw things around a lot.",
   "text.mystical.spellConsequence.killOnSleep": "Sleep = die :)",
