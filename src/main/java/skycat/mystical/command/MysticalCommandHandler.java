@@ -16,7 +16,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(literal("foo").executes(this::testCommand));
+        dispatcher.register(literal("newspell").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4)).executes(this::testCommand));
     }
 
     int testCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {

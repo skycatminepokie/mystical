@@ -30,7 +30,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
     static {
         Collections.addAll(consequenceFactories,
-                KillOnSleepConsequence.FACTORY,
+                // KillOnSleepConsequence.FACTORY,
                 LevitateConsequence.FACTORY,
                 RandomTreeTypeConsequence.FACTORY,
                 BigCreeperExplosionConsequence.FACTORY,
