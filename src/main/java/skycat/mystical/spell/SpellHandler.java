@@ -83,6 +83,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         activeSpells.add(SpellGenerator.get());
     }
 
+    public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
+        activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
+    }
+
     @Override
     public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         for (Spell spell : spellsOfHandler(PlayerBlockBreakEvents.After.class)) {

@@ -46,7 +46,17 @@ public abstract class SpellCure {
         // TODO: Logging
     }
 
-    public record CureContribution(@Nullable UUID contributor, @Nullable LocalDateTime time, double amount) { }
+    public static class CureContribution {
+        @Nullable UUID contributor;
+        @Nullable LocalDateTime time;
+        double amount;
+
+        public CureContribution(@Nullable UUID uuid, @Nullable LocalDateTime now, double amount) {
+            contributor = uuid;
+            time = now;
+            this.amount = amount;
+        }
+    }
 
     public static class Serializer implements JsonSerializer<SpellCure>, JsonDeserializer<SpellCure> {
         @Override

@@ -15,6 +15,7 @@ import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Optional;
 
 /*
@@ -28,6 +29,7 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
     @SuppressWarnings("rawtypes") private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
+    @SuppressWarnings("rawtypes") public static final HashMap<String, ConsequenceFactory> consequenceFactoriesHash = new HashMap<>();
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
@@ -39,6 +41,11 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 FishingRodLaunchConsequence.FACTORY,
                 CatVariantChangeConsequence.FACTORY
         );
+        consequenceFactoriesHash.put("levitate", LevitateConsequence.FACTORY);
+        consequenceFactoriesHash.put("randomTreeType", RandomTreeTypeConsequence.FACTORY);
+        consequenceFactoriesHash.put("bigCreeperExplosion", BigCreeperExplosionConsequence.FACTORY);
+        consequenceFactoriesHash.put("fishingRodLaunch", FishingRodLaunchConsequence.FACTORY);
+        consequenceFactoriesHash.put("catVariantChange", CatVariantChangeConsequence.FACTORY);
 
         Collections.addAll(cureFactories,
                 (random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")), // TODO: Translate
@@ -52,6 +59,10 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
     public static Spell get() {
         return new Spell(getConsequence(0), getCure(0));
+    }
+
+    public static Spell getWithConsequence(ConsequenceFactory<?> consequenceFactory) {
+        return new Spell(consequenceFactory.make(Mystical.RANDOM, 0), getCure(0));
     }
 
     // TODO: Weight things

@@ -16,7 +16,7 @@ public abstract class FishingBobberEntityMixin { // TODO Test
      * @reason Make entity go zoom
      */
     @Overwrite
-    public void pullHookedEntity(Entity entity) {
+    public void pullHookedEntity(Entity entity) { // TODO: Switch to slice
         FishingBobberEntity dis = ((FishingBobberEntity) (Object) this);
         Entity entity2 = dis.getOwner();
         if (entity2 == null) {
