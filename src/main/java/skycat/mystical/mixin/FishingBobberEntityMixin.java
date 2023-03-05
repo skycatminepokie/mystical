@@ -1,31 +1,21 @@
 package skycat.mystical.mixin;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import skycat.mystical.Mystical;
 
 @Mixin(FishingBobberEntity.class)
-public abstract class FishingBobberEntityMixin { // TODO Test
-
-
-    /**
-     * @author skycatminepokie
-     * @reason Make entity go zoom
-     */
-    @Overwrite
-    public void pullHookedEntity(Entity entity) { // TODO: Switch to slice
-        FishingBobberEntity dis = ((FishingBobberEntity) (Object) this);
-        Entity entity2 = dis.getOwner();
-        if (entity2 == null) {
-            return;
-        }
-        Vec3d vec3d = new Vec3d(entity2.getX() - dis.getX(), entity2.getY() - dis.getY(), entity2.getZ() - dis.getZ()).multiply(0.5);
+public abstract class FishingBobberEntityMixin {
+    @ModifyArg(method = "pullHookedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"), index = 0)
+    public Vec3d onSetVelocity(Vec3d velocity) {
         if (Mystical.SPELL_HANDLER.shouldDoFishingRodLaunch()) {
-            vec3d = vec3d.multiply(2.0); // TODO: config
+            return velocity.multiply(20.0); // TODO: config
         }
-        entity.setVelocity(entity.getVelocity().add(vec3d));
+        return velocity;
     }
+
+
 }
