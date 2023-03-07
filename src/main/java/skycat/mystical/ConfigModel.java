@@ -11,6 +11,7 @@ public class ConfigModel {
 
     @SectionHeader("Spells")
     @Nest public BigCreeperExplosionConsequence bigCreeperExplosionConsequence = new BigCreeperExplosionConsequence();
+    @Nest public RandomTreeTypeConsequence randomTreeTypeConsequence = new RandomTreeTypeConsequence();
 
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
@@ -37,7 +38,7 @@ public class ConfigModel {
     public static class RandomTreeTypeConsequence {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
-        public double chance = 100.0; // Not implemented
+        public double chance = 100.0;
         public boolean fromAcacia = true; // Not implemented
         public boolean fromAzalea = true; // Not implemented
         public boolean fromBirch = true; // Not implemented

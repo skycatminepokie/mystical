@@ -59,7 +59,8 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     }
 
     public boolean shouldDoRandomTree() {
-        return !spellsOfConsequenceType(RandomTreeTypeConsequence.class).isEmpty();
+        return (!spellsOfConsequenceType(RandomTreeTypeConsequence.class).isEmpty() &&
+                (Mystical.RANDOM.nextDouble(0, 100) <= Mystical.CONFIG.randomTreeTypeConsequence.chance()));
     }
 
     /**

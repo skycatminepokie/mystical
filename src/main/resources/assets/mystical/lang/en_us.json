@@ -12,7 +12,11 @@
   "text.config.mysticalConfig.option.playerContributedLogLevel": "Player contributed",
   "text.config.mysticalConfig.option.timeOfDayAtStartupLogLevel": "Time of day at startup",
   "text.config.mysticalConfig.section.Logging": "Logging",
-
+  "text.config.mysticalConfig.section.Spells": "Spells",
+  "text.config.mysticalConfig.option.randomTreeTypeConsequence.enabled": "Enable?",
+  "text.config.mysticalConfig.category.bigCreeperExplosionConsequence": "Big creeper explosions",
+  "text.config.mysticalConfig.category.randomTreeTypeConsequence": "Random tree types",
+  "text.config.mysticalConfig.option.randomTreeTypeConsequence.chance": "% chance",
 
   "text.config.mysticalConfig.enum.logLevel.debug": "Debug",
   "text.config.mysticalConfig.enum.logLevel.error": "Error",
