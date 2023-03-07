@@ -1,10 +1,13 @@
 package skycat.mystical.command;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
@@ -36,11 +39,11 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                                 .executes(this::newSpellCommand))
                                 )
                                 .then(literal("list")
-                                        // .then(argument()
-                                        //         .executes())
                                         .executes(this::listSpellsCommand)
                                 )
                                 .then(literal("delete")
+                                        .then(argument("spell", IntegerArgumentType.integer(0))
+                                                .executes(this::deleteSpellWithArgCommand))
                                         .executes(this::deleteSpellsCommand)
                                 )
                         )
@@ -48,6 +51,15 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                 .executes(this::reloadCommand)
                         )
         );
+    }
+
+    private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        int spellNum = context.getArgument("spell", Integer.class);
+        if (spellNum > Mystical.SPELL_HANDLER.getActiveSpells().size() || Mystical.SPELL_HANDLER.getActiveSpells().isEmpty()) { // TODO Fix error text for empty list
+            throw new CommandException(Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.SPELL_HANDLER.getActiveSpells().size() - 1) + ")"));
+        }
+        Mystical.SPELL_HANDLER.getActiveSpells().remove(spellNum);
+        return Command.SINGLE_SUCCESS;
     }
 
     private int listSpellsCommand(CommandContext<ServerCommandSource> context) {
