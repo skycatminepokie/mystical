@@ -1,4 +1,6 @@
 {
+  "text.config.mysticalConfig.title": "Mystical Config",
+  "text.config.mysticalConfig.option.devMode": "Dev mode",
   "text.config.mysticalConfig.option.failedToGetRandomBlockLogLevel": "Failed to get a random block",
   "text.config.mysticalConfig.option.failedToGetRandomBlockLogLevel.tooltip": [
     "Mystical tried to choose a random block type, but failed.\n",
@@ -13,10 +15,18 @@
   "text.config.mysticalConfig.option.timeOfDayAtStartupLogLevel": "Time of day at startup",
   "text.config.mysticalConfig.section.Logging": "Logging",
   "text.config.mysticalConfig.section.Spells": "Spells",
-  "text.config.mysticalConfig.option.randomTreeTypeConsequence.enabled": "Enable?",
+  "text.config.mysticalConfig.option.randomTreeTypeConsequence.enabled": [{"translate": "text.mystical.config.generic.enable"}],
   "text.config.mysticalConfig.category.bigCreeperExplosionConsequence": "Big creeper explosions",
   "text.config.mysticalConfig.category.randomTreeTypeConsequence": "Random tree types",
-  "text.config.mysticalConfig.option.randomTreeTypeConsequence.chance": "% chance",
+  "text.config.mysticalConfig.option.randomTreeTypeConsequence.chance": [{"translate": "text.mystical.config.generic.chance"}],
+  "text.config.mysticalConfig.section.General": "General",
+  "text.config.mysticalConfig.option.bigCreeperExplosionConsequence.enabled": [{"translate": "text.mystical.config.generic.enable"}],
+  "text.config.mysticalConfig.option.bigCreeperExplosionConsequence.multiplier": "Multiplier",
+  "text.config.mysticalConfig.option.bigCreeperExplosionConsequence.chance": [{"translate": "text.mystical.config.generic.chance"}],
+  "text.config.mysticalConfig.option.bigCreeperExplosionConsequence.logLevel": [{"translate": "text.mystical.config.generic.logging"}],
+  "text.config.mysticalConfig.option.bigCreeperExplosionConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
+  "text.config.mysticalConfig.option.randomTreeTypeConsequence.logLevel": [{"translate": "text.mystical.config.generic.logging"}],
+  "text.config.mysticalConfig.option.randomTreeTypeConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
 
   "text.config.mysticalConfig.enum.logLevel.debug": "Debug",
   "text.config.mysticalConfig.enum.logLevel.error": "Error",
@@ -24,6 +34,10 @@
   "text.config.mysticalConfig.enum.logLevel.off": "No logging",
   "text.config.mysticalConfig.enum.logLevel.warn": "Warn",
 
+  "text.mystical.config.generic.enable": "Enable?",
+  "text.mystical.config.generic.logging": "Logging",
+  "text.mystical.config.generic.chance": "% chance",
+  "text.mystical.config.generic.weight": "Weight",
   "text.mystical.config.commonError": [
     {"translate": "text.mystical.config.note"},
     "This is a common error, for one reason or another. Mystical will handle it for you.",
@@ -53,7 +67,9 @@
 
   "text.mystical.classSerializer.failedDeserializeName": "Couldn't deserialize class of name %s.",
 
-  "text.mystical.commandHandler.deleteSpellButton": " [X]",
+  "text.mystical.commands.deleteSpellButton": " [X]",
+  "text.mystical.commands.newSpell.success": "Successfully created new spell.",
+  "text.mystical.commands.reload.success": "Reload successful.",
 
   "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
 

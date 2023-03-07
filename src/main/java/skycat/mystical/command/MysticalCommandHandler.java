@@ -82,7 +82,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             Spell spell = activeSpells.get(i);
             MutableText spellDescription = spell.getConsequence().getDescription();
             if (showDeleteButton) {
-                MutableText deleteButton = Utils.translatable("text.mystical.commandHandler.deleteSpellButton");
+                MutableText deleteButton = Utils.translatable("text.mystical.commands.deleteSpellButton");
                 // TODO: Test
                 Style style = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/mystical spell delete " + i));
                 deleteButton.setStyle(style);
@@ -98,13 +98,13 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         String spell = context.getArgument("spell", String.class);
         Mystical.LOGGER.info("Eyy-o: " + spell); // TODO: Logging // TODO: Config // WARN: Debug
         Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(SpellGenerator.consequenceFactoriesHash.get(spell));
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.newSpell.success"), false); // TODO: Translate
+        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.newSpell.success"), false); // TODO: Tell what spell was created
         return 1;
     }
 
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.SPELL_HANDLER = SpellHandler.loadOrNew();
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.reload.success"), false); // TODO: Translate
+        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.reload.success"), false);
         return 1;
     }
 
