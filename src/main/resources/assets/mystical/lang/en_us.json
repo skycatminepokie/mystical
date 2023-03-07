@@ -53,6 +53,8 @@
 
   "text.mystical.classSerializer.failedDeserializeName": "Couldn't deserialize class of name %s.",
 
+  "text.mystical.commandHandler.deleteSpellButton": " [X]",
+
   "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
 
   "text.mystical.eventHandler.setNightTimerFailed": "Couldn't set timer for night. Reason: %s",

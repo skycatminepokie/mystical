@@ -33,7 +33,7 @@ public abstract class SpellConsequence {
     }
 
     /**
-     * This is a player-readable description/"recipe" for the consequence.
+     * This is a player-readable description of the consequence.
      * Override this if you have parameters to add to the translation.
      */
     public MutableText getDescription() {

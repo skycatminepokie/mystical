@@ -1,5 +1,6 @@
 package skycat.mystical.spell;
 
+import lombok.Getter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -35,7 +36,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         ServerPlayerEvents.AfterRespawn,
         ServerEntityCombatEvents.AfterKilledOtherEntity {
     private static final File SAVE_FILE = new File("config/spellHandler.json");
-    private final ArrayList<Spell> activeSpells = new ArrayList<>();
+    @Getter private final ArrayList<Spell> activeSpells = new ArrayList<>();
 
     public static SpellHandler loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
