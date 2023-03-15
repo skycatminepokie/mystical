@@ -96,3 +96,36 @@ publishing {
         // retrieving dependencies.
     }
 }
+
+// https://fabricmc.net/wiki/tutorial:datagen_setup
+loom {
+    runs {
+        datagenClient {
+            inherit client
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/resources/data/mystical/lang")}"
+            vmArg "-Dfabric-api.datagen.modid=${modid}"
+
+            runDir "build/datagen"
+        }
+    }
+}
+
+/* sourceSets { // I don't think I need these since I'm putting generated files under the resources directory.
+       main {
+           resources {
+               srcDirs += [
+                       'src/main/generated'
+               ]
+           }
+       }
+   } */
+
+
+
+
+
+
+
+

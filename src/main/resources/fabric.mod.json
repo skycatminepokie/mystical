@@ -20,6 +20,9 @@
       "skycat.mystical.Mystical"
     ],
     "server": [
+    ],
+    "fabric-datagen": [
+      "skycat.mystical.datagen.DataGenerator"
     ]
   },
   "mixins": [
