@@ -27,7 +27,6 @@ public class DataGenerator implements DataGeneratorEntrypoint {
                 translationBuilder.add(consequence.getShortNameKey(), consequence.getShortName());
                 translationBuilder.add(consequence.getLongNameKey(), consequence.getLongName());
                 translationBuilder.add(consequence.getDescriptionKey(), consequence.getDescription());
-
             }
         }
 
