@@ -17,15 +17,27 @@ public abstract class SpellConsequence {
      */
     private final Class callbackType;
     private final String translationKey;
+    public final String shortName;
+    public final String longName;
+    public final String description;
 
+    @Deprecated
     public SpellConsequence(Class consequenceType, Class callbackType) {
         this(consequenceType, callbackType, "text.mystical.spellConsequence.default");
     }
 
+    @Deprecated
     public SpellConsequence(Class consequenceType, Class callbackType, String translationKey) {
+        this(consequenceType, callbackType, translationKey, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.");
+    }
+
+    public SpellConsequence(Class consequenceType, Class callbackType, String translationKey, String shortName, String longName, String description) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
         this.translationKey = translationKey;
+        this.shortName = shortName;
+        this.longName = longName;
+        this.description = description;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {
