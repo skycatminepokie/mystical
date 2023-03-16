@@ -21,16 +21,15 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generateTranslations(TranslationBuilder translationBuilder) {
+            // Generate translations for consequences
             for (ConsequenceFactory<?> factory : SpellGenerator.consequenceFactoriesHash.values()) {
-                generateConsequenceTranslation(translationBuilder, factory.make(Mystical.RANDOM, 0));
+                SpellConsequence consequence = factory.make(Mystical.RANDOM, 0);
+                translationBuilder.add(consequence.getShortNameKey(), consequence.getShortName());
+                translationBuilder.add(consequence.getLongNameKey(), consequence.getLongName());
+                translationBuilder.add(consequence.getDescriptionKey(), consequence.getDescription());
+
             }
         }
 
-        private void generateConsequenceTranslation(TranslationBuilder builder, SpellConsequence consequence) {
-            builder.add("text.mystical.consequence." + consequence.getShortName() + ".shortName", consequence.getShortName());
-            builder.add("text.mystical.consequence." + consequence.getShortName() + ".longName", consequence.getLongName());
-            builder.add("text.mystical.consequence." + consequence.getShortName() + ".description", consequence.description); // TODO use getter instead
-
-        }
     }
 }
