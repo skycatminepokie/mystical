@@ -85,15 +85,9 @@
 
   "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
 
-  "text.mystical.spellConsequence.bigCreeperExplosion": "Creepers. They explode- but more.",
-  "text.mystical.spellConsequence.catVariantChange": "We change coats. Why shouldn't cats do the same?",
-  "text.mystical.spellConsequence.default": "Something good or something bad, who knows?",
-  "text.mystical.spellConsequence.fishingRodLaunch": "Fishing rods throw things around a lot.",
-  "text.mystical.spellConsequence.killOnSleep": "Sleep = die :)",
-  "text.mystical.spellConsequence.levitate": "Levitate in the air",
-  "text.mystical.spellConsequence.randomTreeType": "Saplings grow into random types of trees.",
-
   "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
+
+
   "text.mystical.consequence.bigCreeperExplosions.description": "Creepers go boom. But more.",
   "text.mystical.consequence.bigCreeperExplosions.longName": "Bigger Creeper Explosions",
   "text.mystical.consequence.bigCreeperExplosions.shortName": "bigCreeperExplosions",
@@ -108,5 +102,8 @@
   "text.mystical.consequence.levitate.shortName": "levitate",
   "text.mystical.consequence.randomTreeType.description": "The saplings are spies!",
   "text.mystical.consequence.randomTreeType.longName": "Random Tree Types",
-  "text.mystical.consequence.randomTreeType.shortName": "randomTreeType"
+  "text.mystical.consequence.randomTreeType.shortName": "randomTreeType",
+  "text.mystical.consequence.sheepColorChange.description": "The fluffy marshmallows got jealous of _jeb.",
+  "text.mystical.consequence.sheepColorChange.longName": "Sheep Color Change",
+  "text.mystical.consequence.sheepColorChange.shortName": "sheepColorChange"
 }

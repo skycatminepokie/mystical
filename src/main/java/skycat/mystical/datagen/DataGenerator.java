@@ -22,7 +22,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
         @Override
         public void generateTranslations(TranslationBuilder translationBuilder) {
             // Generate translations for consequences
-            for (ConsequenceFactory<?> factory : SpellGenerator.consequenceFactoriesHash.values()) {
+            for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
                 SpellConsequence consequence = factory.make(Mystical.RANDOM, 0);
                 translationBuilder.add(consequence.getShortNameKey(), consequence.getShortName());
                 translationBuilder.add(consequence.getLongNameKey(), consequence.getLongName());

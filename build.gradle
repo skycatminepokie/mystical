@@ -106,7 +106,7 @@ loom {
             inherit client
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/resources/data/mystical/lang")}" // TODO this causes problems
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
             vmArg "-Dfabric-api.datagen.modid=${modid}"
 
             runDir "build/datagen"

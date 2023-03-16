@@ -35,7 +35,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                         .then(literal("spell")
                                 .then(literal("new")
                                         .then(argument("spell", StringArgumentType.word())
-                                                .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.consequenceFactoriesHash.keySet(), builder)))
+                                                .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.getShortNameToFactory().keySet(), builder)))
                                                 .executes(this::newSpellCommand))
                                 )
                                 .then(literal("list")
@@ -97,7 +97,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int newSpellCommand(CommandContext<ServerCommandSource> context) {
         String spell = context.getArgument("spell", String.class);
         Mystical.LOGGER.info("Eyy-o: " + spell); // TODO: Logging // TODO: Config // WARN: Debug
-        Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(SpellGenerator.consequenceFactoriesHash.get(spell));
+        Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(SpellGenerator.getShortNameToFactory().get(spell));
         context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.newSpell.success"), false); // TODO: Tell what spell was created
         return 1;
     }
