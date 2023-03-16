@@ -12,7 +12,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
     public static final ConsequenceFactory<KillOnSleepConsequence> FACTORY = new Factory();
 
     protected KillOnSleepConsequence() {
-        super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class, "text.mystical.spellConsequence.killOnSleep");
+        super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class);
     }
 
     @Override

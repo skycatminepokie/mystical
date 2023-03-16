@@ -38,7 +38,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     public LevitateConsequence(int length, int level, Class callbackType) { // TODO: maybe double-check that it's a valid callbackType
-        super(LevitateConsequence.class, callbackType, "text.mystical.spellConsequence.levitate");
+        super(LevitateConsequence.class, callbackType, "levitate", "Levitation", "Are you a balloon?");
         this.length = length;
         this.level = level;
     }
