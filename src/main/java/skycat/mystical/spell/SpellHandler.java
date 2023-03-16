@@ -64,6 +64,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 (Mystical.RANDOM.nextDouble(0, 100) <= Mystical.CONFIG.randomTreeTypeConsequence.chance()));
     }
 
+    public boolean shouldSheepChangeColor() {
+        return (!spellsOfConsequenceType(SheepColorChangeConsequence.class).isEmpty());
+    }
+
     /**
      * Used for finding active spells with a particular consequence type.
      * This is not the same as a handler.

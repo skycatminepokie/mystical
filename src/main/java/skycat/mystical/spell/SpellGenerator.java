@@ -39,7 +39,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 RandomTreeTypeConsequence.FACTORY,
                 BigCreeperExplosionConsequence.FACTORY,
                 FishingRodLaunchConsequence.FACTORY,
-                CatVariantChangeConsequence.FACTORY
+                CatVariantChangeConsequence.FACTORY,
+                SheepColorChangeConsequence.FACTORY
         );
         consequenceFactoriesHash.put("levitate", LevitateConsequence.FACTORY);
         consequenceFactoriesHash.put("randomTreeType", RandomTreeTypeConsequence.FACTORY);

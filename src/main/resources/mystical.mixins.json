@@ -11,6 +11,7 @@
     "MinecraftServerTimer",
     "SaplingBlockMixin",
     "ServerWorldMixin",
+    "SheepEntityMixin",
     "StatHandlerMixin"
   ],
   "client": [
