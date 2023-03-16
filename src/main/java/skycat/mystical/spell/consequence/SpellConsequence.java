@@ -28,16 +28,16 @@ public abstract class SpellConsequence {
 
     @Deprecated
     public SpellConsequence(Class consequenceType, Class callbackType, String translationKey) {
-        this(consequenceType, callbackType, translationKey, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.");
+        this(consequenceType, callbackType, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.");
     }
 
-    public SpellConsequence(Class consequenceType, Class callbackType, String translationKey, String shortName, String longName, String description) {
+    public SpellConsequence(Class consequenceType, Class callbackType, String shortName, String longName, String description) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
-        this.translationKey = translationKey;
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
+        this.translationKey = null;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {
