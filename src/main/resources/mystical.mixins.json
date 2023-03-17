@@ -12,7 +12,8 @@
     "SaplingBlockMixin",
     "ServerWorldMixin",
     "SheepEntityMixin",
-    "StatHandlerMixin"
+    "StatHandlerMixin",
+    "ZombieEntityMixin"
   ],
   "client": [
   ],

@@ -105,5 +105,8 @@
   "text.mystical.consequence.randomTreeType.shortName": "randomTreeType",
   "text.mystical.consequence.sheepColorChange.description": "The fluffy marshmallows got jealous of _jeb.",
   "text.mystical.consequence.sheepColorChange.longName": "Sheep Color Change",
-  "text.mystical.consequence.sheepColorChange.shortName": "sheepColorChange"
+  "text.mystical.consequence.sheepColorChange.shortName": "sheepColorChange",
+  "text.mystical.consequence.zombieTypeChange.description": "Zombies are having a wardrobe crisis",
+  "text.mystical.consequence.zombieTypeChange.longName": "Zombie Type Change",
+  "text.mystical.consequence.zombieTypeChange.shortName": "zombieTypeChange"
 }
