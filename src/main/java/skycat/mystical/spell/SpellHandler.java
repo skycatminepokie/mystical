@@ -68,6 +68,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return (!spellsOfConsequenceType(SheepColorChangeConsequence.class).isEmpty());
     }
 
+    public boolean shouldChangeZombieType() {
+        return (!spellsOfConsequenceType(ZombieTypeChangeConsequence.class).isEmpty());
+    }
+
     /**
      * Used for finding active spells with a particular consequence type.
      * This is not the same as a handler.

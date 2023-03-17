@@ -16,7 +16,8 @@ public abstract class ZombieEntityMixin {
 
     @Inject(method = "damage", at = @At("RETURN"))
     public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (!cir.getReturnValue() || Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.zombieTypeChangeConsequence.chance()) { // If nothing happened or we didn't roll high enough // TODO: config
+        // If the spell is not active, the damage didn't go through, or we roll too low, don't do anything
+        if (!Mystical.SPELL_HANDLER.shouldChangeZombieType() || !cir.getReturnValue() || Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.zombieTypeChangeConsequence.chance()) {
             return;
         }
         ZombieEntity dis = (ZombieEntity) (Object) this;
