@@ -16,7 +16,7 @@
   "text.config.mysticalConfig.section.Logging": "Logging",
   "text.config.mysticalConfig.section.Spells": "Spells",
   "text.config.mysticalConfig.option.randomTreeTypeConsequence.enabled": [{"translate": "text.mystical.config.generic.enable"}],
-  "text.config.mysticalConfig.category.bigCreeperExplosionConsequence": "Big creeper explosions",
+  "text.config.mysticalConfig.category.bigCreeperExplosionConsequence": [{"translate": "text.mystical.consequence.bigCreeperExplosion.longName"}],
   "text.config.mysticalConfig.category.randomTreeTypeConsequence": "Random tree types",
   "text.config.mysticalConfig.option.randomTreeTypeConsequence.chance": [{"translate": "text.mystical.config.generic.chance"}],
   "text.config.mysticalConfig.section.General": "General",
@@ -27,7 +27,12 @@
   "text.config.mysticalConfig.option.bigCreeperExplosionConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
   "text.config.mysticalConfig.option.randomTreeTypeConsequence.logLevel": [{"translate": "text.mystical.config.generic.logging"}],
   "text.config.mysticalConfig.option.randomTreeTypeConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
-
+  "text.config.mysticalConfig.category.zombieTypeChangeConsequence": [{"translate": "text.mystical.consequence.zombieTypeChange.longName"}],
+  "text.config.mysticalConfig.option.zombieTypeChangeConsequence.enabled": [{"translate": "text.mystical.config.generic.enable"}],
+  "text.config.mysticalConfig.option.zombieTypeChangeConsequence.chance": [{"translate": "text.mystical.config.generic.chance"}],
+  "text.config.mysticalConfig.option.zombieTypeChangeConsequence.logLevel": [{"translate": "text.mystical.config.generic.logging"}],
+  "text.config.mysticalConfig.option.zombieTypeChangeConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
+  
   "text.config.mysticalConfig.enum.logLevel.debug": "Debug",
   "text.config.mysticalConfig.enum.logLevel.error": "Error",
   "text.config.mysticalConfig.enum.logLevel.info": "Info",
@@ -88,9 +93,9 @@
   "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
 
 
-  "text.mystical.consequence.bigCreeperExplosions.description": "Creepers go boom. But more.",
-  "text.mystical.consequence.bigCreeperExplosions.longName": "Bigger Creeper Explosions",
-  "text.mystical.consequence.bigCreeperExplosions.shortName": "bigCreeperExplosions",
+  "text.mystical.consequence.bigCreeperExplosion.description": "Creepers go boom. But more.",
+  "text.mystical.consequence.bigCreeperExplosion.longName": "Bigger Creeper Explosions",
+  "text.mystical.consequence.bigCreeperExplosion.shortName": "bigCreeperExplosion",
   "text.mystical.consequence.catVariantChange.description": "We change coats, so why can't cats do the same?",
   "text.mystical.consequence.catVariantChange.longName": "Cat Variant Change",
   "text.mystical.consequence.catVariantChange.shortName": "catVariantChange",

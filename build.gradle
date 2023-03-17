@@ -114,7 +114,7 @@ loom {
     }
 }
 
-/* sourceSets { // I don't think I need these since I'm putting generated files under the resources directory.
+/* sourceSets { // Adding these manually
        main {
            resources {
                srcDirs += [

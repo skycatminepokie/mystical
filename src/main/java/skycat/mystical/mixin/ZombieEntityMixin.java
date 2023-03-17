@@ -16,7 +16,7 @@ public abstract class ZombieEntityMixin {
 
     @Inject(method = "damage", at = @At("RETURN"))
     public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (!cir.getReturnValue() || Mystical.RANDOM.nextInt(10) < 9) { // If nothing happened or we didn't roll high enough // TODO: config
+        if (!cir.getReturnValue() || Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.zombieTypeChangeConsequence.chance()) { // If nothing happened or we didn't roll high enough // TODO: config
             return;
         }
         ZombieEntity dis = (ZombieEntity) (Object) this;

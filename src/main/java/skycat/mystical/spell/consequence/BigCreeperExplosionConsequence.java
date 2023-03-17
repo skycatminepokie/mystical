@@ -9,7 +9,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     private BigCreeperExplosionConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, "bigCreeperExplosions", "Bigger Creeper Explosions", "Creepers go boom. But more.");
+        super(consequenceType, callbackType, "bigCreeperExplosion", "Bigger Creeper Explosions", "Creepers go boom. But more.");
     }
 
     public static class Factory implements ConsequenceFactory<BigCreeperExplosionConsequence> {
