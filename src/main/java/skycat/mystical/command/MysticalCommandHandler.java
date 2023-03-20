@@ -32,6 +32,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(
                 literal("mystical")
+                        .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4))
                         .then(literal("spell")
                                 .then(literal("new")
                                         .then(argument("spell", StringArgumentType.word())
