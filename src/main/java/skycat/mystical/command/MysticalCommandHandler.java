@@ -35,7 +35,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 literal("mystical")
                         .requires(Permissions.require("mystical.command.mystical", true))
                         .then(literal("spell")
-                                .requires(Permissions.require("mystical.command.mystical.spell", 4))
+                                .requires(Permissions.require("mystical.command.mystical.spell", true))
                                 .then(literal("new")
                                         .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
                                         .then(argument("spell", StringArgumentType.word())
