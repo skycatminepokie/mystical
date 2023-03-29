@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
@@ -32,23 +33,28 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(
                 literal("mystical")
-                        .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(4))
+                        .requires(Permissions.require("mystical.command.mystical", true))
                         .then(literal("spell")
+                                .requires(Permissions.require("mystical.command.mystical.spell", true))
                                 .then(literal("new")
+                                        .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
                                         .then(argument("spell", StringArgumentType.word())
                                                 .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.getShortNameToFactory().keySet(), builder)))
                                                 .executes(this::newSpellCommand))
                                 )
                                 .then(literal("list")
+                                        .requires(Permissions.require("mystical.command.mystical.spell.list", true))
                                         .executes(this::listSpellsCommand)
                                 )
                                 .then(literal("delete")
+                                        .requires(Permissions.require("mystical.command.mystical.spell.delete", 4))
                                         .then(argument("spell", IntegerArgumentType.integer(0))
                                                 .executes(this::deleteSpellWithArgCommand))
                                         .executes(this::deleteSpellsCommand)
                                 )
                         )
                         .then(literal("reload")
+                                .requires(Permissions.require("mystical.command.mystical.reload", 4))
                                 .executes(this::reloadCommand)
                         )
         );
