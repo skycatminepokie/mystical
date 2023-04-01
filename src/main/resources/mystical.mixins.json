@@ -7,6 +7,7 @@
     "BlockFertilizableMixin",
     "CatEntityMixin",
     "CreeperEntityMixin",
+    "DamageTrackerMixin",
     "FishingBobberEntityMixin",
     "MinecraftServerTimer",
     "SaplingBlockMixin",

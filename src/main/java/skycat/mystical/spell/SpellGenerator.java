@@ -42,7 +42,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 FishingRodLaunchConsequence.FACTORY,
                 CatVariantChangeConsequence.FACTORY,
                 SheepColorChangeConsequence.FACTORY,
-                ZombieTypeChangeConsequence.FACTORY
+                ZombieTypeChangeConsequence.FACTORY,
+                SkeletonTypeChangeConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.

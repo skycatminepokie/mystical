@@ -41,6 +41,9 @@
   "text.mystical.consequence.sheepColorChange.description": "The fluffy marshmallows got jealous of _jeb.",
   "text.mystical.consequence.sheepColorChange.longName": "Sheep Color Change",
   "text.mystical.consequence.sheepColorChange.shortName": "sheepColorChange",
+  "text.mystical.consequence.skeletonTypeChange.description": "Skeletons are having a wardrobe crisis too!",
+  "text.mystical.consequence.skeletonTypeChange.longName": "Skeleton Type Change",
+  "text.mystical.consequence.skeletonTypeChange.shortName": "skeletonTypeChange",
   "text.mystical.consequence.zombieTypeChange.description": "Zombies are having a wardrobe crisis",
   "text.mystical.consequence.zombieTypeChange.longName": "Zombie Type Change",
   "text.mystical.consequence.zombieTypeChange.shortName": "zombieTypeChange"

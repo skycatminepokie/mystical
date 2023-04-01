@@ -13,6 +13,7 @@ public class ConfigModel {
     @Nest public BigCreeperExplosionConsequence bigCreeperExplosionConsequence = new BigCreeperExplosionConsequence();
     @Nest public RandomTreeTypeConsequence randomTreeTypeConsequence = new RandomTreeTypeConsequence();
     @Nest public ZombieTypeChangeConsequence zombieTypeChangeConsequence = new ZombieTypeChangeConsequence();
+    @Nest public SkeletonTypeChangeConsequence skeletonTypeChangeConsequence = new SkeletonTypeChangeConsequence(); // TODO: translate
 
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
@@ -71,11 +72,18 @@ public class ConfigModel {
     public static class ZombieTypeChangeConsequence {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
-        public double chance = 100.0;
+        public double chance = 25.0;
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
         public double weight = 1; // Not implemented
     }
 
+    public static class SkeletonTypeChangeConsequence {
+        public boolean enabled = true; // Not implemented
+        @RangeConstraint(min = 0.0001d, max = 100.0d)
+        public double chance = 25.0;
+        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        public double weight = 1; // Not implemented
+    }
 
 
 }

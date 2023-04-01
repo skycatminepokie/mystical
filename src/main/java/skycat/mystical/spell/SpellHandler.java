@@ -68,6 +68,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return (!spellsOfConsequenceType(SheepColorChangeConsequence.class).isEmpty());
     }
 
+    public boolean shouldChangeSkeletonType() {
+        return (!spellsOfConsequenceType(SkeletonTypeChangeConsequence.class).isEmpty());
+    }
+
     public boolean shouldChangeZombieType() {
         return (!spellsOfConsequenceType(ZombieTypeChangeConsequence.class).isEmpty());
     }
