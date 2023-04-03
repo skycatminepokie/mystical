@@ -194,4 +194,8 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
         return results;
     }
+
+    public boolean shouldChangeEnderType() {
+        return (!spellsOfConsequenceType(EnderTypeChangeConsequence.class).isEmpty());
+    }
 }
