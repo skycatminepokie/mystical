@@ -1,9 +1,13 @@
 package skycat.mystical.mixin;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
+import net.minecraft.entity.mob.EndermanEntity;
+import net.minecraft.entity.mob.EndermiteEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +34,22 @@ public abstract class DamageTrackerMixin {
                 // Convert
                 ((AbstractSkeletonEntity) entity).convertTo(Util.getRandom(SkeletonTypeChangeConsequence.SKELETON_TYPES, Mystical.MC_RANDOM), true)
                         .damage(DamageSource.OUT_OF_WORLD, totalDamage); // Do the damage TODO check for null (shouldn't happen though)
+            }
+        } else {
+            if (entity instanceof EndermanEntity || entity instanceof EndermiteEntity) {
+                if (Mystical.SPELL_HANDLER.shouldChangeEnderType() && // Spell is active
+                        !damageSource.isOutOfWorld() && // Damage from normal source
+                        Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.enderTypeChangeConsequence.chance()) { // Roll the dice
+                    float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
+                    Mystical.LOGGER.info("total: " + totalDamage + " max: " + entity.getMaxHealth() + " original: " + originalHealth + " damage: " + damage);
+                    // Convert
+                    EntityType<? extends MobEntity> convertToType = EntityType.ENDERMITE;
+                    if (entity instanceof EndermiteEntity) { // If it's an endermite, turn it into an enderman instead.
+                        convertToType = EntityType.ENDERMAN;
+                    }
+                    ((MobEntity) entity).convertTo(convertToType, true)
+                            .damage(DamageSource.OUT_OF_WORLD, totalDamage); // Do the damage TODO check for null (shouldn't happen though)
+                }
             }
         }
     }

@@ -37,6 +37,11 @@
   "text.config.mysticalConfig.option.zombieTypeChangeConsequence.chance": [{"translate": "text.mystical.config.generic.chance"}],
   "text.config.mysticalConfig.option.zombieTypeChangeConsequence.logLevel": [{"translate": "text.mystical.config.generic.logging"}],
   "text.config.mysticalConfig.option.zombieTypeChangeConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
+  "text.config.mysticalConfig.category.enderTypeChangeConsequence": [{"translate": "text.mystical.consequence.enderTypeChange.longName"}],
+  "text.config.mysticalConfig.option.enderTypeChangeConsequence.enabled": [{"translate": "text.mystical.config.generic.enable"}],
+  "text.config.mysticalConfig.option.enderTypeChangeConsequence.chance": [{"translate": "text.mystical.config.generic.chance"}],
+  "text.config.mysticalConfig.option.enderTypeChangeConsequence.logLevel": [{"translate": "text.mystical.config.generic.logging"}],
+  "text.config.mysticalConfig.option.enderTypeChangeConsequence.weight": [{"translate": "text.mystical.config.generic.weight"}],
   
   "text.config.mysticalConfig.enum.logLevel.debug": "Debug",
   "text.config.mysticalConfig.enum.logLevel.error": "Error",

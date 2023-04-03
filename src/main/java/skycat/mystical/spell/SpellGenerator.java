@@ -29,8 +29,7 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
     @SuppressWarnings("rawtypes") private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
-    @SuppressWarnings("rawtypes")
-    private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
+    @SuppressWarnings("rawtypes") private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
@@ -43,12 +42,13 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 CatVariantChangeConsequence.FACTORY,
                 SheepColorChangeConsequence.FACTORY,
                 ZombieTypeChangeConsequence.FACTORY,
-                SkeletonTypeChangeConsequence.FACTORY
+                SkeletonTypeChangeConsequence.FACTORY,
+                EnderTypeChangeConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
         for (ConsequenceFactory<?> factory : consequenceFactories) {
-            getShortNameToFactory().put(factory.make(Mystical.RANDOM, 0).getShortName(), factory); // Not the greatest option for getting the names, but oh well.
+            getShortNameToFactory().put(factory.make(Mystical.RANDOM, 0).getShortName(), factory); // Not the greatest option for getting the names since we're making a new one, but oh well.
         }
 
         Collections.addAll(cureFactories,
