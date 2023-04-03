@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import skycat.mystical.Mystical;
+import skycat.mystical.spell.consequence.CatVariantChangeConsequence;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public abstract class CatEntityMixin { // I could probably turn this into an eve
                 VARIANTS.add(catVariant);
             }
         }
-        if (Mystical.SPELL_HANDLER.shouldChangeCatVariant()) {
+        if (Mystical.SPELL_HANDLER.isConsequenceActive(CatVariantChangeConsequence.class)) {
             setVariant(Util.getRandom(VARIANTS, Mystical.MC_RANDOM));
         }
     }

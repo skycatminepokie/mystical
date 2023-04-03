@@ -16,7 +16,8 @@ import net.minecraft.stat.Stat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import skycat.mystical.Mystical;
-import skycat.mystical.spell.consequence.*;
+import skycat.mystical.spell.consequence.ConsequenceFactory;
+import skycat.mystical.spell.consequence.SpellConsequence;
 import skycat.mystical.spell.cure.StatBackedSpellCure;
 import skycat.mystical.util.Utils;
 
@@ -47,33 +48,8 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
     }
 
-    public boolean shouldDoBigCreeperExplosion() {
-        return !spellsOfConsequenceType(BigCreeperExplosionConsequence.class).isEmpty();
-    }
-
-    public boolean shouldChangeCatVariant() {
-        return !spellsOfConsequenceType(CatVariantChangeConsequence.class).isEmpty();
-    }
-
-    public boolean shouldDoFishingRodLaunch() {
-        return !spellsOfConsequenceType(FishingRodLaunchConsequence.class).isEmpty();
-    }
-
-    public boolean shouldDoRandomTree() {
-        return (!spellsOfConsequenceType(RandomTreeTypeConsequence.class).isEmpty() &&
-                (Mystical.RANDOM.nextDouble(0, 100) <= Mystical.CONFIG.randomTreeTypeConsequence.chance()));
-    }
-
-    public boolean shouldSheepChangeColor() {
-        return (!spellsOfConsequenceType(SheepColorChangeConsequence.class).isEmpty());
-    }
-
-    public boolean shouldChangeSkeletonType() {
-        return (!spellsOfConsequenceType(SkeletonTypeChangeConsequence.class).isEmpty());
-    }
-
-    public boolean shouldChangeZombieType() {
-        return (!spellsOfConsequenceType(ZombieTypeChangeConsequence.class).isEmpty());
+    public boolean isConsequenceActive(Class<? extends SpellConsequence> consequence) {
+        return !spellsOfConsequenceType(consequence).isEmpty();
     }
 
     /**
@@ -115,6 +91,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
     }
 
+    /**
+     * Applies spells of type {@link ServerPlayerEvents.AfterRespawn}
+     * @param oldPlayer the old player
+     * @param newPlayer the new player
+     * @param alive whether the old player is still alive
+     */
     @Override
     public void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
         for (Spell spell : spellsOfHandler(ServerPlayerEvents.AfterRespawn.class)) {
@@ -122,15 +104,25 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
     }
 
+    /**
+     * Applies spells of type {@link PlayerBlockBreakEvents.Before}
+     * @param world the world in which the block is broken
+     * @param player the player breaking the block
+     * @param pos the position at which the block is broken
+     * @param state the block state <strong>before</strong> the block is broken
+     * @param blockEntity the block entity <strong>before</strong> the block is broken, can be {@code null}
+     * @return {@code false} to cancel the breaking, {@code true} to leave it alone.
+     * @implNote All spells will be run, even if it is cancelled in one of them.
+     */
     @Override
     public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         // TODO Make options for when there are collisions
-        boolean shouldCancel = false;
+        boolean returnValue = false;
         for (Spell spell : spellsOfHandler(PlayerBlockBreakEvents.Before.class)) {
-            // Keep these in order. This way, the consequence triggers, even if shouldCancel is true. Otherwise, it gets short-circuited.
-            shouldCancel = ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity) || shouldCancel;
+            // Keep these in order. This way, the consequence triggers, even if returnValue is false. Otherwise, it gets short-circuited.
+            returnValue = returnValue || ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity);
         }
-        return !shouldCancel;
+        return returnValue;
     }
 
     @Override
@@ -193,9 +185,5 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             }
         }
         return results;
-    }
-
-    public boolean shouldChangeEnderType() {
-        return (!spellsOfConsequenceType(EnderTypeChangeConsequence.class).isEmpty());
     }
 }

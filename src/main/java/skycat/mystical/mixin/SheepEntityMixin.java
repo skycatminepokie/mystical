@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import skycat.mystical.Mystical;
+import skycat.mystical.spell.consequence.SheepColorChangeConsequence;
 
 @Mixin(SheepEntity.class)
 public abstract class SheepEntityMixin {
@@ -16,7 +17,7 @@ public abstract class SheepEntityMixin {
 
     @Inject(method = "onEatingGrass", at = @At("TAIL"))
     public void afterEatGrass(CallbackInfo ci) {
-        if (Mystical.SPELL_HANDLER.shouldSheepChangeColor()) { // TODO: Logging
+        if (Mystical.SPELL_HANDLER.isConsequenceActive(SheepColorChangeConsequence.class)) { // TODO: Logging
             setColor(Util.getRandom(DyeColor.values(), Mystical.MC_RANDOM));
         }
     }
