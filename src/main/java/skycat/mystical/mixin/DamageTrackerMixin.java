@@ -29,7 +29,7 @@ public abstract class DamageTrackerMixin {
         if (entity instanceof AbstractSkeletonEntity) {
             if (Mystical.SPELL_HANDLER.isConsequenceActive(SkeletonTypeChangeConsequence.class) && // Spell is active
                     !damageSource.isOutOfWorld() && // Damage from normal source
-                    Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.skeletonTypeChangeConsequence.chance()) { // Roll the dice
+                    Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.skeletonTypeChange.chance()) { // Roll the dice
                 float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
                 Mystical.LOGGER.info("total: " + totalDamage + " max: " + entity.getMaxHealth() + " original: " + originalHealth + " damage: " + damage);
                 // Convert
@@ -40,7 +40,7 @@ public abstract class DamageTrackerMixin {
             if (entity instanceof EndermanEntity || entity instanceof EndermiteEntity) {
                 if (Mystical.SPELL_HANDLER.isConsequenceActive(EnderTypeChangeConsequence.class) && // Spell is active
                         !damageSource.isOutOfWorld() && // Damage from normal source
-                        Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.enderTypeChangeConsequence.chance()) { // Roll the dice
+                        Mystical.RANDOM.nextFloat(0, 100) >= Mystical.CONFIG.enderTypeChange.chance()) { // Roll the dice
                     float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
                     Mystical.LOGGER.info("total: " + totalDamage + " max: " + entity.getMaxHealth() + " original: " + originalHealth + " damage: " + damage);
                     // Convert

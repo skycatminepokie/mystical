@@ -10,11 +10,11 @@ public class ConfigModel {
     public boolean devMode = false; // Not implemented
 
     @SectionHeader("Spells")
-    @Nest public BigCreeperExplosionConsequence bigCreeperExplosionConsequence = new BigCreeperExplosionConsequence();
-    @Nest public RandomTreeTypeConsequence randomTreeTypeConsequence = new RandomTreeTypeConsequence();
-    @Nest public ZombieTypeChangeConsequence zombieTypeChangeConsequence = new ZombieTypeChangeConsequence();
-    @Nest public SkeletonTypeChangeConsequence skeletonTypeChangeConsequence = new SkeletonTypeChangeConsequence();
-    @Nest public EnderTypeChangeConsequence enderTypeChangeConsequence = new EnderTypeChangeConsequence(); // TODO: Translate
+    @Nest public BigCreeperExplosionConfig bigCreeperExplosion = new BigCreeperExplosionConfig();
+    @Nest public RandomTreeTypeConfig randomTreeType = new RandomTreeTypeConfig();
+    @Nest public ZombieTypeChangeConfig zombieTypeChange = new ZombieTypeChangeConfig();
+    @Nest public SkeletonTypeChangeConfig skeletonTypeChange = new SkeletonTypeChangeConfig();
+    @Nest public EnderTypeChangeConfig enderTypeChange = new EnderTypeChangeConfig(); // TODO: Translate
 
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
@@ -26,8 +26,9 @@ public class ConfigModel {
     public LogLevel failedToGetRandomBlockLogLevel = LogLevel.ERROR;
     public LogLevel failedToLoadSpellHandlerLogLevel = LogLevel.WARN;
     public LogLevel failedToSaveSpellHandlerLogLevel = LogLevel.ERROR;
+    public LogLevel newSpellCommandLogLevel = LogLevel.INFO;
 
-    public static class BigCreeperExplosionConsequence {
+    public static class BigCreeperExplosionConfig {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
         public double multiplier = 2.0;
@@ -38,7 +39,7 @@ public class ConfigModel {
         public double weight = 1; // Not implemented
     }
     
-    public static class RandomTreeTypeConsequence {
+    public static class RandomTreeTypeConfig {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
         public double chance = 100.0;
@@ -62,7 +63,7 @@ public class ConfigModel {
         public double weight = 1; // Not implemented
     }
 
-    public static class LevitateConsequence {
+    public static class LevitateConfig {
         public boolean enabled = true; // Not implemented
         public double chance = 100.0; // Not implemented
         // TODO: block/event type options
@@ -70,7 +71,7 @@ public class ConfigModel {
         public double weight = 1; // Not implemented
     }
 
-    public static class ZombieTypeChangeConsequence {
+    public static class ZombieTypeChangeConfig {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
         public double chance = 25.0;
@@ -78,7 +79,7 @@ public class ConfigModel {
         public double weight = 1; // Not implemented
     }
 
-    public static class SkeletonTypeChangeConsequence {
+    public static class SkeletonTypeChangeConfig {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
         public double chance = 25.0;
@@ -86,7 +87,7 @@ public class ConfigModel {
         public double weight = 1; // Not implemented
     }
 
-    public static class EnderTypeChangeConsequence {
+    public static class EnderTypeChangeConfig {
         public boolean enabled = true; // Not implemented
         @RangeConstraint(min = 0.0001d, max = 100.0d)
         public double chance = 25.0;

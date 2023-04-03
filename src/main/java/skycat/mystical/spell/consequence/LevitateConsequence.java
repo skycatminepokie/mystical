@@ -74,7 +74,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
             // TODO: Take points into account
             return new LevitateConsequence(5, 5, Utils.chooseRandom(random, supportedEvents));
-            // return new LevitateConsequence(5, 5, EntitySleepEvents.StartSleeping.class); // WARN Debug
+            // return new LevitateConfig(5, 5, EntitySleepEvents.StartSleeping.class); // WARN Debug
         }
     }
 }
