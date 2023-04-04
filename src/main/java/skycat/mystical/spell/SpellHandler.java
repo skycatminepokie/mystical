@@ -117,10 +117,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     @Override
     public boolean beforeBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         // TODO Make options for when there are collisions
-        boolean returnValue = false;
+        boolean returnValue = true;
         for (Spell spell : spellsOfHandler(PlayerBlockBreakEvents.Before.class)) {
             // Keep these in order. This way, the consequence triggers, even if returnValue is false. Otherwise, it gets short-circuited.
-            returnValue = returnValue || ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity);
+            returnValue = ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity) && returnValue  ;
         }
         return returnValue;
     }
