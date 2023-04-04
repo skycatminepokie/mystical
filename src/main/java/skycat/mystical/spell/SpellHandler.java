@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 import static skycat.mystical.Mystical.GSON;
@@ -184,5 +185,21 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             }
         }
         return results;
+    }
+
+    /**
+     * Removes all spells that have met their cure condition
+     * @return The number of spells cured
+     */
+    public int removeCuredSpells() {
+        ListIterator<Spell> li = activeSpells.listIterator();
+        int removed = 0;
+        while (li.hasNext()) {
+            if (li.next().getCure().isSatisfied()) {
+                li.remove();
+                removed ++;
+            }
+        }
+        return removed;
     }
 }

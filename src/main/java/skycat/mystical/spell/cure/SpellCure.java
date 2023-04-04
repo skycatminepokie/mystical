@@ -46,6 +46,14 @@ public abstract class SpellCure {
         // TODO: Logging
     }
 
+    public boolean isSatisfied() {
+        double fulfilled = 0;
+        for (CureContribution contribution : contributions) {
+            fulfilled += contribution.amount;
+        }
+        return fulfilled >= contributionGoal;
+    }
+
     public static class CureContribution {
         @Nullable UUID contributor;
         @Nullable LocalDateTime time;
