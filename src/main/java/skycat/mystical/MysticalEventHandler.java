@@ -24,6 +24,9 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         // TODO: Logging
         // TODO: Add new spells
         Mystical.SPELL_HANDLER.removeCuredSpells();
+        if (Mystical.SPELL_HANDLER.getActiveSpells().size() < 2) { // TODO: Config
+            Mystical.SPELL_HANDLER.activateNewSpell();
+        }
 
         try {
             setNightTimer();
