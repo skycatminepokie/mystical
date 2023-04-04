@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import skycat.mystical.Mystical;
 import skycat.mystical.spell.consequence.EnderTypeChangeConsequence;
 import skycat.mystical.spell.consequence.SkeletonTypeChangeConsequence;
+import skycat.mystical.util.Utils;
 
 @Mixin(DamageTracker.class)
 public abstract class DamageTrackerMixin {
@@ -34,8 +35,8 @@ public abstract class DamageTrackerMixin {
                 float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
                 Mystical.LOGGER.info("total: " + totalDamage + " max: " + entity.getMaxHealth() + " original: " + originalHealth + " damage: " + damage);
                 // Convert
-                ((AbstractSkeletonEntity) entity).convertTo(Util.getRandom(SkeletonTypeChangeConsequence.SKELETON_TYPES, Mystical.MC_RANDOM), true)
-                        .damage(DamageSource.OUT_OF_WORLD, totalDamage); // Do the damage TODO check for null (shouldn't happen though)
+                MobEntity skeletonEntity = ((AbstractSkeletonEntity) entity).convertTo(Util.getRandom(SkeletonTypeChangeConsequence.SKELETON_TYPES, Mystical.MC_RANDOM), true);
+                // Do the damage TODO check for null (shouldn't happen though)
             }
         } else {
             if (entity instanceof EndermanEntity || entity instanceof EndermiteEntity) {
@@ -50,8 +51,14 @@ public abstract class DamageTrackerMixin {
                     if (entity instanceof EndermiteEntity) { // If it's an endermite, turn it into an enderman instead.
                         convertToType = EntityType.ENDERMAN;
                     }
-                    ((MobEntity) entity).convertTo(convertToType, true)
-                            .damage(DamageSource.OUT_OF_WORLD, totalDamage); // Do the damage TODO check for null (shouldn't happen though)
+                    MobEntity mobEntity = ((MobEntity) entity).convertTo(convertToType, true);
+                    if (mobEntity != null) {
+                        if (convertToType.equals(EntityType.ENDERMAN)) { // Since endermites are so weak, we'll leave them be.
+                            mobEntity.damage(DamageSource.OUT_OF_WORLD, totalDamage); // Do the damage
+                        }
+                    } else {
+                        Utils.log("mobEntity was null when converting. Not sure how.");
+                    }
                 }
             }
         }
