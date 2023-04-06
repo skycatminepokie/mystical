@@ -28,5 +28,10 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
             // TODO: Take points into account
             return new KillOnSleepConsequence();
         }
+
+        @Override
+        public double getChance() {
+            return 0; // WARN debug
+        }
     }
 }

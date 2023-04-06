@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-@FunctionalInterface
 public interface ConsequenceFactory<T extends SpellConsequence> {
     /**
      * Make a new consequence of class {@link T}
@@ -14,4 +13,11 @@ public interface ConsequenceFactory<T extends SpellConsequence> {
      * @return A new {@link T}.
      */
     @NotNull T make(@NonNull Random random, double points);
+
+    /**
+     * Return the config option's chance for the consequence, or 0 if it's disabled
+     * Probably an awful way to do this
+     * @return the config option's chance for the consequence, or 0 if it's disabled
+     */
+    double getChance();
 }

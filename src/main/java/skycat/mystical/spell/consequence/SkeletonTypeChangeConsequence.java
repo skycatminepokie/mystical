@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +30,11 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
         @Override
         public @NotNull SkeletonTypeChangeConsequence make(@NonNull Random random, double points) {
             return new SkeletonTypeChangeConsequence();
+        }
+
+        @Override
+        public double getChance() {
+            return (Mystical.CONFIG.skeletonTypeChange.enabled()?Mystical.CONFIG.skeletonTypeChange.chance():0);
         }
     }
 }

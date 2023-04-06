@@ -2,6 +2,7 @@ package skycat.mystical.spell.consequence;
 
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 
 import java.util.Random;
 
@@ -16,6 +17,11 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
         @Override
         public @NotNull EnderTypeChangeConsequence make(@NonNull Random random, double points) {
             return new EnderTypeChangeConsequence();
+        }
+
+        @Override
+        public double getChance() {
+            return (Mystical.CONFIG.enderTypeChange.enabled()?Mystical.CONFIG.enderTypeChange.chance():0);
         }
     }
 

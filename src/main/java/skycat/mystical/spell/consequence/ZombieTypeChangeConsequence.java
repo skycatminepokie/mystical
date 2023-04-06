@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +32,11 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
         @Override
         public @NotNull ZombieTypeChangeConsequence make(@NonNull Random random, double points) {
             return new ZombieTypeChangeConsequence();
+        }
+
+        @Override
+        public double getChance() {
+            return (Mystical.CONFIG.zombieTypeChange.enabled()?Mystical.CONFIG.zombieTypeChange.chance():0);
         }
     }
 }

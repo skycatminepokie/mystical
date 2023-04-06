@@ -3,6 +3,7 @@ package skycat.mystical.spell.consequence;
 import lombok.NonNull;
 import net.minecraft.block.sapling.*;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +38,11 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
         @Override
         public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {
             return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, RandomTreeTypeConsequence.class);
+        }
+
+        @Override
+        public double getChance() {
+            return (Mystical.CONFIG.randomTreeType.enabled()?Mystical.CONFIG.randomTreeType.chance():0);
         }
     }
 }

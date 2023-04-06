@@ -16,5 +16,11 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
         public @NotNull SheepColorChangeConsequence make(@NonNull Random random, double points) {
             return new SheepColorChangeConsequence();
         }
+
+        @Override
+        public double getChance() {
+            // return (Mystical.CONFIG.bigCreeperExplosion.enabled()?Mystical.CONFIG.bigCreeperExplosion.chance():0);
+            return 100; // WARN debug
+        }
     }
 }

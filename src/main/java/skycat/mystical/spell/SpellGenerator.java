@@ -69,13 +69,35 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         return new Spell(consequenceFactory.make(Mystical.RANDOM, 0), getCure(0));
     }
 
-    // TODO: Weight things
-    public static SpellConsequence getConsequence(double points) {
-        if (consequenceFactories.isEmpty()) {
+    /**
+     * Get a random consequence, weighted by config settings
+     * @param points unused
+     * @return A new consequence, or null if all spells are disabled
+     */
+    public static SpellConsequence getConsequence(double points) { // I think we're getting rid of the notion of points for now. TODO: Refactor out points WARN: This may be slow with many consequences
+        if (consequenceFactories.isEmpty()) { // Should not happen
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList")); // TODO: Config
             return LevitateConsequence.FACTORY.make(Mystical.getRANDOM(), 0);
         }
-        return Utils.chooseRandom(Mystical.getRANDOM(), consequenceFactories).make(Mystical.getRANDOM(), points);
+
+        // Think of the chances as being on a number line.
+        double sum = 0;
+        for (ConsequenceFactory<?> factory : consequenceFactories) {
+            sum += factory.getChance(); // The line is as big as all the weights set end to end.
+        }
+        double rand = Mystical.RANDOM.nextDouble(sum); // rand is a place on the number line.
+        for (ConsequenceFactory<?> consequenceFactory : consequenceFactories) {
+            double chance = consequenceFactory.getChance();
+            if (rand < chance) { // If that place is in the "territory" of this consequence
+                return consequenceFactory.make(Mystical.RANDOM, 0); // then that one is chosen.
+            } else { // Otherwise, chop off the first part of the number line
+                // by forgetting about this consequence, essentially shifting all the territories left to fill in the gap.
+                rand -= chance; // All we have to do is make sure rand moves along with everything else
+                assert rand >= 0; // WARN debug
+            }
+        }
+
+        return null; // This should only happen if all consequences are disabled TODO: Logging
     }
 
     public static SpellCure getCure(double points) {

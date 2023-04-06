@@ -76,5 +76,11 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
             return new LevitateConsequence(5, 5, Utils.chooseRandom(random, supportedEvents));
             // return new LevitateConfig(5, 5, EntitySleepEvents.StartSleeping.class); // WARN Debug
         }
+
+        @Override
+        public double getChance() {
+            // return (Mystical.CONFIG.levitate.enabled()?Mystical.CONFIG.levitate.chance():0);
+            return 100; // WARN debug
+        }
     }
 }
