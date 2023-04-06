@@ -35,8 +35,8 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
         }
 
         @Override
-        public double getChance() {
-            return (Mystical.CONFIG.zombieTypeChange.enabled()?Mystical.CONFIG.zombieTypeChange.chance():0);
+        public double getWeight() {
+            return (Mystical.CONFIG.zombieTypeChange.enabled()?Mystical.CONFIG.zombieTypeChange.weight():0);
         }
     }
 }

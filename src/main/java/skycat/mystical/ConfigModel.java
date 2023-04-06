@@ -35,7 +35,6 @@ public class ConfigModel {
         @RangeConstraint(min = 0.0001d, max = 100.0d)
         public double chance = 100.0;
         public LogLevel logLevel = LogLevel.OFF;
-        @RangeConstraint(min = 0.0001d, max = Double.MAX_VALUE)
         public double weight = 1; // Not implemented
     }
     

@@ -83,11 +83,11 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         // Think of the chances as being on a number line.
         double sum = 0;
         for (ConsequenceFactory<?> factory : consequenceFactories) {
-            sum += factory.getChance(); // The line is as big as all the weights set end to end.
+            sum += factory.getWeight(); // The line is as big as all the weights set end to end.
         }
         double rand = Mystical.RANDOM.nextDouble(sum); // rand is a place on the number line.
         for (ConsequenceFactory<?> consequenceFactory : consequenceFactories) {
-            double chance = consequenceFactory.getChance();
+            double chance = consequenceFactory.getWeight();
             if (rand < chance) { // If that place is in the "territory" of this consequence
                 return consequenceFactory.make(Mystical.RANDOM, 0); // then that one is chosen.
             } else { // Otherwise, chop off the first part of the number line

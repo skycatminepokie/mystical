@@ -41,8 +41,8 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
         }
 
         @Override
-        public double getChance() {
-            return (Mystical.CONFIG.randomTreeType.enabled()?Mystical.CONFIG.randomTreeType.chance():0);
+        public double getWeight() {
+            return (Mystical.CONFIG.randomTreeType.enabled()?Mystical.CONFIG.randomTreeType.weight():0);
         }
     }
 }

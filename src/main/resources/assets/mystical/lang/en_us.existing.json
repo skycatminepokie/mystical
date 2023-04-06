@@ -23,6 +23,7 @@
 
   "text.config.mysticalConfig.option.skeletonTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.bigCreeperExplosion.chance": "% chance",
+  "text.config.mysticalConfig.option.bigCreeperExplosion.multiplier": "Multiplier",
   "text.config.mysticalConfig.option.randomTreeType.chance": "% chance",
   "text.config.mysticalConfig.option.levitate.chance": "% chance",
   "text.config.mysticalConfig.option.zombieTypeChange.chance": "% chance",

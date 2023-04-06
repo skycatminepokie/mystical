@@ -19,5 +19,5 @@ public interface ConsequenceFactory<T extends SpellConsequence> {
      * Probably an awful way to do this
      * @return the config option's chance for the consequence, or 0 if it's disabled
      */
-    double getChance();
+    double getWeight();
 }

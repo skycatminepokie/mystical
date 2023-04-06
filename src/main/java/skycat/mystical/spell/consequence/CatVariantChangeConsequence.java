@@ -17,8 +17,8 @@ public class CatVariantChangeConsequence extends SpellConsequence {
             return new CatVariantChangeConsequence();
         }
         @Override
-        public double getChance() {
-            // return (Mystical.CONFIG.bigCreeperExplosion.enabled()?Mystical.CONFIG.bigCreeperExplosion.chance():0);
+        public double getWeight() {
+            // return (Mystical.CONFIG.bigCreeperExplosion.enabled()?Mystical.CONFIG.bigCreeperExplosion.weight():0);
             return 100; // WARN debug
         }
     }

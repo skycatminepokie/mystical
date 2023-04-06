@@ -33,8 +33,8 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
         }
 
         @Override
-        public double getChance() {
-            return (Mystical.CONFIG.skeletonTypeChange.enabled()?Mystical.CONFIG.skeletonTypeChange.chance():0);
+        public double getWeight() {
+            return (Mystical.CONFIG.skeletonTypeChange.enabled()?Mystical.CONFIG.skeletonTypeChange.weight():0);
         }
     }
 }

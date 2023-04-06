@@ -78,8 +78,8 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         }
 
         @Override
-        public double getChance() {
-            // return (Mystical.CONFIG.levitate.enabled()?Mystical.CONFIG.levitate.chance():0);
+        public double getWeight() {
+            // return (Mystical.CONFIG.levitate.enabled()?Mystical.CONFIG.levitate.weight():0);
             return 100; // WARN debug
         }
     }

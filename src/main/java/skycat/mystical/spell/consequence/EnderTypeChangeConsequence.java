@@ -20,8 +20,8 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
         }
 
         @Override
-        public double getChance() {
-            return (Mystical.CONFIG.enderTypeChange.enabled()?Mystical.CONFIG.enderTypeChange.chance():0);
+        public double getWeight() {
+            return (Mystical.CONFIG.enderTypeChange.enabled()?Mystical.CONFIG.enderTypeChange.weight():0);
         }
     }
 

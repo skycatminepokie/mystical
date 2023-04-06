@@ -30,7 +30,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
         }
 
         @Override
-        public double getChance() {
+        public double getWeight() {
             return 0; // WARN debug
         }
     }
