@@ -16,6 +16,7 @@ public class ConfigModel {
     @Nest public FishingRodLaunchConfig fishingRodLaunch = new FishingRodLaunchConfig();
     @Nest public LevitateConfig levitate = new LevitateConfig();
     @Nest public RandomTreeTypeConfig randomTreeType = new RandomTreeTypeConfig();
+    @Nest public SheepColorChangeConfig sheepColorChange = new SheepColorChangeConfig();
     @Nest public ZombieTypeChangeConfig zombieTypeChange = new ZombieTypeChangeConfig();
     @Nest public SkeletonTypeChangeConfig skeletonTypeChange = new SkeletonTypeChangeConfig();
 
@@ -82,12 +83,12 @@ public class ConfigModel {
     }
 
     public static class FishingRodLaunchConfig {
-        public boolean enabled = true; // Not implemented
+        public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
-        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
-        public double weight = 1; // Not implemented
+        public double weight = 1;
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }
@@ -115,7 +116,7 @@ public class ConfigModel {
     }
 
     public static class RandomTreeTypeConfig {
-        public boolean enabled = true; // Not implemented
+        public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
         // public boolean fromAcacia = true; // Not implemented // TODO: Config
@@ -136,7 +137,23 @@ public class ConfigModel {
         // public boolean toSpruce = true; // Not implemented // TODO: Config
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
         @PredicateConstraint("weightPredicate")
-        public double weight = 1; // Not implemented
+        public double weight = 1;
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class SheepColorChangeConfig {
+        public boolean enabled = true;
+        @PredicateConstraint("chancePredicate")
+        public double chance = 25.0;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }

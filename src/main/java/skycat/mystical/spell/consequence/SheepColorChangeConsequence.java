@@ -2,6 +2,7 @@ package skycat.mystical.spell.consequence;
 
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 
 import java.util.Random;
 
@@ -19,8 +20,7 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
 
         @Override
         public double getWeight() {
-            // return (Mystical.CONFIG.bigCreeperExplosion.enabled()?Mystical.CONFIG.bigCreeperExplosion.weight():0);
-            return 100; // WARN debug
+            return (Mystical.CONFIG.sheepColorChange.enabled()?Mystical.CONFIG.sheepColorChange.weight():0);
         }
     }
 }
