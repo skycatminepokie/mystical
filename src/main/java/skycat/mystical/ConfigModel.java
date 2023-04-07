@@ -180,12 +180,12 @@ public class ConfigModel {
     }
 
     public static class ZombieTypeChangeConfig {
-        public boolean enabled = true; // Not implemented
+        public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 25.0;
-        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
-        public double weight = 1; // Not implemented
+        public double weight = 1;
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }
