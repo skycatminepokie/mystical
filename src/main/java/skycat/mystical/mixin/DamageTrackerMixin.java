@@ -33,10 +33,13 @@ public abstract class DamageTrackerMixin {
                     !entity.isDead() && // And we're not dead
                     Utils.percentChance(Mystical.CONFIG.skeletonTypeChange.chance())) { // Roll the dice
                 float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
-                Mystical.LOGGER.info("total: " + totalDamage + " max: " + entity.getMaxHealth() + " original: " + originalHealth + " damage: " + damage);
+                Utils.log(Utils.translateString("text.mystical.skeletonTypeChange.fired"), Mystical.CONFIG.skeletonTypeChange.logLevel()); // TODO: Translate
                 // Convert
                 MobEntity skeletonEntity = ((AbstractSkeletonEntity) entity).convertTo(Util.getRandom(SkeletonTypeChangeConsequence.SKELETON_TYPES, Mystical.MC_RANDOM), true);
                 // Do the damage TODO check for null (shouldn't happen though)
+                if (skeletonEntity != null) {
+                    skeletonEntity.damage(DamageSource.OUT_OF_WORLD, totalDamage);
+                }
             }
         } else {
             if (entity instanceof EndermanEntity || entity instanceof EndermiteEntity) {
@@ -45,7 +48,7 @@ public abstract class DamageTrackerMixin {
                         !entity.isDead() && // And we're not dead
                         Utils.percentChance(Mystical.CONFIG.enderTypeChange.chance())) { // Roll the dice
                     float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
-                    Mystical.LOGGER.info("text.mystical.enderTypeChange.fired"); // TODO: Translate
+                    Utils.log(Utils.translateString("text.mystical.enderTypeChange.fired"), Mystical.CONFIG.enderTypeChange.logLevel()); // TODO: Translate
                     // Convert
                     EntityType<? extends MobEntity> convertToType = EntityType.ENDERMITE;
                     if (entity instanceof EndermiteEntity) { // If it's an endermite, turn it into an enderman instead.
