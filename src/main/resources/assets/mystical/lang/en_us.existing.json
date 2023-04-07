@@ -26,6 +26,7 @@
   "text.config.mysticalConfig.option.bigCreeperExplosion.multiplier": "Multiplier",
   "text.config.mysticalConfig.option.randomTreeType.chance": "% chance",
   "text.config.mysticalConfig.option.levitate.chance": "% chance",
+  "text.config.mysticalConfig.option.sheepColorChange.chance": "% chance",
   "text.config.mysticalConfig.option.zombieTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance"
 }
