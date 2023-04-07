@@ -17,12 +17,12 @@
     "client": [
     ],
     "main": [
-      "skycat.mystical.Mystical"
+      "com.skycat.mystical.Mystical"
     ],
     "server": [
     ],
     "fabric-datagen": [
-      "skycat.mystical.datagen.DataGenerator"
+      "com.skycat.mystical.datagen.DataGenerator"
     ]
   },
   "mixins": [
@@ -36,7 +36,7 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/class_2248": ["skycat/mystical/server/DefaultFertilizable"]
+      "net/minecraft/class_2248": ["com/skycat/mystical/server/DefaultFertilizable"]
     }
   }
 }
