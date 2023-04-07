@@ -17,6 +17,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 import skycat.mystical.util.Utils;
 
 import java.util.ArrayList;
@@ -44,7 +45,10 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     private void levitate(LivingEntity entity) {
-        Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level); // TODO: CONFIG
+        if (Utils.percentChance(Mystical.CONFIG.levitate.chance())) {
+            Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level); // TODO: CONFIG
+            Utils.log(Utils.translateString("text.mystical.levitate.fired"), Mystical.CONFIG.levitate.logLevel());
+        }
     }
 
     @Override
@@ -79,8 +83,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
 
         @Override
         public double getWeight() {
-            // return (Mystical.CONFIG.levitate.enabled()?Mystical.CONFIG.levitate.weight():0);
-            return 100; // WARN debug
+            return (Mystical.CONFIG.levitate.enabled()?Mystical.CONFIG.levitate.weight():0);
         }
     }
 }
