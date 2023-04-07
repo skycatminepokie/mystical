@@ -46,6 +46,22 @@ public class ConfigModel {
             return ConfigModel.weightPredicate(value);
         }
     }
+
+    public static class CatVariantChangeConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+        @PredicateConstraint("chancePredicate")
+        public double chance = 100.0;
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
     
     public static class RandomTreeTypeConfig {
         public boolean enabled = true; // Not implemented
@@ -96,20 +112,7 @@ public class ConfigModel {
         }
     }
 
-    public static class CatVariantChangeConfig {
-        public boolean enabled = true;
-        public LogLevel logLevel = LogLevel.OFF;
-        @PredicateConstraint("weightPredicate")
-        public double weight = 1;
-        public double chance = 100.0; // Not implemented: logging, chance
-        public static boolean chancePredicate(double value) {
-            return ConfigModel.chancePredicate(value);
-        }
 
-        public static boolean weightPredicate(double value) {
-            return ConfigModel.weightPredicate(value);
-        }
-    }
 
     public static class ZombieTypeChangeConfig {
         public boolean enabled = true; // Not implemented

@@ -136,4 +136,8 @@ public class Utils {
     public static String translateString(String path, Object... args) {
         return translatable(path, args).getString();
     }
+
+    public static boolean percentChance(double chance) {
+        return Mystical.RANDOM.nextDouble(0, 100) < chance;
+    }
 }
