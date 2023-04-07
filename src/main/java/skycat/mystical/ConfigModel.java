@@ -62,7 +62,40 @@ public class ConfigModel {
             return ConfigModel.weightPredicate(value);
         }
     }
-    
+
+    public static class EnderTypeChangeConfig {
+        public boolean enabled = true; // Not implemented
+        @PredicateConstraint("chancePredicate")
+        public double chance = 25.0;
+        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1; // Not implemented
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class LevitateConfig {
+        public boolean enabled = true; // Not implemented
+        @PredicateConstraint("chancePredicate")
+        public double chance = 100.0; // Not implemented
+        // TODO: block/event type options
+        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1; // Not implemented
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
     public static class RandomTreeTypeConfig {
         public boolean enabled = true; // Not implemented
         @PredicateConstraint("chancePredicate")
@@ -95,11 +128,10 @@ public class ConfigModel {
         }
     }
 
-    public static class LevitateConfig {
+    public static class SkeletonTypeChangeConfig {
         public boolean enabled = true; // Not implemented
         @PredicateConstraint("chancePredicate")
-        public double chance = 100.0; // Not implemented
-        // TODO: block/event type options
+        public double chance = 25.0;
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
         @PredicateConstraint("weightPredicate")
         public double weight = 1; // Not implemented
@@ -111,8 +143,6 @@ public class ConfigModel {
             return ConfigModel.weightPredicate(value);
         }
     }
-
-
 
     public static class ZombieTypeChangeConfig {
         public boolean enabled = true; // Not implemented
@@ -130,37 +160,6 @@ public class ConfigModel {
         }
     }
 
-    public static class SkeletonTypeChangeConfig {
-        public boolean enabled = true; // Not implemented
-        @PredicateConstraint("chancePredicate")
-        public double chance = 25.0;
-        public LogLevel logLevel = LogLevel.OFF; // Not implemented
-        @PredicateConstraint("weightPredicate")
-        public double weight = 1; // Not implemented
-        public static boolean chancePredicate(double value) {
-            return ConfigModel.chancePredicate(value);
-        }
-
-        public static boolean weightPredicate(double value) {
-            return ConfigModel.weightPredicate(value);
-        }
-    }
-
-    public static class EnderTypeChangeConfig {
-        public boolean enabled = true; // Not implemented
-        @PredicateConstraint("chancePredicate")
-        public double chance = 25.0;
-        public LogLevel logLevel = LogLevel.OFF; // Not implemented
-        @PredicateConstraint("weightPredicate")
-        public double weight = 1; // Not implemented
-        public static boolean chancePredicate(double value) {
-            return ConfigModel.chancePredicate(value);
-        }
-
-        public static boolean weightPredicate(double value) {
-            return ConfigModel.weightPredicate(value);
-        }
-    }
 
     /**
      * Verify that the chance is valid.
