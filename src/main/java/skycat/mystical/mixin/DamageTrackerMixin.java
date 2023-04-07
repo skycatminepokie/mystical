@@ -45,7 +45,7 @@ public abstract class DamageTrackerMixin {
                         !entity.isDead() && // And we're not dead
                         Utils.percentChance(Mystical.CONFIG.enderTypeChange.chance())) { // Roll the dice
                     float totalDamage = (entity.getMaxHealth() - originalHealth) + damage;
-                    Mystical.LOGGER.info("total: " + totalDamage + " max: " + entity.getMaxHealth() + " original: " + originalHealth + " damage: " + damage);
+                    Mystical.LOGGER.info("text.mystical.enderTypeChange.fired"); // TODO: Translate
                     // Convert
                     EntityType<? extends MobEntity> convertToType = EntityType.ENDERMITE;
                     if (entity instanceof EndermiteEntity) { // If it's an endermite, turn it into an enderman instead.

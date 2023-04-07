@@ -11,11 +11,13 @@ public class ConfigModel {
 
     @SectionHeader("Spells")
     @Nest public BigCreeperExplosionConfig bigCreeperExplosion = new BigCreeperExplosionConfig();
+    @Nest public CatVariantChangeConfig catVariantChange = new CatVariantChangeConfig();
+    @Nest public EnderTypeChangeConfig enderTypeChange = new EnderTypeChangeConfig();
+    @Nest public FishingRodLaunchConfig fishingRodLaunch = new FishingRodLaunchConfig();
+    @Nest public LevitateConfig levitate = new LevitateConfig();
     @Nest public RandomTreeTypeConfig randomTreeType = new RandomTreeTypeConfig();
     @Nest public ZombieTypeChangeConfig zombieTypeChange = new ZombieTypeChangeConfig();
     @Nest public SkeletonTypeChangeConfig skeletonTypeChange = new SkeletonTypeChangeConfig();
-    @Nest public EnderTypeChangeConfig enderTypeChange = new EnderTypeChangeConfig(); // TODO: Translate
-    @Nest public CatVariantChangeConfig catVariantChange = new CatVariantChangeConfig();
 
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
@@ -64,9 +66,25 @@ public class ConfigModel {
     }
 
     public static class EnderTypeChangeConfig {
-        public boolean enabled = true; // Not implemented
+        public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 25.0;
+        public LogLevel logLevel = LogLevel.OFF; // Not implemented
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class FishingRodLaunchConfig {
+        public boolean enabled = true; // Not implemented
+        @PredicateConstraint("chancePredicate")
+        public double chance = 100.0;
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
         @PredicateConstraint("weightPredicate")
         public double weight = 1; // Not implemented

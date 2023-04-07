@@ -2,6 +2,7 @@ package skycat.mystical.spell.consequence;
 
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
+import skycat.mystical.Mystical;
 
 import java.util.Random;
 
@@ -25,8 +26,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            // return (Mystical.CONFIG.bigCreeperExplosion.enabled()?Mystical.CONFIG.bigCreeperExplosion.weight():0);
-            return 100; // WARN: DEBUG
+            return (Mystical.CONFIG.fishingRodLaunch.enabled()? Mystical.CONFIG.fishingRodLaunch.weight():0);
         }
     }
 }
