@@ -47,7 +47,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     private void levitate(LivingEntity entity) {
         if (Utils.percentChance(Mystical.CONFIG.levitate.chance())) {
             Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level); // TODO: CONFIG
-            Utils.log(Utils.translateString("text.mystical.levitate.fired"), Mystical.CONFIG.levitate.logLevel()); // TODO: Translate
+            Utils.log(Utils.translateString("text.mystical.consequence.levitate.fired"), Mystical.CONFIG.levitate.logLevel()); // TODO: Translate
         }
     }
 

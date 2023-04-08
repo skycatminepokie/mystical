@@ -32,7 +32,7 @@ public abstract class CatEntityMixin { // I could probably turn this into an eve
         }
         if (Mystical.SPELL_HANDLER.isConsequenceActive(CatVariantChangeConsequence.class) && Utils.percentChance(Mystical.CONFIG.catVariantChange.chance())) {
             setVariant(Util.getRandom(VARIANTS, Mystical.MC_RANDOM));
-            Utils.log(Utils.translateString("text.mystical.catVariantChange.fired"), Mystical.CONFIG.catVariantChange.logLevel()); // TODO translate
+            Utils.log(Utils.translateString("text.mystical.consequence.catVariantChange.fired"), Mystical.CONFIG.catVariantChange.logLevel()); // TODO translate
         }
     }
 }
