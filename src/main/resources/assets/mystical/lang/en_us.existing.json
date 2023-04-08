@@ -5,8 +5,6 @@
   "text.mystical.commands.newSpell.success": "Successfully created new spell.",
   "text.mystical.commands.reload.success": "Reload successful.",
 
-  "text.mystical.creeperEntityMixin.fired": "A new creeper has been generated with multiplied explosion power.",
-
   "text.mystical.eventHandler.setNightTimerFailed": "Couldn't set timer for night. Reason: %s",
   "text.mystical.eventHandler.timeOfDay": "Time of day is %l.",
 
@@ -18,13 +16,15 @@
   "text.mystical.spellGenerator.failedRandomBlock": "SpellGenerator failed to choose a random block. How? No clue. Using a command block instead.",
 
   "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
-
   "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
-
   "text.config.mysticalConfig.option.skeletonTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.bigCreeperExplosion.chance": "% chance",
+  "text.config.mysticalConfig.option.bigCreeperExplosion.multiplier": "Multiplier",
   "text.config.mysticalConfig.option.randomTreeType.chance": "% chance",
   "text.config.mysticalConfig.option.levitate.chance": "% chance",
+  "text.config.mysticalConfig.option.sheepColorChange.chance": "% chance",
   "text.config.mysticalConfig.option.zombieTypeChange.chance": "% chance",
-  "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance"
+  "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance",
+  "text.config.mysticalConfig.option.fishingRodLaunch.chance": "% chance",
+  "text.config.mysticalConfig.option.catVariantChange.chance": "% chance"
 }
