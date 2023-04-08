@@ -10,7 +10,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public FishingRodLaunchConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, "fishingRodLaunch", "Fishing Rod Launch", "Hehe. Rod make cow go zoom.");
+        super(consequenceType, callbackType, "fishingRodLaunch", "Fishing Rod Launch", "Hehe. Rod make cow go zoom.", "Fishing rod power multiplied");
     }
 
     public FishingRodLaunchConsequence() {

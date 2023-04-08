@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class FishingBobberEntityMixin {
     @ModifyArg(method = "pullHookedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"), index = 0)
     public Vec3d onSetVelocity(Vec3d velocity) {
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class)) {
-            Utils.log(Utils.translateString("text.mystical.consequence.fishingRodLaunch.fired"), Mystical.CONFIG.fishingRodLaunch.logLevel()); // TODO: Translate
+        if (Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class) && Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) {
+            Utils.log(Utils.translateString("text.mystical.consequence.fishingRodLaunch.fired"), Mystical.CONFIG.fishingRodLaunch.logLevel());
             return velocity.multiply(20.0); // TODO: config
         }
         return velocity;

@@ -99,6 +99,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             tb.add(consequence.getShortNameKey(), shortName); // Short name
             tb.add(consequence.getLongNameKey(), longName); // Long name
             tb.add(consequence.getDescriptionKey(), consequence.getDescription()); // Description
+            tb.add("text.mystical.consequence." + shortName + ".fired", "Spell " + shortName + ": " + consequence.getFiredMessage() + "."); // TODO: pretty this up
             // Config stuff
             addConfigCategory(tb, shortName, longName); // Category
             addConfigOptionInCategory(tb, shortName, "enabled", "Enable?"); // Enabled option

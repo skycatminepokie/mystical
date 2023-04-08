@@ -24,7 +24,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
                 );
     }
     public ZombieTypeChangeConsequence() {
-        super(ZombieTypeChangeConsequence.class, ZombieTypeChangeConsequence.class, "zombieTypeChange", "Zombie Type Change", "Zombies are having a wardrobe crisis");
+        super(ZombieTypeChangeConsequence.class, ZombieTypeChangeConsequence.class, "zombieTypeChange", "Zombie Type Change", "Zombies are having a wardrobe crisis", "Zombie type changed.");
     }
 
     public static class Factory implements ConsequenceFactory<ZombieTypeChangeConsequence> {

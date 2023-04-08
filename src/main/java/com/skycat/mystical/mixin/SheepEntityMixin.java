@@ -20,7 +20,7 @@ public abstract class SheepEntityMixin {
     public void afterEatGrass(CallbackInfo ci) {
         if (Mystical.SPELL_HANDLER.isConsequenceActive(SheepColorChangeConsequence.class) && Utils.percentChance(Mystical.CONFIG.sheepColorChange.chance())) {
             setColor(Util.getRandom(DyeColor.values(), Mystical.MC_RANDOM));
-            Utils.log(Utils.translateString("text.mystical.consequence.sheepColorChange.fired"), Mystical.CONFIG.sheepColorChange.logLevel()); // TODO: Translate
+            Utils.log(Utils.translateString("text.mystical.consequence.sheepColorChange.fired"), Mystical.CONFIG.sheepColorChange.logLevel());
         }
     }
 }

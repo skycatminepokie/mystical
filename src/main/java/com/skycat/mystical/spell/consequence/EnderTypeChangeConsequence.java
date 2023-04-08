@@ -10,7 +10,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     protected EnderTypeChangeConsequence() {
-        super(EnderTypeChangeConsequence.class, EnderTypeChangeConsequence.class, "enderTypeChange", "Ender Type Change", "Of mites and men");
+        super(EnderTypeChangeConsequence.class, EnderTypeChangeConsequence.class, "enderTypeChange", "Ender Type Change", "Of mites and men", "Swapped endermite/enderman");
     }
 
     public static class Factory implements ConsequenceFactory<EnderTypeChangeConsequence> {

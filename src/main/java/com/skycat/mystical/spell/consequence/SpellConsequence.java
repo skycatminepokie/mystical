@@ -13,6 +13,7 @@ public abstract class SpellConsequence {
     private static final String CONSEQUENCE_TRANSLATION_PREFIX = "text.mystical.consequence.";
     private final String shortName;
     private final String description;
+    private final String firedMessage;
     private final Class consequenceType;
     // TODO Probably move callbackType to an extended class
     private final String longName;
@@ -23,15 +24,16 @@ public abstract class SpellConsequence {
 
     @Deprecated
     public SpellConsequence(Class consequenceType, Class callbackType) {
-        this(consequenceType, callbackType, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.");
+        this(consequenceType, callbackType, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.", "A default spell was fired. Hm. This should not be here.");
     }
 
-    public SpellConsequence(Class consequenceType, Class callbackType, String shortName, String longName, String description) {
+    public SpellConsequence(Class consequenceType, Class callbackType, String shortName, String longName, String description, String firedMessage) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
+        this.firedMessage = firedMessage;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {

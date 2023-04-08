@@ -9,7 +9,7 @@ import java.util.Random;
 public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Config
     public static final Factory FACTORY = new Factory();
     public SheepColorChangeConsequence() {
-        super(SheepColorChangeConsequence.class, SheepColorChangeConsequence.class, "sheepColorChange", "Sheep Color Change", "The fluffy marshmallows got jealous of _jeb.");
+        super(SheepColorChangeConsequence.class, SheepColorChangeConsequence.class, "sheepColorChange", "Sheep Color Change", "The fluffy marshmallows got jealous of _jeb.", "Sheep color changed");
     }
 
     public static class Factory implements ConsequenceFactory<SheepColorChangeConsequence> {
