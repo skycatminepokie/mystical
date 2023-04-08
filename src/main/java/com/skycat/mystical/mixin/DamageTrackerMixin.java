@@ -36,7 +36,7 @@ public abstract class DamageTrackerMixin {
                 Utils.log(Utils.translateString("text.mystical.consequence.skeletonTypeChange.fired"), Mystical.CONFIG.skeletonTypeChange.logLevel());
                 // Convert
                 MobEntity skeletonEntity = ((AbstractSkeletonEntity) entity).convertTo(Util.getRandom(SkeletonTypeChangeConsequence.SKELETON_TYPES, Mystical.MC_RANDOM), true);
-                // Do the damage TODO check for null (shouldn't happen though)
+                // Do the damage
                 if (skeletonEntity != null) {
                     skeletonEntity.damage(DamageSource.OUT_OF_WORLD, totalDamage);
                 }

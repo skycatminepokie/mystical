@@ -38,7 +38,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
                 PlayerBlockBreakEvents.After.class);
     }
 
-    public LevitateConsequence(int length, int level, Class callbackType) { // TODO: maybe double-check that it's a valid callbackType
+    public LevitateConsequence(int length, int level, Class callbackType) {
         super(LevitateConsequence.class, callbackType, "levitate", "Levitation", "Are you a balloon?", "Levitating entity");
         this.length = length;
         this.level = level;
@@ -76,9 +76,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     private static class Factory implements ConsequenceFactory<LevitateConsequence> {
         @Override
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
-            // TODO: Take points into account
             return new LevitateConsequence(5, 5, Utils.chooseRandom(random, supportedEvents));
-            // return new LevitateConfig(5, 5, EntitySleepEvents.StartSleeping.class); // WARN Debug
         }
 
         @Override
