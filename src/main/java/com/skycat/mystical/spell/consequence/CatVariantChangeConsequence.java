@@ -8,18 +8,29 @@ import java.util.Random;
 
 public class CatVariantChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
-    public CatVariantChangeConsequence() { // TODO: Config
-        super(CatVariantChangeConsequence.class, CatVariantChangeConsequence.class, "catVariantChange", "Cat Variant Change", "We change coats, so why can't cats do the same?", "Changed cat variant");
+
+    @Override
+    public ConsequenceFactory<CatVariantChangeConsequence> getFactory() {
+        return FACTORY;
     }
 
-    public static class Factory implements ConsequenceFactory<CatVariantChangeConsequence> {
+    public CatVariantChangeConsequence() { // TODO: Config
+        super(CatVariantChangeConsequence.class, null);
+    }
+
+    public static class Factory extends ConsequenceFactory<CatVariantChangeConsequence> {
+        public Factory() {
+            super("catVariantChange", "Cat Variant Change", "We change coats, so why can't cats do the same?", "Changed cat variant", CatVariantChangeConsequence.class);
+        }
+
         @Override
         public @NotNull CatVariantChangeConsequence make(@NonNull Random random, double points) {
             return new CatVariantChangeConsequence();
         }
+
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.catVariantChange.enabled()? Mystical.CONFIG.catVariantChange.weight():0);
+            return (Mystical.CONFIG.catVariantChange.enabled() ? Mystical.CONFIG.catVariantChange.weight() : 0);
         }
     }
 }

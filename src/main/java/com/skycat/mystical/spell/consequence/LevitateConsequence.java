@@ -30,6 +30,11 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     private static final ArrayList<Class> supportedEvents = new ArrayList<>();
     public static final ConsequenceFactory<LevitateConsequence> FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<LevitateConsequence> getFactory() {
+        return FACTORY;
+    }
+
     static {
         Collections.addAll(supportedEvents,
                 EntitySleepEvents.StopSleeping.class,
@@ -39,7 +44,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     public LevitateConsequence(int length, int level, Class callbackType) {
-        super(LevitateConsequence.class, callbackType, "levitate", "Levitation", "Are you a balloon?", "Levitating entity");
+        super(LevitateConsequence.class, callbackType);
         this.length = length;
         this.level = level;
     }
@@ -73,7 +78,11 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         levitate(entity);
     }
 
-    private static class Factory implements ConsequenceFactory<LevitateConsequence> {
+    private static class Factory extends ConsequenceFactory<LevitateConsequence> {
+        private Factory() {
+            super("levitate", "Levitation", "Are you a balloon?", "Levitating entity", LevitateConsequence.class);
+        }
+
         @Override
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
             return new LevitateConsequence(5, 5, Utils.chooseRandom(random, supportedEvents));
@@ -81,7 +90,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.levitate.enabled()?Mystical.CONFIG.levitate.weight():0);
+            return (Mystical.CONFIG.levitate.enabled() ? Mystical.CONFIG.levitate.weight() : 0);
         }
     }
 }

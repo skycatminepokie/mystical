@@ -88,7 +88,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         ArrayList<Spell> activeSpells = Mystical.SPELL_HANDLER.getActiveSpells();
         for (int i = 0; i < activeSpells.size(); i++) {
             Spell spell = activeSpells.get(i);
-            MutableText spellDescription = spell.getConsequence().getDescriptionText();
+            MutableText spellDescription = spell.getConsequence().getFactory().getDescriptionText(spell.getConsequence()); // TODO: getDescriptionText should never throw IllegalArgumentException
             if (showDeleteButton) {
                 MutableText deleteButton = Utils.translatable("text.mystical.commands.deleteSpellButton");
                 // TODO: Test

@@ -9,11 +9,20 @@ import java.util.Random;
 public class EnderTypeChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
-    protected EnderTypeChangeConsequence() {
-        super(EnderTypeChangeConsequence.class, EnderTypeChangeConsequence.class, "enderTypeChange", "Ender Type Change", "Of mites and men", "Swapped endermite/enderman");
+    @Override
+    public ConsequenceFactory<EnderTypeChangeConsequence> getFactory() {
+        return FACTORY;
     }
 
-    public static class Factory implements ConsequenceFactory<EnderTypeChangeConsequence> {
+    protected EnderTypeChangeConsequence() {
+        super(EnderTypeChangeConsequence.class, null);
+    }
+
+    public static class Factory extends ConsequenceFactory<EnderTypeChangeConsequence> {
+        public Factory() {
+            super("enderTypeChange", "Ender Type Change", "Of mites and men", "Swapped endermite/enderman", EnderTypeChangeConsequence.class);
+        }
+
         @Override
         public @NotNull EnderTypeChangeConsequence make(@NonNull Random random, double points) {
             return new EnderTypeChangeConsequence();
@@ -21,7 +30,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.enderTypeChange.enabled()?Mystical.CONFIG.enderTypeChange.weight():0);
+            return (Mystical.CONFIG.enderTypeChange.enabled() ? Mystical.CONFIG.enderTypeChange.weight() : 0);
         }
     }
 

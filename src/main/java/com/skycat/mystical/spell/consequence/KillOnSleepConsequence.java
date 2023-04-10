@@ -11,6 +11,11 @@ import java.util.Random;
 public class KillOnSleepConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping {
     public static final ConsequenceFactory<KillOnSleepConsequence> FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<KillOnSleepConsequence> getFactory() {
+        return FACTORY;
+    }
+
     protected KillOnSleepConsequence() {
         super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class);
     }
@@ -22,7 +27,11 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
         }
     }
 
-    private static class Factory implements ConsequenceFactory<KillOnSleepConsequence> {
+    private static class Factory extends ConsequenceFactory<KillOnSleepConsequence> {
+        private Factory() {
+            super("killOnSleep", "Kill on sleep", "Bigger bedbugs", "Killed an entity for sleeping", KillOnSleepConsequence.class);
+        }
+
         @Override
         public @NotNull KillOnSleepConsequence make(@NonNull Random random, double points) {
             // TODO: Take points into account

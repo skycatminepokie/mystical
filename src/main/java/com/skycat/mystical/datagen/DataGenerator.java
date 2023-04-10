@@ -1,9 +1,7 @@
 package com.skycat.mystical.datagen;
 
-import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.SpellGenerator;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
-import com.skycat.mystical.spell.consequence.SpellConsequence;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -44,8 +42,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigSection(tb, "Spells");
             // Generate translations for consequences
             for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
-                SpellConsequence consequence = factory.make(Mystical.RANDOM, 0);
-                addConfigSpell(tb, consequence);
+                addConfigSpell(tb, factory);
             }
 
             addConfig(tb, "enum.logLevel.debug", "Debug");
@@ -89,23 +86,23 @@ public class DataGenerator implements DataGeneratorEntrypoint {
         /**
          * Adds translation information for a consequence, along with its category.
          * Note that this only adds generic options (enable, logging, and weight)
-         * @param tb The builder
-         * @param consequence The consequence to add
+         *
+         * @param tb      The builder
+         * @param factory The factory of the consequence to add translations for
          */
-        private void addConfigSpell(TranslationBuilder tb, SpellConsequence consequence) {
+        private void addConfigSpell(TranslationBuilder tb, ConsequenceFactory<?> factory) {
             // General stuff
-            String shortName = consequence.getShortName();
-            String longName = consequence.getLongName();
-            tb.add(consequence.getShortNameKey(), shortName); // Short name
-            tb.add(consequence.getLongNameKey(), longName); // Long name
-            tb.add(consequence.getDescriptionKey(), consequence.getDescription()); // Description
-            tb.add("text.mystical.consequence." + shortName + ".fired", "Spell " + shortName + ": " + consequence.getFiredMessage() + "."); // TODO: pretty this up
+            String shortName = factory.getShortName();
+            String longName = factory.getLongName();
+            tb.add(factory.getShortNameKey(), shortName); // Short name
+            tb.add(factory.getLongNameKey(), longName); // Long name
+            tb.add(factory.getDescriptionKey(), factory.getDescription()); // Description
+            tb.add(factory.translationKey() + ".fired", "Spell " + shortName + ": " + factory.getFiredMessage() + "."); // TODO: pretty this up
             // Config stuff
             addConfigCategory(tb, shortName, longName); // Category
             addConfigOptionInCategory(tb, shortName, "enabled", "Enable?"); // Enabled option
             addConfigOptionInCategory(tb, shortName, "logLevel", "Logging"); // Logging option
             addConfigOptionInCategory(tb, shortName, "weight", "Weight"); // Weight option
-
         }
 
         private void addConfigCategory(TranslationBuilder tb, String key, String value) {

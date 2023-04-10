@@ -10,10 +10,19 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     private BigCreeperExplosionConsequence() {
-        super(BigCreeperExplosionConsequence.class, BigCreeperExplosionConsequence.class, "bigCreeperExplosion", "Bigger Creeper Explosions", "Creepers go boom. But more.", "Made new creeper with multiplied explosion power.");
+        super(BigCreeperExplosionConsequence.class, null);
     }
 
-    public static class Factory implements ConsequenceFactory<BigCreeperExplosionConsequence> {
+    @Override
+    public ConsequenceFactory<BigCreeperExplosionConsequence> getFactory() {
+        return FACTORY;
+    }
+
+    public static class Factory extends ConsequenceFactory<BigCreeperExplosionConsequence> {
+        public Factory() {
+            super("bigCreeperExplosion", "Bigger Creeper Explosions", "Creepers go boom. But more.", "Made new creeper with multiplied explosion power.", BigCreeperExplosionConsequence.class);
+        }
+
         @NotNull
         @Override
         public BigCreeperExplosionConsequence make(@NonNull Random random, double points) {
@@ -22,7 +31,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.bigCreeperExplosion.enabled()?Mystical.CONFIG.bigCreeperExplosion.weight():0);
+            return (Mystical.CONFIG.bigCreeperExplosion.enabled() ? Mystical.CONFIG.bigCreeperExplosion.weight() : 0);
         }
     }
 }

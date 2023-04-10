@@ -14,6 +14,11 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
     public static final ArrayList<EntityType<? extends MobEntity>> ZOMBIE_TYPES = new ArrayList<>(); // TODO: Config
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<ZombieTypeChangeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     static {
         Collections.addAll(ZOMBIE_TYPES,
                 EntityType.ZOMBIE,
@@ -21,13 +26,18 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
                 EntityType.ZOMBIE_VILLAGER,
                 EntityType.DROWNED,
                 EntityType.HUSK
-                );
-    }
-    public ZombieTypeChangeConsequence() {
-        super(ZombieTypeChangeConsequence.class, ZombieTypeChangeConsequence.class, "zombieTypeChange", "Zombie Type Change", "Zombies are having a wardrobe crisis", "Zombie type changed.");
+        );
     }
 
-    public static class Factory implements ConsequenceFactory<ZombieTypeChangeConsequence> {
+    public ZombieTypeChangeConsequence() {
+        super(ZombieTypeChangeConsequence.class, null);
+    }
+
+    public static class Factory extends ConsequenceFactory<ZombieTypeChangeConsequence> {
+
+        public Factory() {
+            super("zombieTypeChange", "Zombie Type Change", "Zombies are having a wardrobe crisis", "Zombie type changed.", ZombieTypeChangeConsequence.class);
+        }
 
         @Override
         public @NotNull ZombieTypeChangeConsequence make(@NonNull Random random, double points) {
@@ -36,7 +46,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.zombieTypeChange.enabled()?Mystical.CONFIG.zombieTypeChange.weight():0);
+            return (Mystical.CONFIG.zombieTypeChange.enabled() ? Mystical.CONFIG.zombieTypeChange.weight() : 0);
         }
     }
 }

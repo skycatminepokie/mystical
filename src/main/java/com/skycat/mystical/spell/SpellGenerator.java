@@ -48,7 +48,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
         for (ConsequenceFactory<?> factory : consequenceFactories) {
-            getShortNameToFactory().put(factory.make(Mystical.RANDOM, 0).getShortName(), factory); // Not the greatest option for getting the names since we're making a new one, but oh well.
+            getShortNameToFactory().put(factory.getShortName(), factory);
         }
 
         Collections.addAll(cureFactories,
@@ -123,6 +123,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         return Blocks.COMMAND_BLOCK;
     }
 
+    @SuppressWarnings("rawtypes")
     public static HashMap<String, ConsequenceFactory> getShortNameToFactory() {
         return shortNameToFactory;
     }
