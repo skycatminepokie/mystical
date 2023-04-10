@@ -71,4 +71,14 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
     public String translationKey() {
         return CONSEQUENCE_TRANSLATION_PREFIX + getShortName();
     }
+
+    /**
+     * This is a player-readable description of the consequence.
+     * Override this if you have parameters to add to the translation.
+     *
+     * @param consequence The consequence to get the description of. Used for parameterized translations.
+     */
+    public MutableText getDescriptionText(T consequence) {
+        return Utils.translatable(getDescriptionKey());
+    }
 }

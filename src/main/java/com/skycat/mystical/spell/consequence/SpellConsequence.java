@@ -60,26 +60,32 @@ public abstract class SpellConsequence {
      * This is a player-readable description of the consequence.
      * Override this if you have parameters to add to the translation.
      */
+    @Deprecated
     public MutableText getDescriptionText() {
         return Utils.translatable(getDescriptionKey());
     }
 
+    @Deprecated
     public MutableText getShortNameText() {
         return Utils.translatable(getShortNameKey());
     }
 
+    @Deprecated
     public MutableText getLongNameText() {
         return Utils.translatable(getLongNameKey());
     }
 
+    @Deprecated
     public String getDescriptionKey() {
         return translationKey() + ".description";
     }
 
+    @Deprecated
     public String getShortNameKey() {
         return translationKey() + ".shortName";
     }
 
+    @Deprecated
     public String getLongNameKey() {
         return translationKey() + ".longName";
     }
@@ -89,6 +95,7 @@ public abstract class SpellConsequence {
      * @implNote Returns {@link SpellConsequence#CONSEQUENCE_TRANSLATION_PREFIX} + getShortName(). There is probably not a translation at this key - this is just a base "path"
      * @return The base part of the translations for this spell
      */
+    @Deprecated
     protected String translationKey() {
         return CONSEQUENCE_TRANSLATION_PREFIX + getShortName();
     }
