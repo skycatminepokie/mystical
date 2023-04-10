@@ -89,6 +89,7 @@ public class ConfigModel {
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
+        public double multiplier = 20;
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }

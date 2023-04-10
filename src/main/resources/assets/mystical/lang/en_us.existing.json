@@ -26,5 +26,6 @@
   "text.config.mysticalConfig.option.zombieTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.fishingRodLaunch.chance": "% chance",
-  "text.config.mysticalConfig.option.catVariantChange.chance": "% chance"
+  "text.config.mysticalConfig.option.catVariantChange.chance": "% chance",
+  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier"
 }
