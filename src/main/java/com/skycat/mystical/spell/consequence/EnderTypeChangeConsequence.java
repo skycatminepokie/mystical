@@ -13,7 +13,11 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
         super(EnderTypeChangeConsequence.class, EnderTypeChangeConsequence.class, "enderTypeChange", "Ender Type Change", "Of mites and men", "Swapped endermite/enderman");
     }
 
-    public static class Factory implements ConsequenceFactory<EnderTypeChangeConsequence> {
+    public static class Factory extends ConsequenceFactory<EnderTypeChangeConsequence> {
+        public Factory() {
+            super("enderTypeChange", "Ender Type Change", "Of mites and men", "Swapped endermite/enderman", EnderTypeChangeConsequence.class);
+        }
+
         @Override
         public @NotNull EnderTypeChangeConsequence make(@NonNull Random random, double points) {
             return new EnderTypeChangeConsequence();
@@ -21,7 +25,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.enderTypeChange.enabled()?Mystical.CONFIG.enderTypeChange.weight():0);
+            return (Mystical.CONFIG.enderTypeChange.enabled() ? Mystical.CONFIG.enderTypeChange.weight() : 0);
         }
     }
 

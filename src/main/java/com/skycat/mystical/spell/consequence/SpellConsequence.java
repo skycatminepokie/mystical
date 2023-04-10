@@ -10,12 +10,18 @@ import java.lang.reflect.Type;
 @SuppressWarnings("rawtypes")
 @Getter
 public abstract class SpellConsequence {
+    @Deprecated
     private static final String CONSEQUENCE_TRANSLATION_PREFIX = "text.mystical.consequence.";
+    @Deprecated
     private final String shortName;
+    @Deprecated
     private final String description;
+    @Deprecated
     private final String firedMessage;
+    @Deprecated
     private final Class consequenceType;
     // TODO Probably move callbackType to an extended class
+    @Deprecated
     private final String longName;
     /**
      * If there is no relevant callback, this should be the same as consequenceType
@@ -27,6 +33,7 @@ public abstract class SpellConsequence {
         this(consequenceType, callbackType, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.", "A default spell was fired. Hm. This should not be here.");
     }
 
+    @Deprecated
     public SpellConsequence(Class consequenceType, Class callbackType, String shortName, String longName, String description, String firedMessage) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
@@ -34,6 +41,15 @@ public abstract class SpellConsequence {
         this.longName = longName;
         this.description = description;
         this.firedMessage = firedMessage;
+    }
+
+    public SpellConsequence(Class callbackType) {
+        this.consequenceType = null;
+        this.callbackType = callbackType;
+        this.shortName = null;
+        this.longName = null;
+        this.description = null;
+        this.firedMessage = null;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {

@@ -34,7 +34,11 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
         super(consequenceType, callbackType, "randomTreeType", "Random Tree Types", "The saplings are spies!", "Random tree generated");
     }
 
-    public static class Factory implements ConsequenceFactory<RandomTreeTypeConsequence> {
+    public static class Factory extends ConsequenceFactory<RandomTreeTypeConsequence> {
+        public Factory() {
+            super("randomTreeType", "Random Tree Types", "The saplings are spies!", "Random tree generated", RandomTreeTypeConsequence.class);
+        }
+
         @Override
         public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {
             return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, RandomTreeTypeConsequence.class);
@@ -42,7 +46,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.randomTreeType.enabled()?Mystical.CONFIG.randomTreeType.weight():0);
+            return (Mystical.CONFIG.randomTreeType.enabled() ? Mystical.CONFIG.randomTreeType.weight() : 0);
         }
     }
 }

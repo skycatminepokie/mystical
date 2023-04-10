@@ -17,7 +17,11 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
         this(FishingRodLaunchConsequence.class, FishingRodLaunchConsequence.class);
     }
 
-    public static class Factory implements ConsequenceFactory<FishingRodLaunchConsequence> {
+    public static class Factory extends ConsequenceFactory<FishingRodLaunchConsequence> {
+
+        public Factory() {
+            super("fishingRodLaunch", "Fishing Rod Launch", "Hehe. Rod make cow go zoom.", "Fishing rod power multiplied", FishingRodLaunchConsequence.class);
+        }
 
         @Override
         public @NotNull FishingRodLaunchConsequence make(@NonNull Random random, double points) {
@@ -26,7 +30,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.fishingRodLaunch.enabled()? Mystical.CONFIG.fishingRodLaunch.weight():0);
+            return (Mystical.CONFIG.fishingRodLaunch.enabled() ? Mystical.CONFIG.fishingRodLaunch.weight() : 0);
         }
     }
 }

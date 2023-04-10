@@ -26,7 +26,11 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
         super(SkeletonTypeChangeConsequence.class, SkeletonTypeChangeConsequence.class, "skeletonTypeChange", "Skeleton Type Change", "Skeletons are having a wardrobe crisis too!", "Skeleton type changed");
     }
 
-    public static class Factory implements ConsequenceFactory<SkeletonTypeChangeConsequence> {
+    public static class Factory extends ConsequenceFactory<SkeletonTypeChangeConsequence> {
+        public Factory() {
+            super("skeletonTypeChange", "Skeleton Type Change", "Skeletons are having a wardrobe crisis too!", "Skeleton type changed", SkeletonTypeChangeConsequence.class);
+        }
+
         @Override
         public @NotNull SkeletonTypeChangeConsequence make(@NonNull Random random, double points) {
             return new SkeletonTypeChangeConsequence();
@@ -34,7 +38,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.skeletonTypeChange.enabled()?Mystical.CONFIG.skeletonTypeChange.weight():0);
+            return (Mystical.CONFIG.skeletonTypeChange.enabled() ? Mystical.CONFIG.skeletonTypeChange.weight() : 0);
         }
     }
 }

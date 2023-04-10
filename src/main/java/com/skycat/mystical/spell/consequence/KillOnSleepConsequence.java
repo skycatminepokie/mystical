@@ -22,7 +22,11 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
         }
     }
 
-    private static class Factory implements ConsequenceFactory<KillOnSleepConsequence> {
+    private static class Factory extends ConsequenceFactory<KillOnSleepConsequence> {
+        private Factory() {
+            super("killOnSleep", "Kill on sleep", "Bigger bedbugs", "Killed an entity for sleeping", KillOnSleepConsequence.class);
+        }
+
         @Override
         public @NotNull KillOnSleepConsequence make(@NonNull Random random, double points) {
             // TODO: Take points into account
