@@ -11,6 +11,11 @@ import java.util.Random;
 public class KillOnSleepConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping {
     public static final ConsequenceFactory<KillOnSleepConsequence> FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<KillOnSleepConsequence> getFactory() {
+        return FACTORY;
+    }
+
     protected KillOnSleepConsequence() {
         super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class);
     }

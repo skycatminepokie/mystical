@@ -14,6 +14,11 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
     public static final ArrayList<EntityType<? extends MobEntity>> SKELETON_TYPES = new ArrayList<>(); // TODO: Config
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<SkeletonTypeChangeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     static {
         Collections.addAll(SKELETON_TYPES,
                 EntityType.SKELETON,
@@ -23,7 +28,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
     }
 
     protected SkeletonTypeChangeConsequence() {
-        super(SkeletonTypeChangeConsequence.class, SkeletonTypeChangeConsequence.class, "skeletonTypeChange", "Skeleton Type Change", "Skeletons are having a wardrobe crisis too!");
+        super(SkeletonTypeChangeConsequence.class, null);
     }
 
     public static class Factory extends ConsequenceFactory<SkeletonTypeChangeConsequence> {

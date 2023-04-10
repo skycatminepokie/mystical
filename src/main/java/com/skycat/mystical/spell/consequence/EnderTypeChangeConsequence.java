@@ -9,8 +9,13 @@ import java.util.Random;
 public class EnderTypeChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<EnderTypeChangeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     protected EnderTypeChangeConsequence() {
-        super(EnderTypeChangeConsequence.class, EnderTypeChangeConsequence.class, "enderTypeChange", "Ender Type Change", "Of mites and men");
+        super(EnderTypeChangeConsequence.class, null);
     }
 
     public static class Factory extends ConsequenceFactory<EnderTypeChangeConsequence> {

@@ -9,8 +9,13 @@ import java.util.Random;
 public class CatVariantChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<CatVariantChangeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     public CatVariantChangeConsequence() { // TODO: Config
-        super(CatVariantChangeConsequence.class, CatVariantChangeConsequence.class, "catVariantChange", "Cat Variant Change", "We change coats, so why can't cats do the same?");
+        super(CatVariantChangeConsequence.class, null);
     }
 
     public static class Factory extends ConsequenceFactory<CatVariantChangeConsequence> {

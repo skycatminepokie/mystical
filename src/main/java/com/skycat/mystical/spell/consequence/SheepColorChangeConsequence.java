@@ -9,8 +9,13 @@ import java.util.Random;
 public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Config
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<SheepColorChangeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     public SheepColorChangeConsequence() {
-        super(SheepColorChangeConsequence.class, SheepColorChangeConsequence.class, "sheepColorChange", "Sheep Color Change", "The fluffy marshmallows got jealous of _jeb.");
+        super(RandomTreeTypeConsequence.class, null);
     }
 
     public static class Factory extends ConsequenceFactory<SheepColorChangeConsequence> {

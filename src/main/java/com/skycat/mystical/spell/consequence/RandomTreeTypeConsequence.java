@@ -17,6 +17,11 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
     public static final ArrayList<SaplingGenerator> SAPLING_GENERATORS = new ArrayList<>();
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<RandomTreeTypeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     static {
         Collections.addAll(SAPLING_GENERATORS,
                 new AcaciaSaplingGenerator(),
@@ -31,7 +36,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
     }
 
     private RandomTreeTypeConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, "randomTreeType", "Random Tree Types", "The saplings are spies!");
+        super(consequenceType, callbackType);
     }
 
     public static class Factory extends ConsequenceFactory<RandomTreeTypeConsequence> {
@@ -41,7 +46,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
 
         @Override
         public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {
-            return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, RandomTreeTypeConsequence.class);
+            return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, null);
         }
 
         @Override

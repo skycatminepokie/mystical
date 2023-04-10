@@ -77,8 +77,12 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
      * Override this if you have parameters to add to the translation.
      *
      * @param consequence The consequence to get the description of. Used for parameterized translations.
+     * @throws IllegalArgumentException If consequence.class != consequenceType
      */
-    public MutableText getDescriptionText(T consequence) {
+    public MutableText getDescriptionText(SpellConsequence consequence) throws IllegalArgumentException {
+        if (consequence.getClass() != consequenceType) {
+            throw new IllegalArgumentException(consequence.getClass() + " != " + consequenceType); // TODO: Find a better way?
+        }
         return Utils.translatable(getDescriptionKey());
     }
 }

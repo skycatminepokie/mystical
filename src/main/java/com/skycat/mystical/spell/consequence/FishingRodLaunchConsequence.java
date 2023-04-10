@@ -9,12 +9,17 @@ import java.util.Random;
 public class FishingRodLaunchConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<FishingRodLaunchConsequence> getFactory() {
+        return FACTORY;
+    }
+
     public FishingRodLaunchConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, "fishingRodLaunch", "Fishing Rod Launch", "Hehe. Rod make cow go zoom.");
+        super(consequenceType, callbackType);
     }
 
     public FishingRodLaunchConsequence() {
-        this(FishingRodLaunchConsequence.class, FishingRodLaunchConsequence.class);
+        this(FishingRodLaunchConsequence.class, null);
     }
 
     public static class Factory extends ConsequenceFactory<FishingRodLaunchConsequence> {

@@ -14,6 +14,11 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
     public static final ArrayList<EntityType<? extends MobEntity>> ZOMBIE_TYPES = new ArrayList<>(); // TODO: Config
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<ZombieTypeChangeConsequence> getFactory() {
+        return FACTORY;
+    }
+
     static {
         Collections.addAll(ZOMBIE_TYPES,
                 EntityType.ZOMBIE,
@@ -25,7 +30,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
     }
 
     public ZombieTypeChangeConsequence() {
-        super(ZombieTypeChangeConsequence.class, ZombieTypeChangeConsequence.class, "zombieTypeChange", "Zombie Type Change", "Zombies are having a wardrobe crisis");
+        super(ZombieTypeChangeConsequence.class, null);
     }
 
     public static class Factory extends ConsequenceFactory<ZombieTypeChangeConsequence> {

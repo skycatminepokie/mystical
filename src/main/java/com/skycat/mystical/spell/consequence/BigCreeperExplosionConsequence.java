@@ -10,7 +10,12 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     private BigCreeperExplosionConsequence() {
-        super(null);
+        super(BigCreeperExplosionConsequence.class, null);
+    }
+
+    @Override
+    public ConsequenceFactory<BigCreeperExplosionConsequence> getFactory() {
+        return FACTORY;
     }
 
     public static class Factory extends ConsequenceFactory<BigCreeperExplosionConsequence> {

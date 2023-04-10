@@ -30,6 +30,11 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     private static final ArrayList<Class> supportedEvents = new ArrayList<>();
     public static final ConsequenceFactory<LevitateConsequence> FACTORY = new Factory();
 
+    @Override
+    public ConsequenceFactory<LevitateConsequence> getFactory() {
+        return FACTORY;
+    }
+
     static {
         Collections.addAll(supportedEvents,
                 EntitySleepEvents.StopSleeping.class,
@@ -39,7 +44,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     public LevitateConsequence(int length, int level, Class callbackType) {
-        super(LevitateConsequence.class, callbackType, "levitate", "Levitation", "Are you a balloon?");
+        super(LevitateConsequence.class, callbackType);
         this.length = length;
         this.level = level;
     }
