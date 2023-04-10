@@ -31,7 +31,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
     }
 
     private RandomTreeTypeConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, "randomTreeType", "Random Tree Types", "The saplings are spies!", "Random tree generated");
+        super(consequenceType, callbackType, "randomTreeType", "Random Tree Types", "The saplings are spies!");
     }
 
     public static class Factory extends ConsequenceFactory<RandomTreeTypeConsequence> {

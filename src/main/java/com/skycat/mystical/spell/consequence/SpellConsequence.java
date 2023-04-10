@@ -17,8 +17,6 @@ public abstract class SpellConsequence {
     @Deprecated
     private final String description;
     @Deprecated
-    private final String firedMessage;
-    @Deprecated
     private final Class consequenceType;
     // TODO Probably move callbackType to an extended class
     @Deprecated
@@ -30,17 +28,16 @@ public abstract class SpellConsequence {
 
     @Deprecated
     public SpellConsequence(Class consequenceType, Class callbackType) {
-        this(consequenceType, callbackType, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.", "A default spell was fired. Hm. This should not be here.");
+        this(consequenceType, callbackType, "defaultSpell", "Default Spell", "A spell that really shouldn't be here.");
     }
 
     @Deprecated
-    public SpellConsequence(Class consequenceType, Class callbackType, String shortName, String longName, String description, String firedMessage) {
+    public SpellConsequence(Class consequenceType, Class callbackType, String shortName, String longName, String description) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
-        this.firedMessage = firedMessage;
     }
 
     public SpellConsequence(Class callbackType) {
@@ -49,7 +46,6 @@ public abstract class SpellConsequence {
         this.shortName = null;
         this.longName = null;
         this.description = null;
-        this.firedMessage = null;
     }
 
     public <T> boolean supportsEvent(Class<T> eventClass) {
@@ -66,28 +62,8 @@ public abstract class SpellConsequence {
     }
 
     @Deprecated
-    public MutableText getShortNameText() {
-        return Utils.translatable(getShortNameKey());
-    }
-
-    @Deprecated
-    public MutableText getLongNameText() {
-        return Utils.translatable(getLongNameKey());
-    }
-
-    @Deprecated
     public String getDescriptionKey() {
         return translationKey() + ".description";
-    }
-
-    @Deprecated
-    public String getShortNameKey() {
-        return translationKey() + ".shortName";
-    }
-
-    @Deprecated
-    public String getLongNameKey() {
-        return translationKey() + ".longName";
     }
 
     /**

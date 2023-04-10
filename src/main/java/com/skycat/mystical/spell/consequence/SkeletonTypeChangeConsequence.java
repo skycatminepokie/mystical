@@ -23,7 +23,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
     }
 
     protected SkeletonTypeChangeConsequence() {
-        super(SkeletonTypeChangeConsequence.class, SkeletonTypeChangeConsequence.class, "skeletonTypeChange", "Skeleton Type Change", "Skeletons are having a wardrobe crisis too!", "Skeleton type changed");
+        super(SkeletonTypeChangeConsequence.class, SkeletonTypeChangeConsequence.class, "skeletonTypeChange", "Skeleton Type Change", "Skeletons are having a wardrobe crisis too!");
     }
 
     public static class Factory extends ConsequenceFactory<SkeletonTypeChangeConsequence> {

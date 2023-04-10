@@ -10,7 +10,7 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
     public static final Factory FACTORY = new Factory();
 
     public SheepColorChangeConsequence() {
-        super(SheepColorChangeConsequence.class, SheepColorChangeConsequence.class, "sheepColorChange", "Sheep Color Change", "The fluffy marshmallows got jealous of _jeb.", "Sheep color changed");
+        super(SheepColorChangeConsequence.class, SheepColorChangeConsequence.class, "sheepColorChange", "Sheep Color Change", "The fluffy marshmallows got jealous of _jeb.");
     }
 
     public static class Factory extends ConsequenceFactory<SheepColorChangeConsequence> {
