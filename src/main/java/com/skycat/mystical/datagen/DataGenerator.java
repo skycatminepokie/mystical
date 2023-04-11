@@ -29,6 +29,9 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigOption(tb, "devMode", "Dev mode");
 
             addConfigSection(tb, "Logging");
+            addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");
+            addConfigOption(tb, "newSpellCommandBroadcast", "New spell command (in-game)");
+            // TODO: Move these to addLoggingOption
             addConfigOption(tb, "failedToGetRandomBlockLogLevel", "Failed to get random block");
             addConfigOption(tb, "failedToLoadHavenManagerLogLevel", "Failed to load haven manager");
             addConfigOption(tb, "failedToLoadSpellHandlerLogLevel", "Failed to load spell handler");
@@ -109,6 +112,16 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfig(tb, "category." + key, value);
         }
 
+        /**
+         * @param tb      The TranslationBuilder to use.
+         * @param key     The key under the logging section.
+         * @param console The translation for config output.
+         * @param option  The translation for the config option.
+         */
+        private void addLoggingOption(TranslationBuilder tb, String key, String console, String option) {
+            tb.add("text.mystical.logging." + key, console);
+            addConfigOption(tb, key + "LogLevel", option);
+        }
 
     }
 }
