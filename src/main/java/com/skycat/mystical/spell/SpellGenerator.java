@@ -52,29 +52,29 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         }
 
         Collections.addAll(cureFactories,
-                (random, points) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")), // TODO: Translate
-                (random, points) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")), // TODO: Translate
-                (random, points) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS), "text.mystical.spellCure.default")), // TODO: Translate
-                (random, points) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")), // TODO: Translate
-                (random, points) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default")), // TODO: Translate
-                (random, points) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED), "text.mystical.spellCure.default")) // TODO: Translate
+                (random) -> (new StatBackedSpellCure(100.0, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED), "text.mystical.spellCure.default")) // TODO: Translate
         );
     }
 
     public static Spell get() {
-        return new Spell(getConsequence(0), getCure(0));
+        return new Spell(getConsequence(), getCure());
     }
 
     public static Spell getWithConsequence(ConsequenceFactory<?> consequenceFactory) {
-        return new Spell(consequenceFactory.make(Mystical.RANDOM, 0), getCure(0));
+        return new Spell(consequenceFactory.make(Mystical.RANDOM, 0), getCure());
     }
 
     /**
      * Get a random consequence, weighted by config settings
-     * @param points unused
+     *
      * @return A new consequence, or null if all spells are disabled
      */
-    public static SpellConsequence getConsequence(double points) { // I think we're getting rid of the notion of points for now. TODO: Refactor out points WARN: This may be slow with many consequences
+    public static SpellConsequence getConsequence() { // I think we're getting rid of the notion of points for now. WARN: This may be slow with many consequences
         if (consequenceFactories.isEmpty()) { // Should not happen
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList")); // TODO: Config
             return LevitateConsequence.FACTORY.make(Mystical.getRANDOM(), 0);
@@ -100,12 +100,12 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         return null; // This should only happen if all consequences are disabled TODO: Logging
     }
 
-    public static SpellCure getCure(double points) {
+    public static SpellCure getCure() {
         if (cureFactories.isEmpty()) {
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList")); // TODO: Config
             return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default");
         }
-        return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM(), points);
+        return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM());
     }
 
     private static Block getRandomBlock() { // TODO: Make checked (no unbreakables, configurable rarities, etc)
