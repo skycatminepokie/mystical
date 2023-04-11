@@ -12,7 +12,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
     public static final ConsequenceFactory<KillOnSleepConsequence> FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<KillOnSleepConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<KillOnSleepConsequence> getFactory() {
         return FACTORY;
     }
 

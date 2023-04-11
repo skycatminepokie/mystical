@@ -31,7 +31,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     public static final ConsequenceFactory<LevitateConsequence> FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<LevitateConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<LevitateConsequence> getFactory() {
         return FACTORY;
     }
 

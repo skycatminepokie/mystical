@@ -10,7 +10,7 @@ public class CatVariantChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<CatVariantChangeConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<CatVariantChangeConsequence> getFactory() {
         return FACTORY;
     }
 

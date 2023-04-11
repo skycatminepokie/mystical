@@ -10,7 +10,7 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<SheepColorChangeConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<SheepColorChangeConsequence> getFactory() {
         return FACTORY;
     }
 

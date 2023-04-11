@@ -14,7 +14,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
     }
 
     @Override
-    public ConsequenceFactory<BigCreeperExplosionConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<BigCreeperExplosionConsequence> getFactory() {
         return FACTORY;
     }
 

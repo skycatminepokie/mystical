@@ -2,6 +2,7 @@ package com.skycat.mystical.spell.consequence;
 
 import com.google.gson.*;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.lang.reflect.Type;
 
@@ -33,6 +34,7 @@ public abstract class SpellConsequence {
      *
      * @return The factory associated with this type of consequence.
      */
+    @NonNull
     public abstract ConsequenceFactory<? extends SpellConsequence> getFactory(); // TODO: Find a way to force ? to be this.getClass().
 
     public <T> boolean supportsEvent(Class<T> eventClass) {

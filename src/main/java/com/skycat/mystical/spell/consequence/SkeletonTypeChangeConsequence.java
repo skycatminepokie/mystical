@@ -15,7 +15,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<SkeletonTypeChangeConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<SkeletonTypeChangeConsequence> getFactory() {
         return FACTORY;
     }
 

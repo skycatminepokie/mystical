@@ -18,7 +18,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: CONFI
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<RandomTreeTypeConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<RandomTreeTypeConsequence> getFactory() {
         return FACTORY;
     }
 
