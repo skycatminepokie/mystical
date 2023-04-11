@@ -104,9 +104,9 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     private int newSpellCommand(CommandContext<ServerCommandSource> context) {
         String spell = context.getArgument("spell", String.class); // TODO: Warn if disabled or weight = 0
-        Mystical.LOGGER.info("Eyy-o: " + spell); // TODO: Logging // TODO: Config // WARN: Debug
+        Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(SpellGenerator.getShortNameToFactory().get(spell));
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.newSpell.success"), false); // TODO: Tell what spell was created
+        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.newSpell.success"), Mystical.CONFIG.newSpellCommandBroadcast()); // TODO: Tell what spell was created
         return 1;
     }
 
@@ -118,7 +118,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.SPELL_HANDLER = SpellHandler.loadOrNew();
         context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.reload.success"), false);
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.JUSTATEST"), false);
         return 1;
     }
 

@@ -31,6 +31,7 @@ public class ConfigModel {
     public LogLevel failedToLoadSpellHandlerLogLevel = LogLevel.WARN;
     public LogLevel failedToSaveSpellHandlerLogLevel = LogLevel.ERROR;
     public LogLevel newSpellCommandLogLevel = LogLevel.INFO;
+    public boolean newSpellCommandBroadcast = true;
 
     public static class BigCreeperExplosionConfig {
         public boolean enabled = true; // Not implemented
