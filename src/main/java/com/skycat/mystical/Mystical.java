@@ -46,7 +46,7 @@ public class Mystical implements ModInitializer {
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
-    @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // WARN: Probably not a great way to do this
+    @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // Probably not a great way to do this, but oh well.
     @Getter public static final com.skycat.mystical.MysticalConfig CONFIG = com.skycat.mystical.MysticalConfig.createAndLoad();
     @Getter public static SpellHandler SPELL_HANDLER = SpellHandler.loadOrNew();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();

@@ -94,7 +94,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             } else { // Otherwise, chop off the first part of the number line
                 // by forgetting about this consequence, essentially shifting all the territories left to fill in the gap.
                 rand -= chance; // All we have to do is make sure rand moves along with everything else
-                assert rand >= 0; // WARN debug
+                // assert rand >= 0;
             }
         }
 

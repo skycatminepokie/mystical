@@ -103,7 +103,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             tb.add(factory.getShortNameKey(), shortName); // Short name
             tb.add(factory.getLongNameKey(), longName); // Long name
             tb.add(factory.getDescriptionKey(), factory.getDescription()); // Description
-            tb.add(factory.translationKey() + ".fired", "Spell " + shortName + ": " + factory.getFiredMessage() + "."); // TODO: pretty this up
+            tb.add(factory.translationKey() + ".fired", "Spell " + shortName + ": " + factory.getFiredMessage() + ".");
             // Config stuff
             addConfigCategory(tb, shortName, longName); // Category
             addConfigOptionInCategory(tb, shortName, "enabled", "Enable?"); // Enabled option

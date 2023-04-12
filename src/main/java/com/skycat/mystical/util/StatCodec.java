@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.lang.reflect.Type;
 
-public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonDeserializer<Stat<?>> { // TODO Use and test
+public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonDeserializer<Stat<?>> {
     public static StatCodec INSTANCE = new StatCodec();
     public static Codec<Pair<StatType<?>, Identifier>> TYPE_IDENTIFIER_CODEC = Codec.pair(
             Registry.STAT_TYPE.getCodec().fieldOf("type").codec(),
@@ -30,14 +30,16 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
             // Success
             try {
                 @SuppressWarnings("unchecked")
-                StatType<S> type = (StatType<S>) result.result().get().getFirst(); // WARN I'm pretty sure this is a safe cast if all the data is valid
+                StatType<S> type = (StatType<S>) result.result().get().getFirst(); // I'm pretty sure this is a safe cast if all the data is valid
                 Stat<S> stat = type.getOrCreateStat(type.getRegistry().get(result.result().get().getSecond()));
                 return stat;
             } catch (ClassCastException e) {
-                Utils.log("oof");
+                Utils.log("Stat could not be deserialized properly. Printing stacktrace.");
+                e.printStackTrace();
             }
         } else {
-            Utils.log("other oof");
+            // TODO better error handling
+            throw new RuntimeException("Stat could not be deserialized- result was not present.");
         }
         return null; // WARN error handling
     }
@@ -45,7 +47,7 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
     @Override
     public <T> DataResult<Pair<Stat<?>, T>> decode(DynamicOps<T> ops, T input) {
         // In the case of using json, T is JsonElement
-        return DataResult.success(Pair.of(getStat(ops, input),input)); // WARN Error handling is currently awful
+        return DataResult.success(Pair.of(getStat(ops, input), input)); // TODO Error handling
     }
 
     @Override
@@ -60,6 +62,6 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
 
     @Override
     public JsonElement serialize(Stat<?> src, Type typeOfSrc, JsonSerializationContext context) {
-        return encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> Utils.log("awful 62 statcodec")); // WARN Error checking
+        return encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> Utils.log("Could not parse the following string as a stat: \"" + s + "\".")); // WARN Error checking
     }
 }

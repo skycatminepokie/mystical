@@ -34,7 +34,6 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
 
         @Override
         public @NotNull KillOnSleepConsequence make(@NonNull Random random, double points) {
-            // TODO: Take points into account
             return new KillOnSleepConsequence();
         }
 

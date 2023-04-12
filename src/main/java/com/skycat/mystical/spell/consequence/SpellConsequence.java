@@ -21,7 +21,7 @@ public abstract class SpellConsequence {
     }
 
     /*
-        // TODO: I really don't know if this will work.
+        // I really don't know if this would work.
         public SpellConsequence(Class callbackType) {
             this.consequenceType = this.getClass();
             this.callbackType = callbackType;

@@ -25,7 +25,7 @@ public abstract class CatEntityMixin { // I could probably turn this into an eve
 
     @Inject(method = "eat", at = @At("HEAD"))
     public void eat(PlayerEntity entity, Hand hand, ItemStack stack, CallbackInfo ci) {
-        if (VARIANTS.isEmpty()) { // TODO Should this be in static? Seems like delaying initialization might be good though.
+        if (VARIANTS.isEmpty()) { // Should this be in static? Seems like delaying initialization might be good though.
             for (CatVariant catVariant : Registry.CAT_VARIANT) {
                 VARIANTS.add(catVariant);
             }
