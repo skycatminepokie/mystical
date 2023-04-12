@@ -20,7 +20,6 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     public void doNighttimeEvents() {
         // TODO: Logging
-        // TODO: Add new spells
         Mystical.SPELL_HANDLER.removeCuredSpells();
         if (Mystical.SPELL_HANDLER.getActiveSpells().size() < 2) { // TODO: Config
             Mystical.SPELL_HANDLER.activateNewSpell();
@@ -31,6 +30,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         } catch (NullPointerException e) {
             Utils.log(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", e.getMessage()), Mystical.CONFIG.failedToSetNightTimerLogLevel());
             // TODO Try again later?
+            // WARN: If this fails after the timer expires, nighttime events will keep happening, which is not good.
         }
     }
 

@@ -25,14 +25,14 @@ public abstract class CatEntityMixin { // I could probably turn this into an eve
 
     @Inject(method = "eat", at = @At("HEAD"))
     public void eat(PlayerEntity entity, Hand hand, ItemStack stack, CallbackInfo ci) {
-        if (VARIANTS.isEmpty()) { // TODO Should this be in static? Seems like delaying initialization might be good though.
+        if (VARIANTS.isEmpty()) { // Should this be in static? Seems like delaying initialization might be good though.
             for (CatVariant catVariant : Registry.CAT_VARIANT) {
                 VARIANTS.add(catVariant);
             }
         }
         if (Mystical.SPELL_HANDLER.isConsequenceActive(CatVariantChangeConsequence.class) && Utils.percentChance(Mystical.CONFIG.catVariantChange.chance())) {
             setVariant(Util.getRandom(VARIANTS, Mystical.MC_RANDOM));
-            Utils.log(Utils.translateString("text.mystical.consequence.catVariantChange.fired"), Mystical.CONFIG.catVariantChange.logLevel()); // TODO translate
+            Utils.log(Utils.translateString("text.mystical.consequence.catVariantChange.fired"), Mystical.CONFIG.catVariantChange.logLevel());
         }
     }
 }

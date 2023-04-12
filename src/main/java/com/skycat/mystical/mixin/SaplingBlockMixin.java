@@ -5,7 +5,6 @@ import com.skycat.mystical.spell.consequence.RandomTreeTypeConsequence;
 import com.skycat.mystical.util.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.sapling.SaplingGenerator;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.Util;
@@ -21,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SaplingBlock.class)
 public abstract class SaplingBlockMixin {
     @Shadow @Final public static IntProperty STAGE;
-    @Shadow @Final private SaplingGenerator generator;
 
     @Inject(method = "generate", at = @At("HEAD"), cancellable = true)
     public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) {

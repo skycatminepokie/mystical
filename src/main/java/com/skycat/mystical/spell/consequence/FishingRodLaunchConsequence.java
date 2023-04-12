@@ -9,15 +9,24 @@ import java.util.Random;
 public class FishingRodLaunchConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
+    @Override
+    public @NotNull ConsequenceFactory<FishingRodLaunchConsequence> getFactory() {
+        return FACTORY;
+    }
+
     public FishingRodLaunchConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, "fishingRodLaunch", "Fishing Rod Launch", "Hehe. Rod make cow go zoom.", "Fishing rod power multiplied");
+        super(consequenceType, callbackType);
     }
 
     public FishingRodLaunchConsequence() {
-        this(FishingRodLaunchConsequence.class, FishingRodLaunchConsequence.class);
+        this(FishingRodLaunchConsequence.class, null);
     }
 
-    public static class Factory implements ConsequenceFactory<FishingRodLaunchConsequence> {
+    public static class Factory extends ConsequenceFactory<FishingRodLaunchConsequence> {
+
+        public Factory() {
+            super("fishingRodLaunch", "Fishing Rod Launch", "Hehe. Rod make cow go zoom.", "Fishing rod power multiplied", FishingRodLaunchConsequence.class);
+        }
 
         @Override
         public @NotNull FishingRodLaunchConsequence make(@NonNull Random random, double points) {
@@ -26,7 +35,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
 
         @Override
         public double getWeight() {
-            return (Mystical.CONFIG.fishingRodLaunch.enabled()? Mystical.CONFIG.fishingRodLaunch.weight():0);
+            return (Mystical.CONFIG.fishingRodLaunch.enabled() ? Mystical.CONFIG.fishingRodLaunch.weight() : 0);
         }
     }
 }

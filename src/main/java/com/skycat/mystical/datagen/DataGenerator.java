@@ -1,9 +1,7 @@
 package com.skycat.mystical.datagen;
 
-import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.SpellGenerator;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
-import com.skycat.mystical.spell.consequence.SpellConsequence;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -31,21 +29,26 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigOption(tb, "devMode", "Dev mode");
 
             addConfigSection(tb, "Logging");
-            addConfigOption(tb, "failedToGetRandomBlockLogLevel", "Failed to get random block");
-            addConfigOption(tb, "failedToLoadHavenManagerLogLevel", "Failed to load haven manager");
-            addConfigOption(tb, "failedToLoadSpellHandlerLogLevel", "Failed to load spell handler");
-            addConfigOption(tb, "failedToSaveHavenManagerLogLevel", "Failed to save haven manager");
-            addConfigOption(tb, "failedToSaveSpellHandlerLogLevel", "Failed to save spell manager");
-            addConfigOption(tb, "failedToSetNightTimerLogLevel", "Failed to set night timer");
-            addConfigOption(tb, "playerContributedLogLevel", "Player contribution");
-            addConfigOption(tb, "timeOfDayAtStartupLogLevel", "Time of day at startup");
-            addConfigOption(tb, "newSpellCommandLogLevel", "New spell command");
+            addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");
+            addConfigOption(tb, "newSpellCommandBroadcast", "New spell command (in-game)");
+            // TODO: Make sure logging uses these (they probably don't)
+            addLoggingOption(tb, "failedToGetRandomBlock", "Failed to get random block", "Failed to get random block");
+            addLoggingOption(tb, "failedToLoadHavenManager", "Failed to load haven manager", "Failed to load haven manager");
+            addLoggingOption(tb, "failedToLoadSpellHandler", "Failed to load spell handler", "Failed to load spell handler");
+            addLoggingOption(tb, "failedToSaveHavenManager", "Failed to save haven manager", "Failed to save haven manager");
+            addLoggingOption(tb, "failedToSaveSpellHandler", "Failed to save spell manager", "Failed to save spell manager");
+            addLoggingOption(tb, "failedToSetNightTimer", "Failed to set night timer", "Failed to set night timer");
+            addLoggingOption(tb, "playerContributed", "Player contribution", "Player contribution");
+            addLoggingOption(tb, "timeOfDayAtStartup", "Time of day at startup", "Time of day at startup");
+
+            addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
+            addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
+            addCommandText(tb, "mystical.reload.success", "Successfully reloaded spells from file and set night timer.");
 
             addConfigSection(tb, "Spells");
             // Generate translations for consequences
             for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
-                SpellConsequence consequence = factory.make(Mystical.RANDOM, 0);
-                addConfigSpell(tb, consequence);
+                addConfigSpell(tb, factory);
             }
 
             addConfig(tb, "enum.logLevel.debug", "Debug");
@@ -89,29 +92,43 @@ public class DataGenerator implements DataGeneratorEntrypoint {
         /**
          * Adds translation information for a consequence, along with its category.
          * Note that this only adds generic options (enable, logging, and weight)
-         * @param tb The builder
-         * @param consequence The consequence to add
+         *
+         * @param tb      The builder
+         * @param factory The factory of the consequence to add translations for
          */
-        private void addConfigSpell(TranslationBuilder tb, SpellConsequence consequence) {
+        private void addConfigSpell(TranslationBuilder tb, ConsequenceFactory<?> factory) {
             // General stuff
-            String shortName = consequence.getShortName();
-            String longName = consequence.getLongName();
-            tb.add(consequence.getShortNameKey(), shortName); // Short name
-            tb.add(consequence.getLongNameKey(), longName); // Long name
-            tb.add(consequence.getDescriptionKey(), consequence.getDescription()); // Description
-            tb.add("text.mystical.consequence." + shortName + ".fired", "Spell " + shortName + ": " + consequence.getFiredMessage() + "."); // TODO: pretty this up
+            String shortName = factory.getShortName();
+            String longName = factory.getLongName();
+            tb.add(factory.getShortNameKey(), shortName); // Short name
+            tb.add(factory.getLongNameKey(), longName); // Long name
+            tb.add(factory.getDescriptionKey(), factory.getDescription()); // Description
+            tb.add(factory.translationKey() + ".fired", "Spell " + shortName + ": " + factory.getFiredMessage() + ".");
             // Config stuff
             addConfigCategory(tb, shortName, longName); // Category
             addConfigOptionInCategory(tb, shortName, "enabled", "Enable?"); // Enabled option
             addConfigOptionInCategory(tb, shortName, "logLevel", "Logging"); // Logging option
             addConfigOptionInCategory(tb, shortName, "weight", "Weight"); // Weight option
-
         }
 
         private void addConfigCategory(TranslationBuilder tb, String key, String value) {
             addConfig(tb, "category." + key, value);
         }
 
+        /**
+         * @param tb      The TranslationBuilder to use.
+         * @param key     The key under the logging section.
+         * @param console The translation for config output.
+         * @param option  The translation for the config option.
+         */
+        private void addLoggingOption(TranslationBuilder tb, String key, String console, String option) {
+            tb.add("text.mystical.logging." + key, console);
+            addConfigOption(tb, key + "LogLevel", option);
+        }
+
+        private void addCommandText(TranslationBuilder tb, String key, String value) {
+            tb.add("text.mystical.command." + key, value);
+        }
 
     }
 }
