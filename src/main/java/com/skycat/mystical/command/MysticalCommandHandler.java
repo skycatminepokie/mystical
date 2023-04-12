@@ -64,7 +64,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int spellNum = context.getArgument("spell", Integer.class);
         if (Mystical.SPELL_HANDLER.getActiveSpells().isEmpty()) {
-            throw new CommandException(Utils.translatable("mystical.spell.delete.noSpells"));
+            throw new CommandException(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
         }
         if (spellNum > Mystical.SPELL_HANDLER.getActiveSpells().size()) { // TODO: Translate
             throw new CommandException(Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.SPELL_HANDLER.getActiveSpells().size() - 1) + ")"));
@@ -94,12 +94,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             MutableText spellDescription = spell.getConsequence().getFactory().getDescriptionText(spell.getConsequence()); // TODO: getDescriptionText should never throw IllegalArgumentException
             if (showDeleteButton) {
                 MutableText deleteButton = Utils.translatable("text.mystical.commands.deleteSpellButton");
-                // TODO: Test
                 Style style = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/mystical spell delete " + i));
                 deleteButton.setStyle(style);
                 spellDescription.append(deleteButton);
             }
-            // TODO: Give as multiple lines in one message or as multiple messages?
             context.getSource().sendFeedback(spellDescription, false);
         }
         return 1;
@@ -109,12 +107,14 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         String spell = context.getArgument("spell", String.class); // TODO: Warn if disabled or weight = 0
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(SpellGenerator.getShortNameToFactory().get(spell));
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.newSpell.success"), Mystical.CONFIG.newSpellCommandBroadcast()); // TODO: Tell what spell was created
+        context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
         return 1;
     }
 
     private int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
-        Mystical.SPELL_HANDLER.activateNewSpell(); // TODO: Logging
+        Mystical.SPELL_HANDLER.activateNewSpell();
+        Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
+        context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
         return 1;
     }
 

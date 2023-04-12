@@ -42,6 +42,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigOption(tb, "timeOfDayAtStartupLogLevel", "Time of day at startup");
 
             addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
+            addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
 
             addConfigSection(tb, "Spells");
             // Generate translations for consequences
