@@ -43,6 +43,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
             addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
             addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
+            addCommandText(tb, "mystical.reload.success", "Successfully reloaded spells from file.");
 
             addConfigSection(tb, "Spells");
             // Generate translations for consequences
