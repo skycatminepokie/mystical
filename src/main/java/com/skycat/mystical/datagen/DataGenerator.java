@@ -41,6 +41,8 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigOption(tb, "playerContributedLogLevel", "Player contribution");
             addConfigOption(tb, "timeOfDayAtStartupLogLevel", "Time of day at startup");
 
+            addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
+
             addConfigSection(tb, "Spells");
             // Generate translations for consequences
             for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
@@ -120,6 +122,10 @@ public class DataGenerator implements DataGeneratorEntrypoint {
         private void addLoggingOption(TranslationBuilder tb, String key, String console, String option) {
             tb.add("text.mystical.logging." + key, console);
             addConfigOption(tb, key + "LogLevel", option);
+        }
+
+        private void addCommandText(TranslationBuilder tb, String key, String value) {
+            tb.add("text.mystical.command." + key, value);
         }
 
     }

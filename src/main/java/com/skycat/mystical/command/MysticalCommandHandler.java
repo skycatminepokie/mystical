@@ -36,7 +36,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                         .requires(Permissions.require("mystical.command.mystical", true))
                         .then(literal("spell")
                                 .requires(Permissions.require("mystical.command.mystical.spell", true))
-                                .then(literal("new") // TODO: Allow this (for weighted random spell)
+                                .then(literal("new")
                                         .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
                                         .then(argument("spell", StringArgumentType.word())
                                                 .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.getShortNameToFactory().keySet(), builder)))
@@ -63,7 +63,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int spellNum = context.getArgument("spell", Integer.class);
-        if (spellNum > Mystical.SPELL_HANDLER.getActiveSpells().size() || Mystical.SPELL_HANDLER.getActiveSpells().isEmpty()) { // TODO Fix error text for empty list
+        if (Mystical.SPELL_HANDLER.getActiveSpells().isEmpty()) {
+            throw new CommandException(Utils.translatable("mystical.spell.delete.noSpells"));
+        }
+        if (spellNum > Mystical.SPELL_HANDLER.getActiveSpells().size()) { // TODO: Translate
             throw new CommandException(Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.SPELL_HANDLER.getActiveSpells().size() - 1) + ")"));
         }
         Mystical.SPELL_HANDLER.getActiveSpells().remove(spellNum);
