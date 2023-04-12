@@ -40,7 +40,6 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigOption(tb, "failedToSetNightTimerLogLevel", "Failed to set night timer");
             addConfigOption(tb, "playerContributedLogLevel", "Player contribution");
             addConfigOption(tb, "timeOfDayAtStartupLogLevel", "Time of day at startup");
-            addConfigOption(tb, "newSpellCommandLogLevel", "New spell command");
 
             addConfigSection(tb, "Spells");
             // Generate translations for consequences

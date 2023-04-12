@@ -1,5 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
+import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +31,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
 
         @Override
         public double getWeight() {
-            return 1; // TODO: Config
+            return (Mystical.CONFIG.disableDaylightBurning.enabled() ? Mystical.CONFIG.disableDaylightBurning.weight() : 0);
         }
     }
 }
