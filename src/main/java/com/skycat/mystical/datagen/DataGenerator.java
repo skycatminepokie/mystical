@@ -31,15 +31,15 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfigSection(tb, "Logging");
             addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");
             addConfigOption(tb, "newSpellCommandBroadcast", "New spell command (in-game)");
-            // TODO: Move these to addLoggingOption
-            addConfigOption(tb, "failedToGetRandomBlockLogLevel", "Failed to get random block");
-            addConfigOption(tb, "failedToLoadHavenManagerLogLevel", "Failed to load haven manager");
-            addConfigOption(tb, "failedToLoadSpellHandlerLogLevel", "Failed to load spell handler");
-            addConfigOption(tb, "failedToSaveHavenManagerLogLevel", "Failed to save haven manager");
-            addConfigOption(tb, "failedToSaveSpellHandlerLogLevel", "Failed to save spell manager");
-            addConfigOption(tb, "failedToSetNightTimerLogLevel", "Failed to set night timer");
-            addConfigOption(tb, "playerContributedLogLevel", "Player contribution");
-            addConfigOption(tb, "timeOfDayAtStartupLogLevel", "Time of day at startup");
+            // TODO: Make sure logging uses these (they probably don't)
+            addLoggingOption(tb, "failedToGetRandomBlock", "Failed to get random block", "Failed to get random block");
+            addLoggingOption(tb, "failedToLoadHavenManager", "Failed to load haven manager", "Failed to load haven manager");
+            addLoggingOption(tb, "failedToLoadSpellHandler", "Failed to load spell handler", "Failed to load spell handler");
+            addLoggingOption(tb, "failedToSaveHavenManager", "Failed to save haven manager", "Failed to save haven manager");
+            addLoggingOption(tb, "failedToSaveSpellHandler", "Failed to save spell manager", "Failed to save spell manager");
+            addLoggingOption(tb, "failedToSetNightTimer", "Failed to set night timer", "Failed to set night timer");
+            addLoggingOption(tb, "playerContributed", "Player contribution", "Player contribution");
+            addLoggingOption(tb, "timeOfDayAtStartup", "Time of day at startup", "Time of day at startup");
 
             addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
             addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");

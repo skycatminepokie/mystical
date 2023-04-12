@@ -120,7 +120,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             return block;
         }
         // Labeled in translation as critical error. Ideally, this should not happen.
-        Utils.log(Utils.translateString("text.mystical.spellGenerator.failedRandomBlock"), Mystical.CONFIG.failedToGetRandomBlockLogLevel());
+        Utils.log(Utils.translateString("text.mystical.logging.failedRandomBlock"), Mystical.CONFIG.failedToGetRandomBlockLogLevel());
         return Blocks.COMMAND_BLOCK;
     }
 
