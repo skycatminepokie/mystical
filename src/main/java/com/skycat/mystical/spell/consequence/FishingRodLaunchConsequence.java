@@ -10,7 +10,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<FishingRodLaunchConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<FishingRodLaunchConsequence> getFactory() {
         return FACTORY;
     }
 

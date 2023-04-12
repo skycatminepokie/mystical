@@ -19,6 +19,7 @@ public class ConfigModel {
     @Nest public SheepColorChangeConfig sheepColorChange = new SheepColorChangeConfig();
     @Nest public ZombieTypeChangeConfig zombieTypeChange = new ZombieTypeChangeConfig();
     @Nest public SkeletonTypeChangeConfig skeletonTypeChange = new SkeletonTypeChangeConfig();
+    @Nest public DisableDaylightBurningConfig disableDaylightBurning = new DisableDaylightBurningConfig();
 
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
@@ -188,9 +189,21 @@ public class ConfigModel {
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
+
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class DisableDaylightBurningConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
 
         public static boolean weightPredicate(double value) {
             return ConfigModel.weightPredicate(value);
@@ -201,6 +214,7 @@ public class ConfigModel {
     /**
      * Verify that the chance is valid.
      * Used instead of {@link RangeConstraint} because it doesn't make a slider.
+     *
      * @param value The chance value to check
      * @return value >= 0 && value <= 100
      */

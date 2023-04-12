@@ -15,7 +15,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<ZombieTypeChangeConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<ZombieTypeChangeConsequence> getFactory() {
         return FACTORY;
     }
 

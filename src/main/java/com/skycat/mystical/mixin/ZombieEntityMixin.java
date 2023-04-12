@@ -24,11 +24,19 @@ public abstract class ZombieEntityMixin {
         ZombieEntity dis = (ZombieEntity) (Object) this;
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOutOfWorld() && !dis.isDead()) {
-                Entity newEntity = dis.convertTo(Util.getRandom(ZombieTypeChangeConsequence.ZOMBIE_TYPES, Mystical.MC_RANDOM), true);
-                Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
-                if (newEntity != null) {
-                    newEntity.damage(DamageSource.OUT_OF_WORLD, totalDamage);
-                }
+            Entity newEntity = dis.convertTo(Util.getRandom(ZombieTypeChangeConsequence.ZOMBIE_TYPES, Mystical.MC_RANDOM), true);
+            Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
+            if (newEntity != null) {
+                newEntity.damage(DamageSource.OUT_OF_WORLD, totalDamage);
+            }
         }
     }
+
+    /* @Inject(method = "burnsInDaylight", at = @At("RETURN"), cancellable = true)
+    private void burnsInDaylight(CallbackInfoReturnable<Boolean> cir) {
+        if (Mystical.SPELL_HANDLER.isConsequenceActive(DisableDaylightBurningConsequence.class)) {
+            cir.setReturnValue(false);
+        }
+    }
+     */
 }

@@ -10,6 +10,7 @@
     "DamageTrackerMixin",
     "FishingBobberEntityMixin",
     "MinecraftServerTimer",
+    "MobEntityMixin",
     "SaplingBlockMixin",
     "ServerWorldMixin",
     "SheepEntityMixin",

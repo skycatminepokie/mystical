@@ -10,7 +10,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     @Override
-    public ConsequenceFactory<EnderTypeChangeConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<EnderTypeChangeConsequence> getFactory() {
         return FACTORY;
     }
 
