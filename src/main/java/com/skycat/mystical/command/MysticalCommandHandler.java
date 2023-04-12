@@ -120,6 +120,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.SPELL_HANDLER = SpellHandler.loadOrNew();
+        Mystical.EVENT_HANDLER.setNightTimer();
         context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.reload.success"), true);
         return 1;
     }
