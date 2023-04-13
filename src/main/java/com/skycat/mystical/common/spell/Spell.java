@@ -1,0 +1,17 @@
+package com.skycat.mystical.common.spell;
+
+import com.skycat.mystical.common.spell.consequence.SpellConsequence;
+import com.skycat.mystical.common.spell.cure.SpellCure;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class Spell {
+    private SpellConsequence consequence;
+    private SpellCure cure;
+
+    public Spell(SpellConsequence consequence, SpellCure cure) {
+        this.consequence = consequence;
+        this.cure = cure;
+    }
+}
