@@ -36,7 +36,9 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/class_2248": ["com/skycat/mystical/server/DefaultFertilizable"]
+      "net/minecraft/class_2248": [
+        "com/skycat/mystical/common/DefaultFertilizable"
+      ]
     }
   }
 }

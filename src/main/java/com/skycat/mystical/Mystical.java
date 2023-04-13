@@ -3,14 +3,15 @@ package com.skycat.mystical;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.util.UUIDTypeAdapter;
-import com.skycat.mystical.command.MysticalCommandHandler;
-import com.skycat.mystical.spell.SpellHandler;
-import com.skycat.mystical.spell.consequence.SpellConsequence;
-import com.skycat.mystical.spell.cure.SpellCure;
-import com.skycat.mystical.util.BlockSerializer;
-import com.skycat.mystical.util.ClassSerializer;
-import com.skycat.mystical.util.LocalDateTimeSerializer;
-import com.skycat.mystical.util.StatCodec;
+import com.skycat.mystical.common.MysticalEventHandler;
+import com.skycat.mystical.common.command.MysticalCommandHandler;
+import com.skycat.mystical.common.spell.SpellHandler;
+import com.skycat.mystical.common.spell.consequence.SpellConsequence;
+import com.skycat.mystical.common.spell.cure.SpellCure;
+import com.skycat.mystical.common.util.BlockSerializer;
+import com.skycat.mystical.common.util.ClassSerializer;
+import com.skycat.mystical.common.util.LocalDateTimeSerializer;
+import com.skycat.mystical.common.util.StatCodec;
 import lombok.Getter;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -47,7 +48,7 @@ public class Mystical implements ModInitializer {
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
     @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // Probably not a great way to do this, but oh well.
-    @Getter public static final com.skycat.mystical.MysticalConfig CONFIG = com.skycat.mystical.MysticalConfig.createAndLoad();
+    @Getter public static final com.skycat.mystical.common.MysticalConfig CONFIG = com.skycat.mystical.common.MysticalConfig.createAndLoad();
     @Getter public static SpellHandler SPELL_HANDLER = SpellHandler.loadOrNew();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
 
