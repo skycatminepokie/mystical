@@ -1,4 +1,4 @@
-package com.skycat.mystical.common.command;
+package com.skycat.mystical.server.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

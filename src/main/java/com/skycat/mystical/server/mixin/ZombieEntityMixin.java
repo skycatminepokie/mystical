@@ -1,4 +1,4 @@
-package com.skycat.mystical.common.mixin;
+package com.skycat.mystical.server.mixin;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.ZombieTypeChangeConsequence;

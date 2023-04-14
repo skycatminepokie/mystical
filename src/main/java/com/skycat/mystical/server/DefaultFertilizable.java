@@ -1,4 +1,4 @@
-package com.skycat.mystical.common;
+package com.skycat.mystical.server;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Fertilizable;

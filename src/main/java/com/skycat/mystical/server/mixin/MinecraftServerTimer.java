@@ -1,7 +1,7 @@
-package com.skycat.mystical.common.mixin;
+package com.skycat.mystical.server.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.MinecraftServerTimerAccess;
+import com.skycat.mystical.server.MinecraftServerTimerAccess;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

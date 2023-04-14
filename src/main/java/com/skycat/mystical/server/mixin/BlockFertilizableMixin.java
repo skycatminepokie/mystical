@@ -1,6 +1,6 @@
-package com.skycat.mystical.common.mixin;
+package com.skycat.mystical.server.mixin;
 
-import com.skycat.mystical.common.DefaultFertilizable;
+import com.skycat.mystical.server.DefaultFertilizable;
 import net.minecraft.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 

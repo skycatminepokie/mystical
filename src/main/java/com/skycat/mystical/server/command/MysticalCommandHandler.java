@@ -1,4 +1,4 @@
-package com.skycat.mystical.common.command;
+package com.skycat.mystical.server.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;

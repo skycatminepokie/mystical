@@ -1,4 +1,4 @@
-package com.skycat.mystical.common;
+package com.skycat.mystical.server;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
