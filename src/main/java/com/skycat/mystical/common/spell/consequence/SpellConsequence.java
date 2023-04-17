@@ -14,10 +14,12 @@ public abstract class SpellConsequence {
      * If there is no relevant callback, this should be null
      */
     private final Class callbackType;
+    private final double difficulty;
 
-    public SpellConsequence(Class consequenceType, Class callbackType) {
+    public SpellConsequence(Class consequenceType, Class callbackType, double difficulty) {
         this.consequenceType = consequenceType;
         this.callbackType = callbackType;
+        this.difficulty = difficulty;
     }
 
     /*

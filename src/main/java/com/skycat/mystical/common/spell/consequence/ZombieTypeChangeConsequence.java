@@ -30,7 +30,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
     }
 
     public ZombieTypeChangeConsequence() {
-        super(ZombieTypeChangeConsequence.class, null);
+        super(ZombieTypeChangeConsequence.class, null, 50d); // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<ZombieTypeChangeConsequence> {

@@ -17,7 +17,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
     }
 
     protected KillOnSleepConsequence() {
-        super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class);
+        super(KillOnSleepConsequence.class, EntitySleepEvents.StartSleeping.class, 1000d);
     }
 
     @Override

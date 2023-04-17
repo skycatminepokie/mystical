@@ -15,7 +15,7 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
     }
 
     public SheepColorChangeConsequence() {
-        super(RandomTreeTypeConsequence.class, null);
+        super(RandomTreeTypeConsequence.class, null, 5d); // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<SheepColorChangeConsequence> {

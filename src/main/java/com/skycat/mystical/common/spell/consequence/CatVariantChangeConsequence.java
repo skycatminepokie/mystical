@@ -14,8 +14,8 @@ public class CatVariantChangeConsequence extends SpellConsequence {
         return FACTORY;
     }
 
-    public CatVariantChangeConsequence() { // TODO: Config
-        super(CatVariantChangeConsequence.class, null);
+    public CatVariantChangeConsequence() { // TODO: Config on variants
+        super(CatVariantChangeConsequence.class, null, 1d);  // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<CatVariantChangeConsequence> {

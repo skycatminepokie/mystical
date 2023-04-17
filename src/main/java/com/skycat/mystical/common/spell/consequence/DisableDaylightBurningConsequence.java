@@ -10,7 +10,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
     public static Factory FACTORY = new Factory();
 
     protected DisableDaylightBurningConsequence() {
-        super(DisableDaylightBurningConsequence.class, null);
+        super(DisableDaylightBurningConsequence.class, null, 15d); // TODO: Scaling
     }
 
     @Override

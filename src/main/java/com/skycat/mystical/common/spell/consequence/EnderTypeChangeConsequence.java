@@ -15,7 +15,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
     }
 
     protected EnderTypeChangeConsequence() {
-        super(EnderTypeChangeConsequence.class, null);
+        super(EnderTypeChangeConsequence.class, null, 5d); // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<EnderTypeChangeConsequence> {

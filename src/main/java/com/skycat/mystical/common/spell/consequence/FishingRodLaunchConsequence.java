@@ -15,7 +15,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
     }
 
     public FishingRodLaunchConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType);
+        super(consequenceType, callbackType, -5d); // TODO: Scaling
     }
 
     public FishingRodLaunchConsequence() {

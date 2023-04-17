@@ -35,7 +35,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence {
     }
 
     private RandomTreeTypeConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType);
+        super(consequenceType, callbackType, 15d); // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<RandomTreeTypeConsequence> {
