@@ -15,7 +15,6 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "com.skycat.mystical.client.MysticalClient"
     ],
     "main": [
       "com.skycat.mystical.Mystical"

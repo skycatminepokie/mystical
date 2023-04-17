@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.skycat.mystical.mixin",
+  "package": "com.skycat.mystical.server.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BlockFertilizableMixin",
@@ -18,7 +18,6 @@
     "ZombieEntityMixin"
   ],
   "client": [
-    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

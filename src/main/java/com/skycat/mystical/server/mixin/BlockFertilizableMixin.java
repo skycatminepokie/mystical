@@ -1,4 +1,4 @@
-package com.skycat.mystical.mixin;
+package com.skycat.mystical.server.mixin;
 
 import com.skycat.mystical.server.DefaultFertilizable;
 import net.minecraft.block.Block;

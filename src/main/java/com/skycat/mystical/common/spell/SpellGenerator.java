@@ -6,7 +6,6 @@ import com.skycat.mystical.common.spell.cure.CureFactory;
 import com.skycat.mystical.common.spell.cure.SpellCure;
 import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.common.util.Utils;
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
@@ -29,10 +28,8 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
     This is separate from difficulty, though difficulty will likely be correlated.
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
-    @Getter
     @SuppressWarnings("rawtypes") private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
     @SuppressWarnings("rawtypes") private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
-    @Getter
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
