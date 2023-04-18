@@ -28,7 +28,10 @@ public abstract class FishingBobberEntityMixin {
 
     @Inject(method = "pullHookedEntity", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void afterPullHooked(Entity entity, CallbackInfo ci, Entity entity2, Vec3d vec3d) {
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class) && entity instanceof ServerPlayerEntity) {
+        if (!Mystical.HAVEN_MANAGER.isInHaven(entity) &&
+                !Mystical.HAVEN_MANAGER.isInHaven(entity2) &&
+                entity instanceof ServerPlayerEntity &&
+                Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class)) {
             ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity));
         }
     }

@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +23,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
-        if (entity.isAlive()) {
+        if (entity.isAlive() && !Mystical.HAVEN_MANAGER.isInHaven(entity)) {
             entity.kill();
         }
     }

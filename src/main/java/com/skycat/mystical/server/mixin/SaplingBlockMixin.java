@@ -23,7 +23,10 @@ public abstract class SaplingBlockMixin {
 
     @Inject(method = "generate", at = @At("HEAD"), cancellable = true)
     public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) {
-        if (state.get(STAGE) != 0 && Mystical.SPELL_HANDLER.isConsequenceActive(RandomTreeTypeConsequence.class) && Utils.percentChance(Mystical.CONFIG.randomTreeType.chance())) {
+        if (state.get(STAGE) != 0 &&
+                Mystical.HAVEN_MANAGER.isInHaven(pos) &&
+                Mystical.SPELL_HANDLER.isConsequenceActive(RandomTreeTypeConsequence.class) &&
+                Utils.percentChance(Mystical.CONFIG.randomTreeType.chance())) {
             Util.getRandom(RandomTreeTypeConsequence.SAPLING_GENERATORS, random).generate(world, world.getChunkManager().getChunkGenerator(), pos, state, random);
             Utils.log("text.mystical.consequence.randomTreeType.fired", Mystical.CONFIG.randomTreeType.logLevel());
             ci.cancel();

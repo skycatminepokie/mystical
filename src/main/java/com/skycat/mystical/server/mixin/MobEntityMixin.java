@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MobEntityMixin {
     @Inject(method = "isAffectedByDaylight", at = @At("HEAD"), cancellable = true)
     private void cancelDaylightEffects(CallbackInfoReturnable<Boolean> cir) {
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(DisableDaylightBurningConsequence.class)) {
+        if (Mystical.SPELL_HANDLER.isConsequenceActive(DisableDaylightBurningConsequence.class)) { // TODO allow for havening
             cir.setReturnValue(false);
         }
     }

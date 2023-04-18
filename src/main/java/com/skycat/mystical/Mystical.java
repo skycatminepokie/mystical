@@ -10,6 +10,7 @@ import com.skycat.mystical.common.util.BlockSerializer;
 import com.skycat.mystical.common.util.ClassSerializer;
 import com.skycat.mystical.common.util.LocalDateTimeSerializer;
 import com.skycat.mystical.common.util.StatCodec;
+import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.MysticalEventHandler;
 import com.skycat.mystical.server.command.MysticalCommandHandler;
 import lombok.Getter;
@@ -50,6 +51,7 @@ public class Mystical implements ModInitializer {
     @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // Probably not a great way to do this, but oh well.
     @Getter public static final com.skycat.mystical.common.MysticalConfig CONFIG = com.skycat.mystical.common.MysticalConfig.createAndLoad();
     @Getter public static SpellHandler SPELL_HANDLER = SpellHandler.loadOrNew();
+    @Getter public static final HavenManager HAVEN_MANAGER = HavenManager.loadOrNew();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
 
     @Override
