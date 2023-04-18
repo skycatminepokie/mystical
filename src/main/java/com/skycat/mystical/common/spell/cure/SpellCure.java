@@ -5,6 +5,7 @@ import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
@@ -32,6 +33,8 @@ public abstract class SpellCure {
         this.cureType = cureType;
         this.translationKey = translationKey;
     }
+
+    public abstract Text getTranslation();
 
     /**
      * This is a player-readable description/"recipe" for the cure.

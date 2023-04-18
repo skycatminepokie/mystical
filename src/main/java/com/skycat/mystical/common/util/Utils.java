@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -139,5 +140,18 @@ public class Utils {
 
     public static boolean percentChance(double chance) {
         return Mystical.RANDOM.nextDouble(0, 100) < chance;
+    }
+
+    /**
+     * Gets the translation for a stat as shown on the stats screen (ex "Times Mined")
+     *
+     * @param stat The stat to get the translation for
+     * @return The translation
+     */
+    public static MutableText translateStat(Stat<?> stat) {
+        if (stat.getValue() instanceof Identifier) {
+            return translatable("stat." + stat.getValue().toString().replace(':', '.'));
+        }
+        return stat.getType().getName().copy();
     }
 }
