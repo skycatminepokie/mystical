@@ -8,13 +8,12 @@ import net.minecraft.item.Item;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
 
 @Getter
 public class StatBackedSpellCure extends SpellCure {
     private final Stat stat;
 
-    public StatBackedSpellCure(double contributionGoal, Stat stat, String translationKey) {
+    public StatBackedSpellCure(int contributionGoal, Stat stat, String translationKey) {
         super(contributionGoal, StatBackedSpellCure.class, translationKey);
         this.stat = stat;
     }
@@ -24,21 +23,23 @@ public class StatBackedSpellCure extends SpellCure {
     }
 
     @Override
-    public Text getTranslation() {
+    public MutableText getDescription() {
         MutableText text = Utils.translateStat(stat);
         var statValue = stat.getValue();
         if (statValue instanceof Block) {
+            text.append(" (");
             text.append(((Block) statValue).getName());
+            text.append(")");
         } else if (statValue instanceof Item) {
+            text.append(" (");
             text.append(((Item) statValue).getName());
+            text.append(")");
         } else if (statValue instanceof EntityType) {
+            text.append(" (");
             text.append(((EntityType<?>) statValue).getName());
+            text.append(")");
         }
+        text.append(" (" + sumContributions() + "/" + contributionGoal + ")");
         return text;
-    }
-
-    @Override
-    public MutableText getDescription() {
-        return super.getDescription(); // TODO
     }
 }

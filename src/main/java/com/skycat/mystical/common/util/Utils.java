@@ -69,12 +69,17 @@ public class Utils {
         return Text.of(str);
     }
 
+    public static MutableText mutableTextOf(String str) {
+        return Text.of(str).copy();
+    }
+
     /**
      * Gives a status effect to an entity
-     * @param entity The entity to give the status effect to
+     *
+     * @param entity       The entity to give the status effect to
      * @param statusEffect The status effect to give
-     * @param length The length of the effect
-     * @param level The level (amplifier) of the effect.
+     * @param length       The length of the effect
+     * @param level        The level (amplifier) of the effect.
      */
     public static void giveStatusEffect(LivingEntity entity, StatusEffect statusEffect, int length, int level) {
         entity.addStatusEffect(new StatusEffectInstance(statusEffect, length, level));

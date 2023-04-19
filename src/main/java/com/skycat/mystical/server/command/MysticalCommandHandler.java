@@ -19,6 +19,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 
@@ -98,6 +99,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 deleteButton.setStyle(style);
                 spellDescription.append(deleteButton);
             }
+            spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription()))); // TODO: Translate
             context.getSource().sendFeedback(spellDescription, false);
         }
         return 1;
