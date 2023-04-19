@@ -12,22 +12,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@Getter @Setter
+@Getter
+@Setter
 public abstract class SpellCure {
 
-    private double contributionGoal;
-    private final Class cureType;
-    private ArrayList<CureContribution> contributions = new ArrayList<>();
-    private final String translationKey;
+    protected int contributionGoal;
+    protected final Class cureType;
+    protected ArrayList<CureContribution> contributions = new ArrayList<>();
+    protected final String translationKey;
 
     /**
-     * Please provide a translation key with {@link SpellCure#SpellCure(double, Class, String)}
+     * Please provide a translation key with {@link SpellCure#SpellCure(int, Class, String)}
      */
-    public SpellCure(double contributionGoal, Class cureType) {
+    public SpellCure(int contributionGoal, Class cureType) {
         this(contributionGoal, cureType, "text.mystical.spellCure.default");
     }
 
-    public SpellCure(double contributionGoal, Class cureType, String translationKey) {
+    public SpellCure(int contributionGoal, Class cureType, String translationKey) {
         this.contributionGoal = contributionGoal;
         this.cureType = cureType;
         this.translationKey = translationKey;
@@ -39,6 +40,20 @@ public abstract class SpellCure {
      */
     public MutableText getDescription() {
         return Utils.translatable(translationKey);
+    }
+
+    /**
+     * Finds the total value of all contributions
+     *
+     * @return the total value of all contributions
+     * @implNote This is costly: O(n).
+     */
+    public int sumContributions() { // TODO: Migrate to O(1) method by caching
+        int sum = 0;
+        for (CureContribution contribution : contributions) {
+            sum += contribution.amount;
+        }
+        return sum;
     }
 
     public void contribute(@Nullable UUID uuid, double amount) {
