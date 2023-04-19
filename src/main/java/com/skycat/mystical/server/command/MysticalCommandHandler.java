@@ -18,10 +18,13 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.ArrayList;
 
@@ -59,7 +62,33 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                 .requires(Permissions.require("mystical.command.mystical.reload", 4))
                                 .executes(this::reloadCommand)
                         )
+                        .then(literal("haven")
+                                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                                // then pos arg
+                                .executes(this::havenCommand)
+                        )
         );
+    }
+
+    private int havenCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+        if (!(entity instanceof ServerPlayerEntity)) {
+            context.getSource().sendFeedback(Utils.textOf("This can only be called by a player."), false); // TODO: Translate
+            return 0;
+        }
+        if (Mystical.HAVEN_MANAGER.isInHaven(entity)) {
+            context.getSource().sendFeedback(Utils.textOf("You're already in a haven!"), false); // TODO: Translate
+            return 0;
+        }
+        ChunkPos pos = entity.getChunkPos();
+        ((ServerPlayerEntity) entity).sendMessage(
+                Utils.mutableTextOf("Having chunk [" + pos.x + ", " + pos.z + "] for " + Mystical.HAVEN_MANAGER.getHavenCost(pos) + " power. ")
+                        .append(Utils.mutableTextOf("[Confirm]").setStyle(
+                                Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + pos.x + " " + pos.z + " confirm"))
+                                        .withColor(Formatting.GREEN)
+                        ))
+        ); // TODO: Translate
+        return 1;
     }
 
     private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {

@@ -129,6 +129,6 @@ public class HavenManager {
     }
 
     public boolean isInHaven(Entity entity) {
-        return isInHaven(entity.getBlockPos());
+        return isInHaven(entity.getChunkPos());
     }
 }
