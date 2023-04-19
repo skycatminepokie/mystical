@@ -39,7 +39,7 @@ public class StatBackedSpellCure extends SpellCure {
             text.append(((EntityType<?>) statValue).getName());
             text.append(")");
         }
-        text.append(" (" + sumContributions() + "/" + contributionGoal + ")");
+        text.append(" (" + stat.format(getContributionTotal()) + "/" + stat.format(contributionGoal) + ")");
         return text;
     }
 }

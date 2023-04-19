@@ -3,7 +3,6 @@ package com.skycat.mystical.common.spell.cure;
 import com.google.gson.*;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,14 +11,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@Getter
-@Setter
 public abstract class SpellCure {
 
-    protected int contributionGoal;
-    protected final Class cureType;
-    protected ArrayList<CureContribution> contributions = new ArrayList<>();
-    protected final String translationKey;
+    @Getter protected int contributionGoal;
+    @Getter protected final Class cureType;
+    /**
+     * Make sure to update {@link #contributionTotal} when adding to or removing from this
+     */
+    private final ArrayList<CureContribution> contributions = new ArrayList<>();
+    @Getter protected final String translationKey;
+    @Getter private int contributionTotal = 0;
 
     /**
      * Please provide a translation key with {@link SpellCure#SpellCure(int, Class, String)}
@@ -43,21 +44,21 @@ public abstract class SpellCure {
     }
 
     /**
-     * Finds the total value of all contributions
+     * Recalculates the total value of all contributions.
+     * Use {@link #getContributionTotal()} to get the total.
      *
-     * @return the total value of all contributions
      * @implNote This is costly: O(n).
      */
-    public int sumContributions() { // TODO: Migrate to O(1) method by caching
-        int sum = 0;
+    public void sumContributions() {
+        contributionTotal = 0;
         for (CureContribution contribution : contributions) {
-            sum += contribution.amount;
+            contributionTotal += contribution.amount;
         }
-        return sum;
     }
 
     public void contribute(@Nullable UUID uuid, double amount) {
         contributions.add(new CureContribution(uuid, LocalDateTime.now(), amount));
+        contributionTotal += amount;
         // TODO: Logging
     }
 
@@ -69,10 +70,10 @@ public abstract class SpellCure {
         return fulfilled >= contributionGoal;
     }
 
-    public static class CureContribution {
+    public static class CureContribution { // TODO: Move to having a sum, remove time.
         @Nullable UUID contributor;
         @Nullable LocalDateTime time;
-        double amount;
+        public double amount;
 
         public CureContribution(@Nullable UUID uuid, @Nullable LocalDateTime now, double amount) {
             contributor = uuid;
