@@ -2,6 +2,7 @@ package com.skycat.mystical.server;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
@@ -23,6 +24,8 @@ public class HavenManager {
         }
     }
 
+    public static int baseHavenCost = 1000;
+
     public void save() {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(Mystical.GSON.toJson(this));
@@ -31,9 +34,6 @@ public class HavenManager {
             // TODO: Dump info
         }
     }
-    public double getFlatHavenCost() {
-        return 0d; // TODO: Make nonzero
-    }
 
     /**
      * Gets the cost to haven the chunk containing a given block position
@@ -41,7 +41,7 @@ public class HavenManager {
      * @param blockPos The position of the block
      * @return The cost to haven
      */
-    public double getHavenCost(BlockPos blockPos) {
+    public int getHavenCost(BlockPos blockPos) {
         return getHavenCost(new ChunkPos(blockPos));
     }
 
@@ -52,7 +52,7 @@ public class HavenManager {
      * @param z The z position of the block
      * @return The cost
      */
-    public double getHavenCost(int x, int z) {
+    public int getHavenCost(int x, int z) {
         return getHavenCost(new BlockPos(x, 0, z));
     }
 
@@ -62,8 +62,8 @@ public class HavenManager {
      * @param chunkPos The position of the chunk
      * @return The cost
      */
-    public double getHavenCost(ChunkPos chunkPos) {
-        return getFlatHavenCost(); // TODO: allow for different costs for different chunks
+    public int getHavenCost(ChunkPos chunkPos) {
+        return baseHavenCost; // TODO: allow for different costs for different chunks
     }
 
     /**
@@ -103,7 +103,7 @@ public class HavenManager {
      * @param chunkPos The position of the chunk to check
      * @return {@code true} if the chunk is havened
      */
-    public boolean isHavenedChunk(ChunkPos chunkPos) {
+    public boolean isInHaven(ChunkPos chunkPos) {
         return havenedChunks.contains(chunkPos);
     }
 
@@ -114,8 +114,8 @@ public class HavenManager {
      * @param z The z position of the block
      * @return {@code true} if the chunk is havened
      */
-    public boolean isInHavenedChunk(int x, int z) {
-        return isInHavenedChunk(new BlockPos(x, 0, z));
+    public boolean isInHaven(int x, int z) {
+        return isInHaven(new BlockPos(x, 0, z));
     }
 
     /**
@@ -124,7 +124,11 @@ public class HavenManager {
      * @param blockPos The block position
      * @return {@code true} if the chunk is havened
      */
-    public boolean isInHavenedChunk(BlockPos blockPos) {
-        return isHavenedChunk(new ChunkPos(blockPos));
+    public boolean isInHaven(BlockPos blockPos) {
+        return isInHaven(new ChunkPos(blockPos));
+    }
+
+    public boolean isInHaven(Entity entity) {
+        return isInHaven(entity.getBlockPos());
     }
 }

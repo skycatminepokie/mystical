@@ -18,7 +18,10 @@ public abstract class ZombieEntityMixin {
     @Inject(method = "damage", at = @At("RETURN"))
     public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         // If the spell is not active, the damage didn't go through, or we roll too low, don't do anything
-        if (!Mystical.SPELL_HANDLER.isConsequenceActive(ZombieTypeChangeConsequence.class) || !cir.getReturnValue() || !Utils.percentChance(Mystical.CONFIG.zombieTypeChange.chance())) {
+        if (Mystical.HAVEN_MANAGER.isInHaven((ZombieEntity) (Object) this) ||
+                !Mystical.SPELL_HANDLER.isConsequenceActive(ZombieTypeChangeConsequence.class) ||
+                !cir.getReturnValue() ||
+                !Utils.percentChance(Mystical.CONFIG.zombieTypeChange.chance())) {
             return;
         }
         ZombieEntity dis = (ZombieEntity) (Object) this;
