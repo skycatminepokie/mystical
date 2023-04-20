@@ -67,31 +67,100 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                         .then(literal("haven")
                                 .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
                                 .then(
-                                        argument("chunk", Vec2ArgumentType.vec2())
+                                        argument("block", Vec2ArgumentType.vec2())
                                                 .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                                                // TODO: Executes
+                                                .executes(this::havenPosCommand)
                                                 .then(literal("confirm")
                                                         .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                                                        .executes(this::havenConfirmCommand)
+                                                        .executes(this::havenPosConfirmCommand)
                                                 )
                                 )
-                                .executes(this::havenCommand)
+                                .executes(this::havenHereCommand)
                         )
         );
     }
 
-    private int havenConfirmCommand(CommandContext<ServerCommandSource> context) {
+    /**
+     * /mystical haven
+     * Redirects to {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)} with the entity's position
+     * Source must be an entity (a player entity for the redirect to pass)
+     *
+     * @param context The context (fails if source is not ServerPlayerEntity)
+     * @return The return of {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)}
+     */
+    private int havenHereCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
+        if (entity == null) {
+            context.getSource().sendFeedback(Utils.textOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            return 0;
+        }
+        BlockPos pos = entity.getBlockPos();
+        return havenPos(context, pos);
+    }
+
+    /**
+     * Sends a chat message prompting /mystical haven x z confirm
+     * Note this is not a Command. See {@link #havenPosCommand}
+     *
+     * @param context Context - fails if source is not ServerPlayerEntity
+     * @param block   The position to haven
+     * @return 1 When the message is successfully send
+     */
+    private int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) {
+        var entity = context.getSource().getEntity();
+        if (!(entity instanceof ServerPlayerEntity player)) {
+            context.getSource().sendFeedback(Utils.textOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            return 0;
+        }
+        player.sendMessage(
+                Utils.mutableTextOf("Having chunk at [" + block.getX() + ", " + block.getZ() + "] for " + Mystical.HAVEN_MANAGER.getHavenCost(block) + " power. ")
+                        .append(Utils.mutableTextOf("[Confirm]").setStyle(
+                                Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
+                                        .withColor(Formatting.GREEN)
+                        ))
+        ); // TODO: Translate
+        return 1;
+    }
+
+    /**
+     * /mystical haven x z
+     *
+     * @param context The context. Source must be ServerPlayerEntity
+     * @return The return value of {@link #havenPos}.
+     */
+    private int havenPosCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+        if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
+            context.getSource().sendFeedback(Utils.textOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            return 0;
+        }
+        var vec = Vec2ArgumentType.getVec2(context, "block");
+        return havenPos(context, new BlockPos(vec.x, 0, vec.y));
+    }
+
+    /**
+     * /mystical haven x z confirm
+     * This is the end case for havening
+     *
+     * @param context The context. Source must be a player
+     * @return 1 if successful, 0 if unsuccessful
+     */
+    private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+
+        // Must be player
         if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
             context.getSource().sendFeedback(Utils.textOf("This can only be called by a player."), false); // TODO: Translate
             return 0;
         }
-        if (Mystical.HAVEN_MANAGER.isInHaven(player)) {
+
+        var vec = Vec2ArgumentType.getVec2(context, "block");
+        BlockPos blockPos = new BlockPos(vec.x, 0, vec.y);
+        if (Mystical.HAVEN_MANAGER.isInHaven(player)) { // Must not already be havened
             context.getSource().sendFeedback(Utils.textOf("That location is already havened."), false); // TODO: Translate
             return 0;
         }
-        var vec = Vec2ArgumentType.getVec2(context, "chunk");
-        BlockPos blockPos = new BlockPos(vec.x, 0, vec.y);
+
         ChunkPos chunk = new ChunkPos(blockPos);
         boolean success = Mystical.HAVEN_MANAGER.tryHaven(chunk, player);
         if (success) {
@@ -103,22 +172,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         }
     }
 
-    private int havenCommand(CommandContext<ServerCommandSource> context) {
-        var entity = context.getSource().getEntity();
-        if (!(entity instanceof ServerPlayerEntity player)) {
-            context.getSource().sendFeedback(Utils.textOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
-            return 0;
-        }
-        ChunkPos pos = entity.getChunkPos();
-        player.sendMessage(
-                Utils.mutableTextOf("Having chunk [" + pos.x + ", " + pos.z + "] for " + Mystical.HAVEN_MANAGER.getHavenCost(pos) + " power. ")
-                        .append(Utils.mutableTextOf("[Confirm]").setStyle(
-                                Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + pos.x + " " + pos.z + " confirm"))
-                                        .withColor(Formatting.GREEN)
-                        ))
-        ); // TODO: Translate
-        return 1;
-    }
 
     private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int spellNum = context.getArgument("spell", Integer.class);
