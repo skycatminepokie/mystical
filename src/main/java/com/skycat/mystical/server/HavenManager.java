@@ -3,6 +3,7 @@ package com.skycat.mystical.server;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
@@ -95,6 +96,11 @@ public class HavenManager {
      */
     public boolean havenChunk(int x, int z) {
         return havenChunk(new BlockPos(x, 0, z));
+    }
+
+    public boolean tryHaven(ChunkPos chunk, PlayerEntity player) {
+        // STOPSHIP: Check if player has money, charge them
+        return havenChunk(chunk);
     }
 
     /**

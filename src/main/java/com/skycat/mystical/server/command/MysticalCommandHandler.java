@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.Vec2ArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -24,6 +25,7 @@ import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 import java.util.ArrayList;
@@ -64,24 +66,51 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                         )
                         .then(literal("haven")
                                 .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                                // then pos arg
+                                .then(
+                                        argument("chunk", Vec2ArgumentType.vec2())
+                                                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                                                // TODO: Executes
+                                                .then(literal("confirm")
+                                                        .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                                                        .executes(this::havenConfirmCommand)
+                                                )
+                                )
                                 .executes(this::havenCommand)
                         )
         );
     }
 
-    private int havenCommand(CommandContext<ServerCommandSource> context) {
+    private int havenConfirmCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
-        if (!(entity instanceof ServerPlayerEntity)) {
+        if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
             context.getSource().sendFeedback(Utils.textOf("This can only be called by a player."), false); // TODO: Translate
             return 0;
         }
-        if (Mystical.HAVEN_MANAGER.isInHaven(entity)) {
-            context.getSource().sendFeedback(Utils.textOf("You're already in a haven!"), false); // TODO: Translate
+        if (Mystical.HAVEN_MANAGER.isInHaven(player)) {
+            context.getSource().sendFeedback(Utils.textOf("That location is already havened."), false); // TODO: Translate
+            return 0;
+        }
+        var vec = Vec2ArgumentType.getVec2(context, "chunk");
+        BlockPos blockPos = new BlockPos(vec.x, 0, vec.y);
+        ChunkPos chunk = new ChunkPos(blockPos);
+        boolean success = Mystical.HAVEN_MANAGER.tryHaven(chunk, player);
+        if (success) {
+            player.sendMessage(Utils.textOf("Success!")); // TODO: Translate
+            return 1;
+        } else {
+            player.sendMessage(Utils.textOf("You tried as hard as you could, but you couldn't haven the area. Do you have enough power?")); // TODO: Translate
+            return 0;
+        }
+    }
+
+    private int havenCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+        if (!(entity instanceof ServerPlayerEntity player)) {
+            context.getSource().sendFeedback(Utils.textOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
             return 0;
         }
         ChunkPos pos = entity.getChunkPos();
-        ((ServerPlayerEntity) entity).sendMessage(
+        player.sendMessage(
                 Utils.mutableTextOf("Having chunk [" + pos.x + ", " + pos.z + "] for " + Mystical.HAVEN_MANAGER.getHavenCost(pos) + " power. ")
                         .append(Utils.mutableTextOf("[Confirm]").setStyle(
                                 Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + pos.x + " " + pos.z + " confirm"))
