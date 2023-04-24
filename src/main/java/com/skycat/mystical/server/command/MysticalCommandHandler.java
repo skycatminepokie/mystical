@@ -17,6 +17,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.Vec2ArgumentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -74,10 +75,46 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                                         .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
                                                         .executes(this::havenPosConfirmCommand)
                                                 )
-                                ) // TODO: Haven add, haven remove, haven info
+                                )
+                                .then(literal("info")
+                                        .requires(Permissions.require("mystical.command.mystical.haven.info", 0))
+                                        .executes(this::havenInfoCommand)
+                                ) // TODO: Haven add, haven remove, haven info pos
                                 .executes(this::havenHereCommand)
                         )
         );
+        /*
+         TODO: Commands
+            /mystical power add player amount silent
+            /mystical power add player amount
+            /mystical power remove player amount silent
+            /mystical power remove player amount
+            /mystical power get player
+            /mystical power help
+            /mystical power ?
+            /mystical haven info position
+            /mystical haven ?
+            /mystical haven add
+            /mystical haven add position
+            /mystical haven remove
+            /mystical haven remove position
+            /mystical haven remove position refund
+        */
+
+
+    }
+
+    private int havenInfoCommand(CommandContext<ServerCommandSource> context) {
+        Entity entity = context.getSource().getEntity();
+        if (entity == null) {
+            throw new CommandException(Utils.textOf("/mystical haven info must be called by an entity."));
+        }
+        if (Mystical.HAVEN_MANAGER.isInHaven(entity)) { // TODO: Translate, make better
+            context.getSource().sendFeedback(Utils.textOf("This is in a haven"), false);
+            return 1;
+        }
+        context.getSource().sendFeedback(Utils.textOf("This chunk is not havened"), false);
+        return 0;
     }
 
     /**
