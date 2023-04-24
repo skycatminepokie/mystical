@@ -3,7 +3,6 @@ package com.skycat.mystical.server;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -102,9 +101,20 @@ public class HavenManager {
         return havenChunk(new BlockPos(x, 0, z));
     }
 
-    public boolean tryHaven(ChunkPos chunk, PlayerEntity player) {
-        // STOPSHIP: Check if player has money, charge them
-        return havenChunk(chunk);
+    /**
+     * Havens a chunk at a player's expense.
+     * @param chunk The chunk to haven.
+     * @param player The player to charge.
+     * @return {@code true} on success, {@code false} if the havening fails or the player does not have enough power
+     */
+    public boolean tryHaven(ChunkPos chunk, ServerPlayerEntity player) {
+        int cost = getHavenCost(chunk);
+        if (hasPower(player, cost) && havenChunk(chunk)) { // Maintain order, lazy boolean operations used.
+            // Player has enough power and the haven succeeded
+            removePower(player, cost);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -174,9 +184,11 @@ public class HavenManager {
      * Get how much power a player has.
      * @param playerUUID The UUID of the player.
      * @return The power a player has, or 0 if they have no power/power is not yet tracked for this player.
+     * @implSpec Calling this ensures that {@code powerMap.get(playerUUID) != null}.
      */
     public int getPower(UUID playerUUID) {
         if (powerMap.get(playerUUID) == null) {
+            powerMap.put(playerUUID, 0);
             return 0;
         }
         return powerMap.get(playerUUID);
@@ -186,8 +198,57 @@ public class HavenManager {
      * Get how much power a player has.
      * @param player The player.
      * @return The power the player has, or 0 if they have no power/power is not yet tracked for this player.
+     * @implSpec Calling this ensures that {@code powerMap.get(playerUUID) != null}.
+     * @implNote Simple overload of {@link #getPower(UUID)}.
      */
     public int getPower(ServerPlayerEntity player) {
         return getPower(player.getUuid());
+    }
+
+    /**
+     * Removes power from a player, if and only if the player has enough power.
+     * @param player The player to remove power from.
+     * @param power The amount of power to remove.
+     * @return {@code true} on success, {@code false} when the player does not have enough power (so nothing was done).
+     * @implNote Simple overload of {@link #removePower(UUID, int)}.
+     */
+    public boolean removePower(ServerPlayerEntity player, int power) {
+        return removePower(player.getUuid(), power);
+    }
+
+    /**
+     * Removes power from a player, if and only if the player has enough power.
+     * @param playerUUID The uuid of the player to remove power from.
+     * @param power The amount of power to remove.
+     * @return {@code true} on success, {@code false} when the player does not have enough power (so nothing was done).
+     */
+    public boolean removePower(UUID playerUUID, int power) {
+        int prevPower = getPower(playerUUID);
+        if (hasPower(playerUUID, power)) {
+            powerMap.put(playerUUID, prevPower - power);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a player has at least {@code power} power.
+     * @param playerUUID The UUID of the player.
+     * @param power The amount of power required.
+     * @return {@code (player's power) >= power}.
+     */
+    public boolean hasPower(UUID playerUUID, int power) {
+        return getPower(playerUUID) >= power;
+    }
+
+    /**
+     * Checks if a player has at least {@code power} power.
+     * @param player The player.
+     * @param power The amount of power required.
+     * @return {@code (player's power) >= power}.
+     * @implNote Simple overload of {@link #hasPower(UUID, int)}.
+     */
+    public boolean hasPower(ServerPlayerEntity player, int power) {
+        return hasPower(player.getUuid(), power);
     }
 }
