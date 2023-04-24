@@ -74,7 +74,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                                         .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
                                                         .executes(this::havenPosConfirmCommand)
                                                 )
-                                )
+                                ) // TODO: Haven add, haven remove, haven info
                                 .executes(this::havenHereCommand)
                         )
         );
