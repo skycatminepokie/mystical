@@ -139,7 +139,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     }
 
     /**
-     * /mystical haven x z confirm
+     * /mystical haven x z confirm - Havens a chunk at the player's expense.
      * This is the end case for havening
      *
      * @param context The context. Source must be a player
