@@ -19,6 +19,7 @@ public class HavenManager {
     public HashSet<ChunkPos> havenedChunks = new HashSet<>();
     public HashMap<UUID, Integer> powerMap = new HashMap<>();
     private static final File SAVE_FILE = new File("config/havenManager.json");
+    public static int baseHavenCost = 1000;
     public static HavenManager loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return Mystical.GSON.fromJson(scanner.nextLine(), HavenManager.class);
@@ -27,8 +28,6 @@ public class HavenManager {
             return new HavenManager();
         }
     }
-
-    public static int baseHavenCost = 1000;
 
     public void save() {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
