@@ -44,6 +44,7 @@ public class HavenManager {
      *
      * @param blockPos The position of the block
      * @return The cost to haven
+     * @implNote Simple overload of {@link #getHavenCost(ChunkPos)}.
      */
     public int getHavenCost(BlockPos blockPos) {
         return getHavenCost(new ChunkPos(blockPos));
@@ -55,6 +56,7 @@ public class HavenManager {
      * @param x The x position of the block
      * @param z The z position of the block
      * @return The cost
+     * @implNote Simple overload of {@link #getHavenCost(BlockPos)}
      */
     public int getHavenCost(int x, int z) {
         return getHavenCost(new BlockPos(x, 0, z));
@@ -85,6 +87,7 @@ public class HavenManager {
      *
      * @param blockPos The position of a block inside the targeted chunk
      * @return {@code true} if the chunk was not already havened
+     * @implNote Simple overload of {@link #havenChunk(ChunkPos)}.
      */
     public boolean havenChunk(BlockPos blockPos) {
         return havenChunk(new ChunkPos(blockPos));
@@ -96,6 +99,7 @@ public class HavenManager {
      * @param x The x position of a block in the chunk
      * @param z The z position of a block in the chunk
      * @return {@code true} if the chunk was not already havened
+     * @implNote Simple overload of {@link #havenChunk(BlockPos)}.
      */
     public boolean havenChunk(int x, int z) {
         return havenChunk(new BlockPos(x, 0, z));
@@ -133,6 +137,7 @@ public class HavenManager {
      * @param x The x position of the block
      * @param z The z position of the block
      * @return {@code true} if the chunk is havened
+     * @implNote Simple overload of {@link #isInHaven(BlockPos)}.
      */
     public boolean isInHaven(int x, int z) {
         return isInHaven(new BlockPos(x, 0, z));
@@ -143,11 +148,18 @@ public class HavenManager {
      *
      * @param blockPos The block position
      * @return {@code true} if the chunk is havened
+     * @implNote Simple overload of {@link #isInHaven(ChunkPos)}.
      */
     public boolean isInHaven(BlockPos blockPos) {
         return isInHaven(new ChunkPos(blockPos));
     }
 
+    /**
+     * Checks if an entity is inside a havened chunk.
+     * @param entity The entity to check.
+     * @return {@code true} if the entity is in a havened chunk.
+     * @implNote Simple overload of {@link #isInHaven(ChunkPos)}.
+     */
     public boolean isInHaven(Entity entity) {
         return isInHaven(entity.getChunkPos());
     }
@@ -157,6 +169,7 @@ public class HavenManager {
      * @param player The player to grant power to.
      * @param power The amount of power to grant.
      * @return The amount of power the player has after adding.
+     * @implNote Simple overload of {@link #addPower(UUID, int)}.
      */
     public int addPower(ServerPlayerEntity player, int power) {
         return addPower(player.getUuid(), power);
