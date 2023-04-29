@@ -82,6 +82,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                 ) // TODO: Haven add, haven remove, haven info pos
                                 .executes(this::havenHereCommand)
                         )
+                        .then(literal("power")
+                                .requires(Permissions.require("mystical.command.mystical.power", 0))
+                                .executes(this::myPowerCommand)
+                        )
         );
         /*
          TODO: Commands
@@ -102,6 +106,21 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         */
 
 
+    }
+
+    /**
+     * /mystical power
+     * Sends a message to the source telling them how much power they have.
+     * @param context The context - must be a ServerPlayerEntity.
+     * @return 1 on success, 0 if the sender is not a ServerPlayerEntity.
+     */
+    private int myPowerCommand(CommandContext<ServerCommandSource> context) {
+        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
+            context.getSource().sendFeedback(Utils.textOf("This command must be used by a player!"), true);
+            return 0;
+        }
+        player.sendMessage(Utils.textOf("You have " + Mystical.HAVEN_MANAGER.getPower(player) + " power."));
+        return 1;
     }
 
     private int havenInfoCommand(CommandContext<ServerCommandSource> context) {
