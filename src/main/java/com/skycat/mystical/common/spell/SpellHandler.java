@@ -3,6 +3,7 @@ package com.skycat.mystical.common.spell;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
+import com.skycat.mystical.common.spell.cure.SpellCure;
 import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
@@ -196,7 +197,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         ListIterator<Spell> li = activeSpells.listIterator();
         int removed = 0;
         while (li.hasNext()) {
-            if (li.next().getCure().isSatisfied()) {
+            SpellCure cure = li.next().getCure();
+            if (cure.isSatisfied()) {
+                cure.awardPower(200, 100); // TODO: modify based on cure difficulty
                 li.remove();
                 removed ++;
             }

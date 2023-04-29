@@ -1,14 +1,14 @@
 package com.skycat.mystical.common.spell.cure;
 
 import com.google.gson.*;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class SpellCure {
@@ -18,13 +18,14 @@ public abstract class SpellCure {
     /**
      * Make sure to update {@link #contributionTotal} when adding to or removing from this
      */
-    private final ArrayList<CureContribution> contributions = new ArrayList<>();
+    private final HashMap<UUID, Integer> contributions = new HashMap<>();
     @Getter protected final String translationKey;
     @Getter private int contributionTotal = 0;
 
     /**
      * Please provide a translation key with {@link SpellCure#SpellCure(int, Class, String)}
      */
+    @Deprecated
     public SpellCure(int contributionGoal, Class cureType) {
         this(contributionGoal, cureType, "text.mystical.spellCure.default");
     }
@@ -51,34 +52,44 @@ public abstract class SpellCure {
      */
     public void sumContributions() {
         contributionTotal = 0;
-        for (CureContribution contribution : contributions) {
-            contributionTotal += contribution.amount;
+        for (Integer amount : contributions.values()) {
+            contributionTotal += amount;
         }
     }
 
-    public void contribute(@Nullable UUID uuid, double amount) {
-        contributions.add(new CureContribution(uuid, LocalDateTime.now(), amount));
+    public void contribute(@Nullable UUID uuid, int amount) {
+        if (contributions.containsKey(uuid)) {
+            contributions.put(uuid, contributions.get(uuid) + amount);
+        } else {
+            contributions.put(uuid, amount);
+        }
         contributionTotal += amount;
         // TODO: Logging
     }
 
     public boolean isSatisfied() {
-        double fulfilled = 0;
-        for (CureContribution contribution : contributions) {
-            fulfilled += contribution.amount;
-        }
-        return fulfilled >= contributionGoal;
+        return contributionTotal >= contributionGoal;
     }
 
-    public static class CureContribution { // TODO: Move to having a sum, remove time.
-        @Nullable UUID contributor;
-        @Nullable LocalDateTime time;
-        public double amount;
+    /**
+     * Award power to players based on their contributions.
+     * @param totalPower The total amount of power to distribute among the players
+     * @implNote Simple overload of {@link #awardPower(int, int)}.
+     */
+    public void awardPower(int totalPower) {
+        awardPower(totalPower, Integer.MAX_VALUE);
+    }
 
-        public CureContribution(@Nullable UUID uuid, @Nullable LocalDateTime now, double amount) {
-            contributor = uuid;
-            time = now;
-            this.amount = amount;
+    /**
+     * Award power to players based on their contributions.
+     * @param totalPower The total power to distribute among contributors.
+     * @param max The maximum power to give to any one contributor.
+     */
+    public void awardPower(int totalPower, int max) { // TODO: TEST
+        for (UUID uuid : contributions.keySet()) {
+            if (contributions.get(uuid) <= 0) continue;
+            // Formula: min(totalPower * percentContributed, max)
+            Mystical.HAVEN_MANAGER.addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
         }
     }
 
