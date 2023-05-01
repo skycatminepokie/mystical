@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.Vec2ArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
@@ -30,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -84,14 +86,21 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                         )
                         .then(literal("power")
                                 .requires(Permissions.require("mystical.command.mystical.power", 0))
+                                .then(literal("add")
+                                        .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                                        .then(argument("players", EntityArgumentType.players())
+                                                .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                                                .then(argument("amount", IntegerArgumentType.integer(1))
+                                                        .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                                                        .executes(this::addPowerPlayerAmountCommand)
+                                                )
+                                        )
+                                )
                                 .executes(this::myPowerCommand)
                         )
         );
         /*
          TODO: Commands
-            /mystical power add player amount silent
-            /mystical power add player amount
-            /mystical power remove player amount silent
             /mystical power remove player amount
             /mystical power get player
             /mystical power help
@@ -106,6 +115,18 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         */
 
 
+    }
+
+    private int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
+        int amount = IntegerArgumentType.getInteger(context, "amount");
+        int success = 0;
+        for (ServerPlayerEntity player : players) {
+            Mystical.HAVEN_MANAGER.addPower(player.getUuid(), amount);
+            success++;
+        }
+        context.getSource().sendFeedback(Utils.textOf("Successfully added " + amount + " power to " + success + " players."), true);
+        return success;
     }
 
     /**
