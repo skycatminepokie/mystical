@@ -96,12 +96,21 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                                 )
                                         )
                                 )
+                                .then(literal("remove")
+                                        .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                                        .then(argument("players", EntityArgumentType.players())
+                                                .requires(Permissions.require("mystical.command.mystical.power.remove",4))
+                                                .then(argument("amount", IntegerArgumentType.integer(1))
+                                                        .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                                                        .executes(this::removePowerPlayerAmountCommand)
+                                                )
+                                        )
+                                )
                                 .executes(this::myPowerCommand)
                         )
         );
         /*
          TODO: Commands
-            /mystical power remove player amount
             /mystical power get player
             /mystical power help
             /mystical power ?
@@ -117,16 +126,28 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     }
 
+    private int removePowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
+        int amount = IntegerArgumentType.getInteger(context, "amount");
+        int successCount = 0;
+        for (ServerPlayerEntity player : players) {
+            Mystical.HAVEN_MANAGER.removePower(player.getUuid(), amount);
+            successCount++;
+        }
+        context.getSource().sendFeedback(Utils.textOf("Successfully removed " + amount + " power from " + successCount + " players."), true); // TODO: Translate
+        return successCount;
+    }
+
     private int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
         int amount = IntegerArgumentType.getInteger(context, "amount");
-        int success = 0;
+        int successCount = 0;
         for (ServerPlayerEntity player : players) {
             Mystical.HAVEN_MANAGER.addPower(player.getUuid(), amount);
-            success++;
+            successCount++;
         }
-        context.getSource().sendFeedback(Utils.textOf("Successfully added " + amount + " power to " + success + " players."), true);
-        return success;
+        context.getSource().sendFeedback(Utils.textOf("Successfully added " + amount + " power to " + successCount + " players."), true); // TODO: Translate
+        return successCount;
     }
 
     /**
