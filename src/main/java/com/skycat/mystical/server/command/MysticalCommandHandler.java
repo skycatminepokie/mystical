@@ -106,7 +106,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                                 )
                                         )
                                 )
-                                .then(literal("remove")
+                                .then(literal("get")
                                         .requires(Permissions.require("mystical.command.mystical.power.get", 3))
                                         .then(argument("players", EntityArgumentType.players())
                                                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
