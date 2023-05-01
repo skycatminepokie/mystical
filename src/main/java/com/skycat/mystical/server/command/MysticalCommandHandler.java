@@ -16,14 +16,22 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.Vec2ArgumentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -59,8 +67,226 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                 .requires(Permissions.require("mystical.command.mystical.reload", 4))
                                 .executes(this::reloadCommand)
                         )
+                        .then(literal("haven")
+                                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                                .then(
+                                        argument("block", Vec2ArgumentType.vec2())
+                                                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                                                .executes(this::havenPosCommand)
+                                                .then(literal("confirm")
+                                                        .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                                                        .executes(this::havenPosConfirmCommand)
+                                                )
+                                )
+                                .then(literal("info")
+                                        .requires(Permissions.require("mystical.command.mystical.haven.info", 0))
+                                        .executes(this::havenInfoCommand)
+                                ) // TODO: Haven add, haven remove, haven info pos
+                                .executes(this::havenHereCommand)
+                        )
+                        .then(literal("power")
+                                .requires(Permissions.require("mystical.command.mystical.power", 0))
+                                .then(literal("add")
+                                        .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                                        .then(argument("players", EntityArgumentType.players())
+                                                .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                                                .then(argument("amount", IntegerArgumentType.integer(1))
+                                                        .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                                                        .executes(this::addPowerPlayerAmountCommand)
+                                                )
+                                        )
+                                )
+                                .then(literal("remove")
+                                        .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                                        .then(argument("players", EntityArgumentType.players())
+                                                .requires(Permissions.require("mystical.command.mystical.power.remove",4))
+                                                .then(argument("amount", IntegerArgumentType.integer(1))
+                                                        .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                                                        .executes(this::removePowerPlayerAmountCommand)
+                                                )
+                                        )
+                                )
+                                .then(literal("get")
+                                        .requires(Permissions.require("mystical.command.mystical.power.get", 3))
+                                        .then(argument("players", EntityArgumentType.players())
+                                                .requires(Permissions.require("mystical.command.mystical.power.get", 3))
+                                                .executes(this::getPowerPlayerCommand)
+                                        )
+                                )
+                                .executes(this::myPowerCommand)
+                        )
         );
+        /*
+         TODO: Commands
+            /mystical power help
+            /mystical power ?
+            /mystical haven info position
+            /mystical haven ?
+            /mystical haven add
+            /mystical haven add position
+            /mystical haven remove
+            /mystical haven remove position
+            /mystical haven remove position refund
+        */
+
+
     }
+
+    private int getPowerPlayerCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
+        int successCount = 0;
+        for (ServerPlayerEntity player : players) {
+            int power = Mystical.HAVEN_MANAGER.getPower(player);
+            context.getSource().sendFeedback(player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate TODO: Config
+            successCount++;
+        }
+        return successCount;
+    }
+
+    private int removePowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
+        int amount = IntegerArgumentType.getInteger(context, "amount");
+        int successCount = 0;
+        for (ServerPlayerEntity player : players) {
+            Mystical.HAVEN_MANAGER.removePower(player.getUuid(), amount);
+            successCount++;
+        }
+        context.getSource().sendFeedback(Utils.textOf("Successfully removed " + amount + " power from " + successCount + " players."), true); // TODO: Translate
+        return successCount;
+    }
+
+    private int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
+        int amount = IntegerArgumentType.getInteger(context, "amount");
+        int successCount = 0;
+        for (ServerPlayerEntity player : players) {
+            Mystical.HAVEN_MANAGER.addPower(player.getUuid(), amount);
+            successCount++;
+        }
+        context.getSource().sendFeedback(Utils.textOf("Successfully added " + amount + " power to " + successCount + " players."), true); // TODO: Translate
+        return successCount;
+    }
+
+    /**
+     * /mystical power
+     * Sends a message to the source telling them how much power they have.
+     * @param context The context - must be a ServerPlayerEntity.
+     * @return 1 on success, 0 if the sender is not a ServerPlayerEntity.
+     */
+    private int myPowerCommand(CommandContext<ServerCommandSource> context) {
+        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
+            context.getSource().sendFeedback(Utils.textOf("This command must be used by a player!"), true);
+            return 0;
+        }
+        player.sendMessage(Utils.textOf("You have " + Mystical.HAVEN_MANAGER.getPower(player) + " power."));
+        return 1;
+    }
+
+    private int havenInfoCommand(CommandContext<ServerCommandSource> context) {
+        Entity entity = context.getSource().getEntity();
+        if (entity == null) {
+            throw new CommandException(Utils.textOf("/mystical haven info must be called by an entity."));
+        }
+        if (Mystical.HAVEN_MANAGER.isInHaven(entity)) { // TODO: Translate, make better
+            context.getSource().sendFeedback(Utils.textOf("This is in a haven"), false);
+            return 1;
+        }
+        context.getSource().sendFeedback(Utils.textOf("This chunk is not havened"), false);
+        return 0;
+    }
+
+    /**
+     * /mystical haven
+     * Redirects to {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)} with the entity's position
+     * Source must be an entity (a player entity for the redirect to pass)
+     *
+     * @param context The context (fails if source is not ServerPlayerEntity)
+     * @return The return of {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)}
+     */
+    private int havenHereCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+        if (entity == null) {
+            context.getSource().sendFeedback(Utils.textOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            return 0;
+        }
+        BlockPos pos = entity.getBlockPos();
+        return havenPos(context, pos);
+    }
+
+    /**
+     * Sends a chat message prompting /mystical haven x z confirm
+     * Note this is not a Command. See {@link #havenPosCommand}
+     *
+     * @param context Context - fails if source is not ServerPlayerEntity
+     * @param block   The position to haven
+     * @return 1 When the message is successfully send
+     */
+    private int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) {
+        var entity = context.getSource().getEntity();
+        if (!(entity instanceof ServerPlayerEntity player)) {
+            context.getSource().sendFeedback(Utils.textOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            return 0;
+        }
+        player.sendMessage(
+                Utils.mutableTextOf("Having chunk at [" + block.getX() + ", " + block.getZ() + "] for " + Mystical.HAVEN_MANAGER.getHavenCost(block) + " power. ")
+                        .append(Utils.mutableTextOf("[Confirm]").setStyle(
+                                Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
+                                        .withColor(Formatting.GREEN)
+                        ))
+        ); // TODO: Translate
+        return 1;
+    }
+
+    /**
+     * /mystical haven x z
+     *
+     * @param context The context. Source must be ServerPlayerEntity
+     * @return The return value of {@link #havenPos}.
+     */
+    private int havenPosCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+        if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
+            context.getSource().sendFeedback(Utils.textOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            return 0;
+        }
+        var vec = Vec2ArgumentType.getVec2(context, "block");
+        return havenPos(context, new BlockPos(vec.x, 0, vec.y));
+    }
+
+    /**
+     * /mystical haven x z confirm - Havens a chunk at the player's expense.
+     * This is the end case for havening
+     *
+     * @param context The context. Source must be a player
+     * @return 1 if successful, 0 if unsuccessful
+     */
+    private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) {
+        var entity = context.getSource().getEntity();
+
+        // Must be player
+        if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
+            context.getSource().sendFeedback(Utils.textOf("This can only be called by a player."), false); // TODO: Translate
+            return 0;
+        }
+
+        var vec = Vec2ArgumentType.getVec2(context, "block");
+        BlockPos blockPos = new BlockPos(vec.x, 0, vec.y);
+        if (Mystical.HAVEN_MANAGER.isInHaven(player)) { // Must not already be havened
+            context.getSource().sendFeedback(Utils.textOf("That location is already havened."), false); // TODO: Translate
+            return 0;
+        }
+
+        ChunkPos chunk = new ChunkPos(blockPos);
+        boolean success = Mystical.HAVEN_MANAGER.tryHaven(chunk, player);
+        if (success) {
+            player.sendMessage(Utils.textOf("Success!")); // TODO: Translate
+            return 1;
+        } else {
+            player.sendMessage(Utils.textOf("You tried as hard as you could, but you couldn't haven the area. Do you have enough power?")); // TODO: Translate
+            return 0;
+        }
+    }
+
 
     private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int spellNum = context.getArgument("spell", Integer.class);

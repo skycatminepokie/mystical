@@ -17,14 +17,14 @@ public abstract class ZombieEntityMixin {
 
     @Inject(method = "damage", at = @At("RETURN"))
     public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        ZombieEntity dis = (ZombieEntity) (Object) this;
         // If the spell is not active, the damage didn't go through, or we roll too low, don't do anything
-        if (Mystical.HAVEN_MANAGER.isInHaven((ZombieEntity) (Object) this) ||
+        if (Mystical.HAVEN_MANAGER.isInHaven(dis) ||
                 !Mystical.SPELL_HANDLER.isConsequenceActive(ZombieTypeChangeConsequence.class) ||
                 !cir.getReturnValue() ||
                 !Utils.percentChance(Mystical.CONFIG.zombieTypeChange.chance())) {
             return;
         }
-        ZombieEntity dis = (ZombieEntity) (Object) this;
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOutOfWorld() && !dis.isDead()) {
             Entity newEntity = dis.convertTo(Util.getRandom(ZombieTypeChangeConsequence.ZOMBIE_TYPES, Mystical.MC_RANDOM), true);

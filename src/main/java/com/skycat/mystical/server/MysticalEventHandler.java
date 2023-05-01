@@ -38,6 +38,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void onServerStopping(MinecraftServer server) {
         Mystical.CONFIG.save();
         Mystical.SPELL_HANDLER.save();
+        Mystical.HAVEN_MANAGER.save();
     }
 
     /**
