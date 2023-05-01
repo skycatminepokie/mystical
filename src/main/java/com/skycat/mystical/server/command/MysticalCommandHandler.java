@@ -106,12 +106,18 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                                                 )
                                         )
                                 )
+                                .then(literal("remove")
+                                        .requires(Permissions.require("mystical.command.mystical.power.get", 3))
+                                        .then(argument("players", EntityArgumentType.players())
+                                                .requires(Permissions.require("mystical.command.mystical.power.get", 3))
+                                                .executes(this::getPowerPlayerCommand)
+                                        )
+                                )
                                 .executes(this::myPowerCommand)
                         )
         );
         /*
          TODO: Commands
-            /mystical power get player
             /mystical power help
             /mystical power ?
             /mystical haven info position
@@ -124,6 +130,17 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         */
 
 
+    }
+
+    private int getPowerPlayerCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
+        int successCount = 0;
+        for (ServerPlayerEntity player : players) {
+            int power = Mystical.HAVEN_MANAGER.getPower(player);
+            context.getSource().sendFeedback(player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate TODO: Config
+            successCount++;
+        }
+        return successCount;
     }
 
     private int removePowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
