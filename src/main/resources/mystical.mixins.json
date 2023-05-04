@@ -15,6 +15,9 @@
     "ServerWorldMixin",
     "SheepEntityMixin",
     "StatHandlerMixin",
+    "TntBlockMixin",
+    "TntEntityMixin",
+    "TntMinecartEntityMixin",
     "ZombieEntityMixin"
   ],
   "client": [
