@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(TntBlock.class)
-public class TntBlockMixin {
+public abstract class TntBlockMixin {
     /**
      * Used to fix an error with noFuse consequence (stops the argument of nextInt from being <= 0)
      * @param bound The previously chosen bound.
