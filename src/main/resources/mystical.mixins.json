@@ -14,6 +14,7 @@
     "SaplingBlockMixin",
     "ServerWorldMixin",
     "SheepEntityMixin",
+    "SpawnHelperMixin",
     "StatHandlerMixin",
     "TntBlockMixin",
     "TntEntityMixin",

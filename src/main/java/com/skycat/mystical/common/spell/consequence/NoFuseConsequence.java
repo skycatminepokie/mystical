@@ -10,7 +10,7 @@ public class NoFuseConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public NoFuseConsequence() {
-        super(NoFuseConsequence.class, NoFuseConsequence.class, 50d);
+        super(NoFuseConsequence.class, NoFuseConsequence.class, 100d);
     }
 
     @Override
