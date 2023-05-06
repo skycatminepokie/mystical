@@ -21,6 +21,7 @@ public class ConfigModel {
     @Nest public SkeletonTypeChangeConfig skeletonTypeChange = new SkeletonTypeChangeConfig();
     @Nest public DisableDaylightBurningConfig disableDaylightBurning = new DisableDaylightBurningConfig();
     @Nest public NoFuseConfig noFuse = new NoFuseConfig();
+    @Nest public MobSpawnSwapConfig mobSpawnSwap = new MobSpawnSwapConfig();
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -196,6 +197,17 @@ public class ConfigModel {
     }
 
     public static class NoFuseConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class MobSpawnSwapConfig {
         public boolean enabled = true;
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
