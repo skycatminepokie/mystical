@@ -9,6 +9,7 @@
     "CreeperEntityMixin",
     "DamageTrackerMixin",
     "FishingBobberEntityMixin",
+    "IronGolemEntityMixin",
     "MinecraftServerTimer",
     "MobEntityMixin",
     "SaplingBlockMixin",
