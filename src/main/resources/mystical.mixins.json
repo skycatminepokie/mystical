@@ -9,12 +9,17 @@
     "CreeperEntityMixin",
     "DamageTrackerMixin",
     "FishingBobberEntityMixin",
+    "IronGolemEntityMixin",
     "MinecraftServerTimer",
     "MobEntityMixin",
     "SaplingBlockMixin",
     "ServerWorldMixin",
     "SheepEntityMixin",
+    "SpawnHelperMixin",
     "StatHandlerMixin",
+    "TntBlockMixin",
+    "TntEntityMixin",
+    "TntMinecartEntityMixin",
     "ZombieEntityMixin"
   ],
   "client": [

@@ -20,7 +20,9 @@ public class ConfigModel {
     @Nest public ZombieTypeChangeConfig zombieTypeChange = new ZombieTypeChangeConfig();
     @Nest public SkeletonTypeChangeConfig skeletonTypeChange = new SkeletonTypeChangeConfig();
     @Nest public DisableDaylightBurningConfig disableDaylightBurning = new DisableDaylightBurningConfig();
-
+    @Nest public NoFuseConfig noFuse = new NoFuseConfig();
+    @Nest public MobSpawnSwapConfig mobSpawnSwap = new MobSpawnSwapConfig();
+    @Nest public AggressiveGolemsConfig aggressiveGolems = new AggressiveGolemsConfig();
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -122,22 +124,7 @@ public class ConfigModel {
         public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
-        // public boolean fromAcacia = true; // Not implemented // TODO: Config
-        // public boolean fromAzalea = true; // Not implemented // TODO: Config
-        // public boolean fromBirch = true; // Not implemented // TODO: Config
-        // public boolean fromDarkOak = true; // Not implemented // TODO: Config
-        // public boolean fromJungle = true; // Not implemented // TODO: Config
-        // public boolean fromMangrove = true; // Not implemented // TODO: Config
-        // public boolean fromOak = true; // Not implemented // TODO: Config
-        // public boolean fromSpruce = true; // Not implemented // TODO: Config
-        // public boolean toAcacia = true; // Not implemented // TODO: Config
-        // public boolean toAzalea = true; // Not implemented // TODO: Config
-        // public boolean toBirch = true; // Not implemented // TODO: Config
-        // public boolean toDarkOak = true; // Not implemented // TODO: Config
-        // public boolean toJungle = true; // Not implemented // TODO: Config
-        // public boolean toMangrove = true; // Not implemented // TODO: Config
-        // public boolean toOak = true; // Not implemented // TODO: Config
-        // public boolean toSpruce = true; // Not implemented // TODO: Config
+        // TODO: Config tree types
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
@@ -210,6 +197,38 @@ public class ConfigModel {
         }
     }
 
+    public static class NoFuseConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class MobSpawnSwapConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class AggressiveGolemsConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
 
     /**
      * Verify that the chance is valid.
