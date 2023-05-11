@@ -47,7 +47,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 DisableDaylightBurningConsequence.FACTORY,
                 NoFuseConsequence.FACTORY,
                 MobSpawnSwapConsequence.FACTORY,
-                AggressiveGolemsConsequence.FACTORY
+                AggressiveGolemsConsequence.FACTORY,
+                OneStrikeWardensConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
