@@ -3,8 +3,10 @@ package com.skycat.mystical.server.mixin;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.BigCreeperExplosionConsequence;
 import com.skycat.mystical.common.spell.consequence.NoFuseConsequence;
+import com.skycat.mystical.common.spell.consequence.RandomCreeperEffectCloudsConsequence;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
@@ -12,8 +14,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Collection;
+import java.util.LinkedList;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin {
@@ -36,6 +42,17 @@ public abstract class CreeperEntityMixin {
             return 1;
         }
         return fuseTime;
+    }
+
+    @ModifyVariable(method = "spawnEffectsCloud", at = @At("STORE"), index = 1)
+    private Collection<StatusEffectInstance> makeEffectsCloud(Collection<StatusEffectInstance> value) {
+
+        if (Mystical.SPELL_HANDLER.isConsequenceActive(RandomCreeperEffectCloudsConsequence.class)) { // TODO: Config (chance, duration, amplifier, allowed effects)
+            LinkedList<StatusEffectInstance> newStatusEffects = new LinkedList<>(value);
+            newStatusEffects.add(new StatusEffectInstance(Utils.getRandomStatusEffect(), 99999, 0)); // TODO: IDK if this needs a time to it
+            return newStatusEffects;
+        }
+        return value;
     }
 
 }
