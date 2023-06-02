@@ -248,6 +248,10 @@ public class ConfigModel {
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
+        @RangeConstraint(min = 1, max = 1000000)
+        public int effectDuration = 10; // In seconds, similar to vanilla command
+        @RangeConstraint(min = 0, max = 255)
+        public int effectAmplifier = 0; // 0 = level 1, similar to vanilla command
 
         public static boolean weightPredicate(double value) {
             return ConfigModel.weightPredicate(value);
