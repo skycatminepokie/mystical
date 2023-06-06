@@ -26,5 +26,8 @@
   "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.fishingRodLaunch.chance": "% chance",
   "text.config.mysticalConfig.option.catVariantChange.chance": "% chance",
-  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier"
+  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier",
+  "text.config.mysticalConfig.randomCreeperEffectClouds.effectDuration": "Effect duration (s)",
+  "text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier": "Effect amplifier",
+  "text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier.tooltip": "0 = level one, just like the /effect command"
 }

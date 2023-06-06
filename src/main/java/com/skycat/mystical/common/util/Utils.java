@@ -7,6 +7,7 @@ import com.skycat.mystical.common.LogLevel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
@@ -14,9 +15,11 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import org.slf4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class Utils {
@@ -158,5 +161,15 @@ public class Utils {
             return translatable("stat." + stat.getValue().toString().replace(':', '.'));
         }
         return stat.getType().getName().copy();
+    }
+
+    public static StatusEffect getRandomStatusEffect() {
+        Optional<RegistryEntry<StatusEffect>> entry =  Registry.STATUS_EFFECT.getRandom(Mystical.MC_RANDOM);
+        if (entry.isPresent()) {
+            return entry.get().value();
+        }
+        log("Couldn't get a random status effect, using absorption instead. This probably shouldn't happen. Dumping stack.", LogLevel.ERROR);
+        Thread.dumpStack(); // https://stackoverflow.com/a/945020
+        return StatusEffects.ABSORPTION;
     }
 }
