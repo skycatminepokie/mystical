@@ -10,7 +10,7 @@ public class MobSpawnSwapConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public MobSpawnSwapConsequence() {
-        super(MobSpawnSwapConsequence.class, MobSpawnSwapConsequence.class, 75d);
+        super(MobSpawnSwapConsequence.class, null, 75d);
     }
 
     @Override

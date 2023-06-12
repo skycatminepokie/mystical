@@ -10,7 +10,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public OneStrikeWardensConsequence() {
-        super(OneStrikeWardensConsequence.class, OneStrikeWardensConsequence.class, 100d);
+        super(OneStrikeWardensConsequence.class, null, 100d);
     }
 
     @Override
