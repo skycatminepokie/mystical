@@ -4,8 +4,10 @@
   "package": "com.skycat.mystical.server.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BlockEntityMixin",
     "BlockFertilizableMixin",
     "CatEntityMixin",
+    "ChickenEntityMixin",
     "CreeperEntityMixin",
     "DamageTrackerMixin",
     "FishingBobberEntityMixin",
@@ -15,6 +17,7 @@
     "SaplingBlockMixin",
     "ServerWorldMixin",
     "SheepEntityMixin",
+    "SkulkShriekerBlockEntityMixin",
     "SpawnHelperMixin",
     "StatHandlerMixin",
     "TntBlockMixin",

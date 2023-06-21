@@ -33,6 +33,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
+        // Initialize all the consequence factories
         Collections.addAll(consequenceFactories,
                 // KillOnSleepConsequence.FACTORY,
                 LevitateConsequence.FACTORY,
@@ -48,7 +49,10 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 NoFuseConsequence.FACTORY,
                 MobSpawnSwapConsequence.FACTORY,
                 AggressiveGolemsConsequence.FACTORY,
-                UnbreakableLocationConsequence.FACTORY
+                UnbreakableLocationConsequence.FACTORY,
+                TurboChickensConsequence.FACTORY,
+                OneStrikeWardensConsequence.FACTORY,
+                RandomCreeperEffectCloudsConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
@@ -56,16 +60,24 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             getShortNameToFactory().put(factory.getShortName(), factory);
         }
 
+        // Initialize all the cure factories
         Collections.addAll(cureFactories,
                 (random) -> (new StatBackedSpellCure(100, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(3000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")), // TODO: Translate
                 (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED), "text.mystical.spellCure.default")) // TODO: Translate
+                (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(10, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED), "text.mystical.spellCure.default")), // TODO: Translate
+                (random) -> (new StatBackedSpellCure(100, Stats.CRAFTED.getOrCreateStat(Items.BREAD), "xxx")),
+                (random) -> (new StatBackedSpellCure(25, Stats.CUSTOM.getOrCreateStat(Stats.FISH_CAUGHT), "xxx"))
+
         );
     }
 
+    /**
+     * Return a new random spell.
+     * @return A new random spell.
+     */
     public static Spell get() {
         return new Spell(getConsequence(), getCure());
     }

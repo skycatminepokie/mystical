@@ -39,7 +39,6 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         Collections.addAll(supportedEvents,
                 EntitySleepEvents.StopSleeping.class,
                 ServerEntityCombatEvents.AfterKilledOtherEntity.class,
-                ServerPlayerEvents.AfterRespawn.class,
                 PlayerBlockBreakEvents.After.class);
     }
 
@@ -68,6 +67,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         }
     }
 
+    @Deprecated
     @Override
     public void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
         levitate(newPlayer);
@@ -85,7 +85,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
 
         @Override
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
-            return new LevitateConsequence(5, 5, Utils.chooseRandom(random, supportedEvents));
+            return new LevitateConsequence(20, 5, Utils.chooseRandom(random, supportedEvents));
         }
 
         @Override

@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
+import com.skycat.mystical.common.LogLevel;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.util.Identifier;
@@ -24,6 +25,10 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
         return TYPE_IDENTIFIER_CODEC.encodeStart(ops, Pair.of(input.getType(), input.getType().getRegistry().getId(input.getValue())));
     }
 
+    /**
+     * Parse a stat
+     * @return The stat, got or created, or null if failed.
+     */
     public <T,S> Stat<S> getStat(DynamicOps<T> ops, T input) {
         var result = TYPE_IDENTIFIER_CODEC.parse(ops, input);
         if (result.result().isPresent()) {
@@ -31,23 +36,28 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
             try {
                 @SuppressWarnings("unchecked")
                 StatType<S> type = (StatType<S>) result.result().get().getFirst(); // I'm pretty sure this is a safe cast if all the data is valid
+                //noinspection UnnecessaryLocalVariable // It's more readable
                 Stat<S> stat = type.getOrCreateStat(type.getRegistry().get(result.result().get().getSecond()));
                 return stat;
             } catch (ClassCastException e) {
-                Utils.log("Stat could not be deserialized properly. Printing stacktrace.");
+                Utils.log("Stat could not be deserialized properly. Printing stacktrace.", LogLevel.WARN); // Stacktrace will let us know it's a ClassCastException
                 e.printStackTrace();
+                return null;
             }
         } else {
-            // TODO better error handling
-            throw new RuntimeException("Stat could not be deserialized- result was not present.");
+            Utils.log("Stat could not be deserialized - result was not present.", LogLevel.WARN);
+            return null;
         }
-        return null; // WARN error handling
     }
 
     @Override
     public <T> DataResult<Pair<Stat<?>, T>> decode(DynamicOps<T> ops, T input) {
         // In the case of using json, T is JsonElement
-        return DataResult.success(Pair.of(getStat(ops, input), input)); // TODO Error handling
+        Stat<Object> stat = getStat(ops, input); // I'm afraid to use Stat<?> because I don't want to break anything.
+        if (stat == null) {
+            return DataResult.error("stat was null");
+        }
+        return DataResult.success(Pair.of(stat, input));
     }
 
     @Override
@@ -62,6 +72,6 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
 
     @Override
     public JsonElement serialize(Stat<?> src, Type typeOfSrc, JsonSerializationContext context) {
-        return encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> Utils.log("Could not parse the following string as a stat: \"" + s + "\".")); // WARN Error checking
+        return encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> Utils.log("Could not parse the following string as a stat: \"" + s + "\"."));
     }
 }

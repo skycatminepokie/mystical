@@ -14,12 +14,8 @@ public class FishingRodLaunchConsequence extends SpellConsequence {
         return FACTORY;
     }
 
-    public FishingRodLaunchConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, -5d); // TODO: Scaling
-    }
-
     public FishingRodLaunchConsequence() {
-        this(FishingRodLaunchConsequence.class, null);
+        super(FishingRodLaunchConsequence.class, null, -5d); // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<FishingRodLaunchConsequence> {
