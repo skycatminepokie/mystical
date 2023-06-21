@@ -49,6 +49,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 NoFuseConsequence.FACTORY,
                 MobSpawnSwapConsequence.FACTORY,
                 AggressiveGolemsConsequence.FACTORY,
+                UnbreakableLocationConsequence.FACTORY,
                 TurboChickensConsequence.FACTORY,
                 OneStrikeWardensConsequence.FACTORY,
                 RandomCreeperEffectCloudsConsequence.FACTORY

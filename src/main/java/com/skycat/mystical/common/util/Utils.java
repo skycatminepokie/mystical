@@ -146,8 +146,23 @@ public class Utils {
         return translatable(path, args).getString();
     }
 
+    /**
+     * Returns {@code true} about chance% of the time.
+     * @param chance The chance to return true (out of 100)
+     * @return {@code true} about chance% of the time.
+     */
     public static boolean percentChance(double chance) {
         return Mystical.RANDOM.nextDouble(0, 100) < chance;
+    }
+
+    /**
+     * Returns {@code true} about chance% of the time.
+     * @param chance The chance to return true (out of 100)
+     * @param random The {@link Random} to use.
+     * @return {@code true} about chance% of the time.
+     */
+    public static boolean percentChance(double chance, Random random) {
+        return random.nextDouble(0, 100) < chance;
     }
 
     /**

@@ -10,6 +10,7 @@ import lombok.Getter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,7 +20,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stat;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.io.File;
@@ -37,7 +41,8 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         PlayerBlockBreakEvents.Before,
         PlayerBlockBreakEvents.After,
         ServerPlayerEvents.AfterRespawn,
-        ServerEntityCombatEvents.AfterKilledOtherEntity {
+        ServerEntityCombatEvents.AfterKilledOtherEntity,
+        AttackBlockCallback {
     private static final File SAVE_FILE = new File("config/spellHandler.json");
     @Getter private final ArrayList<Spell> activeSpells = new ArrayList<>();
 
@@ -48,6 +53,17 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
             return new SpellHandler();
         }
+    }
+
+    @Override
+    public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
+        boolean fail = false;
+        for (Spell spell : spellsOfHandler(AttackBlockCallback.class)) {
+            if (((AttackBlockCallback) spell.getConsequence()).interact(player, world, hand, pos, direction) == ActionResult.FAIL) {
+                fail = true;
+            }
+        }
+        return fail ? ActionResult.FAIL : ActionResult.PASS;
     }
 
     public boolean isConsequenceActive(Class<? extends SpellConsequence> consequence) {
