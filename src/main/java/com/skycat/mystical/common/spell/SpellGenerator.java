@@ -33,6 +33,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
+        // Initialize all the consequence factories
         Collections.addAll(consequenceFactories,
                 // KillOnSleepConsequence.FACTORY,
                 LevitateConsequence.FACTORY,
@@ -48,6 +49,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 NoFuseConsequence.FACTORY,
                 MobSpawnSwapConsequence.FACTORY,
                 AggressiveGolemsConsequence.FACTORY,
+                TurboChickensConsequence.FACTORY,
                 OneStrikeWardensConsequence.FACTORY,
                 RandomCreeperEffectCloudsConsequence.FACTORY
         );
@@ -57,6 +59,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             getShortNameToFactory().put(factory.getShortName(), factory);
         }
 
+        // Initialize all the cure factories
         Collections.addAll(cureFactories,
                 (random) -> (new StatBackedSpellCure(100, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")), // TODO: Translate
                 (random) -> (new StatBackedSpellCure(3000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")), // TODO: Translate
@@ -70,6 +73,10 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         );
     }
 
+    /**
+     * Return a new random spell.
+     * @return A new random spell.
+     */
     public static Spell get() {
         return new Spell(getConsequence(), getCure());
     }
