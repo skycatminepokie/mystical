@@ -245,6 +245,9 @@ public class ConfigModel {
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
     }
 
     public static class TurboChickensConfig {
