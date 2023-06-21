@@ -6,6 +6,7 @@
   "mixins": [
     "BlockFertilizableMixin",
     "CatEntityMixin",
+    "ChickenEntityMixin",
     "CreeperEntityMixin",
     "DamageTrackerMixin",
     "FishingBobberEntityMixin",

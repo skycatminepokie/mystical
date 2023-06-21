@@ -26,5 +26,7 @@
   "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.fishingRodLaunch.chance": "% chance",
   "text.config.mysticalConfig.option.catVariantChange.chance": "% chance",
-  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier"
+  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier",
+  "text.config.mysticalConfig.option.turboChickens.speed": "Speed multiplier",
+  "text.config.mysticalConfig.option.turboChickens.speed.tooltip": "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers."
 }
