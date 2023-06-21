@@ -318,14 +318,14 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         ArrayList<Spell> activeSpells = Mystical.SPELL_HANDLER.getActiveSpells();
         for (int i = 0; i < activeSpells.size(); i++) {
             Spell spell = activeSpells.get(i);
-            MutableText spellDescription = spell.getConsequence().getFactory().getDescriptionText(spell.getConsequence()); // TODO: getDescriptionText should never throw IllegalArgumentException
+            MutableText spellDescription = spell.getConsequence().getFactory().getDescriptionText(spell.getConsequence()); // getDescriptionText should never throw IllegalArgumentException if consequence has a factory that makes itself (should be so for all)
             if (showDeleteButton) {
                 MutableText deleteButton = Utils.translatable("text.mystical.commands.deleteSpellButton");
                 Style style = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/mystical spell delete " + i));
                 deleteButton.setStyle(style);
                 spellDescription.append(deleteButton);
             }
-            spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription()))); // TODO: Translate
+            spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription())));
             context.getSource().sendFeedback(spellDescription, false);
         }
         return 1;

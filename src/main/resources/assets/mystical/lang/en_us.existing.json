@@ -28,5 +28,8 @@
   "text.config.mysticalConfig.option.catVariantChange.chance": "% chance",
   "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier",
   "text.config.mysticalConfig.option.turboChickens.speed": "Speed multiplier",
-  "text.config.mysticalConfig.option.turboChickens.speed.tooltip": "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers."
+  "text.config.mysticalConfig.option.turboChickens.speed.tooltip": "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.",
+  "text.config.mysticalConfig.randomCreeperEffectClouds.effectDuration": "Effect duration (s)",
+  "text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier": "Effect amplifier",
+  "text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier.tooltip": "0 = level one, just like the /effect command"
 }

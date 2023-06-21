@@ -10,7 +10,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
     public static final Factory FACTORY = new Factory();
 
     public AggressiveGolemsConsequence() {
-        super(AggressiveGolemsConsequence.class, AggressiveGolemsConsequence.class, 100d);
+        super(AggressiveGolemsConsequence.class, null, 100d);
     }
 
     @Override

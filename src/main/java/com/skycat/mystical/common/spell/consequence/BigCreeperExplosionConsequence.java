@@ -27,7 +27,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
 
     public static class Factory extends ConsequenceFactory<BigCreeperExplosionConsequence> {
         public Factory() {
-            super("bigCreeperExplosion", "Bigger Creeper Explosions", "Creepers go boom. But more.", "Made new creeper with multiplied explosion power.", BigCreeperExplosionConsequence.class);
+            super("bigCreeperExplosion", "Bigger Creeper Explosions", "Creepers go boom. But more.", "Creeper explosion multiplied.", BigCreeperExplosionConsequence.class);
         }
 
         @NotNull

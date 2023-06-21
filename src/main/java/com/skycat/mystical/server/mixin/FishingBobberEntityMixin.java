@@ -37,7 +37,7 @@ public abstract class FishingBobberEntityMixin {
                 !Mystical.HAVEN_MANAGER.isInHaven(entity2) &&
                 entity instanceof ServerPlayerEntity &&
                 Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class)) {
-            ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity));
+            ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)); // Thanks @Wesley1808#9858 :)
         }
     }
 
