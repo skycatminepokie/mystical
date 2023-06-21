@@ -35,8 +35,12 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
 
     @Override
     public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) { // The actual spell part
-        RANDOM.setSeed(seed * pos.hashCode());;
-        return Utils.percentChance(Mystical.CONFIG.unbreakableLocation.chance(), RANDOM) ? ActionResult.PASS : ActionResult.FAIL;
+        RANDOM.setSeed(seed * pos.hashCode());
+        boolean preventBreaking = Utils.percentChance(Mystical.CONFIG.unbreakableLocation.chance(), RANDOM);
+        if (preventBreaking) {
+            Utils.sendMessageToPlayer(player, Utils.translatable("text.mystical.consequence.unbreakableLocation.noBreaking"), true);
+        }
+        return preventBreaking ? ActionResult.FAIL : ActionResult.PASS;
     }
 
     public static class Factory extends ConsequenceFactory<UnbreakableLocationConsequence> {

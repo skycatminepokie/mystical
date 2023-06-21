@@ -14,6 +14,8 @@
   "text.mystical.spellGenerator.emptyCureList": "SpellGenerator found an empty cure list. Using default cure (mine 10 cactus).",
   "text.mystical.spellGenerator.failedRandomBlock": "SpellGenerator failed to choose a random block. How? No clue. Using a command block instead.",
 
+  "text.mystical.consequence.unbreakableLocation.noBreaking": "A mystical force prevents you from breaking that block.",
+
   "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
   "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
   "text.config.mysticalConfig.option.skeletonTypeChange.chance": "% chance",
@@ -26,5 +28,6 @@
   "text.config.mysticalConfig.option.enderTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.fishingRodLaunch.chance": "% chance",
   "text.config.mysticalConfig.option.catVariantChange.chance": "% chance",
-  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier"
+  "text.config.mysticalConfig.option.fishingRodLaunch.multiplier": "Multiplier",
+  "text.config.mysticalConfig.option.unbreakableLocation.chance": "% chance"
 }
