@@ -23,6 +23,7 @@ public class ConfigModel {
     @Nest public NoFuseConfig noFuse = new NoFuseConfig();
     @Nest public MobSpawnSwapConfig mobSpawnSwap = new MobSpawnSwapConfig();
     @Nest public AggressiveGolemsConfig aggressiveGolems = new AggressiveGolemsConfig();
+    @Nest public UnbreakableLocationConfig unbreakableLocation = new UnbreakableLocationConfig();
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -224,6 +225,23 @@ public class ConfigModel {
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
+
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class UnbreakableLocationConfig {
+        public boolean enabled = true;
+        @PredicateConstraint("chancePredicate")
+        public double chance = 5.0;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
 
         public static boolean weightPredicate(double value) {
             return ConfigModel.weightPredicate(value);
