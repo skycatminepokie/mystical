@@ -35,6 +35,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
 
     @Override
     public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) { // The actual spell part
+        if (Mystical.HAVEN_MANAGER.isInHaven(pos)) return ActionResult.PASS;
         RANDOM.setSeed(seed * pos.hashCode());
         boolean preventBreaking = Utils.percentChance(Mystical.CONFIG.unbreakableLocation.chance(), RANDOM);
         if (preventBreaking) {
