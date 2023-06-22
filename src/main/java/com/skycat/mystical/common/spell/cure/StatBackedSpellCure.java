@@ -13,8 +13,14 @@ import net.minecraft.text.MutableText;
 public class StatBackedSpellCure extends SpellCure {
     private final Stat stat;
 
+    @Deprecated
     public StatBackedSpellCure(int contributionGoal, Stat stat, String translationKey) {
         super(contributionGoal, StatBackedSpellCure.class, translationKey);
+        this.stat = stat;
+    }
+
+    public StatBackedSpellCure(int contributionGoal, Stat stat) {
+        super(contributionGoal, StatBackedSpellCure.class, null);
         this.stat = stat;
     }
 

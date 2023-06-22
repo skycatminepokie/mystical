@@ -19,7 +19,7 @@ public abstract class SpellCure {
      * Make sure to update {@link #contributionTotal} when adding to or removing from this
      */
     private final HashMap<UUID, Integer> contributions = new HashMap<>();
-    @Getter protected final String translationKey;
+    @Getter @Nullable protected final String translationKey;
     @Getter private int contributionTotal = 0;
 
     /**
@@ -30,7 +30,7 @@ public abstract class SpellCure {
         this(contributionGoal, cureType, "text.mystical.spellCure.default");
     }
 
-    public SpellCure(int contributionGoal, Class cureType, String translationKey) {
+    public SpellCure(int contributionGoal, Class cureType, @Nullable String translationKey) {
         this.contributionGoal = contributionGoal;
         this.cureType = cureType;
         this.translationKey = translationKey;
