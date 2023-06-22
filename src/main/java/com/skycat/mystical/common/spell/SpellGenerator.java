@@ -8,6 +8,7 @@ import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.registry.Registry;
@@ -62,16 +63,23 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
 
         // Initialize all the cure factories
         Collections.addAll(cureFactories,
-                (random) -> (new StatBackedSpellCure(100, Stats.MINED.getOrCreateStat(Blocks.CACTUS))),
+                (random) -> (new StatBackedSpellCure(25, Stats.MINED.getOrCreateStat(Blocks.CACTUS))),
                 (random) -> (new StatBackedSpellCure(3000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP))),
                 (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS))),
-                (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM))),
+                (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM))), // 1000 blocks
                 (random) -> (new StatBackedSpellCure(10, Stats.CRAFTED.getOrCreateStat(Items.BARREL))),
                 (random) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED))),
                 (random) -> (new StatBackedSpellCure(100, Stats.CRAFTED.getOrCreateStat(Items.BREAD))),
-                (random) -> (new StatBackedSpellCure(25, Stats.CUSTOM.getOrCreateStat(Stats.EAT_CAKE_SLICE)))
-
-
+                (random) -> (new StatBackedSpellCure(35, Stats.CUSTOM.getOrCreateStat(Stats.EAT_CAKE_SLICE))), // 5 cakes
+                (random) -> (new StatBackedSpellCure(20000, Stats.CUSTOM.getOrCreateStat(Stats.CROUCH_ONE_CM))), // 200 blocks
+                (random) -> (new StatBackedSpellCure(5, Stats.KILLED.getOrCreateStat(EntityType.BAT))),
+                (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.CREEPER))),
+                (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.SKELETON))),
+                (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.ZOMBIE))),
+                (random) -> (new StatBackedSpellCure(256, Stats.MINED.getOrCreateStat(Blocks.STONE))), // 4 stacks
+                (random) -> (new StatBackedSpellCure(64, Stats.CUSTOM.getOrCreateStat(Stats.BELL_RING))),
+                (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.FALL_ONE_CM))), // 100 blocks
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD)))
         );
     }
 
