@@ -27,6 +27,10 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
             addConfigSection(tb, "General");
             addConfigOption(tb, "devMode", "Dev mode");
+            addConfigOption(tb, "spellMaxHard", "Max spells (Hard)");
+            addConfigOption(tb, "spellMinHard", "Min spells (Hard)");
+            addConfigOptionTooltip(tb, "spellMaxHard", "The maximum number of spells active at a time.\nMystical will not delete extra spells, but won't make any past this point.");
+            addConfigOptionTooltip(tb, "spellMinHard", "The minimum number of spells active at a time.\nMystical will make sure there are this many spells active whenever spell rewards are paid out.");
 
             addConfigSection(tb, "Logging");
             addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");

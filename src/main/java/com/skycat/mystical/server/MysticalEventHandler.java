@@ -21,17 +21,13 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public void doNighttimeEvents() {
         // TODO: Logging
         Mystical.SPELL_HANDLER.removeCuredSpells();
-        if (Mystical.SPELL_HANDLER.getActiveSpells().size() < 2) { // TODO: Config
+        if (Mystical.SPELL_HANDLER.getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
             Mystical.SPELL_HANDLER.activateNewSpell();
         }
-
-        try {
-            setNightTimer();
-        } catch (NullPointerException e) {
-            Utils.log(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", e.getMessage()), Mystical.CONFIG.failedToSetNightTimerLogLevel());
-            // TODO Try again later?
-            // WARN: If this fails after the timer expires, nighttime events will keep happening, which is not good.
+        while (Mystical.SPELL_HANDLER.getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
+            Mystical.SPELL_HANDLER.activateNewSpell();
         }
+        setNightTimer();
     }
 
     @Override
@@ -45,7 +41,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
      * Sets the nighttime timer to the next night
      * @return Number of ticks until night, or -1 on failure
      */
-    public long setNightTimer() throws NullPointerException {
+    public long setNightTimer() {
         // CREDIT: Daomephsta#0044 for help on fabric discord
         if (server == null) {
             throw new NullPointerException(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", "server was null."));

@@ -8,6 +8,8 @@ import io.wispforest.owo.config.annotation.*;
 public class ConfigModel {
     @SectionHeader("General")
     public boolean devMode = false; // Not implemented
+    public int spellMaxHard = 3;
+    public int spellMinHard = 0;
 
     @SectionHeader("Spells")
     @Nest public BigCreeperExplosionConfig bigCreeperExplosion = new BigCreeperExplosionConfig();
