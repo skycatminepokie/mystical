@@ -50,7 +50,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return GSON.fromJson(scanner.nextLine(), SpellHandler.class);
         } catch (FileNotFoundException e) {
-            Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
+            Utils.log(Utils.translateString("text.mystical.logging.failedToLoadSpellHandler"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
             return new SpellHandler();
         }
     }
@@ -171,7 +171,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
         } catch (IOException e) {
-            // TODO: Logging
+            Utils.log(Utils.translateString("text.mystical.logging.failedToSaveSpellHandler"), Mystical.CONFIG.failedToSaveSpellHandlerLogLevel());
         }
     }
 

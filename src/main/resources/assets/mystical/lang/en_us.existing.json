@@ -2,23 +2,13 @@
   "text.mystical.classSerializer.failedDeserializeName": "Couldn't deserialize class of name %s.",
 
   "text.mystical.commands.deleteSpellButton": " [X]",
-  "text.mystical.commands.reload.success": "Reload successful.",
 
-  "text.mystical.eventHandler.setNightTimerFailed": "Couldn't set timer for night. Reason: %s",
-  "text.mystical.eventHandler.timeOfDay": "Time of day is %l.",
-
-  "text.mystical.havenManager.loadFailed": "Failed to load the haven manager. Maybe it doesn't exist yet?",
-  "text.mystical.havenManager.saveFailed": "Failed to save the haven manager.",
-
-  "text.mystical.spellGenerator.emptyConsequenceList": "SpellGenerator found an empty consequence supplier list. Using default consequence (levitate, 0 pts).",
-  "text.mystical.spellGenerator.emptyCureList": "SpellGenerator found an empty cure list. Using default cure (mine 10 cactus).",
-  "text.mystical.spellGenerator.failedRandomBlock": "SpellGenerator failed to choose a random block. How? No clue. Using a command block instead.",
+  "text.mystical.spellGenerator.emptyConsequenceList": "SpellGenerator found an empty consequence supplier list. Using default consequence.",
+  "text.mystical.spellGenerator.emptyCureList": "SpellGenerator found an empty cure list. Using default cure.",
 
   "text.mystical.consequence.unbreakableLocation.noBreaking": "A mystical force prevents you from breaking that block.",
   "text.mystical.cure.kill": "Kill %ss",
 
-  "text.mystical.spellHandler.loadFailed": "Failed to load SpellHandler because the save file was not found. This is normal when the mod is run for the first time.",
-  "text.mystical.statSerializer.failedSerializeStat": "Mystical couldn't serialize a Stat<?> properly. Using a null value instead.",
   "text.config.mysticalConfig.option.skeletonTypeChange.chance": "% chance",
   "text.config.mysticalConfig.option.bigCreeperExplosion.chance": "% chance",
   "text.config.mysticalConfig.option.bigCreeperExplosion.multiplier": "Multiplier",

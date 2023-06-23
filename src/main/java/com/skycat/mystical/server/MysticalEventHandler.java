@@ -15,7 +15,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         this.server = server;
         timerAccess = ((MinecraftServerTimerAccess) server);
         setNightTimer();
-        Utils.log(Utils.translateString("text.mystical.eventHandler.timeOfDay", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
+        Utils.log(Utils.translateString("text.mystical.logging.timeOfDayAtStartup", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
     }
 
     public void doNighttimeEvents() {
@@ -44,10 +44,10 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     public long setNightTimer() {
         // CREDIT: Daomephsta#0044 for help on fabric discord
         if (server == null) {
-            throw new NullPointerException(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", "server was null."));
+            throw new NullPointerException(Utils.translateString("text.mystical.logging.failedToSetNightTimer", "server was null."));
         }
         if (timerAccess == null) {
-            throw new NullPointerException(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", "timerAccess was null."));
+            throw new NullPointerException(Utils.translateString("text.mystical.logging.failedToSetNightTimer", "timerAccess was null."));
         }
         long timerLength;
         long currentTime = server.getOverworld().getTimeOfDay() % 24000;

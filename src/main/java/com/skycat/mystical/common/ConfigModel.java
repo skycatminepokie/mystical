@@ -35,7 +35,7 @@ public class ConfigModel {
     public LogLevel timeOfDayAtStartupLogLevel = LogLevel.DEBUG;
     public LogLevel failedToLoadHavenManagerLogLevel = LogLevel.INFO;
     public LogLevel failedToSaveHavenManagerLogLevel = LogLevel.INFO;
-    public LogLevel playerContributedLogLevel = LogLevel.OFF; // Not implemented
+    public LogLevel spellContributionLogLevel = LogLevel.OFF;
     public LogLevel failedToGetRandomBlockLogLevel = LogLevel.ERROR;
     public LogLevel failedToLoadSpellHandlerLogLevel = LogLevel.WARN;
     public LogLevel failedToSaveSpellHandlerLogLevel = LogLevel.ERROR;

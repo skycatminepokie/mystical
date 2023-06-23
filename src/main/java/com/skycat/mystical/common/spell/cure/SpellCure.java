@@ -2,6 +2,7 @@ package com.skycat.mystical.common.spell.cure;
 
 import com.google.gson.*;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +51,13 @@ public abstract class SpellCure {
             contributions.put(uuid, amount);
         }
         contributionTotal += amount;
-        // TODO: Logging
+        String contributor;
+        if (uuid != null) {
+            contributor = uuid.toString();
+        } else {
+            contributor = "unknown";
+        }
+        Utils.log(Utils.translateString("text.mystical.logging.spellContribution", contributor, amount), Mystical.CONFIG.spellContributionLogLevel());
     }
 
     public boolean isSatisfied() {
