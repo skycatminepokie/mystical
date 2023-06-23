@@ -21,7 +21,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
     public static class Factory extends ConsequenceFactory<DisableDaylightBurningConsequence> {
 
         protected Factory() {
-            super("disableDaylightBurning", "Disable Daylight Burning", "Mobs bought some sunglasses", "Said no this mob doesn't burn", DisableDaylightBurningConsequence.class);
+            super("disableDaylightBurning", "Disable Daylight Burning", "Mobs bought some sunscreen", "Said no this mob doesn't burn", DisableDaylightBurningConsequence.class);
         }
 
         @Override
