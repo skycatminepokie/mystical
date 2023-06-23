@@ -28,7 +28,6 @@ public class Utils {
      * {@code Identifier.CODEC} is for custom StatTypes
      */
     public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
-    // public static final Codec<Pair<Either<StatType<?>, Identifier>, Stat<?>>> STAT_CODEC = Codec.pair(STAT_TYPE_CODEC, )
 
     public static boolean log(String msg) {
         return log(msg, LogLevel.INFO, Mystical.LOGGER);

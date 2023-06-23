@@ -2,7 +2,6 @@ package com.skycat.mystical.common.spell.cure;
 
 import com.google.gson.*;
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
@@ -19,30 +18,17 @@ public abstract class SpellCure {
      * Make sure to update {@link #contributionTotal} when adding to or removing from this
      */
     private final HashMap<UUID, Integer> contributions = new HashMap<>();
-    @Getter @Nullable protected final String translationKey;
     @Getter private int contributionTotal = 0;
 
-    /**
-     * Please provide a translation key with {@link SpellCure#SpellCure(int, Class, String)}
-     */
-    @Deprecated
     public SpellCure(int contributionGoal, Class cureType) {
-        this(contributionGoal, cureType, "text.mystical.spellCure.default");
-    }
-
-    public SpellCure(int contributionGoal, Class cureType, @Nullable String translationKey) {
         this.contributionGoal = contributionGoal;
         this.cureType = cureType;
-        this.translationKey = translationKey;
     }
 
     /**
-     * This is a player-readable description/"recipe" for the cure.
-     * Override this if you have parameters to add to the translation.
+     * Get a player-readable description/"recipe" for the cure.
      */
-    public MutableText getDescription() {
-        return Utils.translatable(translationKey);
-    }
+    public abstract MutableText getDescription();
 
     /**
      * Recalculates the total value of all contributions.
@@ -85,7 +71,7 @@ public abstract class SpellCure {
      * @param totalPower The total power to distribute among contributors.
      * @param max The maximum power to give to any one contributor.
      */
-    public void awardPower(int totalPower, int max) { // TODO: TEST
+    public void awardPower(int totalPower, int max) {
         for (UUID uuid : contributions.keySet()) {
             if (contributions.get(uuid) <= 0) continue;
             // Formula: min(totalPower * percentContributed, max)

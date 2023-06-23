@@ -7,19 +7,16 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
+import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
 
 @Getter
 public class StatBackedSpellCure extends SpellCure {
     private final Stat stat;
 
-    public StatBackedSpellCure(int contributionGoal, Stat stat, String translationKey) {
-        super(contributionGoal, StatBackedSpellCure.class, translationKey);
-        this.stat = stat;
-    }
-
     public StatBackedSpellCure(int contributionGoal, Stat stat) {
-        this(contributionGoal, stat, null);
+        super(contributionGoal, StatBackedSpellCure.class);
+        this.stat = stat;
     }
 
     public StatType getStatType() {
@@ -28,7 +25,22 @@ public class StatBackedSpellCure extends SpellCure {
 
     @Override
     public MutableText getDescription() {
-        MutableText text = Utils.translateStat(stat);
+        MutableText text;
+        if (getStatType().equals(Stats.KILLED)) {
+            text = Utils.translatable("text.mystical.cure.kill", ((EntityType<?>) stat.getValue()).getName());
+        } else {
+            text = Utils.translateStat(stat); // This is the default. It works best with CUSTOM type stats.
+        }
+        appendType(text);
+        appendCompletion(text);
+        return text;
+    }
+
+    protected void appendCompletion(MutableText text) {
+        text.append(" (" + stat.format(getContributionTotal()) + "/" + stat.format(contributionGoal) + ")");
+    }
+
+    protected void appendType(MutableText text) {
         var statValue = stat.getValue();
         if (statValue instanceof Block) {
             text.append(" (");
@@ -38,12 +50,6 @@ public class StatBackedSpellCure extends SpellCure {
             text.append(" (");
             text.append(((Item) statValue).getName());
             text.append(")");
-        } else if (statValue instanceof EntityType) {
-            text.append(" (");
-            text.append(((EntityType<?>) statValue).getName());
-            text.append(")");
         }
-        text.append(" (" + stat.format(getContributionTotal()) + "/" + stat.format(contributionGoal) + ")");
-        return text;
     }
 }
