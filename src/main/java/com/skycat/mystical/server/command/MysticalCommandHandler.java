@@ -10,6 +10,7 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.Spell;
 import com.skycat.mystical.common.spell.SpellGenerator;
 import com.skycat.mystical.common.spell.SpellHandler;
+import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.util.Utils;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -316,6 +317,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      */
     private int sendSpellList(CommandContext<ServerCommandSource> context, boolean showDeleteButton) {
         ArrayList<Spell> activeSpells = Mystical.SPELL_HANDLER.getActiveSpells();
+        if (activeSpells.size() == 0) {
+            context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.mystical.spell.list.noSpells"), false);
+            return 1;
+        }
         for (int i = 0; i < activeSpells.size(); i++) {
             Spell spell = activeSpells.get(i);
             MutableText spellDescription = spell.getConsequence().getFactory().getDescriptionText(spell.getConsequence()); // getDescriptionText should never throw IllegalArgumentException if consequence has a factory that makes itself (should be so for all)
@@ -332,9 +337,13 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     }
 
     private int newSpellCommand(CommandContext<ServerCommandSource> context) {
-        String spell = context.getArgument("spell", String.class); // TODO: Warn if disabled or weight = 0
+        String spell = context.getArgument("spell", String.class);
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
-        Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(SpellGenerator.getShortNameToFactory().get(spell));
+        ConsequenceFactory<?> factory = SpellGenerator.getShortNameToFactory().get(spell);
+        if (factory.getWeight() == 0) {
+            context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
+        }
+        Mystical.SPELL_HANDLER.activateNewSpellWithConsequence(factory);
         context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
         return 1;
     }
@@ -349,6 +358,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.SPELL_HANDLER = SpellHandler.loadOrNew();
         Mystical.EVENT_HANDLER.setNightTimer();
+        Mystical.CONFIG.load();
         context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.reload.success"), true);
         return 1;
     }
@@ -357,6 +367,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         Mystical.SPELL_HANDLER.removeAllSpells();
         Mystical.SPELL_HANDLER.activateNewSpell();
         context.getSource().sendFeedback(Utils.textOf("Removed all spells and added a new one"), false);
-        return 0;
+        return 1;
     }
 }
