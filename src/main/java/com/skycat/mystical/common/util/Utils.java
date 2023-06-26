@@ -1,7 +1,10 @@
 package com.skycat.mystical.common.util;
 
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializer;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.LogLevel;
 import net.minecraft.entity.LivingEntity;
@@ -28,6 +31,26 @@ public class Utils {
      * {@code Identifier.CODEC} is for custom StatTypes
      */
     public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
+
+    /**
+     * Converts a {@link Codec} to a {@link JsonSerializer}
+     * @param codec The codec to convert.
+     * @return A new {@link JsonSerializer}. It will throw a {@link RuntimeException} on failure.
+     * @param <T> The class of the object the codec is for.
+     */
+    public static <T> JsonSerializer<T> serializerOf(Codec<T> codec) { // This is the kind of code that makes you feel hackerman.
+        return (src, typeOfSrc, context) -> codec.encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> {throw new RuntimeException(s);});
+    }
+
+    /**
+     * Converts a {@link Codec} to a {@link JsonDeserializer}
+     * @param codec The codec to convert.
+     * @return A new {@link JsonDeserializer}. It will throw a {@link RuntimeException} on failure.
+     * @param <T> The class of the object the codec is for.
+     */
+    public static <T> JsonDeserializer<T> deserializerOf(Codec<T> codec) {
+        return (json, typeOfT, context) -> codec.decode(JsonOps.INSTANCE, json).getOrThrow(false, s -> {throw new RuntimeException(s);}).getFirst();
+    }
 
     public static boolean log(String msg) {
         return log(msg, LogLevel.INFO, Mystical.LOGGER);
