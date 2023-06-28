@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
@@ -65,6 +66,7 @@ public class Mystical implements ModInitializer {
         PlayerBlockBreakEvents.AFTER.register(SPELL_HANDLER);
         ServerPlayerEvents.AFTER_RESPAWN.register(SPELL_HANDLER);
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(SPELL_HANDLER);
+        AttackBlockCallback.EVENT.register(SPELL_HANDLER);
 
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
