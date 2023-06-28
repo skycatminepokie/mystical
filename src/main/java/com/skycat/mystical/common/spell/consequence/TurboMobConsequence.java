@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class TurboMobConsequence extends SpellConsequence {
+public class TurboMobConsequence extends SpellConsequence { // TODO: Maybe make this work with wardens?
     public static final Factory FACTORY = new Factory();
     public EntityType<?> entityType;
 
