@@ -3,7 +3,8 @@ package com.skycat.mystical.server.mixin;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.Spell;
 import com.skycat.mystical.common.spell.consequence.MobSpawnSwapConsequence;
-import com.skycat.mystical.common.spell.consequence.TurboMobConsequence;
+import com.skycat.mystical.common.spell.consequence.TurboMobsConsequence;
+import com.skycat.mystical.common.util.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -51,12 +52,13 @@ public abstract class SpawnHelperMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT) // Tried using ModifyVariable, but locations weren't set up yet. // TY llamalad7, benonardo // This could be better as a WrapOperation, but that's yet another dependency :/
     private static void giveSpeedBoost(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner, CallbackInfo ci, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, int i, BlockState blockState, BlockPos.Mutable mutable, int j, int k, int l, int m, int n, SpawnSettings.SpawnEntry spawnEntry, EntityData entityData, int o, int p, int q, double d, double e, PlayerEntity playerEntity, double f, MobEntity mobEntity) {
         // Most of the parameters are unused :(
-        for (Spell spell : Mystical.SPELL_HANDLER.spellsOfConsequenceType(TurboMobConsequence.class)) { // Inside this, there must be an active TurboMobConsequence spell
+        for (Spell spell : Mystical.SPELL_HANDLER.spellsOfConsequenceType(TurboMobsConsequence.class)) { // Inside this, there must be an active TurboMobsConsequence spell
             if (!Mystical.HAVEN_MANAGER.isInHaven(mobEntity) && // Ensure outside haven
-                    ((TurboMobConsequence) spell.getConsequence()).entityType.equals(mobEntity.getType())) { // Make sure it applies to this type // TODO: Chance
+                    ((TurboMobsConsequence) spell.getConsequence()).entityType.equals(mobEntity.getType())) { // Make sure it applies to this type // TODO: Chance
                 EntityAttributeInstance attributeInstance = mobEntity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (attributeInstance != null) {
-                    attributeInstance.addPersistentModifier(new EntityAttributeModifier("Mystical speed boost", 10.5, EntityAttributeModifier.Operation.MULTIPLY_BASE)); // TODO: Config
+                    attributeInstance.addPersistentModifier(new EntityAttributeModifier("Mystical speed boost", 0.5, EntityAttributeModifier.Operation.MULTIPLY_BASE)); // TODO: Config
+                    Utils.log("text.mystical.consequence.turboMobs.fired", Mystical.CONFIG.spellContributionLogLevel());
                 }
             }
         }

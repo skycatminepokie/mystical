@@ -29,6 +29,7 @@ public class ConfigModel {
     @Nest public TurboChickensConfig turboChickens = new TurboChickensConfig();
     @Nest public OneStrikeWardensConfig oneStrikeWardens = new OneStrikeWardensConfig();
     @Nest public RandomCreeperEffectCloudsConfig randomCreeperEffectClouds = new RandomCreeperEffectCloudsConfig();
+    @Nest public TurboMobsConfig turboMobs = new TurboMobsConfig();
   
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -273,6 +274,16 @@ public class ConfigModel {
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
     
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class TurboMobsConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
         public static boolean weightPredicate(double value) {
             return ConfigModel.weightPredicate(value);
         }
