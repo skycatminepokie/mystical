@@ -81,7 +81,7 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
      */
     public MutableText getDescriptionText(SpellConsequence consequence) throws IllegalArgumentException {
         if (consequence.getClass() != consequenceType) {
-            throw new IllegalArgumentException(consequence.getClass() + " != " + consequenceType); // TODO: Find a better way?
+            throw new IllegalArgumentException(consequence.getClass() + " != " + consequenceType); // TODO: Logging instead of crashing
         }
         return Utils.translatable(getDescriptionKey());
     }
