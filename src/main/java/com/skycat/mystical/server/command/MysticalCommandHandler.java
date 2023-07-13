@@ -42,7 +42,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(
-                literal("mystical")
+                /*CommandManager.*/literal("mystical")
                         .requires(Permissions.require("mystical.command.mystical", true))
                         .then(literal("spell")
                                 .requires(Permissions.require("mystical.command.mystical.spell", true))
