@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.spell.cure;
 
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 public abstract class SpellCure {
 
+    public static final Codec<SpellCure> CODEC = ;
     @Getter protected int contributionGoal;
     @Getter protected final Class cureType;
     /**

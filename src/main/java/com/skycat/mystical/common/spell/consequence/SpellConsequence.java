@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.spell.consequence;
 
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -9,6 +10,7 @@ import java.lang.reflect.Type;
 @SuppressWarnings("rawtypes")
 @Getter
 public abstract class SpellConsequence {
+    public static final Codec<SpellConsequence> CODEC = ;
     private final Class consequenceType;
     /**
      * If there is no relevant callback, this should be null
