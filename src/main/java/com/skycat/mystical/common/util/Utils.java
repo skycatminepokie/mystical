@@ -31,6 +31,13 @@ public class Utils {
      * {@code Identifier.CODEC} is for custom StatTypes
      */
     public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
+    public static final Codec<Class> CLASS_CODEC = Codec.STRING.xmap(className -> {
+        try {
+            return Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }, Class::getName); // Arguments are essentially Class::forNameOrThrow, Class::getName (forNameOrThrow doesn't exist, but that's what this is)
 
     /**
      * Converts a {@link Codec} to a {@link JsonSerializer}
