@@ -24,14 +24,6 @@ public abstract class SpellConsequence {
         this.difficulty = difficulty;
     }
 
-    /*
-        // I really don't know if this would work.
-        public SpellConsequence(Class callbackType) {
-            this.consequenceType = this.getClass();
-            this.callbackType = callbackType;
-        }
-     */
-
     /**
      * Returns the factory associated with this type of consequence.
      * {@code ? extends SpellConsequence} should ALWAYS be {@code this.getClass()}.
