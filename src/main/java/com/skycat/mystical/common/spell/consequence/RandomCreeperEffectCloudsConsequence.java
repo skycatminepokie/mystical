@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +19,12 @@ public class RandomCreeperEffectCloudsConsequence extends SpellConsequence {
 
     public static class Factory extends ConsequenceFactory<RandomCreeperEffectCloudsConsequence> {
         protected Factory() {
-            super("randomCreeperEffectClouds", "Creepers leave random effect clouds", "Hissss... Bubbles?", "Random effect cloud made", RandomCreeperEffectCloudsConsequence.class);
+            super("randomCreeperEffectClouds",
+                    "Creepers leave random effect clouds",
+                    "Hissss... Bubbles?",
+                    "Random effect cloud made",
+                    RandomCreeperEffectCloudsConsequence.class,
+                    Codec.unit(RandomCreeperEffectCloudsConsequence::new));
         }
 
         @Override

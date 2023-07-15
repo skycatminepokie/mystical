@@ -1,7 +1,9 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
+import lombok.Getter;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,14 +20,19 @@ import java.util.function.Function;
 public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback {
     public static final Factory FACTORY = new Factory();
     private static final Function<Double, Double> DIFFICULTY_FUNCTION = chance -> {return 10*chance;};
-    private final long seed = Mystical.RANDOM.nextLong();
+    @Getter private final long seed;
     /**
      * The seed will be set every time we pull from this. That needs to be done anyway, so we have a single object to do it.
      */
     private static final Random RANDOM = new Random();
 
     public UnbreakableLocationConsequence() {
+        this(Mystical.RANDOM.nextLong());
+    }
+
+    public UnbreakableLocationConsequence(long seed) {
         super(UnbreakableLocationConsequence.class, AttackBlockCallback.class, 500); // TODO difficulty scaling
+        this.seed = seed;
     }
 
     @Override
@@ -46,7 +53,12 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
 
     public static class Factory extends ConsequenceFactory<UnbreakableLocationConsequence> {
         protected Factory() {
-            super("unbreakableLocation", "Unbreakable Block (location)", "WorldGuard but awful", "Prevented a block from being broken.", UnbreakableLocationConsequence.class);
+            super("unbreakableLocation",
+                    "Unbreakable Block (location)",
+                    "WorldGuard but awful",
+                    "Prevented a block from being broken.",
+                    UnbreakableLocationConsequence.class,
+                    Codec.LONG.xmap(UnbreakableLocationConsequence::new, UnbreakableLocationConsequence::getSeed));
         }
 
         @Override

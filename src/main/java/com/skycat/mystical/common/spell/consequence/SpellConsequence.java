@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 @SuppressWarnings("rawtypes")
 @Getter
 public abstract class SpellConsequence {
-    public static final Codec<SpellConsequence> CODEC = ;
+    public static final Codec<SpellConsequence> CODEC = ConsequenceFactory.FACTORY_CODEC.dispatch("type", SpellConsequence::getFactory, ConsequenceFactory::getCodec);
     private final Class consequenceType;
     /**
      * If there is no relevant callback, this should be null
@@ -38,6 +38,7 @@ public abstract class SpellConsequence {
     }
 
     public static class Serializer implements JsonSerializer<SpellConsequence>, JsonDeserializer<SpellConsequence> {
+
         @Override
         public SpellConsequence deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             Class consequenceType = context.deserialize(json.getAsJsonObject().get("consequenceType"), Class.class);

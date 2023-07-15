@@ -3,6 +3,7 @@ package com.skycat.mystical.common.spell.consequence;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.LogLevel;
 import com.skycat.mystical.common.util.Utils;
+import lombok.Getter;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -14,7 +15,7 @@ import java.util.Random;
 
 public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make this work with wardens?
     public static final Factory FACTORY = new Factory();
-    public EntityType<?> entityType;
+    @Getter public EntityType<?> entityType;
 
     public TurboMobsConsequence(EntityType<?> entityType) {
         super(TurboMobsConsequence.class, null, 50d);
@@ -29,7 +30,12 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make
     public static class Factory extends ConsequenceFactory<TurboMobsConsequence> {
 
         protected Factory() {
-            super("turboMobs", "Turbo Mobs", "%s go zoom", "Gave a mob extra speed.", TurboMobsConsequence.class);
+            super("turboMobs",
+                    "Turbo Mobs",
+                    "%s go zoom",
+                    "Gave a mob extra speed.",
+                    TurboMobsConsequence.class,
+                    Registry.ENTITY_TYPE.getCodec().xmap(TurboMobsConsequence::new, TurboMobsConsequence::getEntityType));
         }
 
         @Override

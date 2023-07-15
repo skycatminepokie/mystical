@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,12 @@ public class CatVariantChangeConsequence extends SpellConsequence {
 
     public static class Factory extends ConsequenceFactory<CatVariantChangeConsequence> {
         public Factory() {
-            super("catVariantChange", "Cat Variant Change", "We change coats, so why can't cats do the same?", "Changed cat variant", CatVariantChangeConsequence.class);
+            super("catVariantChange",
+                    "Cat Variant Change",
+                    "We change coats, so why can't cats do the same?",
+                    "Changed cat variant",
+                    CatVariantChangeConsequence.class,
+                    Codec.unit(CatVariantChangeConsequence::new));
         }
 
         @Override

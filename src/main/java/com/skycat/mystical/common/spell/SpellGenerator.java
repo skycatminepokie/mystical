@@ -154,4 +154,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     public static HashMap<String, ConsequenceFactory> getShortNameToFactory() {
         return shortNameToFactory;
     }
+
+    public static ConsequenceFactory<?> getFactory(String shortName) {
+        return shortNameToFactory.get(shortName);
+    }
 }

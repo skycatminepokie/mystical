@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,12 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
     public static class Factory extends ConsequenceFactory<OneStrikeWardensConsequence> {
 
         protected Factory() {
-            super("oneStrikeWardens", "One Strike Wardens", "Mr. Clompy Shoes returns!", "Hah. New warden, nerd.", OneStrikeWardensConsequence.class);
+            super("oneStrikeWardens",
+                    "One Strike Wardens",
+                    "Mr. Clompy Shoes returns!",
+                    "Hah. New warden, nerd.",
+                    OneStrikeWardensConsequence.class,
+                    Codec.unit(OneStrikeWardensConsequence::new));
         }
 
         @Override

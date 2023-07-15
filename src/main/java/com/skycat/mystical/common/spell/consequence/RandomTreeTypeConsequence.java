@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import net.minecraft.block.sapling.*;
@@ -34,18 +35,23 @@ public class RandomTreeTypeConsequence extends SpellConsequence {
         );
     }
 
-    private RandomTreeTypeConsequence(Class consequenceType, Class callbackType) {
-        super(consequenceType, callbackType, 15d); // TODO: Scaling
+    private RandomTreeTypeConsequence() {
+        super(RandomTreeTypeConsequence.class, null, 15d); // TODO: Scaling
     }
 
     public static class Factory extends ConsequenceFactory<RandomTreeTypeConsequence> {
         public Factory() {
-            super("randomTreeType", "Random Tree Types", "The saplings are spies!", "Random tree generated", RandomTreeTypeConsequence.class);
+            super("randomTreeType",
+                    "Random Tree Types",
+                    "The saplings are spies!",
+                    "Random tree generated",
+                    RandomTreeTypeConsequence.class,
+                    Codec.unit(RandomTreeTypeConsequence::new));
         }
 
         @Override
         public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {
-            return new RandomTreeTypeConsequence(RandomTreeTypeConsequence.class, null);
+            return new RandomTreeTypeConsequence();
         }
 
         @Override
