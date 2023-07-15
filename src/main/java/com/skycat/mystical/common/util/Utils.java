@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 public class Utils {
     /**
@@ -31,13 +32,15 @@ public class Utils {
      * {@code Identifier.CODEC} is for custom StatTypes
      */
     public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
-    public static final Codec<Class> CLASS_CODEC = Codec.STRING.xmap(className -> {
+    public static final Codec<Class<?>> CLASS_CODEC = Codec.STRING.xmap(className -> {
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }, Class::getName); // Arguments are essentially Class::forNameOrThrow, Class::getName (forNameOrThrow doesn't exist, but that's what this is)
+    public static final Codec<UUID> UUID_CODEC = Codec.STRING.xmap(UUID::fromString, UUID::toString);
+
 
     /**
      * Converts a {@link Codec} to a {@link JsonSerializer}
