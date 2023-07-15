@@ -21,10 +21,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import org.slf4j.Logger;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class Utils {
     /**
@@ -41,6 +38,16 @@ public class Utils {
     }, Class::getName); // Arguments are essentially Class::forNameOrThrow, Class::getName (forNameOrThrow doesn't exist, but that's what this is)
     public static final Codec<UUID> UUID_CODEC = Codec.STRING.xmap(UUID::fromString, UUID::toString);
 
+    public static <T> List<T> setToList(Set<T> set) {
+        return set.stream().toList();
+    }
+
+    public static <K, V> HashMap<K, V> toHashMap(Map<K, V> map) {
+        if (map instanceof HashMap<K,V> hashMap) { // I think this will save some time so it doesn't rehash.
+            return hashMap;
+        }
+        return new HashMap<>(map);
+    }
 
     /**
      * Converts a {@link Codec} to a {@link JsonSerializer}
