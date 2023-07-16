@@ -24,9 +24,9 @@ public class HavenManager {
             Codec.LONG.xmap(ChunkPos::new, ChunkPos::toLong).listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks), // Take a long, map that to a ChunkPos, make it a list of those, then map that to a set
             Codec.unboundedMap(Codecs.UUID, Codec.INT).xmap(Utils::toHashMap, map -> map).fieldOf("powerMap").forGetter(HavenManager::getPowerMap) // Yes, map -> map. Awesome.
     ).apply(instance, HavenManager::new)));
-    @Getter public HashSet<ChunkPos> havenedChunks;
-    @Getter public HashMap<UUID, Integer> powerMap;
-    private static final File SAVE_FILE = new File("config/havenManager.json");
+    @Getter private final HashSet<ChunkPos> havenedChunks;
+    @Getter private final HashMap<UUID, Integer> powerMap;
+    @Getter private static final File SAVE_FILE = new File("config/havenManager.json");
     public static int baseHavenCost = 1000;
 
     public HavenManager(HashSet<ChunkPos> havenedChunks, HashMap<UUID, Integer> powerMap) {
@@ -97,6 +97,7 @@ public class HavenManager {
      * @return {@code true} if the chunk was not already havened
      */
     public boolean havenChunk(ChunkPos chunkPos) {
+        Mystical.saveUpdated();
         return havenedChunks.add(chunkPos);
     }
 
@@ -208,6 +209,7 @@ public class HavenManager {
         }
         // else
         powerMap.put(playerUUID, power);
+        Mystical.saveUpdated();
         return power;
     }
 
@@ -220,6 +222,7 @@ public class HavenManager {
     public int getPower(UUID playerUUID) {
         if (powerMap.get(playerUUID) == null) {
             powerMap.put(playerUUID, 0);
+            Mystical.saveUpdated();
             return 0;
         }
         return powerMap.get(playerUUID);
@@ -257,6 +260,7 @@ public class HavenManager {
         int prevPower = getPower(playerUUID);
         if (hasPower(playerUUID, power)) {
             powerMap.put(playerUUID, prevPower - power);
+            Mystical.saveUpdated();
             return true;
         }
         return false;

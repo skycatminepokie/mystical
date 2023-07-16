@@ -51,8 +51,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     // This saves the active spells by taking the spell codec, turning it into a list codec, then maps List<Spell> and SpellHandler
     public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(spellList -> new SpellHandler(spellList), SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
 
-
-    private static final File SAVE_FILE = new File("config/spellHandler.json");
+    @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
     @Getter private final ArrayList<Spell> activeSpells;
 
     public SpellHandler() {
@@ -188,8 +187,13 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void removeAllSpells() {
         activeSpells.clear();
+        Mystical.saveUpdated();
     }
 
+    /**
+     * Save the spellHandler to file. Deprecated in favor of {@link com.skycat.mystical.server.SaveState}
+     */
+    @Deprecated
     public void save() {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
