@@ -96,7 +96,7 @@ public abstract class SpellCure {
         for (UUID uuid : contributions.keySet()) {
             if (contributions.get(uuid) <= 0) continue;
             // Formula: min(totalPower * percentContributed, max)
-            Mystical.HAVEN_MANAGER.addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
+            Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
         }
     }
 

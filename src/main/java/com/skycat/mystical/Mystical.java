@@ -9,6 +9,7 @@ import com.skycat.mystical.common.spell.cure.SpellCure;
 import com.skycat.mystical.common.util.*;
 import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.MysticalEventHandler;
+import com.skycat.mystical.server.SaveState;
 import com.skycat.mystical.server.command.MysticalCommandHandler;
 import lombok.Getter;
 import net.fabricmc.api.ModInitializer;
@@ -21,6 +22,7 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -33,7 +35,7 @@ import java.util.Random;
 import java.util.UUID;
 
 @Getter
-public class Mystical implements ModInitializer {
+public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerStarted {
     @Getter public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
     @Getter public static final Gson GSON = new GsonBuilder()
             .setVersion(0.1)
@@ -52,23 +54,48 @@ public class Mystical implements ModInitializer {
     @Getter public static final Random RANDOM = new Random();
     @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // Probably not a great way to do this, but oh well.
     @Getter public static final com.skycat.mystical.common.MysticalConfig CONFIG = com.skycat.mystical.common.MysticalConfig.createAndLoad();
-    @Getter public static SpellHandler SPELL_HANDLER = SpellHandler.loadOrNew();
-    @Getter public static final HavenManager HAVEN_MANAGER = HavenManager.loadOrNew();
+    private static SpellHandler SPELL_HANDLER = SpellHandler.loadOrNew();
+    private static final HavenManager HAVEN_MANAGER = HavenManager.loadOrNew();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
+    public static SaveState save;
+
+    public static HavenManager getHavenManager() {
+        if (save == null) {
+            throw new NullPointerException("Cannot get haven manager - save is null");
+        }
+        return save.getHavenManager();
+    }
+
+    public static SpellHandler getSpellHandler() {
+        if (save == null) {
+            throw new NullPointerException("Cannot get spell handler - save is null");
+        }
+        return save.getSpellHandler();
+    }
+
+    public static void setSpellHandler(SpellHandler spellHandler) {
+        SPELL_HANDLER = spellHandler;
+    }
 
     @Override
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register(COMMAND_HANDLER);
 
-        EntitySleepEvents.START_SLEEPING.register(SPELL_HANDLER);
-        EntitySleepEvents.STOP_SLEEPING.register(SPELL_HANDLER);
-        PlayerBlockBreakEvents.BEFORE.register(SPELL_HANDLER);
-        PlayerBlockBreakEvents.AFTER.register(SPELL_HANDLER);
-        ServerPlayerEvents.AFTER_RESPAWN.register(SPELL_HANDLER);
-        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(SPELL_HANDLER);
-        AttackBlockCallback.EVENT.register(SPELL_HANDLER);
-
         ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
+        ServerLifecycleEvents.SERVER_STARTED.register(this);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
+    }
+
+    @Override
+    public void onServerStarted(MinecraftServer server) {
+        save = SaveState.loadSave(server);
+
+        EntitySleepEvents.START_SLEEPING.register(getSpellHandler());
+        EntitySleepEvents.STOP_SLEEPING.register(getSpellHandler());
+        PlayerBlockBreakEvents.BEFORE.register(getSpellHandler());
+        PlayerBlockBreakEvents.AFTER.register(getSpellHandler());
+        ServerPlayerEvents.AFTER_RESPAWN.register(getSpellHandler());
+        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(getSpellHandler());
+        AttackBlockCallback.EVENT.register(getSpellHandler());
     }
 }

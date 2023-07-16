@@ -30,8 +30,8 @@ public abstract class CatEntityMixin { // I could probably turn this into an eve
                 VARIANTS.add(catVariant);
             }
         }
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(CatVariantChangeConsequence.class) &&
-                !Mystical.HAVEN_MANAGER.isInHaven(entity) &&
+        if (Mystical.getSpellHandler().isConsequenceActive(CatVariantChangeConsequence.class) &&
+                !Mystical.getHavenManager().isInHaven(entity) &&
                 Utils.percentChance(Mystical.CONFIG.catVariantChange.chance())) {
             setVariant(Util.getRandom(VARIANTS, Mystical.MC_RANDOM));
             Utils.log(Utils.translateString("text.mystical.consequence.catVariantChange.fired"), Mystical.CONFIG.catVariantChange.logLevel());

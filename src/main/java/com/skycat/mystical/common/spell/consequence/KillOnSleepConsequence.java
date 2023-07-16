@@ -24,7 +24,7 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
-        if (entity.isAlive() && !Mystical.HAVEN_MANAGER.isInHaven(entity)) {
+        if (entity.isAlive() && !Mystical.getHavenManager().isInHaven(entity)) {
             entity.kill();
         }
     }
