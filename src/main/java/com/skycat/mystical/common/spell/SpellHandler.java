@@ -110,10 +110,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void activateNewSpell() {
         activeSpells.add(SpellGenerator.get());
+        Mystical.saveUpdated();
     }
 
     public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
         activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
+        Mystical.saveUpdated();
     }
 
     @Override
@@ -241,6 +243,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 removed ++;
             }
         }
+        Mystical.saveUpdated();
         return removed;
     }
 

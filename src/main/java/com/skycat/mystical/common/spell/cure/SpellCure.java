@@ -71,6 +71,7 @@ public abstract class SpellCure {
         } else {
             contributor = "unknown";
         }
+        Mystical.saveUpdated();
         Utils.log(Utils.translateString("text.mystical.logging.spellContribution", contributor, amount), Mystical.CONFIG.spellContributionLogLevel());
     }
 

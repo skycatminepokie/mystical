@@ -33,8 +33,6 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     @Override
     public void onServerStopping(MinecraftServer server) {
         Mystical.CONFIG.save();
-        Mystical.getSpellHandler().save();
-        Mystical.getHavenManager().save();
     }
 
     /**

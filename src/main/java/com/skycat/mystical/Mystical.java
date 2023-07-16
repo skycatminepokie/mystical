@@ -54,8 +54,6 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
     @Getter public static final Random RANDOM = new Random();
     @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // Probably not a great way to do this, but oh well.
     @Getter public static final com.skycat.mystical.common.MysticalConfig CONFIG = com.skycat.mystical.common.MysticalConfig.createAndLoad();
-    private static SpellHandler SPELL_HANDLER = SpellHandler.loadOrNew();
-    private static final HavenManager HAVEN_MANAGER = HavenManager.loadOrNew();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
     public static SaveState save;
 
@@ -66,15 +64,15 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
         return save.getHavenManager();
     }
 
+    public static void saveUpdated() {
+        save.markDirty();
+    }
+
     public static SpellHandler getSpellHandler() {
         if (save == null) {
             throw new NullPointerException("Cannot get spell handler - save is null");
         }
         return save.getSpellHandler();
-    }
-
-    public static void setSpellHandler(SpellHandler spellHandler) {
-        SPELL_HANDLER = spellHandler;
     }
 
     @Override

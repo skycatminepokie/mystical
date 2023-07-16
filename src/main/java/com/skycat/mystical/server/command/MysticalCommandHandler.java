@@ -9,7 +9,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.Spell;
 import com.skycat.mystical.common.spell.SpellGenerator;
-import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.util.Utils;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -298,6 +297,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             throw new CommandException(Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
         }
         Mystical.getSpellHandler().getActiveSpells().remove(spellNum);
+        Mystical.saveUpdated();
         return Command.SINGLE_SUCCESS;
     }
 
@@ -356,7 +356,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     }
 
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
-        Mystical.setSpellHandler(SpellHandler.loadOrNew());
         Mystical.EVENT_HANDLER.setNightTimer();
         Mystical.CONFIG.load();
         context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.reload.success"), true);
@@ -366,6 +365,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     int testCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Mystical.getSpellHandler().removeAllSpells();
         Mystical.getSpellHandler().activateNewSpell();
+        Mystical.saveUpdated();
         context.getSource().sendFeedback(Utils.textOf("Removed all spells and added a new one"), false);
         return 1;
     }
