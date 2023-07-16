@@ -7,6 +7,7 @@ import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
@@ -21,7 +22,7 @@ import java.util.UUID;
 public class HavenManager {
     public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
             Codec.LONG.xmap(ChunkPos::new, ChunkPos::toLong).listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks), // Take a long, map that to a ChunkPos, make it a list of those, then map that to a set
-            Codec.unboundedMap(Utils.UUID_CODEC, Codec.INT).xmap(Utils::toHashMap, map -> map).fieldOf("powerMap").forGetter(HavenManager::getPowerMap) // Yes, map -> map. Awesome.
+            Codec.unboundedMap(Codecs.UUID, Codec.INT).xmap(Utils::toHashMap, map -> map).fieldOf("powerMap").forGetter(HavenManager::getPowerMap) // Yes, map -> map. Awesome.
     ).apply(instance, HavenManager::new)));
     @Getter public HashSet<ChunkPos> havenedChunks;
     @Getter public HashMap<UUID, Integer> powerMap;

@@ -36,7 +36,6 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }, Class::getName); // Arguments are essentially Class::forNameOrThrow, Class::getName (forNameOrThrow doesn't exist, but that's what this is)
-    public static final Codec<UUID> UUID_CODEC = Codec.STRING.xmap(UUID::fromString, UUID::toString);
 
     public static <T> List<T> setToList(Set<T> set) {
         return set.stream().toList();
