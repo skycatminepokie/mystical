@@ -21,8 +21,8 @@ import java.util.UUID;
 
 public class HavenManager {
     public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
-            Codec.LONG.xmap(ChunkPos::new, ChunkPos::toLong).listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks), // Take a long, map that to a ChunkPos, make it a list of those, then map that to a set
-            Codec.unboundedMap(Codecs.UUID, Codec.INT).xmap(Utils::toHashMap, map -> map).fieldOf("powerMap").forGetter(HavenManager::getPowerMap) // Yes, map -> map. Awesome.
+            Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
+            Utils.hashMapCodec(Codecs.UUID, Codec.INT).fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
     ).apply(instance, HavenManager::new)));
     @Getter private final HashSet<ChunkPos> havenedChunks;
     @Getter private final HashMap<UUID, Integer> powerMap;

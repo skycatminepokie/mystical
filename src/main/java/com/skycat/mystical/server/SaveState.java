@@ -48,6 +48,8 @@ public class SaveState extends PersistentState {
     }
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
+        // TEST
+        HavenManager.CODEC.encode(havenManager, NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
         nbt.put("mystical_save", CODEC.encode(this, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).getOrThrow(false, s -> Utils.log("Failed to save mystical data.")));
         return nbt;
     }
