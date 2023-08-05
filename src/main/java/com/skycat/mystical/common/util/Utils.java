@@ -47,9 +47,26 @@ public class Utils {
      * @return A new codec
      * @param <K> The key type
      * @param <V> The value type
+     * @deprecated Please provide field names with {@link Utils#hashMapCodec(Codec, String, Codec, String)}
      */
+    @Deprecated
     public static <K, V> Codec<HashMap<K, V>> hashMapCodec(Codec<K> keyCodec, Codec<V> valueCodec) {
-        return Codec.pair(keyCodec, valueCodec).listOf().xmap(Utils::pairsToMap, Utils::mapToPairs);
+        return hashMapCodec(keyCodec, "first", valueCodec, "second");
+    }
+
+    /**
+     * Create a Codec to store HashMaps as a List of Pairs.
+     *
+     * @param <K>            The key type
+     * @param <V>            The value type
+     * @param keyCodec       The codec for the key type
+     * @param keyFieldName   The name to use for the first field
+     * @param valueCodec     The codec for the value type
+     * @param valueFieldName The name to use for the second field
+     * @return A new codec
+     */
+    public static <K, V> Codec<HashMap<K, V>> hashMapCodec(Codec<K> keyCodec, String keyFieldName, Codec<V> valueCodec, String valueFieldName) {
+        return Utils.pairCodec(keyCodec, keyFieldName, valueCodec, valueFieldName).listOf().xmap(Utils::pairsToMap, Utils::mapToPairs);
     }
 
     private static <K, V> HashMap<K, V> pairsToMap(List<Pair<K, V>> pairs) {
@@ -70,6 +87,10 @@ public class Utils {
 
     public static <K, V> Pair<K, V> mapEntryToPair(Map.Entry<K, V> entry) {
         return Pair.of(entry.getKey(), entry.getValue());
+    }
+
+    public static <F, S> Codec<Pair<F,S>> pairCodec(Codec<F> firstCodec, String firstFieldName, Codec<S> secondCodec, String secondFieldName) {
+        return Codec.pair(firstCodec.fieldOf(firstFieldName).codec(), secondCodec.fieldOf(secondFieldName).codec());
     }
 
     public static <T> List<T> setToList(Set<T> set) {

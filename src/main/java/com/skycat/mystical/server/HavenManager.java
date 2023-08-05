@@ -22,7 +22,7 @@ import java.util.UUID;
 public class HavenManager {
     public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
             Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
-            Utils.hashMapCodec(Codecs.UUID, Codec.INT).fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
+            Utils.hashMapCodec(Codecs.UUID, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
     ).apply(instance, HavenManager::new)));
     @Getter private final HashSet<ChunkPos> havenedChunks;
     @Getter private final HashMap<UUID, Integer> powerMap;
