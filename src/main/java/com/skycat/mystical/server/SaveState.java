@@ -1,15 +1,20 @@
 package com.skycat.mystical.server;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
+
+import java.util.UUID;
 
 public class SaveState extends PersistentState {
     @Getter protected HavenManager havenManager;
@@ -49,6 +54,12 @@ public class SaveState extends PersistentState {
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
         // TEST
+        Codec.INT.encode(Integer.valueOf(1), NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
+        Codecs.UUID.encode(UUID.randomUUID(), NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
+        // PROBLEM:
+        Codec.pair(Codecs.UUID, Codec.INT).encode(Utils.mapToPairs(Mystical.getHavenManager().getPowerMap()).get(0), NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
+        Codec.pair(Codecs.UUID, Codec.INT).encode(Pair.of(UUID.randomUUID(), 1), NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
+        Utils.hashMapCodec(Codecs.UUID, Codec.INT).encode(Mystical.getHavenManager().getPowerMap(), NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
         HavenManager.CODEC.encode(havenManager, NbtOps.INSTANCE, NbtOps.INSTANCE.empty());
         nbt.put("mystical_save", CODEC.encode(this, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).getOrThrow(false, s -> Utils.log("Failed to save mystical data.")));
         return nbt;
