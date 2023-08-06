@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
     public static final Factory FACTORY = new Factory();
 
     public AggressiveGolemsConsequence() {
-        super(AggressiveGolemsConsequence.class, AggressiveGolemsConsequence.class, 100d);
+        super(AggressiveGolemsConsequence.class, null, 100d);
     }
 
     @Override
@@ -20,7 +21,12 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
 
     public static class Factory extends ConsequenceFactory<AggressiveGolemsConsequence> {
         protected Factory() {
-            super("aggressiveGolems", "Aggressive golems", "Iron + Pumpkin says \"Here, have pain!\"", "Golem is aggressive", AggressiveGolemsConsequence.class);
+            super("aggressiveGolems",
+                    "Aggressive golems",
+                    "Iron + Pumpkin says \"Here, have pain!\"",
+                    "Golem is aggressive",
+                    AggressiveGolemsConsequence.class,
+                    Codec.unit(AggressiveGolemsConsequence::new));
         }
 
         @Override

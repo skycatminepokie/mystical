@@ -23,8 +23,8 @@ public abstract class FishingBobberEntityMixin {
 
     @ModifyArg(method = "pullHookedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"), index = 0)
     public Vec3d onSetVelocity(Vec3d velocity) {
-        if (!Mystical.HAVEN_MANAGER.isInHaven(getHookedEntity()) && // getHookedEntity shouldn't return null - we're pulling an entity, so there must be one hooked.
-                Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class) && Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) {
+        if (!Mystical.getHavenManager().isInHaven(getHookedEntity()) && // getHookedEntity shouldn't return null - we're pulling an entity, so there must be one hooked.
+                Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) && Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) {
             Utils.log(Utils.translateString("text.mystical.consequence.fishingRodLaunch.fired"), Mystical.CONFIG.fishingRodLaunch.logLevel());
             return velocity.multiply(Mystical.CONFIG.fishingRodLaunch.multiplier());
         }
@@ -33,11 +33,11 @@ public abstract class FishingBobberEntityMixin {
 
     @Inject(method = "pullHookedEntity", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void afterPullHooked(Entity entity, CallbackInfo ci, Entity entity2, Vec3d vec3d) {
-        if (!Mystical.HAVEN_MANAGER.isInHaven(entity) &&
-                !Mystical.HAVEN_MANAGER.isInHaven(entity2) &&
+        if (!Mystical.getHavenManager().isInHaven(entity) &&
+                !Mystical.getHavenManager().isInHaven(entity2) &&
                 entity instanceof ServerPlayerEntity &&
-                Mystical.SPELL_HANDLER.isConsequenceActive(FishingRodLaunchConsequence.class)) {
-            ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity));
+                Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class)) {
+            ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)); // Thanks @Wesley1808#9858 :)
         }
     }
 

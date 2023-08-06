@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.util;
 
 import com.google.gson.*;
+import com.skycat.mystical.common.LogLevel;
 
 import java.lang.reflect.Type;
 
@@ -16,8 +17,7 @@ public class ClassSerializer implements JsonSerializer<Class>, JsonDeserializer<
         try {
             return Class.forName(json.getAsString());
         } catch (ClassNotFoundException e) {
-            Utils.log(Utils.translateString("text.mystical.classSerializer.failedDeserializeName", json.getAsString())); // TODO: Config
-            // STOPSHIP big ol errors, dump info
+            Utils.log(Utils.translateString("text.mystical.classSerializer.failedDeserializeName", json.getAsString()), LogLevel.ERROR);
             throw new RuntimeException(e);
         }
     }

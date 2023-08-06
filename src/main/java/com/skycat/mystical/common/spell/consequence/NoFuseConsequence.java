@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,7 @@ public class NoFuseConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public NoFuseConsequence() {
-        super(NoFuseConsequence.class, NoFuseConsequence.class, 100d);
+        super(NoFuseConsequence.class, null, 100d);
     }
 
     @Override
@@ -20,7 +21,12 @@ public class NoFuseConsequence extends SpellConsequence {
 
     public static class Factory extends ConsequenceFactory<NoFuseConsequence> {
         protected Factory() {
-            super("noFuse", "No Fuses", "Creepers don't hesitate anymore.", "Destroyed a fuse", NoFuseConsequence.class);
+            super("noFuse",
+                    "No Fuses",
+                    "Creepers don't hesitate anymore.",
+                    "Destroyed a fuse",
+                    NoFuseConsequence.class,
+                    Codec.unit(NoFuseConsequence::new));
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
@@ -36,7 +37,12 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
     public static class Factory extends ConsequenceFactory<ZombieTypeChangeConsequence> {
 
         public Factory() {
-            super("zombieTypeChange", "Zombie Type Change", "Zombies are having a wardrobe crisis", "Zombie type changed.", ZombieTypeChangeConsequence.class);
+            super("zombieTypeChange",
+                    "Zombie Type Change",
+                    "Zombies are having a wardrobe crisis",
+                    "Zombie type changed.",
+                    ZombieTypeChangeConsequence.class,
+                    Codec.unit(ZombieTypeChangeConsequence::new));
         }
 
         @Override

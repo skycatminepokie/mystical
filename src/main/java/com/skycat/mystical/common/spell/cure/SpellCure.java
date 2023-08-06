@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.spell.cure;
 
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
@@ -9,40 +10,40 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class SpellCure {
-
     @Getter protected int contributionGoal;
     @Getter protected final Class cureType;
+    @Getter public final CureType cureTypeId;
+    @Getter private int contributionTotal = 0;
+    public static final Codec<SpellCure> CODEC = CureTypes.TYPE_CODEC.dispatch("cureTypeID", SpellCure::getCureTypeId, CureType::getCodec);
+
     /**
      * Make sure to update {@link #contributionTotal} when adding to or removing from this
      */
-    private final HashMap<UUID, Integer> contributions = new HashMap<>();
-    @Getter protected final String translationKey;
-    @Getter private int contributionTotal = 0;
+    private final HashMap<UUID, Integer> contributions;
 
-    /**
-     * Please provide a translation key with {@link SpellCure#SpellCure(int, Class, String)}
-     */
-    @Deprecated
-    public SpellCure(int contributionGoal, Class cureType) {
-        this(contributionGoal, cureType, "text.mystical.spellCure.default");
+    public Map<UUID, Integer> getContributionCopy() {
+        return Map.copyOf(contributions);
     }
 
-    public SpellCure(int contributionGoal, Class cureType, String translationKey) {
+    public SpellCure(int contributionGoal, Class cureType, CureType cureTypeId) {
+        this(contributionGoal, cureType, cureTypeId, new HashMap<>());
+    }
+
+    public SpellCure(int contributionGoal, Class cureType, CureType cureTypeId, HashMap<UUID, Integer> contributions) {
         this.contributionGoal = contributionGoal;
         this.cureType = cureType;
-        this.translationKey = translationKey;
+        this.cureTypeId = cureTypeId;
+        this.contributions = contributions;
     }
 
     /**
-     * This is a player-readable description/"recipe" for the cure.
-     * Override this if you have parameters to add to the translation.
+     * Get a player-readable description/"recipe" for the cure.
      */
-    public MutableText getDescription() {
-        return Utils.translatable(translationKey);
-    }
+    public abstract MutableText getDescription();
 
     /**
      * Recalculates the total value of all contributions.
@@ -64,7 +65,14 @@ public abstract class SpellCure {
             contributions.put(uuid, amount);
         }
         contributionTotal += amount;
-        // TODO: Logging
+        String contributor;
+        if (uuid != null) {
+            contributor = uuid.toString();
+        } else {
+            contributor = "unknown";
+        }
+        Utils.log(Utils.translateString("text.mystical.logging.spellContribution", contributor, amount), Mystical.CONFIG.spellContributionLogLevel());
+        Mystical.saveUpdated();
     }
 
     public boolean isSatisfied() {
@@ -85,11 +93,11 @@ public abstract class SpellCure {
      * @param totalPower The total power to distribute among contributors.
      * @param max The maximum power to give to any one contributor.
      */
-    public void awardPower(int totalPower, int max) { // TODO: TEST
+    public void awardPower(int totalPower, int max) {
         for (UUID uuid : contributions.keySet()) {
             if (contributions.get(uuid) <= 0) continue;
             // Formula: min(totalPower * percentContributed, max)
-            Mystical.HAVEN_MANAGER.addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
+            Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
         }
     }
 

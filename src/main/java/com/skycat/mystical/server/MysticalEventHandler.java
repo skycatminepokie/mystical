@@ -15,43 +15,37 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         this.server = server;
         timerAccess = ((MinecraftServerTimerAccess) server);
         setNightTimer();
-        Utils.log(Utils.translateString("text.mystical.eventHandler.timeOfDay", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
+        Utils.log(Utils.translateString("text.mystical.logging.timeOfDayAtStartup", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
     }
 
     public void doNighttimeEvents() {
         // TODO: Logging
-        Mystical.SPELL_HANDLER.removeCuredSpells();
-        if (Mystical.SPELL_HANDLER.getActiveSpells().size() < 2) { // TODO: Config
-            Mystical.SPELL_HANDLER.activateNewSpell();
+        Mystical.getSpellHandler().removeCuredSpells();
+        if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
+            Mystical.getSpellHandler().activateNewSpell();
         }
-
-        try {
-            setNightTimer();
-        } catch (NullPointerException e) {
-            Utils.log(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", e.getMessage()), Mystical.CONFIG.failedToSetNightTimerLogLevel());
-            // TODO Try again later?
-            // WARN: If this fails after the timer expires, nighttime events will keep happening, which is not good.
+        while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
+            Mystical.getSpellHandler().activateNewSpell();
         }
+        setNightTimer();
     }
 
     @Override
     public void onServerStopping(MinecraftServer server) {
         Mystical.CONFIG.save();
-        Mystical.SPELL_HANDLER.save();
-        Mystical.HAVEN_MANAGER.save();
     }
 
     /**
      * Sets the nighttime timer to the next night
      * @return Number of ticks until night, or -1 on failure
      */
-    public long setNightTimer() throws NullPointerException {
+    public long setNightTimer() {
         // CREDIT: Daomephsta#0044 for help on fabric discord
         if (server == null) {
-            throw new NullPointerException(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", "server was null."));
+            throw new NullPointerException(Utils.translateString("text.mystical.logging.failedToSetNightTimer", "server was null."));
         }
         if (timerAccess == null) {
-            throw new NullPointerException(Utils.translateString("text.mystical.eventHandler.setNightTimerFailed", "timerAccess was null."));
+            throw new NullPointerException(Utils.translateString("text.mystical.logging.failedToSetNightTimer", "timerAccess was null."));
         }
         long timerLength;
         long currentTime = server.getOverworld().getTimeOfDay() % 24000;

@@ -1,9 +1,13 @@
 package com.skycat.mystical.server;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
+import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
@@ -16,15 +20,30 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class HavenManager {
-    public HashSet<ChunkPos> havenedChunks = new HashSet<>();
-    public HashMap<UUID, Integer> powerMap = new HashMap<>();
-    private static final File SAVE_FILE = new File("config/havenManager.json");
+    public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
+            Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
+            Utils.hashMapCodec(Codecs.UUID, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
+    ).apply(instance, HavenManager::new)));
+    @Getter private final HashSet<ChunkPos> havenedChunks;
+    @Getter private final HashMap<UUID, Integer> powerMap;
+    @Getter private static final File SAVE_FILE = new File("config/havenManager.json");
     public static int baseHavenCost = 1000;
+
+    public HavenManager(HashSet<ChunkPos> havenedChunks, HashMap<UUID, Integer> powerMap) {
+        this.havenedChunks = havenedChunks;
+        this.powerMap = powerMap;
+    }
+
+    public HavenManager() {
+        this.havenedChunks = new HashSet<>();
+        this.powerMap = new HashMap<>();
+    }
+
     public static HavenManager loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return Mystical.GSON.fromJson(scanner.nextLine(), HavenManager.class);
         } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.havenManager.loadFailed"), Mystical.CONFIG.failedToLoadHavenManagerLogLevel());
+            Utils.log(Utils.translateString("text.mystical.logging.failedToLoadHavenManager"), Mystical.CONFIG.failedToLoadHavenManagerLogLevel());
             return new HavenManager();
         }
     }
@@ -33,7 +52,7 @@ public class HavenManager {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(Mystical.GSON.toJson(this));
         } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.havenManager.saveFailed"), Mystical.CONFIG.failedToSaveHavenManagerLogLevel());
+            Utils.log(Utils.translateString("text.mystical.logging.failedToSaveHavenManager"), Mystical.CONFIG.failedToSaveHavenManagerLogLevel());
             // TODO: Dump info
         }
     }
@@ -78,6 +97,7 @@ public class HavenManager {
      * @return {@code true} if the chunk was not already havened
      */
     public boolean havenChunk(ChunkPos chunkPos) {
+        Mystical.saveUpdated();
         return havenedChunks.add(chunkPos);
     }
 
@@ -189,6 +209,7 @@ public class HavenManager {
         }
         // else
         powerMap.put(playerUUID, power);
+        Mystical.saveUpdated();
         return power;
     }
 
@@ -201,6 +222,7 @@ public class HavenManager {
     public int getPower(UUID playerUUID) {
         if (powerMap.get(playerUUID) == null) {
             powerMap.put(playerUUID, 0);
+            Mystical.saveUpdated();
             return 0;
         }
         return powerMap.get(playerUUID);
@@ -238,6 +260,7 @@ public class HavenManager {
         int prevPower = getPower(playerUUID);
         if (hasPower(playerUUID, power)) {
             powerMap.put(playerUUID, prevPower - power);
+            Mystical.saveUpdated();
             return true;
         }
         return false;

@@ -27,23 +27,28 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 
             addConfigSection(tb, "General");
             addConfigOption(tb, "devMode", "Dev mode");
+            addConfigOption(tb, "spellMaxHard", "Max spells (Hard)");
+            addConfigOption(tb, "spellMinHard", "Min spells (Hard)");
+            addConfigOptionTooltip(tb, "spellMaxHard", "The maximum number of spells active at a time.\nMystical will not delete extra spells, but won't make any past this point.");
+            addConfigOptionTooltip(tb, "spellMinHard", "The minimum number of spells active at a time.\nMystical will make sure there are this many spells active whenever spell rewards are paid out.");
 
             addConfigSection(tb, "Logging");
             addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");
             addConfigOption(tb, "newSpellCommandBroadcast", "New spell command (in-game)");
-            // TODO: Make sure logging uses these (they probably don't)
-            addLoggingOption(tb, "failedToGetRandomBlock", "Failed to get random block", "Failed to get random block");
-            addLoggingOption(tb, "failedToLoadHavenManager", "Failed to load haven manager", "Failed to load haven manager");
-            addLoggingOption(tb, "failedToLoadSpellHandler", "Failed to load spell handler", "Failed to load spell handler");
-            addLoggingOption(tb, "failedToSaveHavenManager", "Failed to save haven manager", "Failed to save haven manager");
-            addLoggingOption(tb, "failedToSaveSpellHandler", "Failed to save spell manager", "Failed to save spell manager");
-            addLoggingOption(tb, "failedToSetNightTimer", "Failed to set night timer", "Failed to set night timer");
-            addLoggingOption(tb, "playerContributed", "Player contribution", "Player contribution");
-            addLoggingOption(tb, "timeOfDayAtStartup", "Time of day at startup", "Time of day at startup");
+            addLoggingOption(tb, "failedToGetRandomBlock", "Failed to get random block, using a command block instead.", "Failed to get random block");
+            addLoggingOption(tb, "failedToLoadHavenManager", "Failed to load haven manager, making a new one instead.", "Failed to load haven manager");
+            addLoggingOption(tb, "failedToLoadSpellHandler", "Failed to load spell handler, making a new one instead.", "Failed to load spell handler");
+            addLoggingOption(tb, "failedToSaveHavenManager", "Failed to save haven manager.", "Failed to save haven manager");
+            addLoggingOption(tb, "failedToSaveSpellHandler", "Failed to save spell manager.", "Failed to save spell manager");
+            addLoggingOption(tb, "failedToSetNightTimer", "Failed to set night timer because %s", "Failed to set night timer");
+            addLoggingOption(tb, "spellContribution", "Spell contribution by %s. Amount: %d.", "Spell contribution");
+            addLoggingOption(tb, "timeOfDayAtStartup", "Time of day at startup: %l.", "Time of day at startup");
 
             addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
             addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
-            addCommandText(tb, "mystical.reload.success", "Successfully reloaded spells from file and set night timer.");
+            addCommandText(tb, "mystical.reload.success", "Successfully reloaded config and set night timer.");
+            addCommandText(tb, "mystical.spell.list.noSpells", "There are no active spells.");
+            addCommandText(tb, "mystical.spell.new.spell.warnDisabled", "Warning: Randomly generating this spell is disabled, or its weight is zero.");
 
             addConfigSection(tb, "Spells");
             // Generate translations for consequences

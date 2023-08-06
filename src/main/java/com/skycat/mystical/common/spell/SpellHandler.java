@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,7 +21,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stat;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.io.File;
@@ -27,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
@@ -37,17 +43,47 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         PlayerBlockBreakEvents.Before,
         PlayerBlockBreakEvents.After,
         ServerPlayerEvents.AfterRespawn,
-        ServerEntityCombatEvents.AfterKilledOtherEntity {
-    private static final File SAVE_FILE = new File("config/spellHandler.json");
-    @Getter private final ArrayList<Spell> activeSpells = new ArrayList<>();
+        ServerEntityCombatEvents.AfterKilledOtherEntity,
+        AttackBlockCallback {
+    /**
+     * @implNote Saving/loading does not ensure that the order of spells will be retained.
+     */
+    // This saves the active spells by taking the spell codec, turning it into a list codec, then maps List<Spell> and SpellHandler
+    public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(spellList -> new SpellHandler(spellList), SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
+
+    @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
+    @Getter private final ArrayList<Spell> activeSpells;
+
+    public SpellHandler() {
+        activeSpells = new ArrayList<>();
+    }
+
+    public SpellHandler(ArrayList<Spell> activeSpells) {
+        this.activeSpells = activeSpells;
+    }
+
+    public SpellHandler(List<Spell> activeSpells) {
+        this.activeSpells = new ArrayList<>(activeSpells);
+    }
 
     public static SpellHandler loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
             return GSON.fromJson(scanner.nextLine(), SpellHandler.class);
         } catch (FileNotFoundException e) {
-            Utils.log(Utils.translateString("text.mystical.spellHandler.loadFailed"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
+            Utils.log(Utils.translateString("text.mystical.logging.failedToLoadSpellHandler"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
             return new SpellHandler();
         }
+    }
+
+    @Override
+    public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
+        boolean fail = false;
+        for (Spell spell : spellsOfHandler(AttackBlockCallback.class)) {
+            if (((AttackBlockCallback) spell.getConsequence()).interact(player, world, hand, pos, direction) == ActionResult.FAIL) {
+                fail = true;
+            }
+        }
+        return fail ? ActionResult.FAIL : ActionResult.PASS;
     }
 
     public boolean isConsequenceActive(Class<? extends SpellConsequence> consequence) {
@@ -73,10 +109,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void activateNewSpell() {
         activeSpells.add(SpellGenerator.get());
+        Mystical.saveUpdated();
     }
 
     public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
         activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
+        Mystical.saveUpdated();
     }
 
     @Override
@@ -149,13 +187,18 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void removeAllSpells() {
         activeSpells.clear();
+        Mystical.saveUpdated();
     }
 
+    /**
+     * Save the spellHandler to file. Deprecated in favor of {@link com.skycat.mystical.server.SaveState}
+     */
+    @Deprecated
     public void save() {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
         } catch (IOException e) {
-            // TODO: Logging
+            Utils.log(Utils.translateString("text.mystical.logging.failedToSaveSpellHandler"), Mystical.CONFIG.failedToSaveSpellHandlerLogLevel());
         }
     }
 
@@ -204,6 +247,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 removed ++;
             }
         }
+        Mystical.saveUpdated();
         return removed;
     }
+
+
 }

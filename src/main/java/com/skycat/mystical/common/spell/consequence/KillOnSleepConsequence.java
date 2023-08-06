@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -23,14 +24,19 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
 
     @Override
     public void onStartSleeping(LivingEntity entity, BlockPos sleepingPos) {
-        if (entity.isAlive() && !Mystical.HAVEN_MANAGER.isInHaven(entity)) {
+        if (entity.isAlive() && !Mystical.getHavenManager().isInHaven(entity)) {
             entity.kill();
         }
     }
 
     private static class Factory extends ConsequenceFactory<KillOnSleepConsequence> {
         private Factory() {
-            super("killOnSleep", "Kill on sleep", "Bigger bedbugs", "Killed an entity for sleeping", KillOnSleepConsequence.class);
+            super("killOnSleep",
+                    "Kill on sleep",
+                    "Bigger bedbugs",
+                    "Killed an entity for sleeping",
+                    KillOnSleepConsequence.class,
+                    Codec.unit(KillOnSleepConsequence::new));
         }
 
         @Override

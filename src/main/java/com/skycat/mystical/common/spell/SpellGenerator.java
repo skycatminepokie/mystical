@@ -8,6 +8,7 @@ import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.registry.Registry;
@@ -33,6 +34,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
+        // Initialize all the consequence factories
         Collections.addAll(consequenceFactories,
                 // KillOnSleepConsequence.FACTORY,
                 LevitateConsequence.FACTORY,
@@ -47,7 +49,12 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 DisableDaylightBurningConsequence.FACTORY,
                 NoFuseConsequence.FACTORY,
                 MobSpawnSwapConsequence.FACTORY,
-                AggressiveGolemsConsequence.FACTORY
+                AggressiveGolemsConsequence.FACTORY,
+                UnbreakableLocationConsequence.FACTORY,
+                TurboChickensConsequence.FACTORY,
+                OneStrikeWardensConsequence.FACTORY,
+                RandomCreeperEffectCloudsConsequence.FACTORY,
+                TurboMobsConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
@@ -55,16 +62,32 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             getShortNameToFactory().put(factory.getShortName(), factory);
         }
 
+        // Initialize all the cure factories
         Collections.addAll(cureFactories,
-                (random) -> (new StatBackedSpellCure(100, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(1000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(50000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(640, Stats.CRAFTED.getOrCreateStat(Items.BARREL), "text.mystical.spellCure.default")), // TODO: Translate
-                (random) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED), "text.mystical.spellCure.default")) // TODO: Translate
+                (random) -> (new StatBackedSpellCure(25, Stats.MINED.getOrCreateStat(Blocks.CACTUS))),
+                (random) -> (new StatBackedSpellCure(3000, Stats.CUSTOM.getOrCreateStat(Stats.JUMP))),
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.SHEARS))),
+                (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.SPRINT_ONE_CM))), // 1000 blocks
+                (random) -> (new StatBackedSpellCure(10, Stats.CRAFTED.getOrCreateStat(Items.BARREL))),
+                (random) -> (new StatBackedSpellCure(10, Stats.CUSTOM.getOrCreateStat(Stats.ANIMALS_BRED))),
+                (random) -> (new StatBackedSpellCure(100, Stats.CRAFTED.getOrCreateStat(Items.BREAD))),
+                (random) -> (new StatBackedSpellCure(35, Stats.CUSTOM.getOrCreateStat(Stats.EAT_CAKE_SLICE))), // 5 cakes
+                (random) -> (new StatBackedSpellCure(20000, Stats.CUSTOM.getOrCreateStat(Stats.CROUCH_ONE_CM))), // 200 blocks
+                (random) -> (new StatBackedSpellCure(5, Stats.KILLED.getOrCreateStat(EntityType.BAT))),
+                (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.CREEPER))),
+                (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.SKELETON))),
+                (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.ZOMBIE))),
+                (random) -> (new StatBackedSpellCure(256, Stats.MINED.getOrCreateStat(Blocks.STONE))), // 4 stacks
+                (random) -> (new StatBackedSpellCure(64, Stats.CUSTOM.getOrCreateStat(Stats.BELL_RING))),
+                (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.FALL_ONE_CM))), // 100 blocks
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD)))
         );
     }
 
+    /**
+     * Return a new random spell.
+     * @return A new random spell.
+     */
     public static Spell get() {
         return new Spell(getConsequence(), getCure());
     }
@@ -107,7 +130,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     public static SpellCure getCure() {
         if (cureFactories.isEmpty()) {
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList")); // TODO: Config
-            return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS), "text.mystical.spellCure.default");
+            return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS));
         }
         return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM());
     }
@@ -123,12 +146,16 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             return block;
         }
         // Labeled in translation as critical error. Ideally, this should not happen.
-        Utils.log(Utils.translateString("text.mystical.logging.failedRandomBlock"), Mystical.CONFIG.failedToGetRandomBlockLogLevel());
+        Utils.log(Utils.translateString("text.mystical.logging.failedToGetRandomBlock"), Mystical.CONFIG.failedToGetRandomBlockLogLevel());
         return Blocks.COMMAND_BLOCK;
     }
 
     @SuppressWarnings("rawtypes")
     public static HashMap<String, ConsequenceFactory> getShortNameToFactory() {
         return shortNameToFactory;
+    }
+
+    public static ConsequenceFactory<?> getFactory(String shortName) {
+        return shortNameToFactory.get(shortName);
     }
 }
