@@ -5,8 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.mojang.util.UUIDTypeAdapter;
 import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
-import com.skycat.mystical.common.spell.cure.CureType;
-import com.skycat.mystical.common.spell.cure.CureTypes;
 import com.skycat.mystical.common.spell.cure.SpellCure;
 import com.skycat.mystical.common.util.*;
 import com.skycat.mystical.server.HavenManager;
@@ -45,12 +43,12 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
             .registerTypeAdapter(UUID.class, new UUIDTypeAdapter())
             .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
-            .registerTypeAdapter(SpellCure.class, Utils.deserializerOf(SpellCure.CODEC))
+            .registerTypeAdapter(SpellCure.class, new SpellCure.Serializer())
             .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
             .registerTypeAdapter(Class.class, new ClassSerializer())
             .registerTypeAdapter(Stat.class, new StatCodec())
+            .registerTypeAdapter(EntityType.class, Utils.serializerOf(Registry.ENTITY_TYPE.getCodec()))
             .registerTypeAdapter(EntityType.class, Utils.deserializerOf(Registry.ENTITY_TYPE.getCodec()))
-            .registerTypeAdapter(CureType.class, Utils.deserializerOf(CureTypes.TYPE_CODEC))
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();

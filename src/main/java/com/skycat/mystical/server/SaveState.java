@@ -58,6 +58,11 @@ public class SaveState extends PersistentState {
     }
 
     private static SaveState readFromNbt(NbtCompound save) {
-        return CODEC.decode(NbtOps.INSTANCE, save.get("mystical_save")).getOrThrow(false, s -> Utils.log("Failed to load save data.")).getFirst();
+        var result = CODEC.decode(NbtOps.INSTANCE, save.get("mystical_save"));
+        if (result.get().left().isPresent()) { // If we successfully loaded the PersistentState
+            return result.get().left().get().getFirst();
+        }
+        Utils.log("Failed to load PersistentState - this is normal when updating versions from below 4.1.0");
+        return null;
     }
 }
