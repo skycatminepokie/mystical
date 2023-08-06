@@ -8,7 +8,7 @@ Mystical is currently in beta - things are likely to change, and more polish and
 
 ### Warnings/known bugs
 - Singleplayer mode is a bit broken - spells will work across worlds ([#14](https://github.com/skycatminepokie/mystical/issues/14))
-- Major updates (the x in version x.y.z) indicate BREAKING changes - your game WILL CRASH if proper steps aren't taken when updating. I plan on resolving these as well.
+- Major updates (the x in version x.y.z) indicate BREAKING changes - your game WILL CRASH if proper steps aren't taken when updating.
 
 | Command                            | Effect                                       | Permission                               | Default requirement |
 |------------------------------------|----------------------------------------------|------------------------------------------|---------------------|
