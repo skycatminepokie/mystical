@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
@@ -31,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
@@ -43,8 +45,26 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         ServerPlayerEvents.AfterRespawn,
         ServerEntityCombatEvents.AfterKilledOtherEntity,
         AttackBlockCallback {
-    private static final File SAVE_FILE = new File("config/spellHandler.json");
-    @Getter private final ArrayList<Spell> activeSpells = new ArrayList<>();
+    /**
+     * @implNote Saving/loading does not ensure that the order of spells will be retained.
+     */
+    // This saves the active spells by taking the spell codec, turning it into a list codec, then maps List<Spell> and SpellHandler
+    public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(spellList -> new SpellHandler(spellList), SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
+
+    @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
+    @Getter private final ArrayList<Spell> activeSpells;
+
+    public SpellHandler() {
+        activeSpells = new ArrayList<>();
+    }
+
+    public SpellHandler(ArrayList<Spell> activeSpells) {
+        this.activeSpells = activeSpells;
+    }
+
+    public SpellHandler(List<Spell> activeSpells) {
+        this.activeSpells = new ArrayList<>(activeSpells);
+    }
 
     public static SpellHandler loadOrNew() {
         try (Scanner scanner = new Scanner(SAVE_FILE)) {
@@ -89,10 +109,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void activateNewSpell() {
         activeSpells.add(SpellGenerator.get());
+        Mystical.saveUpdated();
     }
 
     public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
         activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
+        Mystical.saveUpdated();
     }
 
     @Override
@@ -165,8 +187,13 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void removeAllSpells() {
         activeSpells.clear();
+        Mystical.saveUpdated();
     }
 
+    /**
+     * Save the spellHandler to file. Deprecated in favor of {@link com.skycat.mystical.server.SaveState}
+     */
+    @Deprecated
     public void save() {
         try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
             pw.println(GSON.toJson(this));
@@ -220,6 +247,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 removed ++;
             }
         }
+        Mystical.saveUpdated();
         return removed;
     }
+
+
 }

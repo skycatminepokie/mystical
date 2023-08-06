@@ -3,6 +3,7 @@ package com.skycat.mystical.common.util;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;
 import com.mojang.datafixers.util.Either;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.skycat.mystical.Mystical;
@@ -17,13 +18,12 @@ import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import org.slf4j.Logger;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class Utils {
     /**
@@ -31,6 +31,78 @@ public class Utils {
      * {@code Identifier.CODEC} is for custom StatTypes
      */
     public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
+    public static final Codec<Class<?>> CLASS_CODEC = Codec.STRING.xmap(className -> {
+        try {
+            return Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }, Class::getName); // Arguments are essentially Class::forNameOrThrow, Class::getName (forNameOrThrow doesn't exist, but that's what this is)
+    public static final Codec<ChunkPos> CHUNK_POS_CODEC = Codec.LONG.xmap(ChunkPos::new, ChunkPos::toLong);
+
+    /**
+     * Create a Codec to store HashMaps as a List of Pairs.
+     * @param keyCodec The codec for the key type
+     * @param valueCodec The codec for the value type
+     * @return A new codec
+     * @param <K> The key type
+     * @param <V> The value type
+     * @deprecated Please provide field names with {@link Utils#hashMapCodec(Codec, String, Codec, String)}
+     */
+    @Deprecated
+    public static <K, V> Codec<HashMap<K, V>> hashMapCodec(Codec<K> keyCodec, Codec<V> valueCodec) {
+        return hashMapCodec(keyCodec, "first", valueCodec, "second");
+    }
+
+    /**
+     * Create a Codec to store HashMaps as a List of Pairs.
+     *
+     * @param <K>            The key type
+     * @param <V>            The value type
+     * @param keyCodec       The codec for the key type
+     * @param keyFieldName   The name to use for the first field
+     * @param valueCodec     The codec for the value type
+     * @param valueFieldName The name to use for the second field
+     * @return A new codec
+     */
+    public static <K, V> Codec<HashMap<K, V>> hashMapCodec(Codec<K> keyCodec, String keyFieldName, Codec<V> valueCodec, String valueFieldName) {
+        return Utils.pairCodec(keyCodec, keyFieldName, valueCodec, valueFieldName).listOf().xmap(Utils::pairsToMap, Utils::mapToPairs);
+    }
+
+    private static <K, V> HashMap<K, V> pairsToMap(List<Pair<K, V>> pairs) {
+        HashMap<K, V> map = new HashMap<>(/*pairs.size()*/);
+        for (Pair<K, V> pair : pairs) {
+            map.put(pair.getFirst(), pair.getSecond());
+        }
+        return map;
+    }
+
+    public static <K, V> LinkedList<Pair<K, V>> mapToPairs(Map<K, V> map) {
+        LinkedList<Pair<K, V>> list = new LinkedList<>();
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            list.add(mapEntryToPair(entry));
+        }
+        return list;
+    }
+
+    public static <K, V> Pair<K, V> mapEntryToPair(Map.Entry<K, V> entry) {
+        return Pair.of(entry.getKey(), entry.getValue());
+    }
+
+    public static <F, S> Codec<Pair<F,S>> pairCodec(Codec<F> firstCodec, String firstFieldName, Codec<S> secondCodec, String secondFieldName) {
+        return Codec.pair(firstCodec.fieldOf(firstFieldName).codec(), secondCodec.fieldOf(secondFieldName).codec());
+    }
+
+    public static <T> List<T> setToList(Set<T> set) {
+        return set.stream().toList();
+    }
+
+    public static <K, V> HashMap<K, V> toHashMap(Map<K, V> map) {
+        if (map instanceof HashMap<K,V> hashMap) { // I think this will save some time so it doesn't rehash.
+            return hashMap;
+        }
+        return new HashMap<>(map);
+    }
 
     /**
      * Converts a {@link Codec} to a {@link JsonSerializer}

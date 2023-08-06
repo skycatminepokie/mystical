@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class StatHandlerMixin {
     @Inject(method = "increaseStat", at = @At("HEAD"))
     public void statIncreased(PlayerEntity player, Stat<?> stat, int value, CallbackInfo ci) {
-        Mystical.SPELL_HANDLER.onStatIncreased(player, stat, value);
+        Mystical.getSpellHandler().onStatIncreased(player, stat, value);
     }
 }

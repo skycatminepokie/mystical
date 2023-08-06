@@ -20,12 +20,12 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
 
     public void doNighttimeEvents() {
         // TODO: Logging
-        Mystical.SPELL_HANDLER.removeCuredSpells();
-        if (Mystical.SPELL_HANDLER.getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
-            Mystical.SPELL_HANDLER.activateNewSpell();
+        Mystical.getSpellHandler().removeCuredSpells();
+        if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
+            Mystical.getSpellHandler().activateNewSpell();
         }
-        while (Mystical.SPELL_HANDLER.getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
-            Mystical.SPELL_HANDLER.activateNewSpell();
+        while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
+            Mystical.getSpellHandler().activateNewSpell();
         }
         setNightTimer();
     }
@@ -33,8 +33,6 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     @Override
     public void onServerStopping(MinecraftServer server) {
         Mystical.CONFIG.save();
-        Mystical.SPELL_HANDLER.save();
-        Mystical.HAVEN_MANAGER.save();
     }
 
     /**

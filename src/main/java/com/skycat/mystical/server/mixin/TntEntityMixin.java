@@ -13,7 +13,7 @@ public abstract class TntEntityMixin implements EntityLike {
 
     @ModifyArg(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/entity/LivingEntity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/TntEntity;setFuse(I)V"))
     private int modifyFuse(int fuse) {
-        if (!Mystical.HAVEN_MANAGER.isInHaven(getBlockPos()) && Mystical.SPELL_HANDLER.isConsequenceActive(NoFuseConsequence.class)) {
+        if (!Mystical.getHavenManager().isInHaven(getBlockPos()) && Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {
             return 1;
         }
         return fuse;

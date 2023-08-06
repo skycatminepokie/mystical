@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.spell.consequence;
 
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -9,6 +10,7 @@ import java.lang.reflect.Type;
 @SuppressWarnings("rawtypes")
 @Getter
 public abstract class SpellConsequence {
+    public static final Codec<SpellConsequence> CODEC = ConsequenceFactory.FACTORY_CODEC.dispatch("type", SpellConsequence::getFactory, ConsequenceFactory::getCodec);
     private final Class consequenceType;
     /**
      * If there is no relevant callback, this should be null
@@ -21,14 +23,6 @@ public abstract class SpellConsequence {
         this.callbackType = callbackType;
         this.difficulty = difficulty;
     }
-
-    /*
-        // I really don't know if this would work.
-        public SpellConsequence(Class callbackType) {
-            this.consequenceType = this.getClass();
-            this.callbackType = callbackType;
-        }
-     */
 
     /**
      * Returns the factory associated with this type of consequence.
@@ -44,6 +38,7 @@ public abstract class SpellConsequence {
     }
 
     public static class Serializer implements JsonSerializer<SpellConsequence>, JsonDeserializer<SpellConsequence> {
+
         @Override
         public SpellConsequence deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             Class consequenceType = context.deserialize(json.getAsJsonObject().get("consequenceType"), Class.class);

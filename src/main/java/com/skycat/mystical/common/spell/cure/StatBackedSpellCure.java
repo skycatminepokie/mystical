@@ -10,12 +10,19 @@ import net.minecraft.stat.StatType;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 @Getter
 public class StatBackedSpellCure extends SpellCure {
     private final Stat stat;
 
     public StatBackedSpellCure(int contributionGoal, Stat stat) {
-        super(contributionGoal, StatBackedSpellCure.class);
+        this(contributionGoal, stat, new HashMap<>());
+    }
+
+    public StatBackedSpellCure(int contributionGoal, Stat stat, HashMap<UUID, Integer> contributions) {
+        super(contributionGoal, StatBackedSpellCure.class, CureTypes.STAT_BACKED, contributions);
         this.stat = stat;
     }
 

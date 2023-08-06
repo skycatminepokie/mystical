@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.spell.cure;
 
 import com.google.gson.*;
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
@@ -9,21 +10,34 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class SpellCure {
-
     @Getter protected int contributionGoal;
     @Getter protected final Class cureType;
+    @Getter public final CureType cureTypeId;
+    @Getter private int contributionTotal = 0;
+    public static final Codec<SpellCure> CODEC = CureTypes.TYPE_CODEC.dispatch("cureTypeID", SpellCure::getCureTypeId, CureType::getCodec);
+
     /**
      * Make sure to update {@link #contributionTotal} when adding to or removing from this
      */
-    private final HashMap<UUID, Integer> contributions = new HashMap<>();
-    @Getter private int contributionTotal = 0;
+    private final HashMap<UUID, Integer> contributions;
 
-    public SpellCure(int contributionGoal, Class cureType) {
+    public Map<UUID, Integer> getContributionCopy() {
+        return Map.copyOf(contributions);
+    }
+
+    public SpellCure(int contributionGoal, Class cureType, CureType cureTypeId) {
+        this(contributionGoal, cureType, cureTypeId, new HashMap<>());
+    }
+
+    public SpellCure(int contributionGoal, Class cureType, CureType cureTypeId, HashMap<UUID, Integer> contributions) {
         this.contributionGoal = contributionGoal;
         this.cureType = cureType;
+        this.cureTypeId = cureTypeId;
+        this.contributions = contributions;
     }
 
     /**
@@ -58,6 +72,7 @@ public abstract class SpellCure {
             contributor = "unknown";
         }
         Utils.log(Utils.translateString("text.mystical.logging.spellContribution", contributor, amount), Mystical.CONFIG.spellContributionLogLevel());
+        Mystical.saveUpdated();
     }
 
     public boolean isSatisfied() {
@@ -82,7 +97,7 @@ public abstract class SpellCure {
         for (UUID uuid : contributions.keySet()) {
             if (contributions.get(uuid) <= 0) continue;
             // Formula: min(totalPower * percentContributed, max)
-            Mystical.HAVEN_MANAGER.addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
+            Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
         }
     }
 

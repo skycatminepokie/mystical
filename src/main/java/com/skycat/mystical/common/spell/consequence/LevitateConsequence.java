@@ -1,6 +1,8 @@
 package com.skycat.mystical.common.spell.consequence;
 
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.NonNull;
@@ -30,6 +32,14 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     private static final ArrayList<Class> supportedEvents = new ArrayList<>();
     public static final ConsequenceFactory<LevitateConsequence> FACTORY = new Factory();
 
+    public int getLength() {
+        return length;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
     @Override
     public @NotNull ConsequenceFactory<LevitateConsequence> getFactory() {
         return FACTORY;
@@ -49,7 +59,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     private void levitate(LivingEntity entity) {
-        if (Utils.percentChance(Mystical.CONFIG.levitate.chance()) && !Mystical.HAVEN_MANAGER.isInHaven(entity)) {
+        if (Utils.percentChance(Mystical.CONFIG.levitate.chance()) && !Mystical.getHavenManager().isInHaven(entity)) {
             Utils.giveStatusEffect(entity, StatusEffects.LEVITATION, length, level); // TODO: CONFIG
             Utils.log(Utils.translateString("text.mystical.consequence.levitate.fired"), Mystical.CONFIG.levitate.logLevel());
         }
@@ -80,7 +90,16 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
 
     private static class Factory extends ConsequenceFactory<LevitateConsequence> {
         private Factory() {
-            super("levitate", "Levitation", "Are you a balloon?", "Levitating entity", LevitateConsequence.class);
+            super("levitate",
+                    "Levitation",
+                    "Are you a balloon?",
+                    "Levitating entity",
+                    LevitateConsequence.class,
+                    RecordCodecBuilder.create(instance -> instance.group(
+                            Codec.INT.fieldOf("length").forGetter(LevitateConsequence::getLength),
+                            Codec.INT.fieldOf("level").forGetter(LevitateConsequence::getLevel),
+                            Utils.CLASS_CODEC.fieldOf("callbackType").forGetter(LevitateConsequence::getCallbackType)
+                    ).apply(instance, LevitateConsequence::new)));
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,12 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
 
     public static class Factory extends ConsequenceFactory<SheepColorChangeConsequence> {
         public Factory() {
-            super("sheepColorChange", "Sheep Color Change", "The fluffy marshmallows got jealous of _jeb.", "Sheep color changed", SheepColorChangeConsequence.class);
+            super("sheepColorChange",
+                    "Sheep Color Change",
+                    "The fluffy marshmallows got jealous of _jeb.",
+                    "Sheep color changed",
+                    SheepColorChangeConsequence.class,
+                    Codec.unit(SheepColorChangeConsequence::new));
         }
 
         @Override

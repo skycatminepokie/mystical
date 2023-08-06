@@ -27,9 +27,9 @@ public abstract class DamageTrackerMixin {
 
     @Inject(method = "onDamage", at = @At("HEAD"))
     public void onDamage(DamageSource damageSource, float originalHealth, float damage, CallbackInfo ci) {
-        if (!Mystical.HAVEN_MANAGER.isInHaven(entity)) {
+        if (!Mystical.getHavenManager().isInHaven(entity)) {
             if (entity instanceof AbstractSkeletonEntity) {
-                if (Mystical.SPELL_HANDLER.isConsequenceActive(SkeletonTypeChangeConsequence.class) && // Spell is active
+                if (Mystical.getSpellHandler().isConsequenceActive(SkeletonTypeChangeConsequence.class) && // Spell is active
                         !damageSource.isOutOfWorld() && // Damage from normal source
                         !entity.isDead() && // And we're not dead
                         Utils.percentChance(Mystical.CONFIG.skeletonTypeChange.chance())) { // Roll the dice
@@ -44,7 +44,7 @@ public abstract class DamageTrackerMixin {
                 }
             } else {
                 if (entity instanceof EndermanEntity || entity instanceof EndermiteEntity) {
-                    if (Mystical.SPELL_HANDLER.isConsequenceActive(EnderTypeChangeConsequence.class) && // Spell is active
+                    if (Mystical.getSpellHandler().isConsequenceActive(EnderTypeChangeConsequence.class) && // Spell is active
                             !damageSource.isOutOfWorld() && // Damage from normal source
                             !entity.isDead() && // And we're not dead
                             Utils.percentChance(Mystical.CONFIG.enderTypeChange.chance())) { // Roll the dice

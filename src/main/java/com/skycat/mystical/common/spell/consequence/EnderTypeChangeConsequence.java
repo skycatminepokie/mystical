@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,12 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
 
     public static class Factory extends ConsequenceFactory<EnderTypeChangeConsequence> {
         public Factory() {
-            super("enderTypeChange", "Ender Type Change", "Of mites and men", "Swapped endermite/enderman", EnderTypeChangeConsequence.class);
+            super("enderTypeChange",
+                    "Ender Type Change",
+                    "Of mites and men",
+                    "Swapped endermite/enderman",
+                    EnderTypeChangeConsequence.class,
+                    Codec.unit(EnderTypeChangeConsequence::new));
         }
 
         @Override

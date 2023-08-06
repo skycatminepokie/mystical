@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.spell.consequence;
 
+import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,12 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
     public static class Factory extends ConsequenceFactory<DisableDaylightBurningConsequence> {
 
         protected Factory() {
-            super("disableDaylightBurning", "Disable Daylight Burning", "Mobs bought some sunscreen", "Said no this mob doesn't burn", DisableDaylightBurningConsequence.class);
+            super("disableDaylightBurning",
+                    "Disable Daylight Burning",
+                    "Mobs bought some sunscreen",
+                    "Said no this mob doesn't burn",
+                    DisableDaylightBurningConsequence.class,
+                    Codec.unit(DisableDaylightBurningConsequence::new));
         }
 
         @Override

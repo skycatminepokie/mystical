@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(IronGolemEntity.class)
 public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Credit MattiDragon#8944 on discord for extension info
     private static boolean targetPredicate(LivingEntity entity) {
-        return Mystical.SPELL_HANDLER.isConsequenceActive(AggressiveGolemsConsequence.class) &&
-                !Mystical.HAVEN_MANAGER.isInHaven(entity); // Don't attack things that are in a haven
+        return Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class) &&
+                !Mystical.getHavenManager().isInHaven(entity); // Don't attack things that are in a haven
     }
 
     @Inject(method = "canTarget", at = @At("RETURN"), cancellable = true)
     private void swapCanTarget(EntityType<?> type, CallbackInfoReturnable<Boolean> cir) {
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(AggressiveGolemsConsequence.class)) {
+        if (Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class)) {
             cir.setReturnValue(!type.equals(EntityType.CAT)); // Protect the poor kitties. TODO: Config
         }
     }

@@ -18,8 +18,8 @@ public abstract class MobEntityMixin implements EntityLike {
 
     @Inject(method = "isAffectedByDaylight", at = @At("HEAD"), cancellable = true)
     private void cancelDaylightEffects(CallbackInfoReturnable<Boolean> cir) {
-        if (!Mystical.HAVEN_MANAGER.isInHaven(getBlockPos()) &&
-                Mystical.SPELL_HANDLER.isConsequenceActive(DisableDaylightBurningConsequence.class)) { // TODO allow for havening
+        if (!Mystical.getHavenManager().isInHaven(getBlockPos()) &&
+                Mystical.getSpellHandler().isConsequenceActive(DisableDaylightBurningConsequence.class)) { // TODO allow for havening
             cir.setReturnValue(false);
         }
     }
