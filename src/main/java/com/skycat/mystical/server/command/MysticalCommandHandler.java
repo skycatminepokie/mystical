@@ -318,7 +318,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int sendSpellList(CommandContext<ServerCommandSource> context, boolean showDeleteButton) {
         ArrayList<Spell> activeSpells = Mystical.getSpellHandler().getActiveSpells();
         if (activeSpells.size() == 0) {
-            context.getSource().sendFeedback(Utils.translatable("text.mystical.commands.mystical.spell.list.noSpells"), false);
+            context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.list.noSpells"), false);
             return 1;
         }
         for (int i = 0; i < activeSpells.size(); i++) {
