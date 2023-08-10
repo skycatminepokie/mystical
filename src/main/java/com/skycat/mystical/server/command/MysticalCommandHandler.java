@@ -87,7 +87,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .executes(this::havenInfoCommand)
                 .build();
         var power = literal("power")
-                .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                .requires(Permissions.require("mystical.command.mystical.power", 0))
                 .executes(this::myPowerCommand)
                 .build();
         var powerAdd = literal("add")
