@@ -40,82 +40,111 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
-        dispatcher.register(
-                /*CommandManager.*/literal("mystical")
-                        .requires(Permissions.require("mystical.command.mystical", true))
-                        .then(literal("spell")
-                                .requires(Permissions.require("mystical.command.mystical.spell", true))
-                                .then(literal("new")
-                                        .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
-                                        .then(argument("spell", StringArgumentType.word())
-                                                .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.getShortNameToFactory().keySet(), builder)))
-                                                .executes(this::newSpellCommand))
-                                        .executes(this::newRandomSpellCommand)
-                                )
-                                .then(literal("list")
-                                        .requires(Permissions.require("mystical.command.mystical.spell.list", true))
-                                        .executes(this::listSpellsCommand)
-                                )
-                                .then(literal("delete")
-                                        .requires(Permissions.require("mystical.command.mystical.spell.delete", 4))
-                                        .then(argument("spell", IntegerArgumentType.integer(0))
-                                                .executes(this::deleteSpellWithArgCommand))
-                                        .executes(this::deleteSpellsCommand)
-                                )
-                        )
-                        .then(literal("reload")
-                                .requires(Permissions.require("mystical.command.mystical.reload", 4))
-                                .executes(this::reloadCommand)
-                        )
-                        .then(literal("haven")
-                                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                                .then(
-                                        argument("block", Vec2ArgumentType.vec2())
-                                                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                                                .executes(this::havenPosCommand)
-                                                .then(literal("confirm")
-                                                        .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                                                        .executes(this::havenPosConfirmCommand)
-                                                )
-                                )
-                                .then(literal("info")
-                                        .requires(Permissions.require("mystical.command.mystical.haven.info", 0))
-                                        .executes(this::havenInfoCommand)
-                                ) // TODO: Haven add, haven remove, haven info pos
-                                .executes(this::havenHereCommand)
-                        )
-                        .then(literal("power")
-                                .requires(Permissions.require("mystical.command.mystical.power", 0))
-                                .then(literal("add")
-                                        .requires(Permissions.require("mystical.command.mystical.power.add", 4))
-                                        .then(argument("players", EntityArgumentType.players())
-                                                .requires(Permissions.require("mystical.command.mystical.power.add", 4))
-                                                .then(argument("amount", IntegerArgumentType.integer(1))
-                                                        .requires(Permissions.require("mystical.command.mystical.power.add", 4))
-                                                        .executes(this::addPowerPlayerAmountCommand)
-                                                )
-                                        )
-                                )
-                                .then(literal("remove")
-                                        .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
-                                        .then(argument("players", EntityArgumentType.players())
-                                                .requires(Permissions.require("mystical.command.mystical.power.remove",4))
-                                                .then(argument("amount", IntegerArgumentType.integer(1))
-                                                        .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
-                                                        .executes(this::removePowerPlayerAmountCommand)
-                                                )
-                                        )
-                                )
-                                .then(literal("get")
-                                        .requires(Permissions.require("mystical.command.mystical.power.get", 3))
-                                        .then(argument("players", EntityArgumentType.players())
-                                                .requires(Permissions.require("mystical.command.mystical.power.get", 3))
-                                                .executes(this::getPowerPlayerCommand)
-                                        )
-                                )
-                                .executes(this::myPowerCommand)
-                        )
-        );
+        var mystical = /*CommandManager.*/literal("mystical")
+                .requires(Permissions.require("mystical.command.mystical", true))
+                // TODO: send some info
+                .build();
+        var spell = literal("spell")
+                .requires(Permissions.require("mystical.command.mystical.spell", true))
+                .build();
+        var spellNew = literal("new")
+                .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
+                .executes(this::newRandomSpellCommand)
+                .build();
+        var spellNewSpell = argument("spell", StringArgumentType.word())
+                .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.getShortNameToFactory().keySet(), builder)))
+                .executes(this::newSpellCommand)
+                .build();
+        var spellList = literal("list")
+                .requires(Permissions.require("mystical.command.mystical.spell.list", true))
+                .executes(this::listSpellsCommand)
+                .build();
+        var spellDelete = literal("delete")
+                .requires(Permissions.require("mystical.command.mystical.spell.delete", 4))
+                .executes(this::deleteSpellsCommand)
+                .build();
+        var spellDeleteSpell = argument("spell", IntegerArgumentType.integer(0))
+                .executes(this::deleteSpellWithArgCommand)
+                .build();
+        var reload = literal("reload")
+                .requires(Permissions.require("mystical.command.mystical.reload", 4))
+                .executes(this::reloadCommand)
+                .build();
+        var haven = literal("haven")
+                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                .executes(this::havenHereCommand)
+                .build();
+        var havenBlock = argument("block", Vec2ArgumentType.vec2())
+                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                .executes(this::havenPosCommand)
+                .build();
+        var havenBlockConfirm = literal("confirm")
+                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                .executes(this::havenPosConfirmCommand)
+                .build();
+        var havenInfo = literal("info")
+                .requires(Permissions.require("mystical.command.mystical.haven.info", 0))
+                .executes(this::havenInfoCommand)
+                .build();
+        var power = literal("power")
+                .requires(Permissions.require("mystical.command.mystical.power", 0))
+                .executes(this::myPowerCommand)
+                .build();
+        var powerAdd = literal("add")
+                .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                .build(); // TODO: Usage info
+        var powerAddPlayers = argument("players", EntityArgumentType.players())
+                .build();
+        var powerAddPlayersAmount = argument("amount", IntegerArgumentType.integer(1))
+                .requires(Permissions.require("mystical.command.mystical.power.add", 4))
+                .executes(this::addPowerPlayerAmountCommand)
+                .build();
+        var powerRemove = literal("remove")
+                .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                .build();
+        var powerRemovePlayers = argument("players", EntityArgumentType.players())
+                .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                .build();
+        var powerRemovePlayersAmount = argument("amount", IntegerArgumentType.integer(1))
+                .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
+                .executes(this::removePowerPlayerAmountCommand)
+                .build();
+        var powerGet = literal("get")
+                .requires(Permissions.require("mystical.command.mystical.power.get", 3))
+                // .executes(this::myPowerCommand) // Done by base power command
+                .build();
+        var powerGetPlayers = argument("players", EntityArgumentType.players())
+                .requires(Permissions.require("mystical.command.mystical.power.get", 3))
+                .executes(this::getPowerPlayerCommand)
+                .build();
+        //@formatter:off
+        dispatcher.getRoot().addChild(mystical);
+            mystical.addChild(spell);
+                spell.addChild(spellList);
+                spell.addChild(spellNew);
+                    spellNew.addChild(spellNewSpell);
+                spell.addChild(spellDelete);
+                    spellDelete.addChild(spellDeleteSpell);
+            mystical.addChild(reload);
+            mystical.addChild(power);
+                power.addChild(powerAdd);
+                    powerAdd.addChild(powerAddPlayers);
+                        powerAddPlayers.addChild(powerAddPlayersAmount);
+                power.addChild(powerRemove);
+                    powerRemove.addChild(powerRemovePlayers);
+                        powerRemovePlayers.addChild(powerRemovePlayersAmount);
+                power.addChild(powerGet);
+                    powerGet.addChild(powerGetPlayers);
+            mystical.addChild(haven);
+                // TODO: Haven add, haven remove
+                haven.addChild(havenInfo);
+                    // TODO: Haven pos
+                haven.addChild(havenBlock);
+                    havenBlock.addChild(havenBlockConfirm);
+        //@formatter:on
+
+        // TODO: Haven add, haven remove, haven info pos
+
         /*
          TODO: Commands
             /mystical power help
