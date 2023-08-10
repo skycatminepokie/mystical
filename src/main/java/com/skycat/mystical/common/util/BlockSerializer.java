@@ -2,8 +2,8 @@ package com.skycat.mystical.common.util;
 
 import com.google.gson.*;
 import net.minecraft.block.Block;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.lang.reflect.Type;
 

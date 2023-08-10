@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.registry.Registry;
 import net.minecraft.text.MutableText;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
