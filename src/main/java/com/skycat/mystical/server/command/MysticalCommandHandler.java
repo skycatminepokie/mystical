@@ -166,7 +166,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         int successCount = 0;
         for (ServerPlayerEntity player : players) {
             int power = Mystical.getHavenManager().getPower(player);
-            context.getSource().sendFeedback(player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate TODO: Config
+            context.getSource().sendFeedback(() -> player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate TODO: Config
             successCount++;
         }
         return successCount;
@@ -180,7 +180,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             Mystical.getHavenManager().removePower(player.getUuid(), amount);
             successCount++;
         }
-        context.getSource().sendFeedback(Utils.textOf("Successfully removed " + amount + " power from " + successCount + " players."), true); // TODO: Translate
+        context.getSource().sendFeedback(Utils.textSupplierOf("Successfully removed " + amount + " power from " + successCount + " players."), true); // TODO: Translate
         return successCount;
     }
 
@@ -192,7 +192,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             Mystical.getHavenManager().addPower(player.getUuid(), amount);
             successCount++;
         }
-        context.getSource().sendFeedback(Utils.textOf("Successfully added " + amount + " power to " + successCount + " players."), true); // TODO: Translate
+        context.getSource().sendFeedback(Utils.textSupplierOf("Successfully added " + amount + " power to " + successCount + " players."), true); // TODO: Translate
         return successCount;
     }
 
@@ -204,7 +204,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      */
     private int myPowerCommand(CommandContext<ServerCommandSource> context) {
         if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
-            context.getSource().sendFeedback(Utils.textOf("This command must be used by a player!"), true);
+            context.getSource().sendFeedback(Utils.textSupplierOf("This command must be used by a player!"), true);
             return 0;
         }
         player.sendMessage(Utils.textOf("You have " + Mystical.getHavenManager().getPower(player) + " power."));
@@ -217,10 +217,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             throw new CommandException(Utils.textOf("/mystical haven info must be called by an entity."));
         }
         if (Mystical.getHavenManager().isInHaven(entity)) { // TODO: Translate, make better
-            context.getSource().sendFeedback(Utils.textOf("This is in a haven"), false);
+            context.getSource().sendFeedback(Utils.textSupplierOf("This is in a haven"), false);
             return 1;
         }
-        context.getSource().sendFeedback(Utils.textOf("This chunk is not havened"), false);
+        context.getSource().sendFeedback(Utils.textSupplierOf("This chunk is not havened"), false);
         return 0;
     }
 
@@ -235,7 +235,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int havenHereCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
         if (entity == null) {
-            context.getSource().sendFeedback(Utils.textOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            context.getSource().sendFeedback(Utils.textSupplierOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
             return 0;
         }
         BlockPos pos = entity.getBlockPos();
@@ -253,7 +253,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) {
         var entity = context.getSource().getEntity();
         if (!(entity instanceof ServerPlayerEntity player)) {
-            context.getSource().sendFeedback(Utils.textOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            context.getSource().sendFeedback(Utils.textSupplierOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
             return 0;
         }
         player.sendMessage(
@@ -275,11 +275,11 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int havenPosCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
         if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
-            context.getSource().sendFeedback(Utils.textOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            context.getSource().sendFeedback(Utils.textSupplierOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
             return 0;
         }
         var vec = Vec2ArgumentType.getVec2(context, "block");
-        return havenPos(context, new BlockPos(vec.x, 0, vec.y));
+        return havenPos(context, new BlockPos((int) vec.x, 0, (int) vec.y));
     }
 
     /**
@@ -294,14 +294,14 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
         // Must be player
         if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
-            context.getSource().sendFeedback(Utils.textOf("This can only be called by a player."), false); // TODO: Translate
+            context.getSource().sendFeedback(Utils.textSupplierOf("This can only be called by a player."), false); // TODO: Translate
             return 0;
         }
 
         var vec = Vec2ArgumentType.getVec2(context, "block");
-        BlockPos blockPos = new BlockPos(vec.x, 0, vec.y);
+        BlockPos blockPos = new BlockPos((int) vec.x, 0, (int) vec.y);
         if (Mystical.getHavenManager().isInHaven(player)) { // Must not already be havened
-            context.getSource().sendFeedback(Utils.textOf("That location is already havened."), false); // TODO: Translate
+            context.getSource().sendFeedback(Utils.textSupplierOf("That location is already havened."), false); // TODO: Translate
             return 0;
         }
 
@@ -347,7 +347,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int sendSpellList(CommandContext<ServerCommandSource> context, boolean showDeleteButton) {
         ArrayList<Spell> activeSpells = Mystical.getSpellHandler().getActiveSpells();
         if (activeSpells.size() == 0) {
-            context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.list.noSpells"), false);
+            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.list.noSpells"), false);
             return 1;
         }
         for (int i = 0; i < activeSpells.size(); i++) {
@@ -360,7 +360,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 spellDescription.append(deleteButton);
             }
             spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription())));
-            context.getSource().sendFeedback(spellDescription, false);
+            context.getSource().sendFeedback(() -> spellDescription, false);
         }
         return 1;
     }
@@ -370,24 +370,24 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         ConsequenceFactory<?> factory = SpellGenerator.getShortNameToFactory().get(spell);
         if (factory.getWeight() == 0) {
-            context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
+            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
         }
         Mystical.getSpellHandler().activateNewSpellWithConsequence(factory);
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
         return 1;
     }
 
     private int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
         Mystical.getSpellHandler().activateNewSpell();
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
         return 1;
     }
 
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.EVENT_HANDLER.setNightTimer();
         Mystical.CONFIG.load();
-        context.getSource().sendFeedback(Utils.translatable("text.mystical.command.mystical.reload.success"), true);
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.reload.success"), true);
         return 1;
     }
 
@@ -395,7 +395,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         Mystical.getSpellHandler().removeAllSpells();
         Mystical.getSpellHandler().activateNewSpell();
         Mystical.saveUpdated();
-        context.getSource().sendFeedback(Utils.textOf("Removed all spells and added a new one"), false);
+        context.getSource().sendFeedback(Utils.textSupplierOf("Removed all spells and added a new one"), false);
         return 1;
     }
 }

@@ -4,6 +4,7 @@ import com.skycat.mystical.common.spell.SpellGenerator;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 import java.io.IOException;
@@ -13,12 +14,13 @@ import java.util.Optional;
 public class DataGenerator implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-        fabricDataGenerator.addProvider(EnglishLangProvider::new);
+        var pack = fabricDataGenerator.createPack();
+        pack.addProvider(EnglishLangProvider::new);
     }
     private static class EnglishLangProvider extends FabricLanguageProvider {
 
-        protected EnglishLangProvider(FabricDataGenerator dataGenerator) {
-            super(dataGenerator, "en_us");
+        protected EnglishLangProvider(FabricDataOutput dataOutput) {
+            super(dataOutput, "en_us");
         }
 
         @Override
@@ -62,7 +64,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
             addConfig(tb, "enum.logLevel.off", "No logging");
             addConfig(tb, "enum.logLevel.warn", "Warn");
 
-            Optional<Path> file = dataGenerator.getModContainer().findPath("assets/mystical/lang/en_us.existing.json");
+            Optional<Path> file = dataOutput.getModContainer().findPath("assets/mystical/lang/en_us.existing.json");
             if (file.isPresent()){
                 try {
                     tb.add(file.get());

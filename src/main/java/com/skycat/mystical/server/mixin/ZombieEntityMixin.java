@@ -5,6 +5,7 @@ import com.skycat.mystical.common.spell.consequence.ZombieTypeChangeConsequence;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,11 +27,11 @@ public abstract class ZombieEntityMixin {
             return;
         }
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
-        if (!source.isOutOfWorld() && !dis.isDead()) {
+        if (!source.isOf(DamageTypes.OUT_OF_WORLD) && !dis.isDead()) {
             Entity newEntity = dis.convertTo(Util.getRandom(ZombieTypeChangeConsequence.ZOMBIE_TYPES, Mystical.MC_RANDOM), true);
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
             if (newEntity != null) {
-                newEntity.damage(DamageSource.OUT_OF_WORLD, totalDamage);
+                newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
             }
         }
     }

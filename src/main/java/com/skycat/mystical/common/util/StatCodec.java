@@ -7,7 +7,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import com.skycat.mystical.common.LogLevel;
-import net.minecraft.registry.Registry;
+import net.minecraft.registry.Registries;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.util.Identifier;
@@ -17,7 +17,7 @@ import java.lang.reflect.Type;
 public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonDeserializer<Stat<?>> {
     public static StatCodec INSTANCE = new StatCodec();
     public static Codec<Pair<StatType<?>, Identifier>> TYPE_IDENTIFIER_CODEC = Codec.pair(
-            Registry.STAT_TYPE.getCodec().fieldOf("type").codec(),
+            Registries.STAT_TYPE.getCodec().fieldOf("type").codec(),
             Identifier.CODEC.fieldOf("id").codec()
     );
 
@@ -55,7 +55,7 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
         // In the case of using json, T is JsonElement
         Stat<Object> stat = getStat(ops, input); // I'm afraid to use Stat<?> because I don't want to break anything.
         if (stat == null) {
-            return DataResult.error("stat was null");
+            return DataResult.error(() -> "stat was null");
         }
         return DataResult.success(Pair.of(stat, input));
     }

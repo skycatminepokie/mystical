@@ -10,7 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registry;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.stat.Stats;
 
@@ -136,7 +136,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     }
 
     private static Block getRandomBlock() { // TODO: Make checked (no unbreakables, configurable rarities, etc)
-        Optional<RegistryEntry<Block>> blockEntry = Registry.BLOCK.getRandom(Mystical.getMC_RANDOM());
+        Optional<RegistryEntry.Reference<Block>> blockEntry = Registries.BLOCK.getRandom(Mystical.getMC_RANDOM());
         Block block;
         if (blockEntry.isPresent()) {
             block = blockEntry.get().value();
