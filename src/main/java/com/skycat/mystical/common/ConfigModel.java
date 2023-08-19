@@ -35,7 +35,6 @@ public class ConfigModel {
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
     public LogLevel timeOfDayAtStartupLogLevel = LogLevel.DEBUG;
     public LogLevel failedToLoadHavenManagerLogLevel = LogLevel.INFO;
-    public LogLevel failedToSaveHavenManagerLogLevel = LogLevel.INFO;
     public LogLevel spellContributionLogLevel = LogLevel.OFF;
     public LogLevel failedToGetRandomBlockLogLevel = LogLevel.ERROR;
     public LogLevel failedToLoadSpellHandlerLogLevel = LogLevel.WARN;

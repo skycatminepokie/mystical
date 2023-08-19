@@ -13,7 +13,6 @@ import net.minecraft.util.math.ChunkPos;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -48,15 +47,6 @@ public class HavenManager {
         }
     }
 
-    public void save() {
-        try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
-            pw.println(Mystical.GSON.toJson(this));
-        } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.logging.failedToSaveHavenManager"), Mystical.CONFIG.failedToSaveHavenManagerLogLevel());
-            // TODO: Dump info
-        }
-    }
-
     /**
      * Gets the cost to haven the chunk containing a given block position
      *
@@ -87,7 +77,7 @@ public class HavenManager {
      * @return The cost
      */
     public int getHavenCost(ChunkPos chunkPos) {
-        return baseHavenCost; // TODO: allow for different costs for different chunks
+        return baseHavenCost;
     }
 
     /**
