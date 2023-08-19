@@ -13,24 +13,25 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 import org.slf4j.Logger;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class Utils {
     /**
-     * {@code Registry.STAT_TYPE.getCodec} is for regular StatTypes
+     * {@code Registries.STAT_TYPE.getCodec} is for regular StatTypes
      * {@code Identifier.CODEC} is for custom StatTypes
      */
-    public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registry.STAT_TYPE.getCodec(), Identifier.CODEC);
+    public static final Codec<Either<StatType<?>, Identifier>> STAT_TYPE_CODEC = Codec.either(Registries.STAT_TYPE.getCodec(), Identifier.CODEC);
     public static final Codec<Class<?>> CLASS_CODEC = Codec.STRING.xmap(className -> {
         try {
             return Class.forName(className);
@@ -166,6 +167,11 @@ public class Utils {
         return Text.of(str);
     }
 
+    public static Supplier<Text> textSupplierOf(String str) {
+        return () -> textOf(str);
+    }
+
+
     public static MutableText mutableTextOf(String str) {
         return Text.of(str).copy();
     }
@@ -232,6 +238,14 @@ public class Utils {
         return Text.translatable(path, args);
     }
 
+    public static Supplier<Text> translatableSupplier(String path) {
+        return () -> Text.translatable(path);
+    }
+
+    public static Supplier<Text> translatableSupplier(String path, Object... args) {
+        return () -> Text.translatable(path, args);
+    }
+
     public static String translateString(String path) {
         return translatable(path).getString();
     }
@@ -273,7 +287,7 @@ public class Utils {
     }
 
     public static StatusEffect getRandomStatusEffect() {
-        Optional<RegistryEntry<StatusEffect>> entry =  Registry.STATUS_EFFECT.getRandom(Mystical.MC_RANDOM);
+        Optional<RegistryEntry.Reference<StatusEffect>> entry =  Registries.STATUS_EFFECT.getRandom(Mystical.MC_RANDOM);
         if (entry.isPresent()) {
             return entry.get().value();
         }

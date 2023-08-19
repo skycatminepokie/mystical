@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ServerWorldMixin {
     @Inject(method = "wakeSleepingPlayers", at = @At("TAIL"))
     private void onWakeSleepingPlayers(CallbackInfo ci) {
-        Mystical.getEVENT_HANDLER().doNighttimeEvents(); // TODO: This is a roundabout fix, but you know...
+        Mystical.getEVENT_HANDLER().doNighttimeEvents();
     }
 }

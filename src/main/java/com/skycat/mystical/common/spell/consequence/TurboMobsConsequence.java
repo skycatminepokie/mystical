@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -35,12 +35,12 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make
                     "%s go zoom",
                     "Gave a mob extra speed.",
                     TurboMobsConsequence.class,
-                    Registry.ENTITY_TYPE.getCodec().xmap(TurboMobsConsequence::new, TurboMobsConsequence::getEntityType));
+                    Registries.ENTITY_TYPE.getCodec().xmap(TurboMobsConsequence::new, TurboMobsConsequence::getEntityType));
         }
 
         @Override
         public @NotNull TurboMobsConsequence make(@NonNull Random random, double points) {
-            var entry = Registry.ENTITY_TYPE.getRandom(Mystical.MC_RANDOM);
+            var entry = Registries.ENTITY_TYPE.getRandom(Mystical.MC_RANDOM);
             if (entry.isPresent()) {
                 EntityType<?> type = entry.get().value();
                 SpawnGroup spawnGroup = type.getSpawnGroup();

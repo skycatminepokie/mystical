@@ -7,13 +7,12 @@ import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.dynamic.Codecs;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -22,7 +21,7 @@ import java.util.UUID;
 public class HavenManager {
     public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
             Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
-            Utils.hashMapCodec(Codecs.UUID, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
+            Utils.hashMapCodec(Uuids.CODEC, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
     ).apply(instance, HavenManager::new)));
     @Getter private final HashSet<ChunkPos> havenedChunks;
     @Getter private final HashMap<UUID, Integer> powerMap;
@@ -45,15 +44,6 @@ public class HavenManager {
         } catch (IOException e) {
             Utils.log(Utils.translateString("text.mystical.logging.failedToLoadHavenManager"), Mystical.CONFIG.failedToLoadHavenManagerLogLevel());
             return new HavenManager();
-        }
-    }
-
-    public void save() {
-        try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
-            pw.println(Mystical.GSON.toJson(this));
-        } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.logging.failedToSaveHavenManager"), Mystical.CONFIG.failedToSaveHavenManagerLogLevel());
-            // TODO: Dump info
         }
     }
 
@@ -87,7 +77,7 @@ public class HavenManager {
      * @return The cost
      */
     public int getHavenCost(ChunkPos chunkPos) {
-        return baseHavenCost; // TODO: allow for different costs for different chunks
+        return baseHavenCost;
     }
 
     /**

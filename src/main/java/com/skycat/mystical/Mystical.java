@@ -22,11 +22,11 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
-import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +47,8 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
             .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
             .registerTypeAdapter(Class.class, new ClassSerializer())
             .registerTypeAdapter(Stat.class, new StatCodec())
-            .registerTypeAdapter(EntityType.class, Utils.serializerOf(Registry.ENTITY_TYPE.getCodec()))
-            .registerTypeAdapter(EntityType.class, Utils.deserializerOf(Registry.ENTITY_TYPE.getCodec()))
+            .registerTypeAdapter(EntityType.class, Utils.serializerOf(Registries.ENTITY_TYPE.getCodec()))
+            .registerTypeAdapter(EntityType.class, Utils.deserializerOf(Registries.ENTITY_TYPE.getCodec()))
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();

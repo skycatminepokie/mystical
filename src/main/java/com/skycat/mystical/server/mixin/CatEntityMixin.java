@@ -7,9 +7,9 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.CatVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +26,7 @@ public abstract class CatEntityMixin { // I could probably turn this into an eve
     @Inject(method = "eat", at = @At("HEAD"))
     public void eat(PlayerEntity entity, Hand hand, ItemStack stack, CallbackInfo ci) {
         if (VARIANTS.isEmpty()) { // Should this be in static? Seems like delaying initialization might be good though.
-            for (CatVariant catVariant : Registry.CAT_VARIANT) {
+            for (CatVariant catVariant : Registries.CAT_VARIANT) {
                 VARIANTS.add(catVariant);
             }
         }

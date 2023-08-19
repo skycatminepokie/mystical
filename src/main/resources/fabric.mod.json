@@ -31,14 +31,11 @@
   "depends": {
     "fabricloader": ">=0.14.9",
     "fabric": "*",
-    "minecraft": "1.19.2",
-    "fabric-permissions-api-v0": "*"
+    "minecraft": "1.20.1",
+    "fabric-permissions-api-v0": "*",
+    "owo-lib": ">=0.11.0+1.20"
   },
-  "custom": {
-    "loom:injected_interfaces": {
-      "net/minecraft/class_2248": [
-        "com/skycat/mystical/server/DefaultFertilizable"
-      ]
-    }
+  "suggests": {
+    "modmenu": "*"
   }
 }

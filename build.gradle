@@ -28,7 +28,7 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation include("fr.catcore:server-translations-api:1.4.18+1.19.2")
+    modImplementation include("xyz.nucleoid:server-translations-api:2.0.0+1.20")
 
     // GSON
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -48,7 +48,7 @@ dependencies {
     include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
 
     // Runtime: modmenu
-    modRuntimeOnly("curse.maven:modmenu-308702:4100232")
+    // modRuntimeOnly("curse.maven:modmenu-308702:4100232")
 
 
 }
