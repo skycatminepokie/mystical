@@ -10,6 +10,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.registry.Registries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,39 +31,29 @@ public abstract class ZombieEntityMixin {
         }
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOf(DamageTypes.OUT_OF_WORLD) && !dis.isDead()) {
-
-            EntityType<?> randomType = EntityType.ARMOR_STAND;
-            // EntityType<?> randomType = EntityType.ZOMBIE;
-            EntityType<MobEntity> mobEntityType = null;
-
-            // Claims i < 10 == true, I guess because ClassCastException won't be thrown. If I could make it throw that when ? does not extend MobEntity, then wonderful!
+            // TODO: Testing
+            EntityType<?> randomType = Utils.getRandomEntryFromTag(Registries.ENTITY_TYPE, Mystical.ZOMBIE_VARIANTS);
+            if (randomType == null) {
+                Utils.log("Failed to get randomType to convert zombie to. We'll skip it for now.", LogLevel.WARN);
+                return;
+            }
+            Entity newEntity = null;
             for (int i = 0; i < 10; i++) {
-                try {
-                    // Unchecked cast
-                    mobEntityType = (EntityType<MobEntity>) randomType;
+                try { // Checking the cast here
+                    //noinspection unchecked
+                    newEntity = dis.convertTo((EntityType<MobEntity>) randomType, true);
                     break;
                 } catch (ClassCastException e) {
                     Utils.log("EntityType<?>" + randomType.getName().getString() + " in mystical:zombie_variants - ? doesn't extend MobEntity - Attempt #" + i + " :(", LogLevel.WARN);
                 }
             }
-            if (mobEntityType == null) {
-                Utils.log("Failed to get a random type");
+            if (newEntity == null) {
+                Utils.log("Failed to convert zombie - see previous logging and check tags. For now, we'll skip it.", LogLevel.ERROR);
+                // TODO: Maybe warn admins?
                 return;
             }
-
-            Entity newEntity = dis.convertTo(mobEntityType, true);
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
-            if (newEntity != null) {
-                newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
-            }
+            newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
         }
     }
-
-    /* @Inject(method = "burnsInDaylight", at = @At("RETURN"), cancellable = true)
-    private void burnsInDaylight(CallbackInfoReturnable<Boolean> cir) {
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(DisableDaylightBurningConsequence.class)) {
-            cir.setReturnValue(false);
-        }
-    }
-     */
 }
