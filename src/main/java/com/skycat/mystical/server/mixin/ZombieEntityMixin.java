@@ -1,13 +1,15 @@
 package com.skycat.mystical.server.mixin;
 
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.LogLevel;
 import com.skycat.mystical.common.spell.consequence.ZombieTypeChangeConsequence;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,7 +30,27 @@ public abstract class ZombieEntityMixin {
         }
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOf(DamageTypes.OUT_OF_WORLD) && !dis.isDead()) {
-            Entity newEntity = dis.convertTo(Util.getRandom(ZombieTypeChangeConsequence.ZOMBIE_TYPES, Mystical.MC_RANDOM), true);
+
+            EntityType<?> randomType = EntityType.ARMOR_STAND;
+            // EntityType<?> randomType = EntityType.ZOMBIE;
+            EntityType<MobEntity> mobEntityType = null;
+
+            // Claims i < 10 == true, I guess because ClassCastException won't be thrown. If I could make it throw that when ? does not extend MobEntity, then wonderful!
+            for (int i = 0; i < 10; i++) {
+                try {
+                    // Unchecked cast
+                    mobEntityType = (EntityType<MobEntity>) randomType;
+                    break;
+                } catch (ClassCastException e) {
+                    Utils.log("EntityType<?>" + randomType.getName().getString() + " in mystical:zombie_variants - ? doesn't extend MobEntity - Attempt #" + i + " :(", LogLevel.WARN);
+                }
+            }
+            if (mobEntityType == null) {
+                Utils.log("Failed to get a random type");
+                return;
+            }
+
+            Entity newEntity = dis.convertTo(mobEntityType, true);
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
             if (newEntity != null) {
                 newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);

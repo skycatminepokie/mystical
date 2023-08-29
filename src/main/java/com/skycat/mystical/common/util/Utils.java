@@ -14,7 +14,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
@@ -149,6 +151,16 @@ public class Utils {
 
     public static void sendMessageToPlayer(PlayerEntity player, String msg) {
         sendMessageToPlayer(player, textOf(msg)); // Converts String to Text
+    }
+
+    public static <T> T getRandomEntryFromTag(Registry<T> registry, TagKey<T> tag) {
+        var entryListOptional = registry.getEntryList(tag);
+        if (entryListOptional.isEmpty()) return null;
+        var entryList = entryListOptional.get();
+        var entry = entryList.getRandom(Mystical.MC_RANDOM);
+        //noinspection OptionalIsPresent
+        if (entry.isEmpty()) return null;
+        return entry.get().value();
     }
 
     public static void sendMessageToPlayer(PlayerEntity player, String msg, boolean actionBar) {
