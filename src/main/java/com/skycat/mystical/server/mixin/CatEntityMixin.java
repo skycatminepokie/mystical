@@ -12,6 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 @Mixin(CatEntity.class)
 public abstract class CatEntityMixin { // I could probably turn this into an event
-    private static final ArrayList<CatVariant> VARIANTS = new ArrayList<>();
+    @Unique private static final ArrayList<CatVariant> VARIANTS = new ArrayList<>();
     @Shadow public abstract void setVariant(CatVariant variant);
 
     @Inject(method = "eat", at = @At("HEAD"))

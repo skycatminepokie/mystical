@@ -104,7 +104,7 @@ public class Utils {
     }
 
     public static <K, V> HashMap<K, V> toHashMap(Map<K, V> map) {
-        if (map instanceof HashMap<K,V> hashMap) { // I think this will save some time so it doesn't rehash.
+        if (map instanceof HashMap<K,V> hashMap) { // I think this will save some time since it doesn't rehash.
             return hashMap;
         }
         return new HashMap<>(map);

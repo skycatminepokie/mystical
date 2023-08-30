@@ -23,7 +23,9 @@ public abstract class FishingBobberEntityMixin {
 
     @ModifyArg(method = "pullHookedEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V"), index = 0)
     public Vec3d onSetVelocity(Vec3d velocity) {
-        if (!Mystical.getHavenManager().isInHaven(getHookedEntity()) && // getHookedEntity shouldn't return null - we're pulling an entity, so there must be one hooked.
+        var hookedEntity = getHookedEntity();
+        if (hookedEntity != null &&
+                !Mystical.getHavenManager().isInHaven(hookedEntity) &&
                 Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) && Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) {
             Utils.log(Utils.translateString("text.mystical.consequence.fishingRodLaunch.fired"), Mystical.CONFIG.fishingRodLaunch.logLevel());
             return velocity.multiply(Mystical.CONFIG.fishingRodLaunch.multiplier());
