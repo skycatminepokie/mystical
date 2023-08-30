@@ -3,29 +3,16 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class SkeletonTypeChangeConsequence extends SpellConsequence {
-    public static final ArrayList<EntityType<? extends MobEntity>> SKELETON_TYPES = new ArrayList<>(); // TODO: Config
     public static final Factory FACTORY = new Factory();
 
     @Override
     public @NotNull ConsequenceFactory<SkeletonTypeChangeConsequence> getFactory() {
         return FACTORY;
-    }
-
-    static {
-        Collections.addAll(SKELETON_TYPES,
-                EntityType.SKELETON,
-                EntityType.WITHER_SKELETON,
-                EntityType.STRAY
-        );
     }
 
     protected SkeletonTypeChangeConsequence() {
