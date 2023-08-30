@@ -8,19 +8,24 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.LogLevel;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ChunkPos;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -99,7 +104,7 @@ public class Utils {
     }
 
     public static <K, V> HashMap<K, V> toHashMap(Map<K, V> map) {
-        if (map instanceof HashMap<K,V> hashMap) { // I think this will save some time so it doesn't rehash.
+        if (map instanceof HashMap<K,V> hashMap) { // I think this will save some time since it doesn't rehash.
             return hashMap;
         }
         return new HashMap<>(map);
@@ -151,6 +156,16 @@ public class Utils {
         sendMessageToPlayer(player, textOf(msg)); // Converts String to Text
     }
 
+    public static <T> T getRandomEntryFromTag(Registry<T> registry, TagKey<T> tag) {
+        var entryListOptional = registry.getEntryList(tag);
+        if (entryListOptional.isEmpty()) return null;
+        var entryList = entryListOptional.get();
+        var entry = entryList.getRandom(Mystical.MC_RANDOM);
+        //noinspection OptionalIsPresent
+        if (entry.isEmpty()) return null;
+        return entry.get().value();
+    }
+
     public static void sendMessageToPlayer(PlayerEntity player, String msg, boolean actionBar) {
         sendMessageToPlayer(player, textOf(msg), actionBar); // Converts String to Text
     }
@@ -174,6 +189,39 @@ public class Utils {
 
     public static MutableText mutableTextOf(String str) {
         return Text.of(str).copy();
+    }
+
+    /**
+     *
+     * Converts a target mob to a random mob from the given tag. <p>
+     * Will pick up to 10 random types, stopping and doing the conversion when finding something that {@code extends} {@link MobEntity}.
+     * @param toConvert The mob to convert
+     * @param tag The tag to choose from
+     * @return The converted mob
+     */
+    @Nullable
+    public static MobEntity convertToRandomInTag(MobEntity toConvert, TagKey<EntityType<?>> tag) {
+        EntityType<?> randomType = Utils.getRandomEntryFromTag(Registries.ENTITY_TYPE, tag);
+        if (randomType == null) {
+            Utils.log("Failed to get randomType to convert to.", LogLevel.WARN);
+            return null;
+        }
+        MobEntity newEntity = null;
+        for (int i = 0; i < 10; i++) {
+            try { // Checking the cast here
+                //noinspection unchecked
+                newEntity = toConvert.convertTo((EntityType<MobEntity>) randomType, true);
+                break;
+            } catch (ClassCastException e) {
+                Utils.log("EntityType<?>" + randomType.getName().getString() + " in " + tag.id() + " - ? doesn't extend MobEntity - Attempt #" + (i + 1) + " :(", LogLevel.WARN);
+            }
+        }
+        if (newEntity == null) {
+            Utils.log("Failed to convert - see previous logging and check tags. For now, we'll skip it.", LogLevel.ERROR);
+            // TODO: Maybe warn admins?
+            return null;
+        }
+        return newEntity;
     }
 
     /**

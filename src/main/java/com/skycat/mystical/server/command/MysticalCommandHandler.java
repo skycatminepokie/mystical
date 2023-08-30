@@ -317,7 +317,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     }
 
 
-    private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) {
         int spellNum = context.getArgument("spell", Integer.class);
         if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
             throw new CommandException(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
@@ -362,7 +362,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription())));
             context.getSource().sendFeedback(() -> spellDescription, false);
         }
-        return 1;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int newSpellCommand(CommandContext<ServerCommandSource> context) {
@@ -374,28 +374,20 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         }
         Mystical.getSpellHandler().activateNewSpellWithConsequence(factory);
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
-        return 1;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
         Mystical.getSpellHandler().activateNewSpell();
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
-        return 1;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.EVENT_HANDLER.setNightTimer();
         Mystical.CONFIG.load();
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.reload.success"), true);
-        return 1;
-    }
-
-    int testCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        Mystical.getSpellHandler().removeAllSpells();
-        Mystical.getSpellHandler().activateNewSpell();
-        Mystical.saveUpdated();
-        context.getSource().sendFeedback(Utils.textSupplierOf("Removed all spells and added a new one"), false);
-        return 1;
+        return Command.SINGLE_SUCCESS;
     }
 }

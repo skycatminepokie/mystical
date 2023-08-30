@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class EnderTypeChangeConsequence extends SpellConsequence {
+public class EnderTypeChangeConsequence extends SpellConsequence { // TODO: Combine all type change consequences into one
     public static final Factory FACTORY = new Factory();
 
     @Override
@@ -24,7 +24,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence {
             super("enderTypeChange",
                     "Ender Type Change",
                     "Of mites and men",
-                    "Swapped endermite/enderman",
+                    "Swapped ender entity type",
                     EnderTypeChangeConsequence.class,
                     Codec.unit(EnderTypeChangeConsequence::new));
         }
