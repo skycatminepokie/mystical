@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.ZombieEntity;
-import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,19 +27,13 @@ public abstract class ZombieEntityMixin {
         }
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOf(DamageTypes.OUT_OF_WORLD) && !dis.isDead()) {
-            Entity newEntity = dis.convertTo(Util.getRandom(ZombieTypeChangeConsequence.ZOMBIE_TYPES, Mystical.MC_RANDOM), true);
+            // TODO: Testing
+            Entity newEntity = Utils.convertToRandomInTag(dis, Mystical.ZOMBIE_VARIANTS);
+            if (newEntity == null) return;
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
-            if (newEntity != null) {
-                newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
-            }
+            newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
         }
     }
 
-    /* @Inject(method = "burnsInDaylight", at = @At("RETURN"), cancellable = true)
-    private void burnsInDaylight(CallbackInfoReturnable<Boolean> cir) {
-        if (Mystical.SPELL_HANDLER.isConsequenceActive(DisableDaylightBurningConsequence.class)) {
-            cir.setReturnValue(false);
-        }
-    }
-     */
+
 }
