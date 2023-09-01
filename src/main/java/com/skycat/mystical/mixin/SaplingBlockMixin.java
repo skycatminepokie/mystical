@@ -1,4 +1,4 @@
-package com.skycat.mystical.server.mixin;
+package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.RandomTreeTypeConsequence;

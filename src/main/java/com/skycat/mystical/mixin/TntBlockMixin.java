@@ -1,4 +1,4 @@
-package com.skycat.mystical.server.mixin;
+package com.skycat.mystical.mixin;
 
 import net.minecraft.block.TntBlock;
 import org.spongepowered.asm.mixin.Mixin;

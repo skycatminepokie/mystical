@@ -1,4 +1,4 @@
-package com.skycat.mystical.server.mixin;
+package com.skycat.mystical.mixin;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
