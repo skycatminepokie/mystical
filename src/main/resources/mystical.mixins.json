@@ -19,6 +19,7 @@
     "SkulkShriekerBlockEntityMixin",
     "SpawnHelperMixin",
     "StatHandlerMixin",
+    "SummonVexGoalMixin",
     "TntBlockMixin",
     "TntEntityMixin",
     "TntMinecartEntityMixin",

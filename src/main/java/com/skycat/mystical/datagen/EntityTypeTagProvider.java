@@ -36,5 +36,8 @@ public class EntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvid
         getOrCreateTagBuilder(Mystical.ENDERMAN_VARIANTS)
                 .add(EntityType.ENDERMAN)
                 .add(EntityType.ENDERMITE);
+        getOrCreateTagBuilder(Mystical.EVOKER_SUMMONABLE)
+                .add(EntityType.CAT)
+                .add(EntityType.SQUID);
     }
 }

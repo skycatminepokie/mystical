@@ -50,7 +50,8 @@ dependencies {
     // Runtime: modmenu
     // modRuntimeOnly("curse.maven:modmenu-308702:4100232")
 
-
+    // MixinExtras
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.11")))
 }
 
 processResources {
