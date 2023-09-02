@@ -2,6 +2,15 @@
   "replace": false,
   "values": [
     "minecraft:cat",
-    "minecraft:squid"
+    "minecraft:squid",
+    "minecraft:iron_golem",
+    "minecraft:vex",
+    "minecraft:evoker",
+    "minecraft:stray",
+    "minecraft:sheep",
+    "minecraft:tnt",
+    "minecraft:fox",
+    "minecraft:parrot",
+    "minecraft:snow_golem"
   ]
 }
