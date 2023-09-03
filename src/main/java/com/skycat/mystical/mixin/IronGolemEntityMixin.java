@@ -2,6 +2,7 @@ package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.AggressiveGolemsConsequence;
+import com.skycat.mystical.common.util.Utils;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
@@ -25,6 +26,7 @@ public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Cre
     private void swapCanTarget(EntityType<?> type, CallbackInfoReturnable<Boolean> cir) {
         if (Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class)) {
             cir.setReturnValue(!type.equals(EntityType.CAT)); // Protect the poor kitties. TODO: Config
+            Utils.log(Utils.translateString(AggressiveGolemsConsequence.FACTORY.getDescriptionKey()), Mystical.CONFIG.aggressiveGolems.logLevel());
         }
     }
 

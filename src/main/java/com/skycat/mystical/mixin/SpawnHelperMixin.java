@@ -58,7 +58,7 @@ public abstract class SpawnHelperMixin {
                 EntityAttributeInstance attributeInstance = mobEntity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (attributeInstance != null) {
                     attributeInstance.addPersistentModifier(new EntityAttributeModifier("Mystical speed boost", 0.5, EntityAttributeModifier.Operation.MULTIPLY_BASE)); // TODO: Config
-                    Utils.log("text.mystical.consequence.turboMobs.fired", Mystical.CONFIG.spellContributionLogLevel());
+                    Utils.log(Utils.translateString(TurboMobsConsequence.FACTORY.getDescriptionKey()), Mystical.CONFIG.turboMobs.logLevel());
                 }
             }
         }

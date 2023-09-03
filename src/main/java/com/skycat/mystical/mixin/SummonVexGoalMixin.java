@@ -54,7 +54,7 @@ public abstract class SummonVexGoalMixin {
         // From EvokerEntity.SummonVexGoal#castSpell
         summonedMob.refreshPositionAndAngles(spawningPos, 0.0f, 0.0f);
         serverWorld.spawnEntityAndPassengers(summonedMob);
-        Utils.log(RandomEvokerSummonsConsequence.FACTORY.getDescriptionKey(), Mystical.CONFIG.randomEvokerSummons.logLevel());
+        Utils.log(Utils.translateString(RandomEvokerSummonsConsequence.FACTORY.getDescriptionKey()), Mystical.CONFIG.randomEvokerSummons.logLevel());
         return null; // And tell it to stop doing stuff. NOTE: As of writing, this will just make it continue trying to spawn its three vexes.
     }
 }
