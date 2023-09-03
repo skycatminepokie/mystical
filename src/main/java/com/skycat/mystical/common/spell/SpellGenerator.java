@@ -55,7 +55,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 OneStrikeWardensConsequence.FACTORY,
                 RandomCreeperEffectCloudsConsequence.FACTORY,
                 TurboMobsConsequence.FACTORY,
-                RandomEvokerSummonsConsequence.FACTORY
+                RandomEvokerSummonsConsequence.FACTORY,
+                IllusionersReplaceEvokersConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
