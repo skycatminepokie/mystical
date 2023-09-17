@@ -33,7 +33,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Make Gradle Wrapper Executable
-        if: $ {{ runner.os != 'Windows' }}
+        if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
 
       - name: Build
