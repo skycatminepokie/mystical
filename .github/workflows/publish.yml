@@ -1,8 +1,10 @@
 name: Publish
 on:
-  release:
+  pull_request:
     types:
-      - published
+      - closed
+    branches:
+      - master
   workflow_dispatch:
 
 env:
@@ -16,6 +18,7 @@ permissions:
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Check Environment Variables
@@ -44,6 +47,9 @@ jobs:
         with:
           modrinth-id: ibmeD85j
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          github-tag: "v${{ env.VERSION }}"
+          github-token: ${{ secrets.GH_TOKEN }}
 
           changelog-file: CHANGELOG.md
 
