@@ -37,5 +37,8 @@
   },
   "suggests": {
     "modmenu": "*"
+  },
+  "embedded": {
+    "fabric-permissions-api": "0.2-SNAPSHOT"
   }
 }

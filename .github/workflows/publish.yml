@@ -1,0 +1,53 @@
+name: Publish
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  MINECRAFT_VERSION: 1.20.1
+  JAVA_VERSION: 17
+  VERSION: 4.1.3+1.20.1
+  VERSION_TYPE: release
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Environment Variables
+        run: env
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: "temurin"
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Make Gradle Wrapper Executable
+        if: $ {{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew clean build
+
+      - name: Publish
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ibmeD85j
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          changelog-file: CHANGELOG.md
+
+          game-versions: "${{ env.MINECRAFT_VERSION }}"
+          java: "${{ env.JAVA_VERSION }}"
