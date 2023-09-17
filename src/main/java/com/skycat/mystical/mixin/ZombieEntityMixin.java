@@ -27,7 +27,6 @@ public abstract class ZombieEntityMixin {
         }
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOf(DamageTypes.OUT_OF_WORLD) && !dis.isDead()) {
-            // TODO: Testing
             Entity newEntity = Utils.convertToRandomInTag(dis, Mystical.ZOMBIE_VARIANTS);
             if (newEntity == null) return;
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
