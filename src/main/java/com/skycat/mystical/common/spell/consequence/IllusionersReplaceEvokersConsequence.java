@@ -10,7 +10,7 @@ import java.util.Random;
 public class IllusionersReplaceEvokersConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
     public IllusionersReplaceEvokersConsequence() {
-        super(IllusionersReplaceEvokersConsequence.class, null, 25d); // TODO: Difficulty
+        super(IllusionersReplaceEvokersConsequence.class, null, 25d);
     }
 
     @Override
