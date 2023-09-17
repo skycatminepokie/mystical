@@ -37,16 +37,10 @@ public class EntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvid
                 .add(EntityType.ENDERMAN)
                 .add(EntityType.ENDERMITE);
         getOrCreateTagBuilder(Mystical.EVOKER_SUMMONABLE)
-                .add(EntityType.CAT)
-                .add(EntityType.SQUID)
-                .add(EntityType.IRON_GOLEM)
                 .add(EntityType.VEX)
-                .add(EntityType.EVOKER)
-                .add(EntityType.STRAY)
-                .add(EntityType.SHEEP)
-                .add(EntityType.TNT)
+                .add(EntityType.SILVERFISH)
+                .add(EntityType.ENDERMITE)
                 .add(EntityType.FOX)
-                .add(EntityType.PARROT)
-                .add(EntityType.SNOW_GOLEM);
+                .add(EntityType.PARROT);
     }
 }
