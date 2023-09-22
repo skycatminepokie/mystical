@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
@@ -26,6 +27,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stat;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -37,7 +39,7 @@ import java.util.Random;
 import java.util.UUID;
 
 @Getter
-public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerStarted {
+public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     @Getter public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
     @Getter public static final Gson GSON = new GsonBuilder()
             .setVersion(0.1)
@@ -54,7 +56,7 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
             .create();
     @Getter public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     @Getter public static final Random RANDOM = new Random();
-    @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong()); // Probably not a great way to do this, but oh well.
+    @Getter public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong());
     @Getter public static final com.skycat.mystical.common.MysticalConfig CONFIG = com.skycat.mystical.common.MysticalConfig.createAndLoad();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
     // Using tags like this will make startup time a bit longer, but will allow for compatibility
@@ -64,12 +66,17 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
     public static final TagKey<EntityType<?>> ENDERMAN_VARIANTS = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:enderman_variants"));
     public static final TagKey<EntityType<?>> EVOKER_SUMMONABLE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:evoker_summonable"));
     public static SaveState save;
+    private static boolean isClientWorld;
 
     public static HavenManager getHavenManager() {
         if (save == null) {
             throw new NullPointerException("Cannot get haven manager - save is null");
         }
         return save.getHavenManager();
+    }
+
+    public static boolean isClientWorld() {
+        return isClientWorld;
     }
 
     public static void saveUpdated() {
@@ -87,13 +94,18 @@ public class Mystical implements ModInitializer, ServerLifecycleEvents.ServerSta
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register(COMMAND_HANDLER);
 
-        ServerLifecycleEvents.SERVER_STARTED.register(EVENT_HANDLER);
-        ServerLifecycleEvents.SERVER_STARTED.register(this);
+        ServerWorldEvents.LOAD.register(this);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
     }
 
     @Override
-    public void onServerStarted(MinecraftServer server) {
+    public void onWorldLoad(MinecraftServer server, ServerWorld world) {
+        if (world.isClient) {
+            isClientWorld = true;
+            return; // Only on the server thread
+        }
+        isClientWorld = false;
+        EVENT_HANDLER.onWorldLoad(server, world);
         save = SaveState.loadSave(server);
 
         EntitySleepEvents.START_SLEEPING.register(getSpellHandler());

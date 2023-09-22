@@ -27,9 +27,9 @@ public abstract class LivingEntityMixin {
         LivingEntity dis = ((LivingEntity) (Object) this);
         var originalHealth = dis.getHealth();
         
-        if (!Mystical.getHavenManager().isInHaven(dis)) { 
+        if (!(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(dis))) { 
             if (dis instanceof AbstractSkeletonEntity skeleton) {
-                if (Mystical.getSpellHandler().isConsequenceActive(SkeletonTypeChangeConsequence.class) && // Spell is active
+                if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(SkeletonTypeChangeConsequence.class)) && // Spell is active
                         !dis.isDead() && // And we're not dead
                         Utils.percentChance(Mystical.CONFIG.skeletonTypeChange.chance())) { // Roll the dice
                     float totalDamage = dis.getHealth();
@@ -42,7 +42,7 @@ public abstract class LivingEntityMixin {
                 }
             } else {
                 if (dis.getType().isIn(Mystical.ENDERMAN_VARIANTS) && dis instanceof MobEntity enderEntity) {
-                    if (Mystical.getSpellHandler().isConsequenceActive(EnderTypeChangeConsequence.class) && // Spell is active
+                    if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(EnderTypeChangeConsequence.class)) && // Spell is active
                             !dis.isDead() && // And we're not dead
                             Utils.percentChance(Mystical.CONFIG.enderTypeChange.chance())) { // Roll the dice
                         float totalDamage = (dis.getMaxHealth() - originalHealth) + damage;

@@ -33,10 +33,10 @@ public abstract class SummonVexGoalMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;")
     )
     public Entity overrideVexSpawning(EntityType instance, World world, Operation<VexEntity> original) { // TODO: Make things not spawn in walls
-        if (Mystical.getHavenManager().isInHaven(spawningPos) ||
+        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(spawningPos)) ||
                 world.isClient() ||
                 spawningPos == null ||
-                !Mystical.getSpellHandler().isConsequenceActive(RandomEvokerSummonsConsequence.class) ||
+                !(Mystical.isClientWorld() && (Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(RandomEvokerSummonsConsequence.class))) ||
                 !Utils.percentChance(Mystical.CONFIG.randomEvokerSummons.chance())) {
             return original.call(instance, world);
         }
