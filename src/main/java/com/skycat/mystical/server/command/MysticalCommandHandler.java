@@ -216,7 +216,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         if (entity == null) {
             throw new CommandException(Utils.textOf("/mystical haven info must be called by an entity."));
         }
-        if (Mystical.getHavenManager().isInHaven(entity)) { // TODO: Translate, make better
+        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity))) { // TODO: Translate, make better
             context.getSource().sendFeedback(Utils.textSupplierOf("This is in a haven"), false);
             return 1;
         }
@@ -300,7 +300,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
         var vec = Vec2ArgumentType.getVec2(context, "block");
         BlockPos blockPos = new BlockPos((int) vec.x, 0, (int) vec.y);
-        if (Mystical.getHavenManager().isInHaven(player)) { // Must not already be havened
+        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player))) { // Must not already be havened
             context.getSource().sendFeedback(Utils.textSupplierOf("That location is already havened."), false); // TODO: Translate
             return 0;
         }

@@ -18,13 +18,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Credit MattiDragon#8944 on discord for extension info
     @Unique
     private static boolean targetPredicate(LivingEntity entity) {
-        return Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class) &&
-                !Mystical.getHavenManager().isInHaven(entity); // Don't attack things that are in a haven
+        return (Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class)) &&
+                !(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity)); // Don't attack things that are in a haven
     }
 
     @Inject(method = "canTarget", at = @At("RETURN"), cancellable = true)
     private void swapCanTarget(EntityType<?> type, CallbackInfoReturnable<Boolean> cir) {
-        if (Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class)) {
+        if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class))) {
             cir.setReturnValue(!type.equals(EntityType.CAT)); // Protect the poor kitties. TODO: Config
             Utils.log(Utils.translateString(AggressiveGolemsConsequence.FACTORY.getDescriptionKey()), Mystical.CONFIG.aggressiveGolems.logLevel());
         }
