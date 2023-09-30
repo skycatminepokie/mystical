@@ -16,8 +16,6 @@ public abstract class ChickenEntityMixin {
                 Mystical.getSpellHandler().isConsequenceActive(TurboChickensConsequence.class) &&
                 Mystical.getHavenManager().isInHaven(instance)) {
             instance.eggLayTime = (int) (value / Mystical.CONFIG.turboChickens.speed());
-        } else {
-            instance.eggLayTime = value;
         }
     }
 }
