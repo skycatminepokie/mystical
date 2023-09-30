@@ -4,19 +4,13 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 
-public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
+public class MysticalEventHandler implements ServerWorldEvents.Load , ServerLifecycleEvents.ServerStopping {
     @Getter private MinecraftServer server;
     private MinecraftServerTimerAccess timerAccess;
-
-    @Override
-    public void onServerStarted(MinecraftServer server) {
-        this.server = server;
-        timerAccess = ((MinecraftServerTimerAccess) server);
-        setNightTimer();
-        Utils.log(Utils.translateString("text.mystical.logging.timeOfDayAtStartup", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
-    }
 
     public void doNighttimeEvents() {
         // TODO: Logging
@@ -33,6 +27,14 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
     @Override
     public void onServerStopping(MinecraftServer server) {
         Mystical.CONFIG.save();
+    }
+
+    @Override
+    public void onWorldLoad(MinecraftServer server, ServerWorld world) {
+        this.server = server;
+        timerAccess = ((MinecraftServerTimerAccess) server);
+        setNightTimer();
+        Utils.log(Utils.translateString("text.mystical.logging.timeOfDayAtStartup", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
     }
 
     /**

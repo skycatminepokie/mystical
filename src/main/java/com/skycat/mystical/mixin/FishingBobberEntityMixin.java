@@ -25,8 +25,8 @@ public abstract class FishingBobberEntityMixin {
     public Vec3d onSetVelocity(Vec3d velocity) {
         var hookedEntity = getHookedEntity();
         if (hookedEntity != null &&
-                !Mystical.getHavenManager().isInHaven(hookedEntity) &&
-                Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) && Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) {
+                !(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(hookedEntity)) &&
+                (Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) && Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance()))) {
             Utils.log(Utils.translateString("text.mystical.consequence.fishingRodLaunch.fired"), Mystical.CONFIG.fishingRodLaunch.logLevel());
             return velocity.multiply(Mystical.CONFIG.fishingRodLaunch.multiplier());
         }
@@ -35,10 +35,10 @@ public abstract class FishingBobberEntityMixin {
 
     @Inject(method = "pullHookedEntity", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void afterPullHooked(Entity entity, CallbackInfo ci, Entity entity2, Vec3d vec3d) {
-        if (!Mystical.getHavenManager().isInHaven(entity) &&
-                !Mystical.getHavenManager().isInHaven(entity2) &&
+        if (!(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity)) &&
+                !(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity2)) &&
                 entity instanceof ServerPlayerEntity &&
-                Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class)) {
+                (Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class))) {
             ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)); // Thanks @Wesley1808#9858 :)
         }
     }
