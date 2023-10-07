@@ -38,6 +38,9 @@ public abstract class SpellCure {
         this.cureType = cureType;
         this.cureTypeId = cureTypeId;
         this.contributions = contributions;
+        for (int contrib : contributions.values()) {
+            contributionTotal += contrib;
+        }
     }
 
     /**
