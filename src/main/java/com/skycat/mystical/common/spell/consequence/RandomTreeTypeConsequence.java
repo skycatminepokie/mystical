@@ -27,6 +27,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence {
                 new AcaciaSaplingGenerator(),
                 new AzaleaSaplingGenerator(),
                 new BirchSaplingGenerator(),
+                new CherrySaplingGenerator(),
                 new DarkOakSaplingGenerator(),
                 new JungleSaplingGenerator(),
                 new MangroveSaplingGenerator(0.85f), // tallChance from PropaguleBlock
