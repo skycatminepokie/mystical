@@ -1,1 +1,1 @@
-- Added cherry saplings to randomTreeTypesConsequence
+- Fixed problem where contribution counts would be wrong after a world restart.
