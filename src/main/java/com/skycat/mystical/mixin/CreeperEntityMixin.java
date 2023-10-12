@@ -19,14 +19,15 @@ import java.util.LinkedList;
 
 @Mixin(CreeperEntity.class)
 public abstract class CreeperEntityMixin {
-    @Shadow
-    private int explosionRadius;
+    @Shadow private int explosionRadius;
 
     @Shadow private int fuseTime;
 
     @Redirect(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/mob/CreeperEntity;fuseTime:I", opcode = Opcodes.GETFIELD))
     private int changeFuseTime(CreeperEntity instance) {
-        if (!Mystical.isClientWorld() || !Mystical.getHavenManager().isInHaven(instance) && Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {
+        if (!Mystical.isClientWorld() &&
+                !Mystical.getHavenManager().isInHaven(instance) &&
+                Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {
             return 1;
         }
         return fuseTime;
@@ -34,20 +35,22 @@ public abstract class CreeperEntityMixin {
 
     @ModifyVariable(method = "spawnEffectsCloud", at = @At("STORE"), index = 1)
     private Collection<StatusEffectInstance> makeEffectsCloud(Collection<StatusEffectInstance> oldEffects) {
-        if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(RandomCreeperEffectCloudsConsequence.class))) { // TODO: Config (chance, allowed effects))
+        if ((Mystical.isClientWorld() &&
+                Mystical.getSpellHandler().isConsequenceActive(RandomCreeperEffectCloudsConsequence.class))) { // TODO: Config (chance, allowed effects))
             LinkedList<StatusEffectInstance> newStatusEffects = new LinkedList<>(oldEffects);
-            newStatusEffects.add(new StatusEffectInstance(Utils.getRandomStatusEffect(), Mystical.CONFIG.randomCreeperEffectClouds.effectDuration() * 20, Mystical.CONFIG.randomCreeperEffectClouds.effectAmplifier()));
+            newStatusEffects.add(new StatusEffectInstance(Utils.getRandomStatusEffect(), Mystical.CONFIG.randomCreeperEffectClouds.effectDuration() *
+                    20, Mystical.CONFIG.randomCreeperEffectClouds.effectAmplifier()));
             return newStatusEffects;
         }
         return oldEffects;
     }
 
     @Redirect(method = "explode", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/mob/CreeperEntity;explosionRadius:I", opcode = Opcodes.GETFIELD))
-    int modifyExplosionRadius(CreeperEntity instance){
-        if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(BigCreeperExplosionConsequence.class)) &&
-                Utils.percentChance(Mystical.CONFIG.bigCreeperExplosion.chance()) &&
-                !(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(instance))
-        ) {
+    int modifyExplosionRadius(CreeperEntity instance) {
+        if (!Mystical.isClientWorld() &&
+                Mystical.getSpellHandler().isConsequenceActive(BigCreeperExplosionConsequence.class) &&
+                !Mystical.getHavenManager().isInHaven(instance) &&
+                Utils.percentChance(Mystical.CONFIG.bigCreeperExplosion.chance())) {
             Utils.log(Utils.translateString("text.mystical.consequence.bigCreeperExplosion.fired"), Mystical.CONFIG.bigCreeperExplosion.logLevel());
             return (int) (explosionRadius * Mystical.CONFIG.bigCreeperExplosion.multiplier());
         }
