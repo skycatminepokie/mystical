@@ -1,1 +1,1 @@
-- Fixed problem where contribution counts would be wrong after a world restart.
+- Fixed fuse consequence being wrong
