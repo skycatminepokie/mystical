@@ -26,7 +26,7 @@ public abstract class CreeperEntityMixin {
 
     @Redirect(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/mob/CreeperEntity;fuseTime:I", opcode = Opcodes.GETFIELD))
     private int changeFuseTime(CreeperEntity instance) {
-        if (!(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(instance) && (Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)))) {
+        if (!Mystical.isClientWorld() && !Mystical.getHavenManager().isInHaven(instance) && Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {
             return 1;
         }
         return fuseTime;
