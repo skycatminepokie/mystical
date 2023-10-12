@@ -15,12 +15,11 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Raid.class)
 public abstract class RaidMixin {
-    @WrapOperation(
-            method = "spawnNextWave",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;")
-    )
-    public Entity illusion(EntityType instance, World world, Operation<RaiderEntity> original) {
-        if (instance == EntityType.EVOKER) {
+    @WrapOperation(method = "spawnNextWave", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;"))
+    public Entity illusion(EntityType instance, World world, Operation<RaiderEntity> original) { // WARN: Not affected by havens
+        if (!Mystical.isClientWorld() &&
+                instance == EntityType.EVOKER &&
+                Mystical.getSpellHandler().isConsequenceActive(IllusionersReplaceEvokersConsequence.class)) {
             Utils.log(Utils.translateString(IllusionersReplaceEvokersConsequence.FACTORY.getDescriptionKey()), Mystical.CONFIG.illusionersReplaceEvokers.logLevel());
             return EntityType.ILLUSIONER.create(world);
         }

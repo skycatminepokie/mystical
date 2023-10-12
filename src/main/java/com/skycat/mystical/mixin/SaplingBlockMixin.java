@@ -19,13 +19,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SaplingBlock.class)
 public abstract class SaplingBlockMixin {
-    @Shadow @Final public static IntProperty STAGE;
+    @Shadow
+    @Final
+    public static IntProperty STAGE;
 
     @Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-    public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) {
-        if (state.get(STAGE) != 0 &&
-                !(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(pos)) &&
-                (Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(RandomTreeTypeConsequence.class)) &&
+    public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) { // TODO: MixinExtras this
+        if (!Mystical.isClientWorld() &&
+                state.get(STAGE) != 0 &&
+                !Mystical.getHavenManager().isInHaven(pos) &&
+                Mystical.getSpellHandler().isConsequenceActive(RandomTreeTypeConsequence.class) &&
                 Utils.percentChance(Mystical.CONFIG.randomTreeType.chance())) {
             Util.getRandom(RandomTreeTypeConsequence.SAPLING_GENERATORS, random).generate(world, world.getChunkManager().getChunkGenerator(), pos, state, random);
             Utils.log("text.mystical.consequence.randomTreeType.fired", Mystical.CONFIG.randomTreeType.logLevel());

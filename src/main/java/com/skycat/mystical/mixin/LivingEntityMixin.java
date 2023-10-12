@@ -20,30 +20,37 @@ public abstract class LivingEntityMixin {
     // Scuffed? Maybe.
     @Inject(method = "applyDamage", at = @At("TAIL"))
     public void applyDamage(DamageSource damageSource, float damage, CallbackInfo ci) {
-        if (damageSource.isOf(DamageTypes.OUT_OF_WORLD)) { // Require damage to be from normal source
+        boolean clientWorld = Mystical.isClientWorld();
+        if (damageSource.isOf(DamageTypes.OUT_OF_WORLD) || clientWorld) { // Require damage to be from normal source and in server world
             return;
         }
-        
+
         LivingEntity dis = ((LivingEntity) (Object) this);
+
+        if (Mystical.getHavenManager().isInHaven(dis) || dis.isDead()) { // Dead or in a haven, don't bother it.
+            return;
+        }
+
         var originalHealth = dis.getHealth();
-        
-        if (!(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(dis))) { 
+
+        if (!Mystical.getHavenManager().isInHaven(dis)) {
             if (dis instanceof AbstractSkeletonEntity skeleton) {
-                if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(SkeletonTypeChangeConsequence.class)) && // Spell is active
-                        !dis.isDead() && // And we're not dead
+                if (Mystical.getSpellHandler().isConsequenceActive(SkeletonTypeChangeConsequence.class) && // Spell is active
                         Utils.percentChance(Mystical.CONFIG.skeletonTypeChange.chance())) { // Roll the dice
                     float totalDamage = dis.getHealth();
                     Utils.log(Utils.translateString("text.mystical.consequence.skeletonTypeChange.fired"), Mystical.CONFIG.skeletonTypeChange.logLevel());
                     // Convert
                     Entity newEntity = Utils.convertToRandomInTag(skeleton, Mystical.SKELETON_VARIANTS);
-                    if (newEntity == null) return;
+                    if (newEntity == null) {
+                        Utils.log("Whoops, something failed while converting skeleton."); // TODO: Config
+                        return; // Something failed, just ignore it
+                    }
                     // Do the damage
                     newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
                 }
             } else {
                 if (dis.getType().isIn(Mystical.ENDERMAN_VARIANTS) && dis instanceof MobEntity enderEntity) {
-                    if ((Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(EnderTypeChangeConsequence.class)) && // Spell is active
-                            !dis.isDead() && // And we're not dead
+                    if (Mystical.getSpellHandler().isConsequenceActive(EnderTypeChangeConsequence.class) && // Spell is active
                             Utils.percentChance(Mystical.CONFIG.enderTypeChange.chance())) { // Roll the dice
                         float totalDamage = (dis.getMaxHealth() - originalHealth) + damage;
                         // Convert

@@ -1,1 +1,3 @@
-- Fixed fuse consequence being wrong
+- Fixed evokers always being replaced by illusioners in raids.
+  - Note that this spell is not affected by havens right now.
+- 
