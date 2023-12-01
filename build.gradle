@@ -125,17 +125,25 @@ loom {
     }
 }
 
-/* sourceSets { // Adding these manually
-       main {
-           resources {
-               srcDirs += [
-                       'src/main/generated'
-               ]
-           }
-       }
-   } */
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/main/generated'
+            ]
+        }
+    }
+}
 
-
+// Thanks to @daomephsta on discord
+runDatagenClient.finalizedBy('copyLangFiles')
+tasks.register('copyLangFiles', Copy) {
+    // String paths passed to from() and into() are relative to the project directory by default
+    from('src/main/resources/assets/mystical/lang/') {
+        include '*.json'
+    }
+    into 'src/main/generated/data/mystical/lang'
+}
 
 
 

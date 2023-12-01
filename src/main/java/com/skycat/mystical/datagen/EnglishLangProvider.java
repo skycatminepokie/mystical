@@ -5,10 +5,6 @@ import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Optional;
-
 class EnglishLangProvider extends FabricLanguageProvider {
 
     protected EnglishLangProvider(FabricDataOutput dataOutput) {
@@ -54,17 +50,6 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfig(tb, "enum.logLevel.info", "Info");
         addConfig(tb, "enum.logLevel.off", "No logging");
         addConfig(tb, "enum.logLevel.warn", "Warn");
-
-        Optional<Path> file = dataOutput.getModContainer().findPath("assets/mystical/lang/en_us.existing.json");
-        if (file.isPresent()) {
-            try {
-                tb.add(file.get());
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to add existing language file", e);
-            }
-        } else {
-            System.out.println("Warning: no existing language file found");
-        }
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {
@@ -126,6 +111,37 @@ class EnglishLangProvider extends FabricLanguageProvider {
 
     private void addCommandText(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical.command." + key, value);
+    }
+
+    /**
+     * Add all the things from the old en_us.existing.json.
+     * TODO: Sort these to go elsewhere and delete this function
+     * @param tb The TranslationBuilder
+     */
+    private void addOldExisting(TranslationBuilder tb) {
+        tb.add("text.mystical.classSerializer.failedDeserializeName", "Couldn't deserialize class of name %s.");
+        tb.add("text.mystical.commands.deleteSpellButton", " [X]");
+        tb.add("text.mystical.spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
+        tb.add("text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
+        tb.add("text.mystical.consequence.unbreakableLocation.noBreaking", "A mystical force prevents you from breaking that block.");
+        tb.add("text.mystical.cure.kill", "Kill %ss");
+        tb.add("text.config.mysticalConfig.option.skeletonTypeChange.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.bigCreeperExplosion.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.bigCreeperExplosion.multiplier", "Multiplier");
+        tb.add("text.config.mysticalConfig.option.randomTreeType.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.levitate.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.sheepColorChange.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.zombieTypeChange.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.enderTypeChange.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.fishingRodLaunch.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.catVariantChange.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.fishingRodLaunch.multiplier", "Multiplier");
+        tb.add("text.config.mysticalConfig.option.unbreakableLocation.chance", "% chance");
+        tb.add("text.config.mysticalConfig.option.turboChickens.speed", "Speed multiplier");
+        tb.add("text.config.mysticalConfig.option.turboChickens.speed.tooltip", "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
+        tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
+        tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier", "Effect amplifier");
+        tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier.tooltip", "0 = level one, just like the /effect command");
     }
 
 }
