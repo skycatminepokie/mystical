@@ -20,7 +20,7 @@ public abstract class MinecraftServerTimer implements MinecraftServerTimerAccess
     @Inject(method = "tick", at = @At("TAIL"))
     private void onTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if (--this.ticksUntilNight <= 0L) {
-            Mystical.EVENT_HANDLER.doNighttimeEvents();
+            Mystical.EVENT_HANDLER.doNighttimeEvents((MinecraftServer) (Object) this);
         }
     }
 

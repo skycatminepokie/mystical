@@ -18,8 +18,12 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         Utils.log(Utils.translateString("text.mystical.logging.timeOfDayAtStartup", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
     }
 
+    /**
+     * Do all the nighttime events - changing spells and setting the night timer.
+     * @deprecated Use {@link MysticalEventHandler#doNighttimeEvents(MinecraftServer)} instead.
+     */
+    @Deprecated
     public void doNighttimeEvents() {
-        // TODO: Logging
         Mystical.getSpellHandler().removeCuredSpells();
         if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
             Mystical.getSpellHandler().activateNewSpell();
@@ -27,6 +31,27 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
             Mystical.getSpellHandler().activateNewSpell();
         }
+        setNightTimer();
+    }
+
+    /**
+     * Do all the nighttime events - changing spells and setting the night timer.
+     */
+    public void doNighttimeEvents(MinecraftServer server) {
+        int spellsCured = Mystical.getSpellHandler().removeCuredSpells();
+        if (spellsCured > 0) {
+            server.sendMessage(Utils.textOf(spellsCured + " spells were cured this night.")); // TODO: Localize, pluralize
+        }
+        int newSpells = 0;
+        if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
+            Mystical.getSpellHandler().activateNewSpell();
+            newSpells++;
+        }
+        while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
+            Mystical.getSpellHandler().activateNewSpell();
+            newSpells++;
+        }
+        server.sendMessage(Utils.textOf(newSpells + " spells fell over the world.")); // TODO: Localize, pluralize
         setNightTimer();
     }
 
