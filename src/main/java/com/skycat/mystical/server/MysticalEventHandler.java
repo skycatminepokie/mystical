@@ -22,7 +22,7 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
      * Do all the nighttime events - changing spells and setting the night timer.
      * @deprecated Use {@link MysticalEventHandler#doNighttimeEvents(MinecraftServer)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public void doNighttimeEvents() {
         Mystical.getSpellHandler().removeCuredSpells();
         if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
@@ -39,8 +39,11 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
      */
     public void doNighttimeEvents(MinecraftServer server) {
         int spellsCured = Mystical.getSpellHandler().removeCuredSpells();
-        if (spellsCured > 0) {
-            server.sendMessage(Utils.textOf(spellsCured + " spells were cured this night.")); // TODO: Localize, pluralize
+        if (spellsCured == 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.cureSpell"));
+        }
+        if (spellsCured > 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.cureSpells", spellsCured));
         }
         int newSpells = 0;
         if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
@@ -51,7 +54,12 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
             Mystical.getSpellHandler().activateNewSpell();
             newSpells++;
         }
-        server.sendMessage(Utils.textOf(newSpells + " spells fell over the world.")); // TODO: Localize, pluralize
+        if (newSpells == 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.newSpell"));
+        }
+        if (newSpells > 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.newSpells", newSpells));
+        }
         setNightTimer();
     }
 
