@@ -139,7 +139,7 @@ sourceSets {
 runDatagenClient.finalizedBy('copyLangFiles')
 tasks.register('copyLangFiles', Copy) {
     // String paths passed to from() and into() are relative to the project directory by default
-    from('src/main/resources/assets/mystical/lang/') {
+    from('src/main/generated/assets/mystical/lang/') {
         include '*.json'
     }
     into 'src/main/generated/data/mystical/lang'
