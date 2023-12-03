@@ -31,3 +31,6 @@ Requires OwO-lib and Fabric API
 
 #### Can I use this in a modpack?
 Yes! Just don't rehost it without permission. And if you feel like it, let me know - I'm excited to see where this project goes!
+
+#### Contributing
+You want to contribute? Awesome! Check out some of the later feature commits to see how the framework works (I'll maybe remember to add info here later). Please branch from `development` - I use PRs to master for publishing.
