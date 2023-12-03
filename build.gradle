@@ -114,7 +114,7 @@ publishing {
 loom {
     runs {
         datagenClient {
-            inherit client
+            inherit server
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
