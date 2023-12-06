@@ -10,6 +10,8 @@ public class ConfigModel {
     public boolean devMode = false; // Not implemented
     public int spellMaxHard = 3;
     public int spellMinHard = 0;
+    public double spellDecay = 10.0;
+    public boolean spellDecayLinear = false;
 
     @SectionHeader("Spells")
     @Nest public BigCreeperExplosionConfig bigCreeperExplosion = new BigCreeperExplosionConfig();
@@ -371,7 +373,9 @@ public class ConfigModel {
     public static boolean weightPredicate(double value) {
         return value >= 0;
     }
-
+    public static boolean percentPredicate(double value) {
+        return value >= 0 && value <= 100;
+    }
     public static boolean positivePredicate(double value) {
         return value >= 0;
     }

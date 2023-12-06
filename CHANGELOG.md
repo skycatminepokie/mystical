@@ -1,3 +1,1 @@
-- Fixed evokers always being replaced by illusioners in raids.
-  - Note that this spell is not affected by havens right now.
-- 
+- Spells now decay over time

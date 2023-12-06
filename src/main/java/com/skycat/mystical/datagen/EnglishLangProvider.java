@@ -18,9 +18,13 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigSection(tb, "General");
         addConfigOption(tb, "devMode", "Dev mode");
         addConfigOption(tb, "spellMaxHard", "Max spells (Hard)");
-        addConfigOption(tb, "spellMinHard", "Min spells (Hard)");
         addConfigOptionTooltip(tb, "spellMaxHard", "The maximum number of spells active at a time.\nMystical will not delete extra spells, but won't make any past this point.");
+        addConfigOption(tb, "spellMinHard", "Min spells (Hard)");
         addConfigOptionTooltip(tb, "spellMinHard", "The minimum number of spells active at a time.\nMystical will make sure there are this many spells active whenever spell rewards are paid out.");
+        addConfigOption(tb, "spellDecay", "Spell decay (%)");
+        addConfigOptionTooltip(tb, "spellDecay", "How much spells will decay each night.");
+        addConfigOption(tb, "spellDecayLinear", "Decay spells linearly?");
+        addConfigOptionTooltip(tb, "spellDecayLinear", "If true, spells will decay based on the full requirement of the spell.\nIf false, they will decay based on what's left.");
 
         addConfigSection(tb, "Logging");
         addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");

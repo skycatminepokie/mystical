@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+import static com.skycat.mystical.Mystical.CONFIG;
 import static com.skycat.mystical.Mystical.GSON;
 
 public class SpellHandler implements EntitySleepEvents.StartSleeping,
@@ -76,6 +77,15 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         } catch (FileNotFoundException e) {
             Utils.log(Utils.translateString("text.mystical.logging.failedToLoadSpellHandler"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
             return new SpellHandler();
+        }
+    }
+
+    public void decaySpells() {
+        double amount = CONFIG.spellDecay() / 100;
+        for (Spell spell : activeSpells) {
+            SpellCure cure = spell.getCure();
+            // If linear, base decay on the goal. Otherwise, base it on how much is left.
+            cure.contribute(null, (int) Math.ceil((CONFIG.spellDecayLinear() ? cure.getContributionGoal() : cure.getContributionsLeft()) * amount));
         }
     }
 
