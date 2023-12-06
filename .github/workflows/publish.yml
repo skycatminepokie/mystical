@@ -7,9 +7,10 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      doit: "do it?"
-      required: true
-      type: boolean
+      doit:
+        description: "do it?"
+        required: true
+        type: boolean
 
 env:
   MINECRAFT_VERSION: 1.20.1
