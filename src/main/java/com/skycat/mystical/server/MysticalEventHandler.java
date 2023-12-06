@@ -18,14 +18,47 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
         Utils.log(Utils.translateString("text.mystical.logging.timeOfDayAtStartup", server.getOverworld().getTimeOfDay()), Mystical.CONFIG.timeOfDayAtStartupLogLevel());
     }
 
+    /**
+     * Do all the nighttime events - changing spells and setting the night timer.
+     * @deprecated Use {@link MysticalEventHandler#doNighttimeEvents(MinecraftServer)} instead.
+     */
+    @Deprecated(forRemoval = true)
     public void doNighttimeEvents() {
-        // TODO: Logging
         Mystical.getSpellHandler().removeCuredSpells();
         if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
             Mystical.getSpellHandler().activateNewSpell();
         }
         while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
             Mystical.getSpellHandler().activateNewSpell();
+        }
+        setNightTimer();
+    }
+
+    /**
+     * Do all the nighttime events - changing spells and setting the night timer.
+     */
+    public void doNighttimeEvents(MinecraftServer server) {
+        int spellsCured = Mystical.getSpellHandler().removeCuredSpells();
+        if (spellsCured == 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.cureSpell"));
+        }
+        if (spellsCured > 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.cureSpells", spellsCured));
+        }
+        int newSpells = 0;
+        if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
+            Mystical.getSpellHandler().activateNewSpell();
+            newSpells++;
+        }
+        while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
+            Mystical.getSpellHandler().activateNewSpell();
+            newSpells++;
+        }
+        if (newSpells == 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.newSpell"));
+        }
+        if (newSpells > 1) {
+            server.sendMessage(Utils.translatable("text.mystical.events.newSpells", newSpells));
         }
         setNightTimer();
     }

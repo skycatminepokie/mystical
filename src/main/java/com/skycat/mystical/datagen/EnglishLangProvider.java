@@ -50,6 +50,11 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfig(tb, "enum.logLevel.info", "Info");
         addConfig(tb, "enum.logLevel.off", "No logging");
         addConfig(tb, "enum.logLevel.warn", "Warn");
+
+        tb.add("text.mystical.events.cureSpell", "1 spell was cured this night.");
+        tb.add("text.mystical.events.cureSpells", "%d spells were cured this night.");
+        tb.add("text.mystical.events.newSpell", "1 new spell fell over the world.");
+        tb.add("text.mystical.events.newSpells", "%d new spells fell over the world.");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {
