@@ -53,7 +53,7 @@ public abstract class SpawnHelperMixin {
     @ModifyArg(method = "spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/SpawnHelper;createMob(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/EntityType;)Lnet/minecraft/entity/mob/MobEntity;"), index = 1)
     private static EntityType swapMobs(EntityType entityType) {
-        if (!Mystical.isClientWorld() && Mystical.getSpellHandler().isConsequenceActive(MobSpawnSwapConsequence.class)) {
+        if (Mystical.isClientWorld() || !Mystical.getSpellHandler().isConsequenceActive(MobSpawnSwapConsequence.class)) {
             return entityType;
         }
         if (entityType == EntityType.SKELETON) return EntityType.WITHER_SKELETON; // Skeleton <-> Wither skeleton
