@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true || true
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' # @AnthonyWC on GH, https://github.com/orgs/community/discussions/26724#discussioncomment-3253096
     runs-on: ubuntu-latest
     steps:
       - name: Check Environment Variables
