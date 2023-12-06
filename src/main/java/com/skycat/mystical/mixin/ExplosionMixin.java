@@ -26,10 +26,12 @@ public abstract class ExplosionMixin {
 
     @Inject(method = "affectWorld", at = @At("HEAD"))
     private void infestBlocks(boolean particles, CallbackInfo ci) {
-        if (Mystical.getSpellHandler().isConsequenceActive(ExplosionsInfestConsequence.class)) {
+        if (!Mystical.isClientWorld() &&
+                Mystical.getSpellHandler().isConsequenceActive(ExplosionsInfestConsequence.class)) {
             ListIterator<BlockPos> it = getAffectedBlocks().listIterator();
             while (it.hasNext()) {
                 BlockPos blockPos = it.next();
+                if (Mystical.getHavenManager().isInHaven(blockPos)) continue;
                 BlockState blockState = world.getBlockState(blockPos);
                 if (Utils.percentChance(Mystical.getCONFIG().explosionsInfest.chance()) && InfestedBlock.isInfestable(blockState)) {
                     world.setBlockState(blockPos, InfestedBlock.fromRegularState(blockState));
