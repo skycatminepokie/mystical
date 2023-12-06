@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Credit MattiDragon#8944 on discord for extension info
     @Unique
     private static boolean targetPredicate(LivingEntity entity) {
-        return (Mystical.isClientWorld() &&
+        return (!Mystical.isClientWorld() &&
                 Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class)) &&
                 !Mystical.getHavenManager().isInHaven(entity); // Don't attack things that are in a haven
     }
