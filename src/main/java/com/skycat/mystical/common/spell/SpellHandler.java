@@ -7,6 +7,7 @@ import com.skycat.mystical.common.spell.consequence.SpellConsequence;
 import com.skycat.mystical.common.spell.cure.SpellCure;
 import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.event.CatEntityEvents;
 import lombok.Getter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
@@ -17,7 +18,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stat;
@@ -44,7 +47,8 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         PlayerBlockBreakEvents.After,
         ServerPlayerEvents.AfterRespawn,
         ServerEntityCombatEvents.AfterKilledOtherEntity,
-        AttackBlockCallback {
+        AttackBlockCallback,
+        CatEntityEvents.Eat {
     /**
      * @implNote Saving/loading does not ensure that the order of spells will be retained.
      */
@@ -90,6 +94,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return !spellsOfConsequenceType(consequence).isEmpty();
     }
 
+
     /**
      * Used for finding active spells with a particular consequence type.
      * This is not the same as a handler.
@@ -121,6 +126,13 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
         for (Spell spell : spellsOfHandler(PlayerBlockBreakEvents.After.class)) {
             ((PlayerBlockBreakEvents.After) spell.getConsequence()).afterBlockBreak(world, player, pos, state, blockEntity);
+        }
+    }
+
+    @Override
+    public void onEat(CatEntity cat, PlayerEntity player, Hand hand, ItemStack stack) {
+        for (Spell spell : spellsOfHandler(CatEntityEvents.Eat.class)) {
+            ((CatEntityEvents.Eat) spell.getConsequence()).onEat(cat, player, hand, stack);
         }
     }
 
