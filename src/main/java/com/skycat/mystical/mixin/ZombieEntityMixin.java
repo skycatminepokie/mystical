@@ -20,9 +20,9 @@ public abstract class ZombieEntityMixin { // TODO: move to LivingEntityMixin
         ZombieEntity dis = (ZombieEntity) (Object) this;
         // If the spell is not active, the damage didn't go through, or we roll too low, don't do anything
         if (Mystical.isClientWorld() ||
+                !cir.getReturnValue() || // Damage was avoided anyway
                 Mystical.getHavenManager().isInHaven(dis) ||
                 !Mystical.getSpellHandler().isConsequenceActive(ZombieTypeChangeConsequence.class) ||
-                !cir.getReturnValue() ||
                 !Utils.percentChance(Mystical.CONFIG.zombieTypeChange.chance())) {
             return;
         }
