@@ -35,8 +35,8 @@ public abstract class CreeperEntityMixin {
 
     @ModifyVariable(method = "spawnEffectsCloud", at = @At("STORE"), index = 1)
     private Collection<StatusEffectInstance> makeEffectsCloud(Collection<StatusEffectInstance> oldEffects) {
-        if ((!Mystical.isClientWorld() &&
-                Mystical.getSpellHandler().isConsequenceActive(RandomCreeperEffectCloudsConsequence.class))) { // TODO: Config (chance, allowed effects))
+        if (!Mystical.isClientWorld() &&
+                Mystical.getSpellHandler().isConsequenceActive(RandomCreeperEffectCloudsConsequence.class)) { // TODO: Config (chance, allowed effects)
             LinkedList<StatusEffectInstance> newStatusEffects = new LinkedList<>(oldEffects);
             newStatusEffects.add(new StatusEffectInstance(Utils.getRandomStatusEffect(), Mystical.CONFIG.randomCreeperEffectClouds.effectDuration() *
                     20, Mystical.CONFIG.randomCreeperEffectClouds.effectAmplifier()));
