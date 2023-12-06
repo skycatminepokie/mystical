@@ -37,9 +37,9 @@ public abstract class SpawnHelperMixin {
     // Tried using ModifyVariable, but locations weren't set up yet. // TY llamalad7, benonardo // This could be better as a WrapOperation
     private static void giveSpeedBoost(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner, CallbackInfo ci, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, int i, BlockState blockState, BlockPos.Mutable mutable, int j, int k, int l, int m, int n, SpawnSettings.SpawnEntry spawnEntry, EntityData entityData, int o, int p, int q, double d, double e, PlayerEntity playerEntity, double f, MobEntity mobEntity) {
         // Most of the parameters are unused :(
+        if (Mystical.isClientWorld()) return;
         for (Spell spell : Mystical.getSpellHandler().spellsOfConsequenceType(TurboMobsConsequence.class)) { // Inside this, there must be an active TurboMobsConsequence spell
-            if (!Mystical.isClientWorld() &&
-                    Mystical.getHavenManager().isInHaven(mobEntity) &&
+            if (!Mystical.getHavenManager().isInHaven(mobEntity) &&
                     ((TurboMobsConsequence) spell.getConsequence()).entityType.equals(mobEntity.getType())) { // Make sure it applies to this type // TODO: Chance
                 EntityAttributeInstance attributeInstance = mobEntity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (attributeInstance != null) {
