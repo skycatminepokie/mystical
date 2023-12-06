@@ -20,8 +20,7 @@ public abstract class LivingEntityMixin {
     // Scuffed? Maybe.
     @Inject(method = "applyDamage", at = @At("TAIL"))
     public void applyDamage(DamageSource damageSource, float damage, CallbackInfo ci) {
-        boolean clientWorld = Mystical.isClientWorld();
-        if (damageSource.isOf(DamageTypes.OUT_OF_WORLD) || clientWorld) { // Require damage to be from normal source and in server world
+        if (damageSource.isOf(DamageTypes.OUT_OF_WORLD) || Mystical.isClientWorld()) { // Require damage to be from normal source and in server world
             return;
         }
 
