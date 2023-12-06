@@ -8,7 +8,7 @@ on:
 env:
   MINECRAFT_VERSION: 1.20.1
   JAVA_VERSION: 17
-  VERSION: 4.1.5+1.20.1
+  VERSION: 4.1.8+1.20.1
   VERSION_TYPE: beta
 
 permissions:
