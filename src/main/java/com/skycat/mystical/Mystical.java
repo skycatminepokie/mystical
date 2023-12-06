@@ -38,6 +38,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
+// WARNING: Package structure looks like split-sources structure. It's not. I'm working on it.
 @Getter
 public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     @Getter public static final Logger LOGGER = LoggerFactory.getLogger("mystical");

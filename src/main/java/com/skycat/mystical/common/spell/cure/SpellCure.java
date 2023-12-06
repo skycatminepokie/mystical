@@ -62,6 +62,9 @@ public abstract class SpellCure {
     }
 
     public void contribute(@Nullable UUID uuid, int amount) {
+        if (uuid == null) {
+            uuid = UUID.fromString("09b4c37c-1dd6-4eb4-8adf-f660dd111410"); // This better not collide with anything.
+        }
         if (contributions.containsKey(uuid)) {
             contributions.put(uuid, contributions.get(uuid) + amount);
         } else {
@@ -69,11 +72,7 @@ public abstract class SpellCure {
         }
         contributionTotal += amount;
         String contributor;
-        if (uuid != null) {
-            contributor = uuid.toString();
-        } else {
-            contributor = "unknown";
-        }
+        contributor = uuid.toString();
         Utils.log(Utils.translateString("text.mystical.logging.spellContribution", contributor, amount), Mystical.CONFIG.spellContributionLogLevel());
         Mystical.saveUpdated();
     }
@@ -102,6 +101,10 @@ public abstract class SpellCure {
             // Formula: min(totalPower * percentContributed, max)
             Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
         }
+    }
+
+    public int getContributionsLeft() {
+        return getContributionGoal() - getContributionTotal();
     }
 
     public static class Serializer implements JsonSerializer<SpellCure>, JsonDeserializer<SpellCure> {

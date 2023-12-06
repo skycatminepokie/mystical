@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class ChickenEntityMixin {
     @Redirect(method = "tickMovement", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/passive/ChickenEntity;eggLayTime:I", opcode = Opcodes.PUTFIELD, ordinal = 1))
     private void shortenEggLayTime(ChickenEntity instance, int value) {
-        if (Mystical.isClientWorld() &&
+        if (!Mystical.isClientWorld() &&
                 Mystical.getSpellHandler().isConsequenceActive(TurboChickensConsequence.class) &&
                 Mystical.getHavenManager().isInHaven(instance)) {
             instance.eggLayTime = (int) (value / Mystical.CONFIG.turboChickens.speed());

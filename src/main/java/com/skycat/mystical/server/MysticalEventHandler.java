@@ -1,6 +1,7 @@
 package com.skycat.mystical.server;
 
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -35,7 +36,9 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
      * Do all the nighttime events - changing spells and setting the night timer.
      */
     public void doNighttimeEvents(MinecraftServer server) {
-        int spellsCured = Mystical.getSpellHandler().removeCuredSpells();
+        SpellHandler spellHandler = Mystical.getSpellHandler();
+        spellHandler.decaySpells();
+        int spellsCured = spellHandler.removeCuredSpells();
         Stack<Text> messageStack = new Stack<>(); // Done this way because it seemed best to get the spell changing message out on top
         if (spellsCured == 1) {
             messageStack.push(Utils.translatable("text.mystical.events.cureSpell"));
@@ -44,12 +47,12 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
             messageStack.push(Utils.translatable("text.mystical.events.cureSpells", spellsCured));
         }
         int newSpells = 0;
-        if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
-            Mystical.getSpellHandler().activateNewSpell();
+        if (spellHandler.getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
+            spellHandler.activateNewSpell();
             newSpells++;
         }
-        while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
-            Mystical.getSpellHandler().activateNewSpell();
+        while (spellHandler.getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
+            spellHandler.activateNewSpell();
             newSpells++;
         }
         if (newSpells == 1) {
