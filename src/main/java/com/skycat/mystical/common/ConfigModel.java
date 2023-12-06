@@ -32,7 +32,7 @@ public class ConfigModel {
     @Nest public TurboMobsConfig turboMobs = new TurboMobsConfig();
     @Nest public RandomEvokerSummonsConfig randomEvokerSummons = new RandomEvokerSummonsConfig();
     @Nest public IllusionersReplaceEvokersConfig illusionersReplaceEvokers = new IllusionersReplaceEvokersConfig();
-    @Nest public CreeperExplosionsInfestConfig creeperExplosionsInfest = new CreeperExplosionsInfestConfig();
+    @Nest public ExplosionsInfestConfig explosionsInfest = new ExplosionsInfestConfig();
   
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -336,7 +336,7 @@ public class ConfigModel {
         }
     }
 
-    public static class CreeperExplosionsInfestConfig {
+    public static class ExplosionsInfestConfig {
         public  boolean enabled = true;
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")

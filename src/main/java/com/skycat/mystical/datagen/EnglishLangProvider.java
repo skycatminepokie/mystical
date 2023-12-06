@@ -86,6 +86,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         tb.add(factory.getShortNameKey(), shortName); // Short name
         tb.add(factory.getLongNameKey(), longName); // Long name
         tb.add(factory.getDescriptionKey(), factory.getDescription()); // Description
+        tb.add("text.config.mysticalConfig.option." + shortName + ".change", "% chance"); // Chance
         tb.add(factory.translationKey() + ".fired", "Spell " + shortName + ": " + factory.getFiredMessage() + ".");
         // Config stuff
         addConfigCategory(tb, shortName, longName); // Category
@@ -125,18 +126,8 @@ class EnglishLangProvider extends FabricLanguageProvider {
         tb.add("text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         tb.add("text.mystical.consequence.unbreakableLocation.noBreaking", "A mystical force prevents you from breaking that block.");
         tb.add("text.mystical.cure.kill", "Kill %ss");
-        tb.add("text.config.mysticalConfig.option.skeletonTypeChange.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.bigCreeperExplosion.chance", "% chance");
         tb.add("text.config.mysticalConfig.option.bigCreeperExplosion.multiplier", "Multiplier");
-        tb.add("text.config.mysticalConfig.option.randomTreeType.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.levitate.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.sheepColorChange.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.zombieTypeChange.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.enderTypeChange.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.fishingRodLaunch.chance", "% chance");
-        tb.add("text.config.mysticalConfig.option.catVariantChange.chance", "% chance");
         tb.add("text.config.mysticalConfig.option.fishingRodLaunch.multiplier", "Multiplier");
-        tb.add("text.config.mysticalConfig.option.unbreakableLocation.chance", "% chance");
         tb.add("text.config.mysticalConfig.option.turboChickens.speed", "Speed multiplier");
         tb.add("text.config.mysticalConfig.option.turboChickens.speed.tooltip", "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
         tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
