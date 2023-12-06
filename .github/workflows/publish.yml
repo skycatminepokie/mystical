@@ -6,11 +6,6 @@ on:
     branches:
       - master
   workflow_dispatch:
-    inputs:
-      doit:
-        description: "do it?"
-        required: true
-        type: boolean
 
 env:
   MINECRAFT_VERSION: 1.20.1
@@ -23,7 +18,7 @@ permissions:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true || github.event.workflow_dispatch.inputs.doit
+    if: github.event.pull_request.merged == true || github.event.workflow_dispatch
     runs-on: ubuntu-latest
     steps:
       - name: Check Environment Variables
