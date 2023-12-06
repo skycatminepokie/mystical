@@ -8,6 +8,7 @@
     "CatEntityMixin",
     "ChickenEntityMixin",
     "CreeperEntityMixin",
+    "ExplosionMixin",
     "FishingBobberEntityMixin",
     "IronGolemEntityMixin",
     "LivingEntityMixin",

@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'fabric-loom' version '1.4-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -49,9 +49,6 @@ dependencies {
 
     // Runtime: modmenu
     // modRuntimeOnly("curse.maven:modmenu-308702:4100232")
-
-    // MixinExtras
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.11")))
 }
 
 processResources {
@@ -114,7 +111,7 @@ publishing {
 loom {
     runs {
         datagenClient {
-            inherit client
+            inherit server
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
             vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
@@ -125,17 +122,25 @@ loom {
     }
 }
 
-/* sourceSets { // Adding these manually
-       main {
-           resources {
-               srcDirs += [
-                       'src/main/generated'
-               ]
-           }
-       }
-   } */
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/main/generated'
+            ]
+        }
+    }
+}
 
-
+// Thanks to @daomephsta on discord
+runDatagenClient.finalizedBy('copyLangFiles')
+tasks.register('copyLangFiles', Copy) {
+    // String paths passed to from() and into() are relative to the project directory by default
+    from('src/main/generated/assets/mystical/lang/') {
+        include '*.json'
+    }
+    into 'src/main/generated/data/mystical/lang'
+}
 
 
 
