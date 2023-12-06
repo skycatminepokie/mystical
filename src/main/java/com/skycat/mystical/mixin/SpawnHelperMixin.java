@@ -40,7 +40,7 @@ public abstract class SpawnHelperMixin {
         for (Spell spell : Mystical.getSpellHandler().spellsOfConsequenceType(TurboMobsConsequence.class)) { // Inside this, there must be an active TurboMobsConsequence spell
             if (!Mystical.isClientWorld() &&
                     Mystical.getHavenManager().isInHaven(mobEntity) &&
-                    ((TurboMobsConsequence) spell.getConsequence()).entityType.equals(mobEntity.getType()) { // Make sure it applies to this type // TODO: Chance
+                    ((TurboMobsConsequence) spell.getConsequence()).entityType.equals(mobEntity.getType())) { // Make sure it applies to this type // TODO: Chance
                 EntityAttributeInstance attributeInstance = mobEntity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 if (attributeInstance != null) {
                     attributeInstance.addPersistentModifier(new EntityAttributeModifier("Mystical speed boost", 0.5, EntityAttributeModifier.Operation.MULTIPLY_BASE)); // TODO: Config
