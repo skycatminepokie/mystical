@@ -1,3 +1,5 @@
 - Added spell that causes explosions to infest blocks instead of breaking them
 - Added notifications for when spells are created or destroyed
 - Update Fabric Loader to 0.15.0
+- Updated to Gradle 8.5
+- Removed MixinExtras - it's in Fabric Loader now :D
