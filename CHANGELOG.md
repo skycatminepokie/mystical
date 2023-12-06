@@ -1,1 +1,2 @@
 - Added spell that causes explosions to infest blocks instead of breaking them
+- Added notifications for when spells are created or destroyed

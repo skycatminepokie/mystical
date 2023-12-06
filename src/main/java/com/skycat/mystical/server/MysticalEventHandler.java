@@ -5,6 +5,9 @@ import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.text.Text;
+
+import java.util.Stack;
 
 public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted, ServerLifecycleEvents.ServerStopping {
     @Getter private MinecraftServer server;
@@ -39,11 +42,12 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
      */
     public void doNighttimeEvents(MinecraftServer server) {
         int spellsCured = Mystical.getSpellHandler().removeCuredSpells();
+        Stack<Text> messageStack = new Stack<>(); // Done this way because it seemed best to get the spell changing message out on top
         if (spellsCured == 1) {
-            server.sendMessage(Utils.translatable("text.mystical.events.cureSpell"));
+            messageStack.push(Utils.translatable("text.mystical.events.cureSpell"));
         }
         if (spellsCured > 1) {
-            server.sendMessage(Utils.translatable("text.mystical.events.cureSpells", spellsCured));
+            messageStack.push(Utils.translatable("text.mystical.events.cureSpells", spellsCured));
         }
         int newSpells = 0;
         if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
@@ -55,10 +59,16 @@ public class MysticalEventHandler implements ServerLifecycleEvents.ServerStarted
             newSpells++;
         }
         if (newSpells == 1) {
-            server.sendMessage(Utils.translatable("text.mystical.events.newSpell"));
+            messageStack.push(Utils.translatable("text.mystical.events.newSpell"));
         }
         if (newSpells > 1) {
-            server.sendMessage(Utils.translatable("text.mystical.events.newSpells", newSpells));
+            messageStack.push(Utils.translatable("text.mystical.events.newSpells", newSpells));
+        }
+        if (!messageStack.isEmpty()) {
+            messageStack.push(Utils.translatable("text.mystical.events.spellsChange"));
+            while (!messageStack.isEmpty()) {
+                server.sendMessage(messageStack.pop());
+            }
         }
         setNightTimer();
     }
