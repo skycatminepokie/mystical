@@ -1,1 +1,2 @@
 - Spells now decay over time
+- Fixed turboChickens not working
