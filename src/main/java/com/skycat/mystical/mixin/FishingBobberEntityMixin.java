@@ -21,11 +21,11 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public abstract class FishingBobberEntityMixin {
     @Inject(method = "pullHookedEntity", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void afterPullHooked(Entity entity, CallbackInfo ci, Entity entity2, Vec3d vec3d) {
-        if (!(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity)) &&
-                !(Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity2)) &&
+        if (!Mystical.isClientWorld() &&
+                !Mystical.getHavenManager().isInHaven(entity) &&
+                !Mystical.getHavenManager().isInHaven(entity2) &&
                 entity instanceof ServerPlayerEntity &&
-                (Mystical.isClientWorld() &&
-                        Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class))) {
+                Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class)) {
             ((ServerPlayerEntity) entity).networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(entity)); // Thanks @Wesley1808#9858 :)
         }
     }
