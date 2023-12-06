@@ -1,9 +1,1 @@
-- Added spell that replaces evokers with illusioners
-- Added spell that makes evoker summon different things
-- For datapacks:
-  - randomEvokerSummons: Evokers may summon anything with the tag "mystical:evoker_summonable"
-  - zombieTypeChange: Zombie types are tagged "mystical:zombie_variants"
-  - skeletonTypeChange: Skeleton types are tagged "mystical:skeleton_variants"
-  - endermanTypeChange: Enderman types are tagged "mystical:enderman_variants"
-  - Added "mystical:bosses" tag for bosses. Currently unused.
-- Also added auto-publishing to repo. Here goes nothing!
+- Added spell that causes explosions to infest blocks instead of breaking them
