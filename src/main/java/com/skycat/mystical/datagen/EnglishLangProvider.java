@@ -48,6 +48,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
             addConfigSpell(tb, factory);
         }
+        tb.add("text.mystical.consequence.unbreakableLocation.noBreaking", "A mystical force prevents you from breaking this block.");
 
         addConfig(tb, "enum.logLevel.debug", "Debug");
         addConfig(tb, "enum.logLevel.error", "Error");
