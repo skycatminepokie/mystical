@@ -64,7 +64,7 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
         if (!messageStack.isEmpty()) {
             messageStack.push(Utils.translatable("text.mystical.events.spellsChange"));
             while (!messageStack.isEmpty()) {
-                server.sendMessage(messageStack.pop());
+                server.getPlayerManager().broadcast(messageStack.pop(), false);
             }
         }
         setNightTimer();
