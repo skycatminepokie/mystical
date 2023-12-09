@@ -104,7 +104,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
      *
      * @return A new consequence, or null if all spells are disabled
      */
-    public static SpellConsequence getConsequence() { // I think we're getting rid of the notion of points for now. WARN: This may be slow with many consequences
+    public static SpellConsequence getConsequence() { // I think we're getting rid of the notion of points for now. This may be slow with many consequences
         if (consequenceFactories.isEmpty()) { // Should not happen
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList")); // TODO: Config
             return LevitateConsequence.FACTORY.make(Mystical.getRANDOM(), 0);
@@ -150,7 +150,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         }
         // Labeled in translation as critical error. Ideally, this should not happen.
         Utils.log(Utils.translateString("text.mystical.logging.failedToGetRandomBlock"), Mystical.CONFIG.failedToGetRandomBlockLogLevel());
-        return Blocks.COMMAND_BLOCK;
+        return Blocks.STONE;
     }
 
     @SuppressWarnings("rawtypes")
