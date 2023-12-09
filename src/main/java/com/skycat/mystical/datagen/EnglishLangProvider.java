@@ -61,6 +61,8 @@ class EnglishLangProvider extends FabricLanguageProvider {
         tb.add("text.mystical.events.cureSpells", "%d spells were cured this night.");
         tb.add("text.mystical.events.newSpell", "1 new spell fell over the world.");
         tb.add("text.mystical.events.newSpells", "%d new spells fell over the world.");
+
+        addOldExisting(tb);
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {
