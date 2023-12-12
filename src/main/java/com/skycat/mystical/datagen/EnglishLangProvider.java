@@ -13,6 +13,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder tb) {
+        // Config
         addConfig(tb, "title", "Mystical Config");
 
         addConfigSection(tb, "General");
@@ -42,26 +43,41 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "mystical.reload.success", "Successfully reloaded config and set night timer.");
         addCommandText(tb, "mystical.spell.list.noSpells", "There are no active spells.");
         addCommandText(tb, "mystical.spell.new.spell.warnDisabled", "Warning: Randomly generating this spell is disabled, or its weight is zero.");
+        addCommandText(tb, "mystical.spell.delete.deleteButton", " [X]");
 
         addConfigSection(tb, "Spells");
-        // Generate translations for consequences
+        // Config + spells
         for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
             addConfigSpell(tb, factory);
         }
+        addConfigOption(tb, "bigCreeperExplosion.multiplier", "Multiplier");
+        addConfigOption(tb, "fishingRodLaunch.multiplier", "Multiplier");
+        addConfigOption(tb, "turboChickens.speed", "Speed multiplier");
+        addConfigOptionTooltip(tb, "turboChickens.speed", "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
+        addConfigOption(tb, "randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
+        addConfigOption(tb, "randomCreeperEffectClouds.effectAmplifier", "Effect amplifier");
+        addConfigOptionTooltip(tb, "randomCreeperEffectClouds.effectAmplifier", "0 = level one, just like the /effect command");
 
+        // Config enums
         addConfig(tb, "enum.logLevel.debug", "Debug");
         addConfig(tb, "enum.logLevel.error", "Error");
         addConfig(tb, "enum.logLevel.info", "Info");
         addConfig(tb, "enum.logLevel.off", "No logging");
         addConfig(tb, "enum.logLevel.warn", "Warn");
 
+        // Additional spells
+        addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
+
+        // Other
         tb.add("text.mystical.events.spellsChange", "The world shifts...");
         tb.add("text.mystical.events.cureSpell", "1 spell was cured this night.");
         tb.add("text.mystical.events.cureSpells", "%d spells were cured this night.");
         tb.add("text.mystical.events.newSpell", "1 new spell fell over the world.");
         tb.add("text.mystical.events.newSpells", "%d new spells fell over the world.");
-
-        addOldExisting(tb);
+        addTextTranslation(tb, "classSerializer.failedDeserializeName", "Couldn't deserialize class of name %s.");
+        addTextTranslation(tb, "spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
+        addTextTranslation(tb, "text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
+        addTextTranslation(tb, "cure.kill", "Kill %ss");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {
@@ -98,7 +114,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         tb.add(factory.getShortNameKey(), shortName); // Short name
         tb.add(factory.getLongNameKey(), longName); // Long name
         tb.add(factory.getDescriptionKey(), factory.getDescription()); // Description
-        tb.add("text.config.mysticalConfig.option." + shortName + ".change", "% chance"); // Chance
+        tb.add("text.config.mysticalConfig.option." + shortName + ".chance", "% chance"); // Chance
         tb.add(factory.translationKey() + ".fired", "Spell " + shortName + ": " + factory.getFiredMessage() + ".");
         // Config stuff
         addConfigCategory(tb, shortName, longName); // Category
@@ -107,14 +123,23 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigOptionInCategory(tb, shortName, "weight", "Weight"); // Weight option
     }
 
+    private void addConsequenceTranslation(TranslationBuilder tb, String consequence, String key, String value) {
+        addConsequenceTranslation(tb, consequence + "." + key, value);
+    }
+
+    private void addConsequenceTranslation(TranslationBuilder tb, String key, String value) {
+        tb.add("text.mystical.consequence." + key, value);
+    }
+
     private void addConfigCategory(TranslationBuilder tb, String key, String value) {
         addConfig(tb, "category." + key, value);
     }
 
     /**
+     * Adds translation for logging options. Prepends `"text.mystical.logging"` and adds a config option.
      * @param tb      The TranslationBuilder to use.
      * @param key     The key under the logging section.
-     * @param console The translation for config output.
+     * @param console The translation for console output.
      * @param option  The translation for the config option.
      */
     private void addLoggingOption(TranslationBuilder tb, String key, String console, String option) {
@@ -122,29 +147,17 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigOption(tb, key + "LogLevel", option);
     }
 
+    /**
+     * Add command translation. Prepends `"text.mystical.command."`.
+     */
     private void addCommandText(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical.command." + key, value);
     }
 
     /**
-     * Add all the things from the old en_us.existing.json.
-     * TODO: Sort these to go elsewhere and delete this function
-     * @param tb The TranslationBuilder
+     * Add text translations. Prepends `"text.mystical."`.
      */
-    private void addOldExisting(TranslationBuilder tb) {
-        tb.add("text.mystical.classSerializer.failedDeserializeName", "Couldn't deserialize class of name %s.");
-        tb.add("text.mystical.commands.deleteSpellButton", " [X]");
-        tb.add("text.mystical.spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
-        tb.add("text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
-        tb.add("text.mystical.consequence.unbreakableLocation.noBreaking", "A mystical force prevents you from breaking that block.");
-        tb.add("text.mystical.cure.kill", "Kill %ss");
-        tb.add("text.config.mysticalConfig.option.bigCreeperExplosion.multiplier", "Multiplier");
-        tb.add("text.config.mysticalConfig.option.fishingRodLaunch.multiplier", "Multiplier");
-        tb.add("text.config.mysticalConfig.option.turboChickens.speed", "Speed multiplier");
-        tb.add("text.config.mysticalConfig.option.turboChickens.speed.tooltip", "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
-        tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
-        tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier", "Effect amplifier");
-        tb.add("text.config.mysticalConfig.randomCreeperEffectClouds.effectAmplifier.tooltip", "0 = level one, just like the /effect command");
+    private void addTextTranslation(TranslationBuilder tb, String key, String value) {
+        tb.add("text.mystical." + key, value);
     }
-
 }
