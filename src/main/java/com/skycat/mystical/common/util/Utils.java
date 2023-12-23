@@ -157,6 +157,10 @@ public class Utils {
     }
 
     public static <T> T getRandomEntryFromTag(Registry<T> registry, TagKey<T> tag) {
+        return getRandomEntryFromTag(registry, tag, Mystical.MC_RANDOM);
+    }
+
+    public static <T> T getRandomEntryFromTag(Registry<T> registry, TagKey<T> tag, net.minecraft.util.math.random.Random random) {
         var entryListOptional = registry.getEntryList(tag);
         if (entryListOptional.isEmpty()) return null;
         var entryList = entryListOptional.get();
@@ -192,15 +196,29 @@ public class Utils {
     }
 
     /**
-     *
      * Converts a target mob to a random mob from the given tag. <p>
      * Will pick up to 10 random types, stopping and doing the conversion when finding something that {@code extends} {@link MobEntity}.
+     *
      * @param toConvert The mob to convert
      * @param tag The tag to choose from
      * @return The converted mob
      */
     @Nullable
     public static MobEntity convertToRandomInTag(MobEntity toConvert, TagKey<EntityType<?>> tag) {
+        return convertToRandomInTag(toConvert, tag, Mystical.MC_RANDOM);
+    }
+
+    /**
+     * Converts a target mob to a random mob from the given tag. <p>
+     * Will pick up to 10 random types, stopping and doing the conversion when finding something that {@code extends} {@link MobEntity}.
+     *
+     * @param toConvert The mob to convert
+     * @param tag       The tag to choose from
+     * @param random
+     * @return The converted mob
+     */
+    @Nullable
+    public static MobEntity convertToRandomInTag(MobEntity toConvert, TagKey<EntityType<?>> tag, net.minecraft.util.math.random.Random random) {
         EntityType<?> randomType = Utils.getRandomEntryFromTag(Registries.ENTITY_TYPE, tag);
         if (randomType == null) {
             Utils.log("Failed to get randomType to convert to.", LogLevel.WARN);
