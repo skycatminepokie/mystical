@@ -19,6 +19,7 @@
     "ServerWorldMixin",
     "SheepEntityMixin",
     "SkulkShriekerBlockEntityMixin",
+    "SlimeEntityMixin",
     "SpawnHelperMixin",
     "StatHandlerMixin",
     "SummonVexGoalMixin",
