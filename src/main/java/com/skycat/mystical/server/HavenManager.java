@@ -310,4 +310,14 @@ public class HavenManager {
     public boolean hasPower(ServerPlayerEntity player, int power) {
         return hasPower(player.getUuid(), power);
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HavenManager other)) return false;
+        if (!powerMap.equals(other.powerMap)) return false;
+        if (!havenedChunks.equals(other.havenedChunks)) return false;
+        return true;
+    }
+
 }
