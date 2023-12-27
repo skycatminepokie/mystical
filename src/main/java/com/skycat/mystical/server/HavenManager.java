@@ -38,7 +38,10 @@ public class HavenManager {
 
     public void resetHavens() {
         havenedChunks.clear();
-        
+    }
+
+    public void resetPower() {
+        powerMap.clear();
     }
 
     public HavenManager() {
@@ -266,6 +269,25 @@ public class HavenManager {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Set the power that a player has.
+     * @param player The UUID of the player to set the power of.
+     * @param power The power to set the player to.
+     */
+    public void setPower(ServerPlayerEntity player, int power) {
+        setPower(player.getUuid(), power);
+    }
+
+    /**
+     * Set the power that a player has.
+     * @param playerUUID The UUID of the player to set the power of.
+     * @param power The power to set the player to.
+     */
+    public void setPower(UUID playerUUID, int power) {
+        powerMap.put(playerUUID, power);
+        markDirty();
     }
 
     /**
