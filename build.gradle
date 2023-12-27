@@ -110,7 +110,7 @@ publishing {
 // https://fabricmc.net/wiki/tutorial:datagen_setup
 loom {
     runs {
-        datagenClient {
+        datagenClient { // TODO make this datagenServer lol
             inherit server
             name "Data Generation"
             vmArg "-Dfabric-api.datagen"
@@ -118,6 +118,13 @@ loom {
             vmArg "-Dfabric-api.datagen.modid=${modid}"
 
             runDir "build/datagen"
+        }
+        gameTest {
+            inherit server
+            name "Game Test"
+            vmArg "-Dfabric-api.gametest"
+            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
+            runDir "build/gametest"
         }
     }
 }
