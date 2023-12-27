@@ -4,15 +4,17 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.LogLevel;
 import com.skycat.mystical.common.util.Utils;
 import com.skycat.mystical.server.HavenManager;
+import com.skycat.mystical.server.SaveState;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 
+import java.lang.reflect.Method;
+
 public class TestEntry implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenWorks(TestContext context) {
-        setupPreconditions(context);
         HavenManager havenManager = Mystical.getHavenManager();
         ServerPlayerEntity player = context.createMockCreativeServerPlayerInWorld();
         havenManager.setPower(player, Integer.MAX_VALUE);
@@ -24,7 +26,6 @@ public class TestEntry implements FabricGameTest {
 
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenFails(TestContext context) {
-        setupPreconditions(context);
         HavenManager havenManager = Mystical.getHavenManager();
         ServerPlayerEntity player = context.createMockCreativeServerPlayerInWorld();
 
@@ -39,10 +40,22 @@ public class TestEntry implements FabricGameTest {
         context.complete();
     }
 
-    public void setupPreconditions(TestContext context) {
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    public void checkHavenSerialization(TestContext context) {
+        HavenManager havenManager = Mystical.getHavenManager();
+        havenManager.havenChunk(0, 0);
+        context.getWorld().save(null, true, false);
+        HavenManager newHavenManager = SaveState.loadSave(context.getWorld().getServer()).getHavenManager();
+        context.assertTrue(newHavenManager.equals(havenManager), "Serialization comparison failed.");
+        context.complete();
+    }
+
+    @Override
+    public void invokeTestMethod(TestContext context, Method method) {
         HavenManager havenManager = Mystical.getHavenManager();
         havenManager.resetHavens();
         havenManager.resetPower();
         Mystical.getSpellHandler().removeAllSpells();
+        FabricGameTest.super.invokeTestMethod(context, method);
     }
 }
