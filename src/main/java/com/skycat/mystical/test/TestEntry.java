@@ -13,6 +13,7 @@ import net.minecraft.test.TestContext;
 import java.lang.reflect.Method;
 
 public class TestEntry implements FabricGameTest {
+    // TODO: Make spells have tests in them
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenWorks(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
