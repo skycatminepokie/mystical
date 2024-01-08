@@ -1,11 +1,2 @@
-Changes since 4.1.7:
-- Spells now decay over time
-- Fixed turboChickens being utterly broken
-- Added spell that causes explosions to infest blocks instead of breaking them
-- Added notifications for when spells are created or destroyed
-- Update Fabric Loader to 0.15.0
-- Updated to Gradle 8.5
-- Removed MixinExtras - it's in Fabric Loader now :D
-- Fixed evokers always being replaced by illusioners in raids.
-    - Note that this spell is not affected by havens right now.
-- Random fallback block is now stone instead of a command block.
+- #141: Added boldSlimes spell
+- Fixed some translation issues
