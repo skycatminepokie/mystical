@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public class BigCreeperExplosionConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
-    private static final Function<Double, Double> DIFFICULTY_FUNCTION = (multiplier) -> ((multiplier - 1) * 50); // Double size = 50 difficulty
+    private static final Function<Double, Double> DIFFICULTY_FUNCTION = (multiplier) -> ((multiplier - 1) * 30); // Double size = 30 difficulty
 
     @Deprecated
     private BigCreeperExplosionConsequence() {

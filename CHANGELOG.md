@@ -1,2 +1,3 @@
 - #141: Added boldSlimes spell
 - Fixed some translation issues
+- Changed bigCreeperExplosion difficulty

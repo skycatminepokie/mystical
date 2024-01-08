@@ -37,7 +37,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence {
     }
 
     private RandomTreeTypeConsequence() {
-        super(RandomTreeTypeConsequence.class, null, 15d); // TODO: Scaling
+        super(RandomTreeTypeConsequence.class, null, 15d);
     }
 
     public static class Factory extends ConsequenceFactory<RandomTreeTypeConsequence> {
