@@ -1,3 +1,4 @@
 - #141: Added boldSlimes spell
 - Fixed some translation issues
 - Changed bigCreeperExplosion difficulty
+- Time commands are now accounted for when dealing with spell completion
