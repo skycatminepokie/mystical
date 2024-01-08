@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SlimeEntity.class)
-public class SlimeEntityMixin {
+public abstract class SlimeEntityMixin {
     @Inject(method = "canSpawn(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/WorldAccess;Lnet/minecraft/entity/SpawnReason;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/random/Random;)Z", at = @At(value = "HEAD", shift = At.Shift.AFTER), cancellable = true)
     private static void modifySlimeSpawning(EntityType<SlimeEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(SlimeEntity.canMobSpawn(type, world, spawnReason, pos, random));
