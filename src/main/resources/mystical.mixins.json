@@ -23,6 +23,7 @@
     "SpawnHelperMixin",
     "StatHandlerMixin",
     "SummonVexGoalMixin",
+    "TimeCommandMixin",
     "TntBlockMixin",
     "TntEntityMixin",
     "TntMinecartEntityMixin",
