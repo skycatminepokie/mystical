@@ -83,7 +83,12 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 (random) -> (new StatBackedSpellCure(256, Stats.MINED.getOrCreateStat(Blocks.STONE))), // 4 stacks
                 (random) -> (new StatBackedSpellCure(64, Stats.CUSTOM.getOrCreateStat(Stats.BELL_RING))),
                 (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.FALL_ONE_CM))), // 100 blocks
-                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD)))
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD))),
+                (random) -> (new StatBackedSpellCure(10, Stats.KILLED.getOrCreateStat(EntityType.DROWNED))),
+                (random) -> (new StatBackedSpellCure(5, Stats.BROKEN.getOrCreateStat(Items.GOLDEN_SWORD))),
+                (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.BOAT_ONE_CM))), // 1000 blocks
+                (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.HORSE_ONE_CM))), // 1000 blocks
+                (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.PIG_ONE_CM))) // 100 blocks
         );
     }
 
