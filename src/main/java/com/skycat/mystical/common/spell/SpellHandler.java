@@ -2,6 +2,7 @@ package com.skycat.mystical.common.spell;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.spell.consequence.ChangeArmorHurtConsequence;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
 import com.skycat.mystical.common.spell.cure.SpellCure;
@@ -12,11 +13,13 @@ import lombok.Getter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,7 +52,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         ServerPlayerEvents.AfterRespawn,
         ServerEntityCombatEvents.AfterKilledOtherEntity,
         AttackBlockCallback,
-        CatEntityEvents.Eat {
+        CatEntityEvents.Eat,
+        ServerEntityEvents.EquipmentChange
+{
     /**
      * @implNote Saving/loading does not ensure that the order of spells will be retained.
      */
@@ -207,6 +212,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
     }
 
+
     public void removeAllSpells() {
         activeSpells.clear();
         Mystical.saveUpdated();
@@ -274,4 +280,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     }
 
 
+    @Override
+    public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
+        for (Spell spell : spellsOfHandler(ServerEntityEvents.EquipmentChange.class)) {
+            ((ServerEntityEvents.EquipmentChange) spell.getConsequence()).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
+        }
+    }
 }

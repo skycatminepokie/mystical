@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
 
+
 /*
 Notes on randomization scheme:
 Difficulty: A double rating how much trouble a spell will cause, taking into account both the cure and consequence.
@@ -29,9 +30,12 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
     This is separate from difficulty, though difficulty will likely be correlated.
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
-    @SuppressWarnings("rawtypes") private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
-    @SuppressWarnings("rawtypes") private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
-    @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
+    @SuppressWarnings("rawtypes")
+    private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
+    @SuppressWarnings("rawtypes")
+    private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
+    @SuppressWarnings("rawtypes")
+    private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
         // Initialize all the consequence factories
@@ -57,7 +61,8 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 TurboMobsConsequence.FACTORY,
                 RandomEvokerSummonsConsequence.FACTORY,
                 IllusionersReplaceEvokersConsequence.FACTORY,
-                ExplosionsInfestConsequence.FACTORY
+                ExplosionsInfestConsequence.FACTORY,
+                ChangeArmorHurtConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
@@ -83,12 +88,19 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 (random) -> (new StatBackedSpellCure(256, Stats.MINED.getOrCreateStat(Blocks.STONE))), // 4 stacks
                 (random) -> (new StatBackedSpellCure(64, Stats.CUSTOM.getOrCreateStat(Stats.BELL_RING))),
                 (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.FALL_ONE_CM))), // 100 blocks
-                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD)))
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD))),
+                (random) -> (new StatBackedSpellCure(64, Stats.CRAFTED.getOrCreateStat(Items.GOLDEN_CARROT))),
+                (random) -> (new StatBackedSpellCure(32, Stats.CRAFTED.getOrCreateStat(Utils.getRandomEntryFromTag(Registries.BLOCK, Mystical.GLAZED_TERRACOTTA).asItem()))) // finds a random item from the tag GLAZED_TERRACOTTA
+
         );
+        // Utils.getRandomEntryFromTag(Registries.BLOCK, Mystical.GLAZED_TERRACOTTA); // Gives us a random block from the tag
+        // Utils.getRandomEntryFromTag(Registries.BLOCK, Mystical.GLAZED_TERRACOTTA).asItem(); // Hey look, there's the item that we need
+
     }
 
     /**
      * Return a new random spell.
+     *
      * @return A new random spell.
      */
     public static Spell get() {
@@ -162,3 +174,4 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
         return shortNameToFactory.get(shortName);
     }
 }
+
