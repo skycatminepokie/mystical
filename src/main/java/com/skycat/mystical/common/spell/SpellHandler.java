@@ -108,7 +108,6 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return !spellsOfConsequenceType(consequence).isEmpty();
     }
 
-
     /**
      * Used for finding active spells with a particular consequence type.
      * This is not the same as a handler.
@@ -211,6 +210,15 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
     }
 
+    /**
+     * @author SuperiorTabby
+     */
+    @Override
+    public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
+        for (Spell spell : spellsOfHandler(ServerEntityEvents.EquipmentChange.class)) {
+            ((ServerEntityEvents.EquipmentChange) spell.getConsequence()).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
+        }
+    }
 
     public void removeAllSpells() {
         activeSpells.clear();
@@ -276,13 +284,5 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
         Mystical.saveUpdated();
         return removed;
-    }
-
-
-    @Override
-    public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
-        for (Spell spell : spellsOfHandler(ServerEntityEvents.EquipmentChange.class)) {
-            ((ServerEntityEvents.EquipmentChange) spell.getConsequence()).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
-        }
     }
 }

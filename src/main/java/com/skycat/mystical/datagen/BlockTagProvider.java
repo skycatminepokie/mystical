@@ -18,8 +18,6 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
         super(output, completableFuture);
     }
 
-
-
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         Iterator<Block> it = Registries.BLOCK.iterator();
@@ -30,6 +28,5 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 tagBuilder.add(block); // Add it
             }
         }
-
     }
 }

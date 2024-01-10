@@ -10,7 +10,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Random;
 
 import static net.minecraft.entity.damage.DamageTypes.THORNS;
@@ -55,6 +54,4 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
             return Mystical.CONFIG.changingArmorHurts.enabled() ? Mystical.CONFIG.changingArmorHurts.weight() : 0;
         }
     }
-
-
 }

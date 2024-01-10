@@ -30,12 +30,9 @@ Wildness: A measure indicating how different the gameplay is due to the spell - 
     This is separate from difficulty, though difficulty will likely be correlated.
  */
 public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
-    @SuppressWarnings("rawtypes")
-    private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
-    @SuppressWarnings("rawtypes")
-    private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
-    @SuppressWarnings("rawtypes")
-    private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
+    @SuppressWarnings("rawtypes") private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
+    @SuppressWarnings("rawtypes") private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
+    @SuppressWarnings("rawtypes") private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
         // Initialize all the consequence factories
