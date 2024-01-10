@@ -1,6 +1,7 @@
 package com.skycat.mystical.common.spell.consequence;
 
 import com.mojang.serialization.Codec;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
@@ -18,7 +19,7 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
     public static final Factory FACTORY = new Factory();
 
     public ChangingArmorHurtsConsequence() {
-        super(ChangingArmorHurtsConsequence.class, ServerEntityEvents.EquipmentChange.class, 10D);
+        super(ChangingArmorHurtsConsequence.class, ServerEntityEvents.EquipmentChange.class, 75);
     }
 
     @Override
@@ -28,8 +29,9 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
 
     @Override
     public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
-        if (livingEntity instanceof ServerPlayerEntity Player && Utils.percentChance(10d) && equipmentSlot.isArmorSlot()) {
+        if (livingEntity instanceof ServerPlayerEntity Player && Utils.percentChance(Mystical.CONFIG.changingArmorHurts.chance()) && equipmentSlot.isArmorSlot()) {
             Player.damage(Player.getServerWorld().getDamageSources().create(THORNS), 1);
+            Utils.log(Utils.translateString(FACTORY.getDescriptionKey()), Mystical.CONFIG.changingArmorHurts.logLevel());
         }
     }
 
@@ -44,13 +46,13 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
         }
 
         @Override
-        public double getWeight() {
-            return 0;
+        public @NotNull ChangingArmorHurtsConsequence make(@NonNull Random random, double points) {
+            return new ChangingArmorHurtsConsequence();
         }
 
         @Override
-        public @NotNull ChangingArmorHurtsConsequence make(@NonNull Random random, double points) {
-            return new ChangingArmorHurtsConsequence();
+        public double getWeight() {
+            return Mystical.CONFIG.changingArmorHurts.enabled() ? Mystical.CONFIG.changingArmorHurts.weight() : 0;
         }
     }
 
