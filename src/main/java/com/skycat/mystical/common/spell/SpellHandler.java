@@ -2,7 +2,6 @@ package com.skycat.mystical.common.spell;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.ChangeArmorHurtConsequence;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
 import com.skycat.mystical.common.spell.cure.SpellCure;

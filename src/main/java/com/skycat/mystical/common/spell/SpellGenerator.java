@@ -62,7 +62,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 RandomEvokerSummonsConsequence.FACTORY,
                 IllusionersReplaceEvokersConsequence.FACTORY,
                 ExplosionsInfestConsequence.FACTORY,
-                ChangeArmorHurtConsequence.FACTORY
+                ChangingArmorHurtsConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
