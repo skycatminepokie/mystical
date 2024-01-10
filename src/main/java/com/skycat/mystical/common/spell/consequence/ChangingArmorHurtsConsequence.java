@@ -35,10 +35,10 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
 
     public static class Factory extends ConsequenceFactory<ChangingArmorHurtsConsequence> {
         protected Factory() {
-            super("reverse_thorns",
-                    "Armor Hurts You",
-                    "Armor Fighting Back!",
-                    "Armor Changed",
+            super("changingArmorHurts",
+                    "Changing Armor Hurts",
+                    "Reverse thorns",
+                    "Armor changed, applying damage",
                     ChangingArmorHurtsConsequence.class,
                     Codec.unit(ChangingArmorHurtsConsequence::new));
         }
