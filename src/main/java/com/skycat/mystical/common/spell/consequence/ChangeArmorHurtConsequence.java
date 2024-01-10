@@ -32,7 +32,7 @@ public class ChangeArmorHurtConsequence extends SpellConsequence implements Serv
 
     @Override
     public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
-        if(livingEntity instanceof ServerPlayerEntity Player && Utils.percentChance(10d))  {
+        if(livingEntity instanceof ServerPlayerEntity Player && Utils.percentChance(10d) && equipmentSlot.isArmorSlot())  {
             Player.damage(Player.getServerWorld().getDamageSources().create(THORNS), 1);
         }
 
