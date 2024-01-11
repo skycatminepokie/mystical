@@ -31,8 +31,7 @@ public abstract class SpellConsequence {
      * @return The factory associated with this type of consequence.
      */
     @NonNull
-    public abstract ConsequenceFactory<? extends SpellConsequence> getFactory(); // TODO: Find a way to force ? to be this.getClass().
-
+    public abstract ConsequenceFactory<? extends SpellConsequence> getFactory(); // Finding a way to force ? to be this.getClass() would be nice
     public <T> boolean supportsEvent(Class<T> eventClass) {
         return eventClass.isInstance(this);
     }

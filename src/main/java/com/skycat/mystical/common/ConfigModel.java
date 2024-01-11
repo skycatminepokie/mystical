@@ -35,7 +35,9 @@ public class ConfigModel {
     @Nest public RandomEvokerSummonsConfig randomEvokerSummons = new RandomEvokerSummonsConfig();
     @Nest public IllusionersReplaceEvokersConfig illusionersReplaceEvokers = new IllusionersReplaceEvokersConfig();
     @Nest public ExplosionsInfestConfig explosionsInfest = new ExplosionsInfestConfig();
-  
+    @Nest public BoldSlimesConfig boldSlimes = new BoldSlimesConfig();
+    @Nest public ChangingArmorHurtsConfig changingArmorHurts = new ChangingArmorHurtsConfig();
+
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
     public LogLevel timeOfDayAtStartupLogLevel = LogLevel.DEBUG;
@@ -339,7 +341,7 @@ public class ConfigModel {
     }
 
     public static class ExplosionsInfestConfig {
-        public  boolean enabled = true;
+        public boolean enabled = true;
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
         public double weight = 1;
@@ -352,7 +354,32 @@ public class ConfigModel {
             return ConfigModel.chancePredicate(value);
         }
     }
-  
+
+    public static class BoldSlimesConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class ChangingArmorHurtsConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+        @PredicateConstraint("chancePredicate")
+        public double chance = 100.0;
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+    }
+
     /**
      * Verify that the chance is valid.
      * Used instead of {@link RangeConstraint} because it doesn't make a slider.

@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Uuids;
@@ -26,11 +27,21 @@ public class HavenManager {
     @Getter private final HashSet<ChunkPos> havenedChunks;
     @Getter private final HashMap<UUID, Integer> powerMap;
     @Getter private static final File SAVE_FILE = new File("config/havenManager.json");
+    @Getter @Setter
+    private boolean dirty = false;
     public static int baseHavenCost = 1000;
 
     public HavenManager(HashSet<ChunkPos> havenedChunks, HashMap<UUID, Integer> powerMap) {
         this.havenedChunks = havenedChunks;
         this.powerMap = powerMap;
+    }
+
+    public void resetHavens() {
+        havenedChunks.clear();
+    }
+
+    public void resetPower() {
+        powerMap.clear();
     }
 
     public HavenManager() {
@@ -87,7 +98,7 @@ public class HavenManager {
      * @return {@code true} if the chunk was not already havened
      */
     public boolean havenChunk(ChunkPos chunkPos) {
-        Mystical.saveUpdated();
+        markDirty();
         return havenedChunks.add(chunkPos);
     }
 
@@ -112,6 +123,10 @@ public class HavenManager {
      */
     public boolean havenChunk(int x, int z) {
         return havenChunk(new BlockPos(x, 0, z));
+    }
+    
+    public void markDirty() {
+        dirty = true;
     }
 
     /**
@@ -199,7 +214,7 @@ public class HavenManager {
         }
         // else
         powerMap.put(playerUUID, power);
-        Mystical.saveUpdated();
+        markDirty();
         return power;
     }
 
@@ -212,7 +227,7 @@ public class HavenManager {
     public int getPower(UUID playerUUID) {
         if (powerMap.get(playerUUID) == null) {
             powerMap.put(playerUUID, 0);
-            Mystical.saveUpdated();
+            markDirty();
             return 0;
         }
         return powerMap.get(playerUUID);
@@ -250,10 +265,29 @@ public class HavenManager {
         int prevPower = getPower(playerUUID);
         if (hasPower(playerUUID, power)) {
             powerMap.put(playerUUID, prevPower - power);
-            Mystical.saveUpdated();
+            markDirty();
             return true;
         }
         return false;
+    }
+
+    /**
+     * Set the power that a player has.
+     * @param player The UUID of the player to set the power of.
+     * @param power The power to set the player to.
+     */
+    public void setPower(ServerPlayerEntity player, int power) {
+        setPower(player.getUuid(), power);
+    }
+
+    /**
+     * Set the power that a player has.
+     * @param playerUUID The UUID of the player to set the power of.
+     * @param power The power to set the player to.
+     */
+    public void setPower(UUID playerUUID, int power) {
+        powerMap.put(playerUUID, power);
+        markDirty();
     }
 
     /**
@@ -276,4 +310,14 @@ public class HavenManager {
     public boolean hasPower(ServerPlayerEntity player, int power) {
         return hasPower(player.getUuid(), power);
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HavenManager other)) return false;
+        if (!powerMap.equals(other.powerMap)) return false;
+        if (!havenedChunks.equals(other.havenedChunks)) return false;
+        return true;
+    }
+
 }

@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -29,7 +30,7 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
      * Parse a stat
      * @return The stat, got or created, or null if failed.
      */
-    public <T,S> Stat<S> getStat(DynamicOps<T> ops, T input) {
+    public @Nullable <T,S> Stat<S> getStat(DynamicOps<T> ops, T input) {
         var result = TYPE_IDENTIFIER_CODEC.parse(ops, input);
         if (result.result().isPresent()) {
             // Success
@@ -67,7 +68,11 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
 
     @Override
     public Stat<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return getStat(JsonOps.INSTANCE, json);
+        Stat<Object> stat = getStat(JsonOps.INSTANCE, json);
+        if (stat == null) {
+            throw new JsonParseException("Failed to parse stat.");
+        }
+        return stat;
     }
 
     @Override

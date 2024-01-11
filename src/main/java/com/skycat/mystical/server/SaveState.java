@@ -65,4 +65,18 @@ public class SaveState extends PersistentState {
         Utils.log("Failed to load PersistentState - this is normal when updating versions from below 4.1.0");
         return null;
     }
+
+    @Override
+    public boolean isDirty() {
+        return super.isDirty() || havenManager.isDirty() || spellHandler.isDirty();
+    }
+
+    @Override
+    public void setDirty(boolean dirty) {
+        if (!dirty) {
+            havenManager.setDirty(false);
+            spellHandler.setDirty(false);
+        }
+        super.setDirty(dirty);
+    }
 }
