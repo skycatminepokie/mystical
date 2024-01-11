@@ -67,7 +67,7 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final TagKey<EntityType<?>> EVOKER_SUMMONABLE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:evoker_summonable"));
     public static final TagKey<Block> GLAZED_TERRACOTTA = TagKey.of(RegistryKeys.BLOCK, new Identifier("mystical:glazed_terracotta"));
     public static SaveState save;
-    private static boolean isClientWorld;
+    private static boolean isClientWorld = true;
 
     public static HavenManager getHavenManager() {
         if (save == null) {
@@ -100,11 +100,8 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     }
 
     @Override
-    public void onWorldLoad(MinecraftServer server, ServerWorld world) {
-        if (world.isClient) {
-            isClientWorld = true;
-            return; // Only on the server thread
-        }
+    public void onWorldLoad(MinecraftServer server, ServerWorld world) { // TODO: Make this only run on loading one dimension lol
+        /*assert !world.isClient()*/
         isClientWorld = false;
         EVENT_HANDLER.onWorldLoad(server, world);
         save = SaveState.loadSave(server);
