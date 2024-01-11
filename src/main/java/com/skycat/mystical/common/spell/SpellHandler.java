@@ -9,6 +9,7 @@ import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.common.util.Utils;
 import com.skycat.mystical.event.CatEntityEvents;
 import lombok.Getter;
+import lombok.Setter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -59,9 +60,15 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
      */
     // This saves the active spells by taking the spell codec, turning it into a list codec, then maps List<Spell> and SpellHandler
     public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(spellList -> new SpellHandler(spellList), SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
-
     @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
+
     @Getter private final ArrayList<Spell> activeSpells;
+    @Getter @Setter
+    private boolean dirty;
+
+    public void markDirty() {
+        dirty = true;
+    }
 
     public SpellHandler() {
         activeSpells = new ArrayList<>();
@@ -83,7 +90,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             return new SpellHandler();
         }
     }
-
+    
     public void decaySpells() {
         double amount = CONFIG.spellDecay() / 100;
         for (Spell spell : activeSpells) {
@@ -127,12 +134,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void activateNewSpell() {
         activeSpells.add(SpellGenerator.get());
-        Mystical.saveUpdated();
+        markDirty();
     }
 
     public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
         activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
-        Mystical.saveUpdated();
+        markDirty();
     }
 
     @Override
@@ -222,7 +229,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void removeAllSpells() {
         activeSpells.clear();
-        Mystical.saveUpdated();
+        markDirty();
     }
 
     /**
@@ -282,7 +289,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 removed ++;
             }
         }
-        Mystical.saveUpdated();
+        markDirty();
         return removed;
     }
 
