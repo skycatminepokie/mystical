@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew runDatagenClient
 
       - name: Game Test
-        run: ./gradlew runGameTest
+        run: mkdir run && echo "eula=true" >> run/eula.txt && ./gradlew runGameTest # ty modmuss
 
       - name: Build
         run: ./gradlew clean build
