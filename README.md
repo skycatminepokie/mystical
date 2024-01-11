@@ -35,3 +35,4 @@ Yes! Just don't rehost it without permission. And if you feel like it, let me kn
 
 #### Contributing
 You want to contribute? Awesome! Check out some of the later feature commits to see how the framework works (I'll maybe remember to add info here later). Please branch from `development` - I use PRs to master for publishing.
+When running datagen, use the Gradle task `runDatagenClient`, NOT the run configuration. The Gradle task will make sure the translations make it to `server-translations-api`.
