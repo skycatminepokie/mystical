@@ -12,11 +12,13 @@ import lombok.Getter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -49,7 +51,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         ServerPlayerEvents.AfterRespawn,
         ServerEntityCombatEvents.AfterKilledOtherEntity,
         AttackBlockCallback,
-        CatEntityEvents.Eat {
+        CatEntityEvents.Eat,
+        ServerEntityEvents.EquipmentChange
+{
     /**
      * @implNote Saving/loading does not ensure that the order of spells will be retained.
      */
@@ -103,7 +107,6 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public boolean isConsequenceActive(Class<? extends SpellConsequence> consequence) {
         return !spellsOfConsequenceType(consequence).isEmpty();
     }
-
 
     /**
      * Used for finding active spells with a particular consequence type.
@@ -204,6 +207,16 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public void onStopSleeping(LivingEntity entity, BlockPos sleepingPos) {
         for (Spell spell : spellsOfHandler(EntitySleepEvents.StopSleeping.class)) {
             ((EntitySleepEvents.StopSleeping) spell.getConsequence()).onStopSleeping(entity, sleepingPos);
+        }
+    }
+
+    /**
+     * @author SuperiorTabby
+     */
+    @Override
+    public void onChange(LivingEntity livingEntity, EquipmentSlot equipmentSlot, ItemStack previousStack, ItemStack currentStack) {
+        for (Spell spell : spellsOfHandler(ServerEntityEvents.EquipmentChange.class)) {
+            ((ServerEntityEvents.EquipmentChange) spell.getConsequence()).onChange(livingEntity, equipmentSlot, previousStack, currentStack);
         }
     }
 
