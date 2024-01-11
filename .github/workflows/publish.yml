@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew runDatagenClient
 
       - name: Game Test
-        run: echo "Y\n" | ./gradlew runGameTest
+        run: ./gradlew runGameTest
 
       - name: Build
         run: ./gradlew clean build

@@ -18,7 +18,6 @@ repositories {
     maven { url "https://cursemaven.com" } // modmenu
     maven { url 'https://maven.nucleoid.xyz'} // server-translations
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' } // fabric-permissions-api
-    maven { url "https://api.modrinth.com/maven" } // Easy Eula
 }
 
 dependencies {
@@ -50,7 +49,6 @@ dependencies {
 
     // Runtime:
     // modRuntimeOnly("curse.maven:modmenu-308702:4100232")
-    modRuntimeOnly("maven.modrinth:easy-eula:1.0.0")
 }
 
 processResources {
