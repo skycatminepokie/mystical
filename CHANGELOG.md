@@ -3,5 +3,6 @@
 - Changed bigCreeperExplosion difficulty
 - Time commands are now accounted for when dealing with spell completion
 - Closed #41
-- Added five new cures
-- Fix double nighttime events
+- Added seven new cures (co-author @SuperiorTabby)
+- #149: Fix double nighttime events
+- Added changingArmorHurts spell (@SuperiorTabby)
