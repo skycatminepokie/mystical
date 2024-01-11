@@ -16,6 +16,6 @@ public abstract class ServerWorldMixin {
 
     @Inject(method = "wakeSleepingPlayers", at = @At("TAIL"))
     private void onWakeSleepingPlayers(CallbackInfo ci) {
-        Mystical.getEVENT_HANDLER().doNighttimeEvents(server);
+        Mystical.EVENT_HANDLER.doNighttimeEvents(server);
     }
 }

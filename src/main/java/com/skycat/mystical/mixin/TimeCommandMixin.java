@@ -12,11 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class TimeCommandMixin {
     @Inject(method = "executeSet", at = @At("HEAD"))
     private static void onTimeSetCommand(ServerCommandSource source, int time, CallbackInfoReturnable<Integer> cir) {
-        Mystical.getEVENT_HANDLER().setNightTimer();
+        Mystical.EVENT_HANDLER.setNightTimer();
     }
 
     @Inject(method = "executeAdd", at = @At("HEAD"))
     private static void onTimeAddCommand(ServerCommandSource source, int time, CallbackInfoReturnable<Integer> cir) {
-        Mystical.getEVENT_HANDLER().setNightTimer();
+        Mystical.EVENT_HANDLER.setNightTimer();
     }
 }

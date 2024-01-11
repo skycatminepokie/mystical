@@ -118,7 +118,7 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
     public static SpellConsequence getConsequence() { // I think we're getting rid of the notion of points for now. This may be slow with many consequences
         if (consequenceFactories.isEmpty()) { // Should not happen
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList")); // TODO: Config
-            return LevitateConsequence.FACTORY.make(Mystical.getRANDOM(), 0);
+            return LevitateConsequence.FACTORY.make(Mystical.RANDOM, 0);
         }
 
         // Think of the chances as being on a number line.
@@ -146,11 +146,11 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
             Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList")); // TODO: Config
             return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS));
         }
-        return Utils.chooseRandom(Mystical.getRANDOM(), cureFactories).make(Mystical.getRANDOM());
+        return Utils.chooseRandom(Mystical.RANDOM, cureFactories).make(Mystical.RANDOM);
     }
 
     private static Block getRandomBlock() { // TODO: Make checked (no unbreakables, configurable rarities, etc)
-        Optional<RegistryEntry.Reference<Block>> blockEntry = Registries.BLOCK.getRandom(Mystical.getMC_RANDOM());
+        Optional<RegistryEntry.Reference<Block>> blockEntry = Registries.BLOCK.getRandom(Mystical.MC_RANDOM);
         Block block;
         if (blockEntry.isPresent()) {
             block = blockEntry.get().value();
