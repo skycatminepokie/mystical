@@ -6,3 +6,4 @@
 - Added seven new cures (co-author @SuperiorTabby)
 - #149: Fix double nighttime events
 - Added changingArmorHurts spell (@SuperiorTabby)
+- WARNING: This version will STILL CRASH if you join a server running Mystical, while also running Mystical yourself. This is known and is being worked on.
