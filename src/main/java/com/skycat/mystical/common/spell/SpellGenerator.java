@@ -57,7 +57,9 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 TurboMobsConsequence.FACTORY,
                 RandomEvokerSummonsConsequence.FACTORY,
                 IllusionersReplaceEvokersConsequence.FACTORY,
-                ExplosionsInfestConsequence.FACTORY
+                ExplosionsInfestConsequence.FACTORY,
+                BoldSlimesConsequence.FACTORY,
+                ChangingArmorHurtsConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
@@ -88,7 +90,11 @@ public class SpellGenerator { // TODO: For now, a lot of things that could be ra
                 (random) -> (new StatBackedSpellCure(5, Stats.BROKEN.getOrCreateStat(Items.GOLDEN_SWORD))),
                 (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.BOAT_ONE_CM))), // 1000 blocks
                 (random) -> (new StatBackedSpellCure(100000, Stats.CUSTOM.getOrCreateStat(Stats.HORSE_ONE_CM))), // 1000 blocks
-                (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.PIG_ONE_CM))) // 100 blocks
+                (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.PIG_ONE_CM))), // 100 blocks
+                (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD))),
+                (random) -> (new StatBackedSpellCure(64, Stats.CRAFTED.getOrCreateStat(Items.GOLDEN_CARROT))),
+                (random) -> (new StatBackedSpellCure(32, Stats.CRAFTED.getOrCreateStat(Utils.getRandomEntryFromTag(Registries.BLOCK, Mystical.GLAZED_TERRACOTTA).asItem()))) // Chooses a random item from the tag GLAZED_TERRACOTTA
+
         );
     }
 
