@@ -4,3 +4,4 @@
 - Time commands are now accounted for when dealing with spell completion
 - Closed #41
 - Added five new cures
+- Fix double nighttime events

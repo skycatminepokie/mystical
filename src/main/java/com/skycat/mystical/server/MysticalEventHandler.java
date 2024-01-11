@@ -15,6 +15,7 @@ import java.util.Stack;
 public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifecycleEvents.ServerStopping {
     @Getter private MinecraftServer server;
     private MinecraftServerTimerAccess timerAccess;
+    public static final int NIGHT_TIME = 18000;
 
     /**
      * Do all the nighttime events - changing spells and setting the night timer.
@@ -97,14 +98,14 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
         }
         long timerLength;
         long currentTime = server.getOverworld().getTimeOfDay() % 24000;
-        if (currentTime > 18000) { // If we've passed midnight
-            timerLength = (24000 - currentTime) + 18000; // (time left in this day) + (time from morning til midnight) = time until tomorrow's midnight
+        if (currentTime > NIGHT_TIME) { // If we've passed NIGHT_TIME
+            timerLength = (24000 - currentTime) + NIGHT_TIME; // (time left in this day) + (time from morning til NIGHT_TIME) = time until tomorrow's NIGHT_TIME
         } else { // It's before midnight
-             timerLength = 18000 - currentTime; // midnight - (current time) = time until midnight
+             timerLength = NIGHT_TIME - currentTime; // NIGHT_TIME - (current time) = time until midnight
         }
 
         if (timerLength == 0) { // So that we don't get repeating events if this is fired twice in a tick.
-            timerLength = 18000;
+            timerLength = NIGHT_TIME;
         }
         timerAccess.mystical_setTimer(timerLength);
         return timerLength;
