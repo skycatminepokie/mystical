@@ -33,7 +33,7 @@ public abstract class ExplosionMixin {
                 BlockPos blockPos = it.next();
                 if (Mystical.getHavenManager().isInHaven(blockPos)) continue;
                 BlockState blockState = world.getBlockState(blockPos);
-                if (Utils.percentChance(Mystical.getCONFIG().explosionsInfest.chance()) && InfestedBlock.isInfestable(blockState)) {
+                if (Utils.percentChance(Mystical.CONFIG.explosionsInfest.chance()) && InfestedBlock.isInfestable(blockState)) {
                     world.setBlockState(blockPos, InfestedBlock.fromRegularState(blockState));
                     it.remove();
                 }
