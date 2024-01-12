@@ -42,15 +42,8 @@ jobs:
       - name: Datagen
         run: ./gradlew runDatagenClient
 
-      # ty modmuss
-      - name: Make run dir
-        run: mkdir run
-
-      - name: Accept EULA
-        run: echo "eula=true" >> run/eula.txt
-
       - name: Game Test
-        run: ./gradlew runGameTest
+        run: mkdir build/gametest && echo "eula=true" >> build/gametest/eula.txt && ./gradlew runGameTest # ty modmuss
 
       - name: Build
         run: ./gradlew clean build
