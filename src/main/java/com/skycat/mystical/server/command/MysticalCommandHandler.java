@@ -291,7 +291,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      */
     private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
-
         // Must be player
         if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
             context.getSource().sendFeedback(Utils.textSupplierOf("This can only be called by a player."), false); // TODO: Translate
@@ -300,7 +299,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
         var vec = Vec2ArgumentType.getVec2(context, "block");
         BlockPos blockPos = new BlockPos((int) vec.x, 0, (int) vec.y);
-        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player))) { // Must not already be havened
+        if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player)) { // Must not already be havened. This check may not be needed, since we've got a ServerCommandSource?
             context.getSource().sendFeedback(Utils.textSupplierOf("That location is already havened."), false); // TODO: Translate
             return 0;
         }
