@@ -1,9 +1,1 @@
-- #141: Added boldSlimes spell
-- Fixed some translation issues
-- Changed bigCreeperExplosion difficulty
-- Time commands are now accounted for when dealing with spell completion
-- Closed #41
-- Added seven new cures (co-author @SuperiorTabby)
-- #149: Fix double nighttime events
-- Added changingArmorHurts spell (@SuperiorTabby)
-- #151: Fixed a crash when joining servers.
+- Fix boldSlimes always being active
