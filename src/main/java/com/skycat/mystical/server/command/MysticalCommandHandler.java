@@ -8,7 +8,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.Spell;
-import com.skycat.mystical.common.spell.SpellGenerator;
+import com.skycat.mystical.common.spell.Spells;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.util.Utils;
 import me.lucko.fabric.api.permissions.v0.Permissions;
@@ -52,7 +52,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .executes(this::newRandomSpellCommand)
                 .build();
         var spellNewSpell = argument("spell", StringArgumentType.word())
-                .suggests(((context, builder) -> CommandSource.suggestMatching(SpellGenerator.getShortNameToFactory().keySet(), builder)))
+                .suggests(((context, builder) -> CommandSource.suggestMatching(Spells.getShortNameToFactory().keySet(), builder)))
                 .executes(this::newSpellCommand)
                 .build();
         var spellList = literal("list")
@@ -372,7 +372,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int newSpellCommand(CommandContext<ServerCommandSource> context) {
         String spell = context.getArgument("spell", String.class);
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
-        ConsequenceFactory<?> factory = SpellGenerator.getShortNameToFactory().get(spell);
+        ConsequenceFactory<?> factory = Spells.getShortNameToFactory().get(spell);
         if (factory.getWeight() == 0) {
             context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
         }

@@ -1,7 +1,7 @@
 package com.skycat.mystical.common.spell.consequence;
 
 import com.mojang.serialization.Codec;
-import com.skycat.mystical.common.spell.SpellGenerator;
+import com.skycat.mystical.common.spell.Spells;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public abstract class ConsequenceFactory<T extends SpellConsequence> {
-    public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(SpellGenerator::getFactory, ConsequenceFactory::getShortName);
+    public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName);
     protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, Codec<T> codec) {
         this.shortName = shortName;
         this.longName = longName;

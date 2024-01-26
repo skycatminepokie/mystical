@@ -1,6 +1,6 @@
 package com.skycat.mystical.datagen;
 
-import com.skycat.mystical.common.spell.SpellGenerator;
+import com.skycat.mystical.common.spell.Spells;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -47,7 +47,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
 
         addConfigSection(tb, "Spells");
         // Config + spells
-        for (ConsequenceFactory<?> factory : SpellGenerator.getShortNameToFactory().values()) {
+        for (ConsequenceFactory<?> factory : Spells.getShortNameToFactory().values()) {
             addConfigSpell(tb, factory);
         }
         addConfigOption(tb, "bigCreeperExplosion.multiplier", "Multiplier");
