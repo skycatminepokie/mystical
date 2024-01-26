@@ -1,1 +1,3 @@
 - Fix boldSlimes always being active
+- Fix haven info command from thinking a chunk is never havened when run on the server side.
+- Fix messages when trying to haven an already-havened chunk

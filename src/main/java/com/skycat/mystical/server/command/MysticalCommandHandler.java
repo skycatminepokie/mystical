@@ -211,12 +211,17 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         return 1;
     }
 
+    /**
+     * /mystical info
+     * Returns feedback telling if the executing entity is in a haven.
+     * @return 1 if the entity is in a haven, 0 otherwise.
+     */
     private int havenInfoCommand(CommandContext<ServerCommandSource> context) {
         Entity entity = context.getSource().getEntity();
         if (entity == null) {
             throw new CommandException(Utils.textOf("/mystical haven info must be called by an entity."));
         }
-        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity))) { // TODO: Translate, make better
+        if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity)) { // TODO: Translate, make better
             context.getSource().sendFeedback(Utils.textSupplierOf("This is in a haven"), false);
             return 1;
         }
@@ -291,7 +296,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      */
     private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
-
         // Must be player
         if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
             context.getSource().sendFeedback(Utils.textSupplierOf("This can only be called by a player."), false); // TODO: Translate
@@ -300,7 +304,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
         var vec = Vec2ArgumentType.getVec2(context, "block");
         BlockPos blockPos = new BlockPos((int) vec.x, 0, (int) vec.y);
-        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player))) { // Must not already be havened
+        if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player)) { // Must not already be havened. This check may not be needed, since we've got a ServerCommandSource?
             context.getSource().sendFeedback(Utils.textSupplierOf("That location is already havened."), false); // TODO: Translate
             return 0;
         }
