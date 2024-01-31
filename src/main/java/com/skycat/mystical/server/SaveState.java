@@ -18,6 +18,7 @@ public class SaveState extends PersistentState {
             HavenManager.CODEC.fieldOf("havenManager").forGetter(SaveState::getHavenManager),
             SpellHandler.CODEC.fieldOf("spellHandler").forGetter(SaveState::getSpellHandler)
     ).apply(instance, SaveState::new));
+    private static Type<SaveState> type = new Type<>(SaveState::loadSupportOld, SaveState::readFromNbt, null); // TODO: Choose a DataFixType?
 
     public SaveState() {
         this(new HavenManager(), new SpellHandler());
@@ -54,7 +55,7 @@ public class SaveState extends PersistentState {
 
     public static SaveState loadSave(MinecraftServer server) {
         PersistentStateManager stateManager = server.getOverworld().getPersistentStateManager();
-        return stateManager.getOrCreate(SaveState::readFromNbt, SaveState::loadSupportOld, "mystical");
+        return stateManager.getOrCreate(type, "mystical");
     }
 
     private static SaveState readFromNbt(NbtCompound save) {
