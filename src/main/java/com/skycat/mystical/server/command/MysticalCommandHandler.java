@@ -6,6 +6,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.Spell;
 import com.skycat.mystical.common.spell.Spells;
@@ -13,7 +15,6 @@ import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.util.Utils;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -37,6 +38,9 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class MysticalCommandHandler implements CommandRegistrationCallback {
+    private static final SimpleCommandExceptionType NO_SPELLS_TO_DELETE_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
+    private static final DynamicCommandExceptionType SPELL_DOES_NOT_EXIST_EXCEPTION = new DynamicCommandExceptionType((spellNum) -> Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
+    private static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.textOf("This must be called by an entity.")); // TODO: Translate
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
@@ -216,10 +220,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      * Returns feedback telling if the executing entity is in a haven.
      * @return 1 if the entity is in a haven, 0 otherwise.
      */
-    private int havenInfoCommand(CommandContext<ServerCommandSource> context) {
+    private int havenInfoCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Entity entity = context.getSource().getEntity();
         if (entity == null) {
-            throw new CommandException(Utils.textOf("/mystical haven info must be called by an entity."));
+            throw EXECUTOR_NOT_ENTITY_EXCEPTION.create();
         }
         if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity)) { // TODO: Translate, make better
             context.getSource().sendFeedback(Utils.textSupplierOf("This is in a haven"), false);
@@ -321,13 +325,13 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     }
 
 
-    private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) {
+    private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int spellNum = context.getArgument("spell", Integer.class);
         if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
-            throw new CommandException(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
+            throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
         }
-        if (spellNum > Mystical.getSpellHandler().getActiveSpells().size()) { // TODO: Translate
-            throw new CommandException(Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
+        if (spellNum > Mystical.getSpellHandler().getActiveSpells().size()) {
+            throw SPELL_DOES_NOT_EXIST_EXCEPTION.create(spellNum);
         }
         Mystical.getSpellHandler().getActiveSpells().remove(spellNum);
         Mystical.saveUpdated();
