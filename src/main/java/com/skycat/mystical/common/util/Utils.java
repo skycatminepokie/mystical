@@ -19,8 +19,10 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
+import net.minecraft.test.TestContext;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -372,5 +374,9 @@ public class Utils {
         log("Couldn't get a random status effect, using absorption instead. This probably shouldn't happen. Dumping stack.", LogLevel.ERROR);
         Thread.dumpStack(); // https://stackoverflow.com/a/945020
         return StatusEffects.ABSORPTION;
+    }
+
+    public static ServerPlayerEntity createMockCreativeServerPlayerEntity(TestContext context) {
+        return context.createMockCreativeServerPlayerInWorld();
     }
 }

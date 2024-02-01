@@ -17,7 +17,7 @@ public class TestEntry implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenWorks(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
-        ServerPlayerEntity player = context.createMockCreativeServerPlayerInWorld();
+        ServerPlayerEntity player = Utils.createMockCreativeServerPlayerEntity(context);
         havenManager.setPower(player, Integer.MAX_VALUE);
         context.assertTrue(havenManager.hasPower(player, havenManager.getHavenCost(player.getChunkPos())), "We couldn't haven with Integer.MAX_VALUE power.");
         context.assertTrue(havenManager.tryHaven(player.getChunkPos(), player), "Player couldn't haven, despite having enough power.");
@@ -28,7 +28,7 @@ public class TestEntry implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenFails(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
-        ServerPlayerEntity player = context.createMockCreativeServerPlayerInWorld();
+        ServerPlayerEntity player = Utils.createMockCreativeServerPlayerEntity(context);
 
         havenManager.setPower(player, -1);
         context.assertFalse(havenManager.tryHaven(player.getChunkPos(), player), "We were able to haven with negative power???");
@@ -48,6 +48,11 @@ public class TestEntry implements FabricGameTest {
         context.getWorld().save(null, true, false);
         HavenManager newHavenManager = SaveState.loadSave(context.getWorld().getServer()).getHavenManager();
         context.assertTrue(newHavenManager.equals(havenManager), "Serialization comparison failed.");
+        context.complete();
+    }
+
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    public void testNoFuseConsequence(TestContext context) { // TODO
         context.complete();
     }
 
