@@ -8,8 +8,10 @@ import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
+import net.minecraft.test.TestFunction;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -58,6 +60,11 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make
         @Override
         public double getWeight() {
             return Mystical.CONFIG.turboMobs.enabled() ? Mystical.CONFIG.turboMobs.weight() : 0;
+        }
+
+        @Override
+        public @Nullable TestFunction getTestFunction() {
+            return null; // TODO
         }
 
         @Override

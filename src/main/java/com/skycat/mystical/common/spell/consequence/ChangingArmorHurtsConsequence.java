@@ -9,7 +9,9 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.test.TestFunction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -48,6 +50,11 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
         @Override
         public @NotNull ChangingArmorHurtsConsequence make(@NonNull Random random, double points) {
             return new ChangingArmorHurtsConsequence();
+        }
+
+        @Override
+        public @Nullable TestFunction getTestFunction() {
+            return null; // TODO
         }
 
         @Override

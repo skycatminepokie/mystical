@@ -5,8 +5,10 @@ import com.skycat.mystical.common.spell.Spells;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
+import net.minecraft.test.TestFunction;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -89,4 +91,11 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
     public String translationKey() {
         return CONSEQUENCE_TRANSLATION_PREFIX + getShortName();
     }
+
+    /**
+     * Return a function to test {@link T}. <br>
+     * Make sure to test in and out of havens, as well as with/without spell being active.
+     * @return A test function (or null if none is implemented)
+     */
+    public abstract @Nullable TestFunction getTestFunction();
 }

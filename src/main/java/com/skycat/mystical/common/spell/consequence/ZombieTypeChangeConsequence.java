@@ -3,7 +3,9 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
+import net.minecraft.test.TestFunction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -33,6 +35,11 @@ public class ZombieTypeChangeConsequence extends SpellConsequence {
         @Override
         public @NotNull ZombieTypeChangeConsequence make(@NonNull Random random, double points) {
             return new ZombieTypeChangeConsequence();
+        }
+
+        @Override
+        public @Nullable TestFunction getTestFunction() {
+            return null; // TODO
         }
 
         @Override

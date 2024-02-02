@@ -3,7 +3,9 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
+import net.minecraft.test.TestFunction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 import java.util.function.Function;
@@ -40,6 +42,11 @@ public class BigCreeperExplosionConsequence extends SpellConsequence {
         @Override
         public BigCreeperExplosionConsequence make(@NonNull Random random, double points) {
             return new BigCreeperExplosionConsequence(DIFFICULTY_FUNCTION.apply(Mystical.CONFIG.bigCreeperExplosion.multiplier())); // TODO: Scaling, randomization
+        }
+
+        @Override
+        public @Nullable TestFunction getTestFunction() {
+            return null; // TODO
         }
 
         @Override

@@ -2,15 +2,21 @@ package com.skycat.mystical.test;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.LogLevel;
+import com.skycat.mystical.common.spell.Spells;
+import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.util.Utils;
 import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.SaveState;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.test.CustomTestProvider;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.test.TestFunction;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Objects;
 
 public class TestEntry implements FabricGameTest {
     // TODO: Make spells have tests in them
@@ -63,5 +69,10 @@ public class TestEntry implements FabricGameTest {
         havenManager.resetPower();
         Mystical.getSpellHandler().removeAllSpells();
         FabricGameTest.super.invokeTestMethod(context, method);
+    }
+
+    @CustomTestProvider
+    public Collection<TestFunction> getTestFunctions() {
+        return Spells.getConsequenceFactories().stream().map(ConsequenceFactory::getTestFunction).filter(Objects::nonNull).sorted().toList();
     }
 }
