@@ -12,8 +12,8 @@ public class TestFunctionBuilder {
     /**
      * Vanilla uses the format "class.method".
      */
-    private String templatePath = FabricGameTest.EMPTY_STRUCTURE;
-    private String structure = "";
+    private String templatePath;
+    private String structure = FabricGameTest.EMPTY_STRUCTURE;
     private BlockRotation rotation = BlockRotation.NONE;
     private int tickLimit = 100;
     private long setupTicks = 0L;
@@ -23,9 +23,11 @@ public class TestFunctionBuilder {
     private Consumer<TestContext> starter;
 
     /**
-     * @param starter The method to run. {@link net.minecraft.test.GameTest} annotations are ignored.
+     * @param testName The name of the test.
+     * @param starter  The method to run. {@link net.minecraft.test.GameTest} annotations are ignored.
      */
-    public TestFunctionBuilder(Consumer<TestContext> starter) {
+    public TestFunctionBuilder(String testName, Consumer<TestContext> starter) {
+        templatePath = "mysticaltests." + testName;
         this.starter = starter;
     }
 

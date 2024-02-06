@@ -25,7 +25,7 @@
       "com.skycat.mystical.datagen.DataGenerator"
     ],
     "fabric-gametest": [
-      "com.skycat.mystical.test.TestEntry"
+      "com.skycat.mystical.test.MysticalTests"
     ]
   },
   "mixins": [

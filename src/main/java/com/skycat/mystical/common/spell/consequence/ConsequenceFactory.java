@@ -95,7 +95,10 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
     /**
      * Return a function to test {@link T}. <br>
      * Make sure to test in and out of havens, as well as with/without spell being active.
+     *
      * @return A test function (or null if none is implemented)
      */
     public abstract @Nullable TestFunction getTestFunction();
+
+    // protected abstract void test(TestContext context)
 }

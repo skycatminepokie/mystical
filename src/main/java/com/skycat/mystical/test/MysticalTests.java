@@ -18,8 +18,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Objects;
 
-public class TestEntry implements FabricGameTest {
-    // TODO: Make spells have tests in them
+public class MysticalTests implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenWorks(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
