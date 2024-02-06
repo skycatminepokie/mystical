@@ -56,11 +56,6 @@ public class MysticalTests implements FabricGameTest {
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void testNoFuseConsequence(TestContext context) { // TODO
-        context.complete();
-    }
-
     @Override
     public void invokeTestMethod(TestContext context, Method method) {
         HavenManager havenManager = Mystical.getHavenManager();
