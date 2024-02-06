@@ -3,16 +3,16 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.common.spell.Spells;
 import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.test.Testable;
 import lombok.Getter;
 import lombok.NonNull;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public abstract class ConsequenceFactory<T extends SpellConsequence> {
+public abstract class ConsequenceFactory<T extends SpellConsequence> implements Testable {
     public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName);
     public static final String CONSEQUENCE_TRANSLATION_PREFIX = "text.mystical.consequence.";
     @Getter public final String shortName;
@@ -21,6 +21,7 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
     @Getter public final String firedMessage;
     @Getter public final Class<T> consequenceType;
     @Getter public final Codec<T> codec;
+
     protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, Codec<T> codec) {
         this.shortName = shortName;
         this.longName = longName;
@@ -92,13 +93,16 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
         return CONSEQUENCE_TRANSLATION_PREFIX + getShortName();
     }
 
+    @Override
+    public String getTemplatePath() {
+        return "mysticaltests.spell." + shortName;
+    }
+
     /**
-     * Return a function to test {@link T}. <br>
+     * Tests {@link T}. <br>
      * Make sure to test in and out of havens, as well as with/without spell being active.
      *
-     * @return A test function (or null if none is implemented)
+     * @param context The context to test in.
      */
-    public abstract @Nullable TestFunction getTestFunction();
-
-    // protected abstract void test(TestContext context)
+    public abstract void test(TestContext context);
 }

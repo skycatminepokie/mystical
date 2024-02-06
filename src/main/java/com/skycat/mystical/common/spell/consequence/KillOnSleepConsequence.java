@@ -5,10 +5,9 @@ import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -47,9 +46,10 @@ public class KillOnSleepConsequence extends SpellConsequence implements EntitySl
         }
 
         @Override
-        public @Nullable TestFunction getTestFunction() {
-            return null; // TODO
+        public void test(TestContext context) {
+            // TODO
         }
+
 
         @Override
         public double getWeight() {

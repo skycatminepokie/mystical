@@ -18,11 +18,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,9 +109,10 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         }
 
         @Override
-        public @Nullable TestFunction getTestFunction() {
-            return null; // TODO
+        public void test(TestContext context) {
+            // TODO
         }
+
 
         @Override
         public double getWeight() {

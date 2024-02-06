@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 import java.util.function.Function;
@@ -69,9 +68,10 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         }
 
         @Override
-        public @Nullable TestFunction getTestFunction() {
-            return null; // TODO
+        public void test(TestContext context) {
+            // TODO
         }
+
 
         @Override
         public double getWeight() {

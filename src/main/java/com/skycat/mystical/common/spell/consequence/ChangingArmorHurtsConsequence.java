@@ -9,9 +9,8 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -53,8 +52,8 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
         }
 
         @Override
-        public @Nullable TestFunction getTestFunction() {
-            return null; // TODO
+        public void test(TestContext context) {
+            // TODO
         }
 
         @Override

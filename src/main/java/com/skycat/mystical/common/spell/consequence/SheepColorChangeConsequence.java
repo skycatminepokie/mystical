@@ -3,9 +3,8 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -37,9 +36,10 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
         }
 
         @Override
-        public @Nullable TestFunction getTestFunction() {
-            return null; // TODO
+        public void test(TestContext context) {
+            // TODO
         }
+
 
         @Override
         public double getWeight() {

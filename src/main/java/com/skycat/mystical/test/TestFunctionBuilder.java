@@ -23,11 +23,11 @@ public class TestFunctionBuilder {
     private Consumer<TestContext> starter;
 
     /**
-     * @param testName The name of the test.
-     * @param starter  The method to run. {@link net.minecraft.test.GameTest} annotations are ignored.
+     * @param templatePath The name of the test.
+     * @param starter      The method to run. {@link net.minecraft.test.GameTest} annotations are ignored.
      */
-    public TestFunctionBuilder(String testName, Consumer<TestContext> starter) {
-        templatePath = "mysticaltests." + testName;
+    public TestFunctionBuilder(String templatePath, Consumer<TestContext> starter) {
+        this.templatePath = "mysticaltests." + templatePath;
         this.starter = starter;
     }
 

@@ -10,11 +10,10 @@ import net.minecraft.entity.passive.CatVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.TestContext;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -64,9 +63,10 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
         }
 
         @Override
-        public @Nullable TestFunction getTestFunction() {
-            return null; // TODO
+        public void test(TestContext context) {
+            // TODO
         }
+
 
         @Override
         public double getWeight() {

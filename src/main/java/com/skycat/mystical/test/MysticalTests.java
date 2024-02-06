@@ -16,8 +16,10 @@ import net.minecraft.test.TestFunction;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class MysticalTests implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenWorks(TestContext context) {
@@ -67,6 +69,6 @@ public class MysticalTests implements FabricGameTest {
 
     @CustomTestProvider
     public Collection<TestFunction> getTestFunctions() {
-        return Spells.getConsequenceFactories().stream().map(ConsequenceFactory::getTestFunction).filter(Objects::nonNull).sorted().toList();
+        return Spells.getConsequenceFactories().stream().map(ConsequenceFactory::getTestFunction).filter(Objects::nonNull).sorted(Comparator.comparing(TestFunction::getTemplateName)).toList();
     }
 }
