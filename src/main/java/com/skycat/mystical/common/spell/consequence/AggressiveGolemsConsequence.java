@@ -36,8 +36,9 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
         }
 
         @Override
-        public void test(TestContext context) {
-            context.complete(); // TODO
+        public void test(TestContext context) { // TODO
+            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
+            context.complete();
         }
 
         @Override

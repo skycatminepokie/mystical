@@ -98,6 +98,11 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> implements 
         return "mysticaltests.spell." + shortName;
     }
 
+    @Override
+    public String getBatchId() {
+        return "spell." + shortName; // I really can't handle them being parallelized right now.
+    }
+
     /**
      * Tests {@link T}. <br>
      * Make sure to test in and out of havens, as well as with/without spell being active.

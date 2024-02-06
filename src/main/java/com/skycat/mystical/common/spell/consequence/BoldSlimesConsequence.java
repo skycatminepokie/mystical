@@ -35,8 +35,9 @@ public class BoldSlimesConsequence extends SpellConsequence {
         }
 
         @Override
-        public void test(TestContext context) {
-            // TODO
+        public void test(TestContext context) { // TODO
+            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
+            context.complete();
         }
 
 
