@@ -71,4 +71,16 @@ public class MysticalTests implements FabricGameTest {
     public Collection<TestFunction> getTestFunctions() {
         return Spells.getConsequenceFactories().stream().map(ConsequenceFactory::getTestFunction).filter(Objects::nonNull).sorted(Comparator.comparing(TestFunction::getTemplateName)).toList();
     }
+
+    @GameTest(templateName = TestUtils.EMPTY)
+    public void testHavenAll(TestContext context) {
+        TestUtils.resetMystical(context);
+        TestUtils.havenAll(context);
+        HavenManager havenManager = Mystical.getHavenManager();
+        context.forEachRelativePos((blockPos) -> {
+            blockPos = context.getAbsolutePos(blockPos);
+            context.assertTrue(havenManager.isInHaven(blockPos), "Block pos " + blockPos + " was expected to be havened.");
+        });
+        context.complete();
+    }
 }
