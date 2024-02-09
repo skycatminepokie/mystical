@@ -3,16 +3,23 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.common.spell.Spells;
 import com.skycat.mystical.common.util.Utils;
-import com.skycat.mystical.test.Testable;
 import lombok.Getter;
 import lombok.NonNull;
-import net.minecraft.test.TestContext;
+import net.minecraft.test.GameTest;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class ConsequenceFactory<T extends SpellConsequence> implements Testable {
+/**
+ * A factory for a {@link SpellConsequence}.
+ *
+ * @implSpec Register in {@link Spells}<br>
+ * Implement {@link GameTest} annotated methods for spell/no spell and haven/no haven.<br>
+ * {@link GameTest#batchId()} is ignored - it will never be run in parallel. See {@link com.skycat.mystical.test.MysticalTests#getSpellTests(ArrayList)}.
+ */
+public abstract class ConsequenceFactory<T extends SpellConsequence> {
     public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName);
     public static final String CONSEQUENCE_TRANSLATION_PREFIX = "text.mystical.consequence.";
     @Getter public final String shortName;
@@ -92,22 +99,4 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> implements 
     public String translationKey() {
         return CONSEQUENCE_TRANSLATION_PREFIX + getShortName();
     }
-
-    @Override
-    public String getTemplatePath() {
-        return "mysticaltests.spell." + shortName;
-    }
-
-    @Override
-    public String getBatchId() {
-        return "spell." + shortName; // I really can't handle them being parallelized right now.
-    }
-
-    /**
-     * Tests {@link T}. <br>
-     * Make sure to test in and out of havens, as well as with/without spell being active.
-     *
-     * @param context The context to test in.
-     */
-    public abstract void test(TestContext context);
 }

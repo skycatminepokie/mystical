@@ -13,10 +13,10 @@ public class TestFunctionBuilder {
      * Vanilla uses the format "class.method".
      */
     private String templatePath;
-    private String structure = FabricGameTest.EMPTY_STRUCTURE;
+    private String templateName = FabricGameTest.EMPTY_STRUCTURE;
     private BlockRotation rotation = BlockRotation.NONE;
     private int tickLimit = 100;
-    private long setupTicks = 0L;
+    private long duration = 0L;
     private boolean required = true;
     private int requiredSuccesses = 1;
     private int maxAttempts = 1;
@@ -42,7 +42,7 @@ public class TestFunctionBuilder {
     }
 
     public TestFunction build() {
-        return new TestFunction(batchId, templatePath, structure, rotation, tickLimit, setupTicks, required, requiredSuccesses, maxAttempts, starter);
+        return new TestFunction(batchId, templatePath, templateName, rotation, tickLimit, duration, required, requiredSuccesses, maxAttempts, starter);
     }
 
     public TestFunctionBuilder rotation(BlockRotation rotation) {
@@ -55,9 +55,16 @@ public class TestFunctionBuilder {
         return this;
     }
 
-    public TestFunctionBuilder setupTicks(long setupTicks) {
-        this.setupTicks = setupTicks;
+    public TestFunctionBuilder duration(long duration) {
+        this.duration = duration;
         return this;
+    }
+
+    /**
+     * Equivalent to {@link TestFunctionBuilder#duration}.
+     */
+    public TestFunctionBuilder setupTicks(long setupTicks) {
+        return duration(setupTicks);
     }
 
     public TestFunctionBuilder required(boolean required) {
@@ -80,8 +87,15 @@ public class TestFunctionBuilder {
         return this;
     }
 
+    /**
+     * Equivalent to {@link TestFunctionBuilder#templateName(String)}
+     */
     public TestFunctionBuilder structure(String structure) {
-        this.structure = structure;
+        return templateName(structure);
+    }
+
+    public TestFunctionBuilder templateName(String templateName) {
+        this.templateName = templateName;
         return this;
     }
 }

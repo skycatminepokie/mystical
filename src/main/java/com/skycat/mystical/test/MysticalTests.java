@@ -9,15 +9,14 @@ import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.SaveState;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.test.CustomTestProvider;
-import net.minecraft.test.GameTest;
-import net.minecraft.test.TestContext;
-import net.minecraft.test.TestFunction;
+import net.minecraft.test.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Objects;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 public class MysticalTests implements FabricGameTest {
@@ -67,9 +66,44 @@ public class MysticalTests implements FabricGameTest {
         FabricGameTest.super.invokeTestMethod(context, method);
     }
 
+    private static void getSpellTests(ArrayList<TestFunction> testFunctions) {
+        for (ConsequenceFactory<?> factory : Spells.getConsequenceFactories()) {
+            for (Method method : factory.getClass().getMethods()) {
+                GameTest testInfo = method.getAnnotation(GameTest.class);
+                if (testInfo != null) {
+                    testFunctions.add(
+                            new TestFunctionBuilder(factory.getShortName() + "." + method.getName(), methodToConsumer(method, factory))
+                                    .tickLimit(testInfo.tickLimit())
+                                    .batchId("mysticaltests.spell." + factory.getShortName() + "." + method.getName())
+                                    .rotation(StructureTestUtil.getRotation(testInfo.rotation()))
+                                    .required(testInfo.required())
+                                    .templateName(testInfo.templateName())
+                                    .duration(testInfo.duration())
+                                    .maxAttempts(testInfo.maxAttempts())
+                                    .requiredSuccesses(testInfo.requiredSuccesses())
+                                    .build()
+                    );
+                }
+            }
+        }
+    }
+
+    public static Consumer<TestContext> methodToConsumer(Method method, Object object) {
+        return (context) -> {
+            try {
+                method.invoke(method, context);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
+
     @CustomTestProvider
     public Collection<TestFunction> getTestFunctions() {
-        return Spells.getConsequenceFactories().stream().map(ConsequenceFactory::getTestFunction).filter(Objects::nonNull).sorted(Comparator.comparing(TestFunction::getTemplateName)).toList();
+        ArrayList<TestFunction> testFunctions = new ArrayList<>();
+        getSpellTests(testFunctions);
+        testFunctions.sort(Comparator.comparing(TestFunction::getTemplateName));
+        return testFunctions;
     }
 
     @GameTest(templateName = TestUtils.EMPTY)
