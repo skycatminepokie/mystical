@@ -3,7 +3,6 @@ package com.skycat.mystical.common.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -33,12 +32,6 @@ public class IllusionersReplaceEvokersConsequence extends SpellConsequence {
         @Override
         public @NotNull IllusionersReplaceEvokersConsequence make(@NonNull Random random, double points) {
             return new IllusionersReplaceEvokersConsequence();
-        }
-
-        @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
         }
 
 

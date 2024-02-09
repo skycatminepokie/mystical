@@ -8,7 +8,6 @@ import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
-import net.minecraft.test.TestContext;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,11 +55,6 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make
             return new TurboMobsConsequence(EntityType.ZOMBIE);
         }
 
-        @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
-        }
 
         @Override
         public double getWeight() {

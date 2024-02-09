@@ -10,7 +10,6 @@ import net.minecraft.entity.passive.CatVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
-import net.minecraft.test.TestContext;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
@@ -60,12 +59,6 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
         @Override
         public @NotNull CatVariantChangeConsequence make(@NonNull Random random, double points) {
             return new CatVariantChangeConsequence();
-        }
-
-        @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
         }
 
 

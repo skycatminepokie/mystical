@@ -91,7 +91,7 @@ public class MysticalTests implements FabricGameTest {
     public static Consumer<TestContext> methodToConsumer(Method method, Object object) {
         return (context) -> {
             try {
-                method.invoke(method, context);
+                method.invoke(method, object);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }

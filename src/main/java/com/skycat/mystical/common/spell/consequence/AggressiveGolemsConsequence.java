@@ -7,6 +7,7 @@ import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,36 +41,33 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
         }
 
         @Override
-        public String getStructure() {
-            return TestUtils.BORDERED_BARRIER_BOX;
-        }
-
-        @Override
-        public int getTickLimit() {
-            return 500;
-        }
-
-        @Override
         public double getWeight() {
             return (Mystical.CONFIG.aggressiveGolems.enabled() ? Mystical.CONFIG.aggressiveGolems.weight() : 0);
         }
 
-        @Override
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 500, batchId = "mysticaltests.spell.aggressiveGolems")
         public void test(TestContext context) { // TODO: Test the test
             TestUtils.resetMystical(context);
-            IronGolemEntity golem = context.spawnMob(EntityType.IRON_GOLEM, 2, 3, 2);
-            VillagerEntity villager = context.spawnMob(EntityType.VILLAGER, 2, 3, 2);
+            IronGolemEntity golem = context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
+            VillagerEntity villager = context.spawnMob(EntityType.VILLAGER, 2, 2, 2);
             context.setHealthLow(villager);
             context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 Mystical.getSpellHandler().activateNewSpellWithConsequence(AggressiveGolemsConsequence.FACTORY);
                 context.waitAndRun(50, () -> {
+                    context.dontExpectEntity(EntityType.VILLAGER); // Golem should've killed it
+                    TestUtils.havenAll(context);
+                    context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
+                    context.waitAndRun(50, () -> {
+                        context.expectEntity(EntityType.VILLAGER);
+                        TestUtils.resetMystical(context);
+                        Mystical.getSpellHandler().activateNewSpellWithConsequence(AggressiveGolemsConsequence.FACTORY);
 
+                    });
                 });
             });
 
 
-            context.dontExpectEntity(EntityType.IRON_GOLEM);
             context.complete();
         }
     }

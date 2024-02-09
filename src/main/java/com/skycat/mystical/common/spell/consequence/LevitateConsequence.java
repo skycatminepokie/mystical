@@ -18,7 +18,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -106,12 +105,6 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         @Override
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
             return new LevitateConsequence(20, 5, Utils.chooseRandom(random, supportedEvents));
-        }
-
-        @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
         }
 
 

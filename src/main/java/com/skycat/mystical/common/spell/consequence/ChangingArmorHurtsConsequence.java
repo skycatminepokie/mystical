@@ -9,7 +9,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -51,11 +50,6 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
             return new ChangingArmorHurtsConsequence();
         }
 
-        @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
-        }
 
         @Override
         public double getWeight() {

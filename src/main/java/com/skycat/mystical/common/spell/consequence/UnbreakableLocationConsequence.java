@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.test.TestContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -65,12 +64,6 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         @Override
         public @NotNull UnbreakableLocationConsequence make(@NonNull Random random, double points) {
             return new UnbreakableLocationConsequence();
-        }
-
-        @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
         }
 
 
