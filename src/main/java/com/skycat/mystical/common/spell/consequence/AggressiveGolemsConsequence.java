@@ -2,7 +2,11 @@ package com.skycat.mystical.common.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.test.TestUtils;
 import lombok.NonNull;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,14 +40,37 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
         }
 
         @Override
-        public void test(TestContext context) { // TODO
-            com.skycat.mystical.common.util.Utils.log("Test not implemented for " + shortName, com.skycat.mystical.common.LogLevel.WARN);
-            context.complete();
+        public String getStructure() {
+            return TestUtils.BORDERED_BARRIER_BOX;
         }
 
         @Override
-        public double getWeight()  {
+        public int getTickLimit() {
+            return 500;
+        }
+
+        @Override
+        public double getWeight() {
             return (Mystical.CONFIG.aggressiveGolems.enabled() ? Mystical.CONFIG.aggressiveGolems.weight() : 0);
+        }
+
+        @Override
+        public void test(TestContext context) { // TODO: Test the test
+            TestUtils.resetMystical(context);
+            IronGolemEntity golem = context.spawnMob(EntityType.IRON_GOLEM, 2, 3, 2);
+            VillagerEntity villager = context.spawnMob(EntityType.VILLAGER, 2, 3, 2);
+            context.setHealthLow(villager);
+            context.waitAndRun(50, () -> {
+                context.expectEntity(EntityType.VILLAGER);
+                Mystical.getSpellHandler().activateNewSpellWithConsequence(AggressiveGolemsConsequence.FACTORY);
+                context.waitAndRun(50, () -> {
+
+                });
+            });
+
+
+            context.dontExpectEntity(EntityType.IRON_GOLEM);
+            context.complete();
         }
     }
 }
