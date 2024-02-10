@@ -18,6 +18,11 @@ public class TestUtils {
      * 32x1x32 air.
      */
     public static final String EMPTY = "mystical:empty_32x1x32";
+    /**
+     * A 13x17x13 box of barriers, outlined with tinted glass. Every fourth y-level starting with the bottom layer is sculk.<br>
+     * In the center, just below the 3rd layer is a sculk shrieker (6, 6, 6). The one sculk above it is removed.
+     */
+    public static final String WARDEN_SUMMON_BOX = "mystical:warden_summon_box_13x17x13";
 
     /**
      * Haven all chunks inside the bounding box of {@code context}.
