@@ -58,7 +58,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testHavenAndSpell(TestContext context) { // TODO: Test
+        public void testHavenAndSpell(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
             context.setTime(1000); // Make it day
@@ -70,7 +70,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testSpell(TestContext context) { // TODO: Test
+        public void testSpell(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
             context.setTime(1000); // Make it day
@@ -82,7 +82,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testVanilla(TestContext context) { // TODO: Test
+        public void testVanilla(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
             context.setTime(1000); // Make it day

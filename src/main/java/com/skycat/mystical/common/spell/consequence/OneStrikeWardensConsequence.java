@@ -62,7 +62,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
-        public void testHaven(TestContext context) { // TODO: Test
+        public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
@@ -74,7 +74,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
-        public void testSpell(TestContext context) { // TODO: Test
+        public void testSpell(TestContext context) {
             setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
 
@@ -85,7 +85,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
-        public void testSpellAndHaven(TestContext context) { // TODO: Test
+        public void testSpellAndHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
 
@@ -96,7 +96,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
-        public void testVanilla(TestContext context) { // TODO: Test
+        public void testVanilla(TestContext context) {
             setUpTest(context);
 
             context.waitAndRun(75, () -> {
