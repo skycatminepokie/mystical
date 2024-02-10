@@ -44,7 +44,47 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testVanilla(TestContext context) {
+        public void testHaven(TestContext context) { // TODO: Test
+            TestUtils.resetMystical(context);
+            context.killAllEntities();
+            TestUtils.havenAll(context);
+            context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
+            context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
+            context.waitAndRun(75, () -> {
+                context.expectEntity(EntityType.VILLAGER);
+            });
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        public void testHavenAndSpell(TestContext context) { // TODO: Test
+            TestUtils.resetMystical(context);
+            context.killAllEntities();
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            TestUtils.havenAll(context);
+            context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
+            context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
+            context.waitAndRun(75, () -> {
+                context.expectEntity(EntityType.VILLAGER);
+            });
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        public void testSpell(TestContext context) { // TODO: Test
+            TestUtils.resetMystical(context);
+            context.killAllEntities();
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
+            context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
+            context.waitAndRun(75, () -> {
+                context.dontExpectEntity(EntityType.VILLAGER);
+            });
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        public void testVanilla(TestContext context) { // TODO: Test
             TestUtils.resetMystical(context);
             context.killAllEntities();
             context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
@@ -54,28 +94,5 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
             });
             context.complete();
         }
-
-        //@GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 500, batchId = "mysticaltests.spell.aggressiveGolems")
-        //public void test(TestContext context) { // TODO: Test the test
-        //    TestUtils.resetMystical(context);
-        //    context.waitAndRun(50, () -> {
-        //        context.expectEntity(EntityType.VILLAGER);
-        //        Mystical.getSpellHandler().activateNewSpellWithConsequence(AggressiveGolemsConsequence.FACTORY);
-        //        context.waitAndRun(50, () -> {
-        //            context.dontExpectEntity(EntityType.VILLAGER); // Golem should've killed it
-        //            TestUtils.havenAll(context);
-        //            context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
-        //            context.waitAndRun(50, () -> {
-        //                context.expectEntity(EntityType.VILLAGER);
-        //                TestUtils.resetMystical(context);
-        //                Mystical.getSpellHandler().activateNewSpellWithConsequence(AggressiveGolemsConsequence.FACTORY);
-//
-        //            });
-        //        });
-        //    });
-//
-//
-        //    context.complete();
-        //}
     }
 }
