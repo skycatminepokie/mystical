@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SkeletonTypeChangeConsequence extends SpellConsequence {
+public class SkeletonTypeChangeConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     @Override

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class ZombieTypeChangeConsequence extends SpellConsequence {
+public class ZombieTypeChangeConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     @Override

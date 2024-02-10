@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class TurboChickensConsequence extends SpellConsequence {
+public class TurboChickensConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     public TurboChickensConsequence() {
         super(TurboChickensConsequence.class, null, 1d);

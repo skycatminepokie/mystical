@@ -15,7 +15,7 @@ import java.util.Random;
 
 import static net.minecraft.entity.damage.DamageTypes.THORNS;
 
-public class ChangingArmorHurtsConsequence extends SpellConsequence implements ServerEntityEvents.EquipmentChange {
+public class ChangingArmorHurtsConsequence extends SpellConsequence implements ServerEntityEvents.EquipmentChange { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     public ChangingArmorHurtsConsequence() {

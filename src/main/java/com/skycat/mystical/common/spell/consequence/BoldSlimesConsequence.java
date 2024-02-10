@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class BoldSlimesConsequence extends SpellConsequence {
+public class BoldSlimesConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     public BoldSlimesConsequence() {
         super(BoldSlimesConsequence.class, null, 50d);

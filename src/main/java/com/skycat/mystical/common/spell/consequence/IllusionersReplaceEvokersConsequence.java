@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class IllusionersReplaceEvokersConsequence extends SpellConsequence {
+public class IllusionersReplaceEvokersConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     public IllusionersReplaceEvokersConsequence() {
         super(IllusionersReplaceEvokersConsequence.class, null, 25d);

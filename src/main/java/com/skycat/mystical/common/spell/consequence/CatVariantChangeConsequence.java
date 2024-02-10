@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CatVariantChangeConsequence extends SpellConsequence implements CatEntityEvents.Eat {
+public class CatVariantChangeConsequence extends SpellConsequence implements CatEntityEvents.Eat { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     private static final ArrayList<CatVariant> VARIANTS = new ArrayList<>();
 

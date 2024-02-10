@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make this work with wardens?
+public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make this work with wardens?  // TODO: Tests
     public static final Factory FACTORY = new Factory();
     @Getter public EntityType<?> entityType;
 

@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * Makes saplings grow into random trees.
  */
-public class RandomTreeTypeConsequence extends SpellConsequence {
+public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     @Override

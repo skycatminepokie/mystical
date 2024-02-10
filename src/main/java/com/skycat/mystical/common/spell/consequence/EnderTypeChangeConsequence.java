@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class EnderTypeChangeConsequence extends SpellConsequence { // TODO: Combine all type change consequences into one
+public class EnderTypeChangeConsequence extends SpellConsequence { // TODO: Combine all type change consequences into one // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     @Override

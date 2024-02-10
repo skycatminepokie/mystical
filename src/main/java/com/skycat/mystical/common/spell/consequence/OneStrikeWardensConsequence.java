@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class OneStrikeWardensConsequence extends SpellConsequence {
+public class OneStrikeWardensConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     public OneStrikeWardensConsequence() {

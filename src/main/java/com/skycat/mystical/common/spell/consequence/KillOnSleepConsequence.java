@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class KillOnSleepConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping {
+public class KillOnSleepConsequence extends SpellConsequence implements EntitySleepEvents.StartSleeping {  // TODO: Tests
     public static final ConsequenceFactory<KillOnSleepConsequence> FACTORY = new Factory();
 
     @Override
