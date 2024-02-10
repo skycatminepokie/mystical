@@ -49,10 +49,9 @@ public class OneStrikeWardensConsequence extends SpellConsequence { // TODO: Tes
             return (Mystical.CONFIG.oneStrikeWardens.enabled() ? Mystical.CONFIG.oneStrikeWardens.weight() : 0);
         }
 
-        private static void testNotActive(TestContext context) {
+        private void setUpTest(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
-            TestUtils.havenAll(context);
             PlayerEntity player = context.createMockSurvivalPlayer();
             Optional<SculkShriekerWarningManager> optWarningManager = player.getSculkShriekerWarningManager();
             if (optWarningManager.isPresent()) {
@@ -60,7 +59,13 @@ public class OneStrikeWardensConsequence extends SpellConsequence { // TODO: Tes
             }
             BlockPos teleportTo = context.getAbsolutePos(new BlockPos(6, 8, 6));
             player.teleport(teleportTo.getX(), teleportTo.getY(), teleportTo.getZ(), false);
+        }
 
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        public void testHaven(TestContext context) { // TODO: Test
+            setUpTest(context);
+            TestUtils.havenAll(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
 
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
@@ -69,23 +74,9 @@ public class OneStrikeWardensConsequence extends SpellConsequence { // TODO: Tes
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
-        public void testHaven(TestContext context) { // TODO: Test
-            testNotActive(context);
-        }
-
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
         public void testSpell(TestContext context) { // TODO: Test
-            TestUtils.resetMystical(context);
-            context.killAllEntities();
+            setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
-            PlayerEntity player = context.createMockSurvivalPlayer();
-            Optional<SculkShriekerWarningManager> optWarningManager = player.getSculkShriekerWarningManager();
-            if (optWarningManager.isPresent()) {
-                optWarningManager.get().setWarningLevel(0);
-            }
-            BlockPos teleportTo = context.getAbsolutePos(new BlockPos(6, 8, 6));
-            player.teleport(teleportTo.getX(), teleportTo.getY(), teleportTo.getZ(), false);
-
 
             context.waitAndRun(75, () -> {
                 context.expectEntity(EntityType.WARDEN);
@@ -94,17 +85,9 @@ public class OneStrikeWardensConsequence extends SpellConsequence { // TODO: Tes
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
-        public void testVanilla(TestContext context) { // TODO: Test
-            TestUtils.resetMystical(context);
-            context.killAllEntities();
-            PlayerEntity player = context.createMockSurvivalPlayer();
-            Optional<SculkShriekerWarningManager> optWarningManager = player.getSculkShriekerWarningManager();
-            if (optWarningManager.isPresent()) {
-                optWarningManager.get().setWarningLevel(0);
-            }
-            BlockPos teleportTo = context.getAbsolutePos(new BlockPos(6, 8, 6));
-            player.teleport(teleportTo.getX(), teleportTo.getY(), teleportTo.getZ(), false);
-
+        public void testSpellAndHaven(TestContext context) { // TODO: Test
+            setUpTest(context);
+            TestUtils.havenAll(context);
 
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
@@ -112,7 +95,15 @@ public class OneStrikeWardensConsequence extends SpellConsequence { // TODO: Tes
             context.complete();
         }
 
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        public void testVanilla(TestContext context) { // TODO: Test
+            setUpTest(context);
 
+            context.waitAndRun(75, () -> {
+                context.dontExpectEntity(EntityType.WARDEN);
+            });
+            context.complete();
+        }
     }
 
 }

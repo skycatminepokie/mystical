@@ -61,19 +61,19 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testHavenAndSpell(TestContext context) { // TODO: Test
+        public void testSpell(TestContext context) { // TODO: Test
             setUpTest(context);
             context.waitAndRun(75, () -> {
-                context.expectEntity(EntityType.VILLAGER);
+                context.dontExpectEntity(EntityType.VILLAGER);
             });
             context.complete();
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testSpell(TestContext context) { // TODO: Test
+        public void testHavenAndSpell(TestContext context) { // TODO: Test
             setUpTest(context);
             context.waitAndRun(75, () -> {
-                context.dontExpectEntity(EntityType.VILLAGER);
+                context.expectEntity(EntityType.VILLAGER);
             });
             context.complete();
         }
