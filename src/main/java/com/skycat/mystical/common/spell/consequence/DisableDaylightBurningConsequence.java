@@ -45,52 +45,51 @@ public class DisableDaylightBurningConsequence extends SpellConsequence { // TOD
             return (Mystical.CONFIG.disableDaylightBurning.enabled() ? Mystical.CONFIG.disableDaylightBurning.weight() : 0);
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testHaven(TestContext context) { // TODO: Test
+        private static void setUpTest(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
             context.setTime(1000); // Make it day
             context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
-            context.waitAndRun(75, () -> {
-                context.dontExpectEntity(EntityType.ZOMBIE);
-            });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
-        public void testHavenAndSpell(TestContext context) {
-            TestUtils.resetMystical(context);
-            context.killAllEntities();
-            context.setTime(1000); // Make it day
-            context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
+        public void testHaven(TestContext context) { // TODO: Test
+            setUpTest(context);
+            TestUtils.havenAll(context);
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
+                context.complete();
             });
-            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        public void testHavenAndSpell(TestContext context) { // TODO: Test
+            setUpTest(context);
+            TestUtils.havenAll(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            context.waitAndRun(75, () -> {
+                context.dontExpectEntity(EntityType.ZOMBIE);
+                context.complete();
+            });
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testSpell(TestContext context) {
-            TestUtils.resetMystical(context);
-            context.killAllEntities();
-            context.setTime(1000); // Make it day
-            context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
+            setUpTest(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
             context.waitAndRun(75, () -> {
-                context.expectEntity(EntityType.ZOMBIE);
+                context.expectEntity(EntityType.ZOMBIE); // It shouldn't burn
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testVanilla(TestContext context) {
-            TestUtils.resetMystical(context);
-            context.killAllEntities();
-            context.setTime(1000); // Make it day
-            context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
+            setUpTest(context);
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
+                context.complete();
             });
-            context.complete();
         }
     }
 }

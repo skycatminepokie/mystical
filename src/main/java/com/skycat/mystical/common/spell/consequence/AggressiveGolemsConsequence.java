@@ -56,8 +56,8 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
             setUpTest(context);
             context.waitAndRun(75, () -> {
                 context.expectEntity(EntityType.VILLAGER);
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
@@ -65,8 +65,8 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
             setUpTest(context);
             context.waitAndRun(75, () -> {
                 context.expectEntity(EntityType.VILLAGER);
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
@@ -74,8 +74,8 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
             setUpTest(context);
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.VILLAGER);
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
@@ -83,8 +83,8 @@ public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Mak
             setUpTest(context);
             context.waitAndRun(75, () -> {
                 context.expectEntity(EntityType.VILLAGER);
+                context.complete();
             });
-            context.complete();
         }
     }
 }

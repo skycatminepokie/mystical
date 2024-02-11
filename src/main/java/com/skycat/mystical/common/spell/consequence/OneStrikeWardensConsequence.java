@@ -69,8 +69,8 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
 
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
@@ -80,8 +80,8 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
 
             context.waitAndRun(75, () -> {
                 context.expectEntity(EntityType.WARDEN);
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
@@ -91,8 +91,8 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
 
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
+                context.complete();
             });
-            context.complete();
         }
 
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
@@ -101,8 +101,8 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
 
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
+                context.complete();
             });
-            context.complete();
         }
     }
 
