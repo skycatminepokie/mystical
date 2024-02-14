@@ -1,1 +1,1 @@
-- Fix boldSlimes being active only in havens
+- Difficulty of unbreakableLocation from 500 -> 200

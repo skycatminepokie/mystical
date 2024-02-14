@@ -238,7 +238,6 @@ public class Utils {
         }
         if (newEntity == null) {
             Utils.log("Failed to convert - see previous logging and check tags. For now, we'll skip it.", LogLevel.ERROR);
-            // TODO: Maybe warn admins?
             return null;
         }
         return newEntity;

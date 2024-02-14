@@ -26,7 +26,6 @@ public class Spells {
     static {
         // Initialize all the consequence factories
         Collections.addAll(Spells.consequenceFactories,
-                // KillOnSleepConsequence.FACTORY,
                 LevitateConsequence.FACTORY,
                 RandomTreeTypeConsequence.FACTORY,
                 BigCreeperExplosionConsequence.FACTORY,

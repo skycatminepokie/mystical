@@ -31,7 +31,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
     }
 
     public UnbreakableLocationConsequence(long seed) {
-        super(UnbreakableLocationConsequence.class, AttackBlockCallback.class, 500); // TODO difficulty scaling
+        super(UnbreakableLocationConsequence.class, AttackBlockCallback.class, 200);
         this.seed = seed;
     }
 

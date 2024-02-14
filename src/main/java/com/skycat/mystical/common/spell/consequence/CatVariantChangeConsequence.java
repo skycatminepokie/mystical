@@ -27,8 +27,8 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
         return FACTORY;
     }
 
-    public CatVariantChangeConsequence() { // TODO: Config on variants
-        super(CatVariantChangeConsequence.class, CatEntityEvents.Eat.class, 1d);  // TODO: Scaling
+    public CatVariantChangeConsequence() {
+        super(CatVariantChangeConsequence.class, CatEntityEvents.Eat.class, 1d);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence { // TODO: Tes
     }
 
     public FishingRodLaunchConsequence() {
-        super(FishingRodLaunchConsequence.class, null, -5d); // TODO: Scaling
+        super(FishingRodLaunchConsequence.class, null, -5d);
     }
 
     public static class Factory extends ConsequenceFactory<FishingRodLaunchConsequence> {

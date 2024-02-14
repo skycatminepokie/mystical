@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AggressiveGolemsConsequence extends SpellConsequence { // TODO: Make work for snow golems
+public class AggressiveGolemsConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public AggressiveGolemsConsequence() {

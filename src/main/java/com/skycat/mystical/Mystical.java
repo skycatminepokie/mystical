@@ -100,7 +100,8 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     }
 
     @Override
-    public void onWorldLoad(MinecraftServer server, ServerWorld world) { // TODO: Make this only run on loading one dimension lol
+    public void onWorldLoad(MinecraftServer server, ServerWorld world) {
+        if (!server.getOverworld().equals(world)) return;
         /*assert !world.isClient()*/
         isClientWorld = false;
         EVENT_HANDLER.onWorldLoad(server, world);

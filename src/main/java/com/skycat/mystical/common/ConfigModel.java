@@ -120,7 +120,6 @@ public class ConfigModel {
         public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
-        // TODO: block/event type options
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
         public double weight = 1;

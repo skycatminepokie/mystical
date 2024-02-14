@@ -24,10 +24,11 @@ Split: A target value for |consequence difficulty - cure difficulty|.
 Wildness: A measure indicating how different the gameplay is due to the spell - more unique spells have higher wildness.
     This is separate from difficulty, though difficulty will likely be correlated.
  */
-public class SpellGenerator { // TODO: For now, a lot of things that could be randomized are just hard-coded
+public class SpellGenerator {
 
     /**
      * Return a new random spell.
+     *
      * @return A new random spell.
      */
     public static Spell get() {

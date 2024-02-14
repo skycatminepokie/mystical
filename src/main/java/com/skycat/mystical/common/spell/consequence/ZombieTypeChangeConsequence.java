@@ -16,7 +16,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence { // TODO: Tes
     }
 
     public ZombieTypeChangeConsequence() {
-        super(ZombieTypeChangeConsequence.class, null, 50d); // TODO: Scaling
+        super(ZombieTypeChangeConsequence.class, null, 50d);
     }
 
     public static class Factory extends ConsequenceFactory<ZombieTypeChangeConsequence> {

@@ -16,7 +16,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence { // TODO: T
     }
 
     protected SkeletonTypeChangeConsequence() {
-        super(SkeletonTypeChangeConsequence.class, null, 50d); // TODO: Scaling
+        super(SkeletonTypeChangeConsequence.class, null, 50d);
     }
 
     public static class Factory extends ConsequenceFactory<SkeletonTypeChangeConsequence> {

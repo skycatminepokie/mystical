@@ -18,7 +18,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence { // TODO: 
     }
 
     private BigCreeperExplosionConsequence(double difficulty) {
-        super(BigCreeperExplosionConsequence.class, null, difficulty);  // TODO: Scaling
+        super(BigCreeperExplosionConsequence.class, null, difficulty);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence { // TODO: 
         @NotNull
         @Override
         public BigCreeperExplosionConsequence make(@NonNull Random random, double points) {
-            return new BigCreeperExplosionConsequence(DIFFICULTY_FUNCTION.apply(Mystical.CONFIG.bigCreeperExplosion.multiplier())); // TODO: Scaling, randomization
+            return new BigCreeperExplosionConsequence(DIFFICULTY_FUNCTION.apply(Mystical.CONFIG.bigCreeperExplosion.multiplier()));
         }
 
 
