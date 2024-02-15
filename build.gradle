@@ -6,18 +6,55 @@ plugins {
 version = project.mod_version
 group = project.maven_group
 
-repositories {
-    mavenCentral()
+base {
+    archivesName = project.archives_base_name
+}
 
+repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
+    mavenCentral()
     maven { url 'https://maven.wispforest.io' } // owo-lib
     maven { url "https://cursemaven.com" } // modmenu
-    maven { url 'https://maven.nucleoid.xyz'} // server-translations
+    maven { url 'https://maven.nucleoid.xyz' } // server-translations
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' } // fabric-permissions-api
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "mystical" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+
+    runs {
+        datagenClient { // TODO make this datagenServer
+            inherit server
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=${modid}"
+
+            runDir "build/datagen"
+        }
+        gameTest {
+            inherit server
+            name "Game Test"
+            vmArg "-Dfabric-api.gametest"
+            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
+            runDir "build/gametest"
+        }
+    }
+}
+
+fabricApi {
+    configureDataGeneration()
 }
 
 dependencies {
@@ -46,47 +83,33 @@ dependencies {
 
     // fabric-permissions-api
     include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
-
-    // Runtime:
-    // modRuntimeOnly("curse.maven:modmenu-308702:4100232")
 }
 
 processResources {
     inputs.property "version", project.version
-    filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version
     }
 }
 
-def targetJavaVersion = 17
 tasks.withType(JavaCompile).configureEach {
-    // ensure that the encoding is set to UTF-8, no matter what the system default is
-    // this fixes some edge cases with special characters not displaying correctly
-    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
-    // If Javadoc is generated, this must be specified in that task too.
-    it.options.encoding = "UTF-8"
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        it.options.release = targetJavaVersion
-    }
+    it.options.release = 17
 }
 
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-    archivesBaseName = project.archives_base_name
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.
     // If you remove this line, sources will not be generated.
     withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+        rename { "${it}_${project.base.archivesName.get()}" }
     }
 }
 
@@ -107,38 +130,8 @@ publishing {
     }
 }
 
-// https://fabricmc.net/wiki/tutorial:datagen_setup
-loom {
-    runs {
-        datagenClient { // TODO make this datagenServer lol
-            inherit server
-            name "Data Generation"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=${modid}"
 
-            runDir "build/datagen"
-        }
-        gameTest {
-            inherit server
-            name "Game Test"
-            vmArg "-Dfabric-api.gametest"
-            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
-            runDir "build/gametest"
-        }
-    }
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDirs += [
-                    'src/main/generated'
-            ]
-        }
-    }
-}
-
+// Copy lang files for use by server-translations-api
 // Thanks to @daomephsta on discord
 runDatagenClient.finalizedBy('copyLangFiles')
 tasks.register('copyLangFiles', Copy) {
@@ -148,9 +141,3 @@ tasks.register('copyLangFiles', Copy) {
     }
     into 'src/main/generated/data/mystical/lang'
 }
-
-
-
-
-
-

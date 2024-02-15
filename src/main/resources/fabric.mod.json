@@ -3,9 +3,12 @@
   "id": "mystical",
   "version": "${version}",
   "name": "Mystical",
-  "description": "",
+  "description": "Watch your step! Not everything is as it seems...",
   "authors": [
     "skycatminepokie"
+  ],
+  "contributors": [
+    "SuperiorTabby"
   ],
   "contact": {
     "website": "https://github.com/skycatminepokie"
@@ -14,12 +17,11 @@
   "icon": "assets/mystical/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-    ],
     "main": [
       "com.skycat.mystical.Mystical"
     ],
-    "server": [
+    "client": [
+      "com.skycat.mystical.MysticalClient"
     ],
     "fabric-datagen": [
       "com.skycat.mystical.datagen.DataGenerator"
@@ -29,7 +31,11 @@
     ]
   },
   "mixins": [
-    "mystical.mixins.json"
+    "mystical.mixins.json",
+    {
+      "config": "mystical.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "fabricloader": ">=0.15.0",
