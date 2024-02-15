@@ -46,45 +46,45 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         private static void setUpTest(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
-            context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
-            context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
+            context.spawnEntity(EntityType.IRON_GOLEM, 2, 2, 2);
+            context.setHealthLow(context.spawnEntity(EntityType.VILLAGER, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
-            context.waitAndRun(125, () -> {
+            context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
-            context.waitAndRun(125, () -> {
+            context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testSpell(TestContext context) {
             setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
-            context.waitAndRun(125, () -> {
+            context.waitAndRun(50, () -> {
                 context.dontExpectEntity(EntityType.VILLAGER);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testVanilla(TestContext context) {
             setUpTest(context);
-            context.waitAndRun(125, () -> {
+            context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
             });
