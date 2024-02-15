@@ -46,42 +46,45 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         private static void setUpTest(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
-            TestUtils.havenAll(context);
             context.spawnMob(EntityType.IRON_GOLEM, 2, 2, 2);
             context.setHealthLow(context.spawnMob(EntityType.VILLAGER, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
         public void testHaven(TestContext context) {
             setUpTest(context);
-            context.waitAndRun(75, () -> {
+            TestUtils.havenAll(context);
+            context.waitAndRun(125, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
-            context.waitAndRun(75, () -> {
+            TestUtils.havenAll(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            context.waitAndRun(125, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
         public void testSpell(TestContext context) {
             setUpTest(context);
-            context.waitAndRun(75, () -> {
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            context.waitAndRun(125, () -> {
                 context.dontExpectEntity(EntityType.VILLAGER);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, tickLimit = 150)
         public void testVanilla(TestContext context) {
             setUpTest(context);
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(125, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
             });

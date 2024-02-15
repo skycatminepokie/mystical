@@ -2,14 +2,16 @@ package com.skycat.mystical.common.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.util.Utils;
 import com.skycat.mystical.test.TestUtils;
 import lombok.NonNull;
 import net.minecraft.block.entity.SculkShriekerWarningManager;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -52,54 +54,56 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         private void setUpTest(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
-            PlayerEntity player = context.createMockSurvivalPlayer();
+            ServerPlayerEntity player = Utils.createMockCreativeServerPlayerEntity(context);
+            player.changeGameMode(GameMode.SURVIVAL);
             Optional<SculkShriekerWarningManager> optWarningManager = player.getSculkShriekerWarningManager();
             if (optWarningManager.isPresent()) {
                 optWarningManager.get().setWarningLevel(0);
             }
-            BlockPos teleportTo = context.getAbsolutePos(new BlockPos(6, 8, 6));
-            player.teleport(teleportTo.getX(), teleportTo.getY(), teleportTo.getZ(), false);
+            BlockPos teleportTo = context.getAbsolutePos(new BlockPos(6, 11, 6));
+            System.out.println(teleportTo);
+            player.updatePosition(teleportTo.getX(), teleportTo.getY(), teleportTo.getZ());
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 275)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
 
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(250, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 275)
         public void testSpell(TestContext context) {
             setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
 
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(250, () -> {
                 context.expectEntity(EntityType.WARDEN);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 275)
         public void testSpellAndHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
 
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(250, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 275)
         public void testVanilla(TestContext context) {
             setUpTest(context);
 
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(250, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
                 context.complete();
             });
