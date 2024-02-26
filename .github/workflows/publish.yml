@@ -42,6 +42,9 @@ jobs:
       - name: Datagen
         run: ./gradlew runDatagenClient
 
+      - name: Copy Datagen
+        run: mkdir -p src/main/generated/data/mystical/ && cp -r src/main/generated/assets/mystical/lang src/main/generated/data/mystical/
+
       - name: Game Test
         run: mkdir build/gametest && echo "eula=true" >> build/gametest/eula.txt && ./gradlew runGameTest # ty modmuss
 
