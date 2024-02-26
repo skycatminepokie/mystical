@@ -1,143 +1,121 @@
 plugins {
-    id 'fabric-loom' version '1.5-SNAPSHOT'
-    id 'maven-publish'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'maven-publish'
 }
 
 version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name
+	archivesName = project.archives_base_name
 }
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-    mavenCentral()
-    maven { url 'https://maven.wispforest.io' } // owo-lib
-    maven { url "https://cursemaven.com" } // modmenu
-    maven { url 'https://maven.nucleoid.xyz' } // server-translations
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' } // fabric-permissions-api
+	// Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
+	maven { url 'https://maven.wispforest.io' } // owo-lib
+	maven { url "https://cursemaven.com" } // modmenu
+	maven { url 'https://maven.nucleoid.xyz'} // server-translations
+	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' } // fabric-permissions-api
 }
 
 loom {
     splitEnvironmentSourceSets()
 
-    mods {
-        "mystical" {
-            sourceSet sourceSets.main
-            sourceSet sourceSets.client
-        }
-    }
+	mods {
+		"mystical" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
 
-    runs {
-        datagenClient { // TODO make this datagenServer
-            inherit server
-            name "Data Generation"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=${modid}"
-
-            runDir "build/datagen"
-        }
-        gameTest {
-            inherit server
-            name "Game Test"
-            vmArg "-Dfabric-api.gametest"
-            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
-            runDir "build/gametest"
-        }
-    }
 }
 
 fabricApi {
-    configureDataGeneration()
+	configureDataGeneration()
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation include("xyz.nucleoid:server-translations-api:2.2.0+1.20.3-rc1")
+	// Fabric API. This is technically optional, but you probably want it anyway.
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation include("xyz.nucleoid:server-translations-api:2.2.0+1.20.3-rc1")
 
-    // GSON
-    implementation 'com.google.code.gson:gson:2.10.1'
+	// GSON
+	implementation 'com.google.code.gson:gson:2.10.1'
 
-    // Lombok
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+	testCompileOnly 'org.projectlombok:lombok:1.18.24'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-    // owo-lib
-    annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
-    include "io.wispforest:owo-sentinel:${project.owo_version}"
+	// owo-lib
+	annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
+	include "io.wispforest:owo-sentinel:${project.owo_version}"
 
-    // fabric-permissions-api
-    include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
+	// fabric-permissions-api
+	include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
+
+	// Runtime:
+	// modRuntimeOnly("curse.maven:modmenu-308702:4100232")
 }
 
 processResources {
-    inputs.property "version", project.version
+	inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+configurations.all {
+	resolutionStrategy {
+		force("net.fabricmc:fabric-loader:$loader_version")
+	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 17
+	it.options.release = 17
 }
 
 java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {
-    from("LICENSE") {
-        rename { "${it}_${project.base.archivesName.get()}" }
-    }
+	from("LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}"}
+	}
 }
 
 // configure the maven publication
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
-    }
-}
-
-
-// Copy lang files for use by server-translations-api
-// Thanks to @daomephsta on discord
-runDatagenClient.finalizedBy('copyLangFiles')
-tasks.register('copyLangFiles', Copy) {
-    // String paths passed to from() and into() are relative to the project directory by default
-    from('src/main/generated/assets/mystical/lang/') {
-        include '*.json'
-    }
-    into 'src/main/generated/data/mystical/lang'
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	repositories {
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
+	}
 }
