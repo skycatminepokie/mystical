@@ -1,12 +1,10 @@
 package com.skycat.mystical.common.spell;
 
 import com.mojang.serialization.Codec;
-import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.common.spell.consequence.SpellConsequence;
 import com.skycat.mystical.common.spell.cure.SpellCure;
 import com.skycat.mystical.common.spell.cure.StatBackedSpellCure;
-import com.skycat.mystical.common.util.Utils;
 import com.skycat.mystical.event.CatEntityEvents;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,16 +32,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Scanner;
 
 import static com.skycat.mystical.Mystical.CONFIG;
-import static com.skycat.mystical.Mystical.GSON;
 
 public class SpellHandler implements EntitySleepEvents.StartSleeping,
         EntitySleepEvents.StopSleeping,
@@ -82,15 +75,6 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         this.activeSpells = new ArrayList<>(activeSpells);
     }
 
-    public static SpellHandler loadOrNew() {
-        try (Scanner scanner = new Scanner(SAVE_FILE)) {
-            return GSON.fromJson(scanner.nextLine(), SpellHandler.class);
-        } catch (FileNotFoundException e) {
-            Utils.log(Utils.translateString("text.mystical.logging.failedToLoadSpellHandler"), Mystical.CONFIG.failedToLoadSpellHandlerLogLevel());
-            return new SpellHandler();
-        }
-    }
-    
     public void decaySpells() {
         double amount = CONFIG.spellDecay() / 100;
         for (Spell spell : activeSpells) {
@@ -229,18 +213,6 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public void removeAllSpells() {
         activeSpells.clear();
         markDirty();
-    }
-
-    /**
-     * Save the spellHandler to file. Deprecated in favor of {@link com.skycat.mystical.server.SaveState}
-     */
-    @Deprecated
-    public void save() {
-        try (PrintWriter pw = new PrintWriter(SAVE_FILE)) {
-            pw.println(GSON.toJson(this));
-        } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.logging.failedToSaveSpellHandler"), Mystical.CONFIG.failedToSaveSpellHandlerLogLevel());
-        }
     }
 
     /**

@@ -1,11 +1,8 @@
 package com.skycat.mystical.common.spell.consequence;
 
-import com.google.gson.*;
 import com.mojang.serialization.Codec;
 import lombok.Getter;
 import lombok.NonNull;
-
-import java.lang.reflect.Type;
 
 @SuppressWarnings("rawtypes")
 @Getter
@@ -36,17 +33,4 @@ public abstract class SpellConsequence {
         return eventClass.isInstance(this);
     }
 
-    public static class Serializer implements JsonSerializer<SpellConsequence>, JsonDeserializer<SpellConsequence> {
-
-        @Override
-        public SpellConsequence deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Class consequenceType = context.deserialize(json.getAsJsonObject().get("consequenceType"), Class.class);
-            return context.deserialize(json, consequenceType);
-        }
-
-        @Override
-        public JsonElement serialize(SpellConsequence src, Type typeOfSrc, JsonSerializationContext context) {
-            return context.serialize(src, src.getConsequenceType());
-        }
-    }
 }

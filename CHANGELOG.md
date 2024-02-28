@@ -1,1 +1,3 @@
+- Updating from 4.x.x -> 5.x.x: Make sure to run and load your worlds with 4.1.12 before running 5.x.x or higher.
 - Difficulty of unbreakableLocation from 500 -> 200
+- Mod is now smaller in file size (removed GSON lol)

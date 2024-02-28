@@ -1,12 +1,6 @@
 package com.skycat.mystical;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mojang.util.UUIDTypeAdapter;
 import com.skycat.mystical.common.spell.SpellHandler;
-import com.skycat.mystical.common.spell.consequence.SpellConsequence;
-import com.skycat.mystical.common.spell.cure.SpellCure;
-import com.skycat.mystical.common.util.*;
 import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.MysticalEventHandler;
 import com.skycat.mystical.server.SaveState;
@@ -23,37 +17,20 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.stat.Stat;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.CheckedRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.UUID;
 
 // WARNING: Package structure looks like split-sources structure. It's not. I'm working on it.
 public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
-    public static final Gson GSON = new GsonBuilder()
-            .setVersion(0.1)
-            .registerTypeAdapter(Block.class, new BlockSerializer())
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
-            .registerTypeAdapter(UUID.class, new UUIDTypeAdapter())
-            .registerTypeAdapter(Identifier.class, new Identifier.Serializer())
-            .registerTypeAdapter(SpellCure.class, new SpellCure.Serializer())
-            .registerTypeAdapter(SpellConsequence.class, new SpellConsequence.Serializer())
-            .registerTypeAdapter(Class.class, new ClassSerializer())
-            .registerTypeAdapter(Stat.class, new StatCodec())
-            .registerTypeAdapter(EntityType.class, Utils.serializerOf(Registries.ENTITY_TYPE.getCodec()))
-            .registerTypeAdapter(EntityType.class, Utils.deserializerOf(Registries.ENTITY_TYPE.getCodec()))
-            .create();
     public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     public static final Random RANDOM = new Random();
     public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong());

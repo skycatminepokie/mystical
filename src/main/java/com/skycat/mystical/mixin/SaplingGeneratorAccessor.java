@@ -9,7 +9,7 @@ import java.util.Map;
 @Mixin(SaplingGenerator.class)
 public interface SaplingGeneratorAccessor {
     @Accessor("GENERATORS")
-    public static Map<String, SaplingGenerator> getGenerators() {
+    static Map<String, SaplingGenerator> getGenerators() {
         throw new AssertionError();
     }
 
