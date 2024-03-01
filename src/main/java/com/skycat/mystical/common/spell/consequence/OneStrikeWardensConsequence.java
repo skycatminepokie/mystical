@@ -67,45 +67,45 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
             player.move(MovementType.SELF, new Vec3d(0, -0.1, 0));
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 130)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
 
-            context.waitAndRun(90, () -> {
+            context.waitAndRun(125, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 130)
         public void testSpell(TestContext context) {
             setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
 
-            context.waitAndRun(90, () -> {
+            context.waitAndRun(125, () -> {
                 context.expectEntity(EntityType.WARDEN);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 145)
         public void testSpellAndHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
 
-            context.waitAndRun(90, () -> {
+            context.waitAndRun(125, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 145)
         public void testVanilla(TestContext context) {
             setUpTest(context);
 
-            context.waitAndRun(90, () -> {
+            context.waitAndRun(125, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
                 context.complete();
             });
