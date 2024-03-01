@@ -12,11 +12,6 @@ public class BigCreeperExplosionConsequence extends SpellConsequence { // TODO: 
     public static final Factory FACTORY = new Factory();
     private static final Function<Double, Double> DIFFICULTY_FUNCTION = (multiplier) -> ((multiplier - 1) * 30); // Double size = 30 difficulty
 
-    @Deprecated
-    private BigCreeperExplosionConsequence() {
-        super(BigCreeperExplosionConsequence.class, null, 1.0);
-    }
-
     private BigCreeperExplosionConsequence(double difficulty) {
         super(BigCreeperExplosionConsequence.class, null, difficulty);
     }
