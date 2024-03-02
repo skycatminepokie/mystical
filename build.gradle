@@ -31,6 +31,15 @@ loom {
 			sourceSet sourceSets.client
 		}
 	}
+	runs {
+		gameTest {
+			inherit server
+			name "Game Test"
+			vmArg "-Dfabric-api.gametest"
+			vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
+			runDir "build/gametest"
+		}
+	}
 
 }
 

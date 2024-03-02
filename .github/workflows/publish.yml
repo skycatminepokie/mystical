@@ -40,7 +40,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Datagen
-        run: ./gradlew runDatagenClient
+        run: ./gradlew runDatagen
 
       - name: Copy Datagen
         run: mkdir -p src/main/generated/data/mystical/ && cp -r src/main/generated/assets/mystical/lang src/main/generated/data/mystical/
