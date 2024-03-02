@@ -1,6 +1,5 @@
 package com.skycat.mystical.common.spell.cure;
 
-import com.google.gson.*;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -107,16 +105,4 @@ public abstract class SpellCure {
         return getContributionGoal() - getContributionTotal();
     }
 
-    public static class Serializer implements JsonSerializer<SpellCure>, JsonDeserializer<SpellCure> {
-        @Override
-        public SpellCure deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            Class cureType = context.deserialize(json.getAsJsonObject().get("cureType"), Class.class);
-            return context.deserialize(json, cureType);
-        }
-
-        @Override
-        public JsonElement serialize(SpellCure src, Type typeOfSrc, JsonSerializationContext context) {
-            return context.serialize(src, src.getCureType());
-        }
-    }
 }

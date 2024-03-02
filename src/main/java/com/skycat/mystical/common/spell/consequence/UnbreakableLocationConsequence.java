@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 import java.util.function.Function;
 
-public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback {
+public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     private static final Function<Double, Double> DIFFICULTY_FUNCTION = chance -> {return 10*chance;};
     @Getter private final long seed;
@@ -31,7 +31,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
     }
 
     public UnbreakableLocationConsequence(long seed) {
-        super(UnbreakableLocationConsequence.class, AttackBlockCallback.class, 500); // TODO difficulty scaling
+        super(UnbreakableLocationConsequence.class, AttackBlockCallback.class, 200);
         this.seed = seed;
     }
 
@@ -65,6 +65,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         public @NotNull UnbreakableLocationConsequence make(@NonNull Random random, double points) {
             return new UnbreakableLocationConsequence();
         }
+
 
         @Override
         public double getWeight() {

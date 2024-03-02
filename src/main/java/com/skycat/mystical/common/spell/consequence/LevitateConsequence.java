@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {
+public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {  // TODO: Tests
     private final int length;
     private final int level;
     private static final ArrayList<Class> supportedEvents = new ArrayList<>();
@@ -53,7 +53,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     }
 
     public LevitateConsequence(int length, int level, Class callbackType) {
-        super(LevitateConsequence.class, callbackType, 30d); // TODO: Scaling
+        super(LevitateConsequence.class, callbackType, 30d);
         this.length = length;
         this.level = level;
     }
@@ -106,6 +106,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
             return new LevitateConsequence(20, 5, Utils.chooseRandom(random, supportedEvents));
         }
+
 
         @Override
         public double getWeight() {

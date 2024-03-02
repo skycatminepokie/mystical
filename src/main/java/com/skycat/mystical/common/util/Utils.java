@@ -1,11 +1,8 @@
 package com.skycat.mystical.common.util;
 
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonSerializer;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.LogLevel;
 import net.minecraft.entity.EntityType;
@@ -19,8 +16,10 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
+import net.minecraft.test.TestContext;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -108,26 +107,6 @@ public class Utils {
             return hashMap;
         }
         return new HashMap<>(map);
-    }
-
-    /**
-     * Converts a {@link Codec} to a {@link JsonSerializer}
-     * @param codec The codec to convert.
-     * @return A new {@link JsonSerializer}. It will throw a {@link RuntimeException} on failure.
-     * @param <T> The class of the object the codec is for.
-     */
-    public static <T> JsonSerializer<T> serializerOf(Codec<T> codec) { // This is the kind of code that makes you feel hackerman.
-        return (src, typeOfSrc, context) -> codec.encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> {throw new RuntimeException(s);});
-    }
-
-    /**
-     * Converts a {@link Codec} to a {@link JsonDeserializer}
-     * @param codec The codec to convert.
-     * @return A new {@link JsonDeserializer}. It will throw a {@link RuntimeException} on failure.
-     * @param <T> The class of the object the codec is for.
-     */
-    public static <T> JsonDeserializer<T> deserializerOf(Codec<T> codec) {
-        return (json, typeOfT, context) -> codec.decode(JsonOps.INSTANCE, json).getOrThrow(false, s -> {throw new RuntimeException(s);}).getFirst();
     }
 
     public static boolean log(String msg) {
@@ -236,7 +215,6 @@ public class Utils {
         }
         if (newEntity == null) {
             Utils.log("Failed to convert - see previous logging and check tags. For now, we'll skip it.", LogLevel.ERROR);
-            // TODO: Maybe warn admins?
             return null;
         }
         return newEntity;
@@ -294,6 +272,18 @@ public class Utils {
      */
     public static <T> T chooseRandom(Random random, List<T> list) {
         return list.get(random.nextInt(0, list.size()));
+    }
+
+    /**
+     * Returns a random element from an array
+     *
+     * @param <T>    The type of the array's elements
+     * @param random The Random object to use
+     * @param array   The array of elements
+     * @return A random element from an array
+     */
+    public static <T> T chooseRandom(Random random, T[] array) {
+        return array[random.nextInt(0, array.length)];
     }
 
     public static MutableText translatable(String path) {
@@ -360,5 +350,9 @@ public class Utils {
         log("Couldn't get a random status effect, using absorption instead. This probably shouldn't happen. Dumping stack.", LogLevel.ERROR);
         Thread.dumpStack(); // https://stackoverflow.com/a/945020
         return StatusEffects.ABSORPTION;
+    }
+
+    public static ServerPlayerEntity createMockCreativeServerPlayerEntity(TestContext context) {
+        return context.createMockCreativeServerPlayerInWorld();
     }
 }

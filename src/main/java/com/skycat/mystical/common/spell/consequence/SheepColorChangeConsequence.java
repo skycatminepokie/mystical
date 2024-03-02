@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Config
+public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     @Override
@@ -33,6 +33,7 @@ public class SheepColorChangeConsequence extends SpellConsequence { // TODO: Con
         public @NotNull SheepColorChangeConsequence make(@NonNull Random random, double points) {
             return new SheepColorChangeConsequence();
         }
+
 
         @Override
         public double getWeight() {

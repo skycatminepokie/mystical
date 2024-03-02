@@ -1,11 +1,9 @@
 package com.skycat.mystical.common.util;
 
-import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.JsonOps;
 import com.skycat.mystical.common.LogLevel;
 import net.minecraft.registry.Registries;
 import net.minecraft.stat.Stat;
@@ -13,9 +11,7 @@ import net.minecraft.stat.StatType;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Type;
-
-public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonDeserializer<Stat<?>> {
+public class StatCodec implements Codec<Stat<?>> {
     public static StatCodec INSTANCE = new StatCodec();
     public static Codec<Pair<StatType<?>, Identifier>> TYPE_IDENTIFIER_CODEC = Codec.pair(
             Registries.STAT_TYPE.getCodec().fieldOf("type").codec(),
@@ -66,17 +62,4 @@ public class StatCodec implements Codec<Stat<?>>, JsonSerializer<Stat<?>>, JsonD
         return genericEncode(input, ops, prefix);
     }
 
-    @Override
-    public Stat<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        Stat<Object> stat = getStat(JsonOps.INSTANCE, json);
-        if (stat == null) {
-            throw new JsonParseException("Failed to parse stat.");
-        }
-        return stat;
-    }
-
-    @Override
-    public JsonElement serialize(Stat<?> src, Type typeOfSrc, JsonSerializationContext context) {
-        return encodeStart(JsonOps.INSTANCE, src).getOrThrow(false, s -> Utils.log("Could not parse the following string as a stat: \"" + s + "\"."));
-    }
 }

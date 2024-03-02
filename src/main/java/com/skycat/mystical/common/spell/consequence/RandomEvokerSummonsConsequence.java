@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class RandomEvokerSummonsConsequence extends SpellConsequence {
+public class RandomEvokerSummonsConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     public RandomEvokerSummonsConsequence() {
         super(RandomEvokerSummonsConsequence.class, null, 30d);
@@ -27,6 +27,7 @@ public class RandomEvokerSummonsConsequence extends SpellConsequence {
         public @NotNull RandomEvokerSummonsConsequence make(@NonNull Random random, double points) {
             return new RandomEvokerSummonsConsequence();
         }
+
 
         @Override
         public double getWeight() {

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class CatVariantChangeConsequence extends SpellConsequence implements CatEntityEvents.Eat {
+public class CatVariantChangeConsequence extends SpellConsequence implements CatEntityEvents.Eat { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     private static final ArrayList<CatVariant> VARIANTS = new ArrayList<>();
 
@@ -27,8 +27,8 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
         return FACTORY;
     }
 
-    public CatVariantChangeConsequence() { // TODO: Config on variants
-        super(CatVariantChangeConsequence.class, CatEntityEvents.Eat.class, 1d);  // TODO: Scaling
+    public CatVariantChangeConsequence() {
+        super(CatVariantChangeConsequence.class, CatEntityEvents.Eat.class, 1d);
     }
 
     @Override
@@ -60,6 +60,7 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
         public @NotNull CatVariantChangeConsequence make(@NonNull Random random, double points) {
             return new CatVariantChangeConsequence();
         }
+
 
         @Override
         public double getWeight() {

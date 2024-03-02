@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SkeletonTypeChangeConsequence extends SpellConsequence {
+public class SkeletonTypeChangeConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
 
     @Override
@@ -16,7 +16,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
     }
 
     protected SkeletonTypeChangeConsequence() {
-        super(SkeletonTypeChangeConsequence.class, null, 50d); // TODO: Scaling
+        super(SkeletonTypeChangeConsequence.class, null, 50d);
     }
 
     public static class Factory extends ConsequenceFactory<SkeletonTypeChangeConsequence> {
@@ -33,6 +33,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence {
         public @NotNull SkeletonTypeChangeConsequence make(@NonNull Random random, double points) {
             return new SkeletonTypeChangeConsequence();
         }
+
 
         @Override
         public double getWeight() {

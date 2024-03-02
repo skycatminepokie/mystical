@@ -18,28 +18,10 @@ public class SaveState extends PersistentState {
             HavenManager.CODEC.fieldOf("havenManager").forGetter(SaveState::getHavenManager),
             SpellHandler.CODEC.fieldOf("spellHandler").forGetter(SaveState::getSpellHandler)
     ).apply(instance, SaveState::new));
+    private static final Type<SaveState> type = new Type<>(SaveState::new, SaveState::readFromNbt, null); // TODO: Choose a DataFixType?
 
     public SaveState() {
         this(new HavenManager(), new SpellHandler());
-    }
-
-    /**
-     * Loads the state, supporting the old format. First, it will try to load the old format and delete old files.
-     * If it fails, it will load the new format. If that doesn't work, it will create a save with the new format.
-     * @return The loaded or created SaveState.
-     */
-    public static SaveState loadSupportOld() {
-        if (HavenManager.getSAVE_FILE().exists() || SpellHandler.getSAVE_FILE().exists()) { // Load old format
-            SaveState save = new SaveState(HavenManager.loadOrNew(), SpellHandler.loadOrNew());
-            if (HavenManager.getSAVE_FILE().delete()) {
-                Utils.log("Updated HavenManager to the new format.");
-            }
-            if (SpellHandler.getSAVE_FILE().delete()) {
-                Utils.log("Updated SpellHandler to the new format.");
-            }
-            return save;
-        }
-        return new SaveState();
     }
 
     public SaveState(HavenManager havenManager, SpellHandler spellHandler) {
@@ -54,7 +36,7 @@ public class SaveState extends PersistentState {
 
     public static SaveState loadSave(MinecraftServer server) {
         PersistentStateManager stateManager = server.getOverworld().getPersistentStateManager();
-        return stateManager.getOrCreate(SaveState::readFromNbt, SaveState::loadSupportOld, "mystical");
+        return stateManager.getOrCreate(type, "mystical");
     }
 
     private static SaveState readFromNbt(NbtCompound save) {

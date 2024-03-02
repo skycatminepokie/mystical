@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make this work with wardens?
+public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     @Getter public EntityType<?> entityType;
 
@@ -44,7 +44,7 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make
             if (entry.isPresent()) {
                 EntityType<?> type = entry.get().value();
                 SpawnGroup spawnGroup = type.getSpawnGroup();
-                if (spawnGroup != null && spawnGroup != SpawnGroup.MISC && type != EntityType.GIANT) { // TODO: Use EntityTypePredicate, TODO: config
+                if (spawnGroup != null && spawnGroup != SpawnGroup.MISC && type != EntityType.GIANT) {
                     return new TurboMobsConsequence(type);
                 } else {
                     Utils.log("Making TurboMobsConsequence: skipping unspawnable type: " + type.getName().getString(), LogLevel.INFO);
@@ -55,10 +55,12 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Maybe make
             return new TurboMobsConsequence(EntityType.ZOMBIE);
         }
 
+
         @Override
         public double getWeight() {
             return Mystical.CONFIG.turboMobs.enabled() ? Mystical.CONFIG.turboMobs.weight() : 0;
         }
+
 
         @Override
         public MutableText getDescriptionText(SpellConsequence consequence) throws IllegalArgumentException {

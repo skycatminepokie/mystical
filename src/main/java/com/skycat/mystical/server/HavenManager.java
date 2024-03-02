@@ -2,7 +2,6 @@ package com.skycat.mystical.server;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,10 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.UUID;
 
 public class HavenManager {
@@ -47,15 +44,6 @@ public class HavenManager {
     public HavenManager() {
         this.havenedChunks = new HashSet<>();
         this.powerMap = new HashMap<>();
-    }
-
-    public static HavenManager loadOrNew() {
-        try (Scanner scanner = new Scanner(SAVE_FILE)) {
-            return Mystical.GSON.fromJson(scanner.nextLine(), HavenManager.class);
-        } catch (IOException e) {
-            Utils.log(Utils.translateString("text.mystical.logging.failedToLoadHavenManager"), Mystical.CONFIG.failedToLoadHavenManagerLogLevel());
-            return new HavenManager();
-        }
     }
 
     /**
@@ -316,8 +304,7 @@ public class HavenManager {
     public boolean equals(Object obj) {
         if (!(obj instanceof HavenManager other)) return false;
         if (!powerMap.equals(other.powerMap)) return false;
-        if (!havenedChunks.equals(other.havenedChunks)) return false;
-        return true;
+        return havenedChunks.equals(other.havenedChunks);
     }
 
 }

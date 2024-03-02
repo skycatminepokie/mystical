@@ -7,7 +7,8 @@ Mystical is **highly configurable**, **open-source**, and **awesome**.
 Mystical is currently in beta - things are likely to change, and more polish and documentation is yet to come. Please feel free to ask questions or contribute to the project on [GitHub](https://github.com/skycatminepokie/mystical). Known issues, bugs, and future plans are also on GitHub.
 
 ### Warnings/known bugs
-- Major updates (the x in version x.y.z) indicate BREAKING changes - your game WILL CRASH if proper steps aren't taken when updating.
+- Major updates (the x in version x.y.z) indicate BREAKING changes - your game MAY CRASH if proper steps aren't taken when updating.
+  - Updating from 4.x.x -> 5.x.x: Make sure to run and load your worlds with 4.1.12 before running 5.x.x or higher.
 - Illusioner/evoker swapping is not affected by havens
 
 | Command                            | Effect                                       | Permission                               | Default requirement |

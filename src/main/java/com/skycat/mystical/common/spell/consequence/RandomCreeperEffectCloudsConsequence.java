@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class RandomCreeperEffectCloudsConsequence extends SpellConsequence {
+public class RandomCreeperEffectCloudsConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     protected RandomCreeperEffectCloudsConsequence() {
         super(RandomCreeperEffectCloudsConsequence.class, null, 25);
@@ -31,6 +31,7 @@ public class RandomCreeperEffectCloudsConsequence extends SpellConsequence {
         public @NotNull RandomCreeperEffectCloudsConsequence make(@NonNull Random random, double points) {
             return new RandomCreeperEffectCloudsConsequence();
         }
+
 
         @Override
         public double getWeight() {

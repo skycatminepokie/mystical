@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class BoldSlimesConsequence extends SpellConsequence {
+public class BoldSlimesConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
     public BoldSlimesConsequence() {
         super(BoldSlimesConsequence.class, null, 50d);
@@ -32,6 +32,7 @@ public class BoldSlimesConsequence extends SpellConsequence {
         public @NotNull BoldSlimesConsequence make(@NonNull Random random, double points) {
             return new BoldSlimesConsequence();
         }
+
 
         @Override
         public double getWeight() {
