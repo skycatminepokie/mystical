@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.GameTest;
+import net.minecraft.test.GameTestException;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -60,6 +61,8 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
             Optional<SculkShriekerWarningManager> optWarningManager = player.getSculkShriekerWarningManager();
             if (optWarningManager.isPresent()) {
                 optWarningManager.get().setWarningLevel(0);
+            } else {
+                throw new GameTestException("No SculkShriekerWarningManager");
             }
             Vec3d teleportTo = context.getAbsolute(new Vec3d(6.5, 8.5, 6.5)); // put em right on top
             System.out.println(teleportTo);

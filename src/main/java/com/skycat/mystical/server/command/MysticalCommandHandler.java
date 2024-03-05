@@ -8,6 +8,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.tree.ArgumentCommandNode;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.spell.Spell;
 import com.skycat.mystical.common.spell.Spells;
@@ -30,7 +32,7 @@ import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-
+import net.minecraft.util.math.Vec2f;
 import java.util.ArrayList;
 import java.util.Collection;
 

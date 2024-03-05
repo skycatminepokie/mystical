@@ -31,7 +31,7 @@ public abstract class ZombieEntityMixin { // TODO: move to LivingEntityMixin
             Entity newEntity = Utils.convertToRandomInTag(dis, Mystical.ZOMBIE_VARIANTS);
             if (newEntity == null) return;
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
-            newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
+            newEntity.damage(dis.getDamageSources().outOfWorld(), totalDamage);
         }
     }
 

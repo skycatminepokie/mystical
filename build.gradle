@@ -46,7 +46,7 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation include("xyz.nucleoid:server-translations-api:2.2.0+1.20.3-rc1")
+	modImplementation include("xyz.nucleoid:server-translations-api:2.0.0+1.20")
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.24'

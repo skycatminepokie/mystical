@@ -45,7 +45,7 @@ public abstract class LivingEntityMixin {
                         return; // Something failed, just ignore it
                     }
                     // Do the damage
-                    newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage);
+                    newEntity.damage(dis.getDamageSources().outOfWorld(), totalDamage);
                 }
             } else {
                 if (dis.getType().isIn(Mystical.ENDERMAN_VARIANTS) && dis instanceof MobEntity enderEntity) {
@@ -59,7 +59,7 @@ public abstract class LivingEntityMixin {
                         }
                         Utils.log(Utils.translateString("text.mystical.consequence.enderTypeChange.fired"), Mystical.CONFIG.enderTypeChange.logLevel());
 
-                        newEntity.damage(dis.getWorld().getDamageSources().outOfWorld(), totalDamage); // Do the damage
+                        newEntity.damage(dis.getDamageSources().outOfWorld(), totalDamage); // Do the damage
                         }
                     }
                 }

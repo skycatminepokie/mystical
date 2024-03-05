@@ -1,6 +1,7 @@
 package com.skycat.mystical.server;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.common.util.Utils;
