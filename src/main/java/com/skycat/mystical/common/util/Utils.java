@@ -275,18 +275,6 @@ public class Utils {
         return list.get(random.nextInt(0, list.size()));
     }
 
-    /**
-     * Returns a random element from an array
-     *
-     * @param <T>    The type of the array's elements
-     * @param random The Random object to use
-     * @param array   The array of elements
-     * @return A random element from an array
-     */
-    public static <T> T chooseRandom(Random random, T[] array) {
-        return array[random.nextInt(0, array.length)];
-    }
-
     public static MutableText translatable(String path) {
         return Text.translatable(path);
     }

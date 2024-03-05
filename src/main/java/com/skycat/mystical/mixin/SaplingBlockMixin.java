@@ -5,9 +5,9 @@ import com.skycat.mystical.common.spell.consequence.RandomTreeTypeConsequence;
 import com.skycat.mystical.common.util.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SaplingGenerator;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
@@ -30,8 +30,7 @@ public abstract class SaplingBlockMixin {
                 !Mystical.getHavenManager().isInHaven(pos) &&
                 Mystical.getSpellHandler().isConsequenceActive(RandomTreeTypeConsequence.class) &&
                 Utils.percentChance(Mystical.CONFIG.randomTreeType.chance())) {
-            SaplingGenerator[] saplingGenerators = SaplingGeneratorAccessor.getGenerators().values().toArray(new SaplingGenerator[0]);
-            Utils.chooseRandom(Mystical.RANDOM, saplingGenerators).generate(world, world.getChunkManager().getChunkGenerator(), pos, state, random);
+            Util.getRandom(RandomTreeTypeConsequence.SAPLING_GENERATORS, random).generate(world, world.getChunkManager().getChunkGenerator(), pos, state, random);
             Utils.log("text.mystical.consequence.randomTreeType.fired", Mystical.CONFIG.randomTreeType.logLevel());
             ci.cancel();
         }
