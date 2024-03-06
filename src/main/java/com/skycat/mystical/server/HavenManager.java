@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class HavenManager {
+public class HavenManager { // TODO: Rename havening methods to make more sense
     public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
             Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
             Utils.hashMapCodec(Uuids.CODEC, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
@@ -60,8 +60,8 @@ public class HavenManager {
     /**
      * Gets the cost to haven the chunk containing a given block position
      *
-     * @param x The x position of the block
-     * @param z The z position of the block
+     * @param x The blockX position of the block
+     * @param z The blockZ position of the block
      * @return The cost
      * @implNote Simple overload of {@link #getHavenCost(BlockPos)}
      */
@@ -104,13 +104,13 @@ public class HavenManager {
     /**
      * Havens a chunk based on a block position
      *
-     * @param x The x position of a block in the chunk
-     * @param z The z position of a block in the chunk
+     * @param blockX The x position of a block contained in the chunk
+     * @param blockZ The z position of a block contained in the chunk
      * @return {@code true} if the chunk was not already havened
      * @implNote Simple overload of {@link #havenChunk(BlockPos)}.
      */
-    public boolean havenChunk(int x, int z) {
-        return havenChunk(new BlockPos(x, 0, z));
+    public boolean havenChunk(int blockX, int blockZ) {
+        return havenChunk(new BlockPos(blockX, 0, blockZ));
     }
     
     public void markDirty() {
@@ -146,8 +146,8 @@ public class HavenManager {
     /**
      * Check if a block is inside a havened chunk
      *
-     * @param x The x position of the block
-     * @param z The z position of the block
+     * @param x The blockX position of the block
+     * @param z The blockZ position of the block
      * @return {@code true} if the chunk is havened
      * @implNote Simple overload of {@link #isInHaven(BlockPos)}.
      */

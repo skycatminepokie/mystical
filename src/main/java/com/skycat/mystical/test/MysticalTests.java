@@ -113,7 +113,10 @@ public class MysticalTests implements FabricGameTest {
         HavenManager havenManager = Mystical.getHavenManager();
         context.forEachRelativePos((blockPos) -> {
             blockPos = context.getAbsolutePos(blockPos);
-            context.assertTrue(havenManager.isInHaven(blockPos), "Block pos " + blockPos + " was expected to be havened.");
+            if (!havenManager.isInHaven(blockPos)) {
+                throw new GameTestException("Block pos " + blockPos + " was expected to be havened.");
+            }
+            // context.assertTrue(havenManager.isInHaven(blockPos), "Block pos " + blockPos + " was expected to be havened.");
         });
         context.complete();
     }

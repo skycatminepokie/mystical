@@ -1,9 +1,13 @@
 package com.skycat.mystical.test;
 
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.mixin.TestContextMixin;
 import com.skycat.mystical.server.HavenManager;
 import net.minecraft.test.TestContext;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.ChunkPos;
 
 /**
  * Contains constants and functions for testing with Mystical.<br>
@@ -30,16 +34,24 @@ public class TestUtils {
      * @param context The context of this test.
      */
     public static void havenAll(TestContext context) {
-        Box box = context.getTestBox();
-        double x = box.minX; // Starting at the min x
-        double z = box.minZ; // Starting at the min z
-        while (x <= box.maxX) { // While we haven't gone past the max x
-            while (z <= box.maxZ) { // While we haven't gone past the max z
-                Mystical.getHavenManager().havenChunk((int) x, (int) z);
-                z += 16; // Size of the side of a chunk
+        // Find chunks corresponding to opposite corners
+        Box box = ((TestContextMixin) context).pleaseGetTestBox();
+        Utils.log("Box: " + box);
+        ChunkPos min = new ChunkPos(new BlockPos((int) box.minX, 0, (int) box.minZ));
+        ChunkPos max = new ChunkPos(new BlockPos((int) box.maxX, 0, (int) box.maxZ));
+        Utils.log("Chunk min: " + min);
+        Utils.log("Chunk max: " + max);
+        int x = min.x; // Starting at the min x
+        int z = min.z; // Starting at the min z
+        // Haven all chunks in that square
+        while (x <= max.x) {
+            while (z <= max.z) {
+                Mystical.getHavenManager().havenChunk(new ChunkPos(x, z));
+                Utils.log("Havening " + x + ", " + z);
+                z++;
             }
-            z = box.minZ;
-            x += 16;
+            x++;
+            z = min.z;
         }
     }
 

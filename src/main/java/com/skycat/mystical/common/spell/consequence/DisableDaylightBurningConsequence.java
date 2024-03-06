@@ -7,6 +7,7 @@ import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.world.Difficulty;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -48,6 +49,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         private static void setUpTest(TestContext context) {
             TestUtils.resetMystical(context);
             context.killAllEntities();
+            context.getWorld().getServer().setDifficulty(Difficulty.EASY, true);
             context.setTime(1000); // Make it day
             context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
         }

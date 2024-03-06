@@ -23,6 +23,7 @@
     "SpawnHelperMixin",
     "StatHandlerMixin",
     "SummonVexGoalMixin",
+    "TestContextMixin",
     "TimeCommandMixin",
     "TntBlockMixin",
     "TntEntityMixin",
