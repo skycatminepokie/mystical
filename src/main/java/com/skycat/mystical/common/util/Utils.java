@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
@@ -343,5 +342,19 @@ public class Utils {
 
     public static ServerPlayerEntity createMockCreativeServerPlayerEntity(TestContext context) {
         return context.createMockCreativeServerPlayerInWorld();
+    }
+
+    /**
+     * Get a random entry from a {@link Registry}.
+     * @param registry The registry to get from.
+     * @return A random entry, or {@code null} if the registry is empty (see {@link Registry#getRandom(net.minecraft.util.math.random.Random)}.
+     * @param <T> The type parameter of the registry.
+     */
+    public static <T> T getRandomRegistryEntry(Registry<T> registry) {
+        Optional<RegistryEntry.Reference<T>> optionalEntry = registry.getRandom(Mystical.MC_RANDOM);
+        if (optionalEntry.isEmpty()) {
+            return null;
+        }
+        return optionalEntry.get().value();
     }
 }
