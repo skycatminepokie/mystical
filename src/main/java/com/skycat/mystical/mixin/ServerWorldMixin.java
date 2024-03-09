@@ -1,6 +1,7 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.common.util.Utils;
 import com.skycat.mystical.server.MysticalEventHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -18,10 +19,15 @@ public abstract class ServerWorldMixin {
     @Shadow @Final private ServerWorldProperties worldProperties;
     @Shadow public abstract @NotNull MinecraftServer getServer();
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.BEFORE))
     private void beforeSkippingNight(CallbackInfo ci) {
         if (worldProperties.getTimeOfDay() % 24000 <= MysticalEventHandler.NIGHT_TIME) { // If the time to do night things hasn't passed, do them now
             Mystical.EVENT_HANDLER.doNighttimeEvents(getServer());
         }
+    }
+
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
+    private void afterSkippingNight(CallbackInfo ci) {
+        Mystical.EVENT_HANDLER.setNightTimer();
     }
 }
