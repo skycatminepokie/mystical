@@ -387,11 +387,16 @@ public class ConfigModel {
         public double weight = 1;
         @PredicateConstraint("chancePredicate")
         public double chance = 5.0;
+        @PredicateConstraint("positiveNonzeroIntPredicate")
+        public int numberOfSwaps = 50;
         public static boolean weightPredicate(double value) {
             return ConfigModel.weightPredicate(value);
         }
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
+        }
+        public static boolean positiveNonzeroIntPredicate(int value) {
+            return ConfigModel.positiveNonzeroIntPredicate(value);
         }
     }
 
@@ -424,6 +429,9 @@ public class ConfigModel {
 
     public static boolean positiveNonzeroPredicate(double value) {
         return positivePredicate(value) && value != 0;
+    }
+    public static boolean positiveNonzeroIntPredicate(int value) {
+        return value > 0;
     }
 
 }

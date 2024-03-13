@@ -57,6 +57,8 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigOption(tb, "randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
         addConfigOption(tb, "randomCreeperEffectClouds.effectAmplifier", "Effect amplifier");
         addConfigOptionTooltip(tb, "randomCreeperEffectClouds.effectAmplifier", "0 = level one, just like the /effect command");
+        addConfigOption(tb, "soundSwap.numberOfSwaps", "Number of swaps");
+        addConfigOptionTooltip(tb, "soundSwap.numberOfSwaps", "Not all swaps will be heard (like rare sounds) or even take effect (for example block sounds don't work).\nThat's why this is so big by default.\nAccepts positive, nonzero integers.");
 
         // Config enums
         addConfig(tb, "enum.logLevel.debug", "Debug");
