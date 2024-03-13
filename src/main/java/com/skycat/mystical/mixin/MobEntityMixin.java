@@ -26,10 +26,4 @@ public abstract class MobEntityMixin implements EntityLike {
             cir.setReturnValue(false);
         }
     }
-
-    // @ModifyArg(method = "playAmbientSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/MobEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"))
-    // private SoundEvent changeAmbientSound(SoundEvent par1) {
-    //     // Idea: Spawn the other entity just to get the sound, then cache it. Or maybe have one of my own hanging around but not spawned? And modify receiver?
-    //     return Utils.getRandomRegistryValue(Registries.SOUND_EVENT);
-    // }
 }
