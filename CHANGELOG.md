@@ -1,1 +1,1 @@
-- Fixed nighttime events happening twice
+- Fixed nighttime events happening twice (actually this time)
