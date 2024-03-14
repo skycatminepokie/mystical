@@ -1,5 +1,6 @@
 package com.skycat.mystical;
 
+import com.skycat.mystical.common.advancement.MakeHavenCriterion;
 import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.MysticalEventHandler;
@@ -15,6 +16,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryKeys;
@@ -43,6 +45,7 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final TagKey<EntityType<?>> ENDERMAN_VARIANTS = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:enderman_variants"));
     public static final TagKey<EntityType<?>> EVOKER_SUMMONABLE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:evoker_summonable"));
     public static final TagKey<Block> GLAZED_TERRACOTTA = TagKey.of(RegistryKeys.BLOCK, new Identifier("mystical:glazed_terracotta"));
+    public static final MakeHavenCriterion MAKE_HAVEN_CRITERION = Criteria.register(new MakeHavenCriterion());
     public static SaveState save;
     private static boolean isClientWorld = true;
 

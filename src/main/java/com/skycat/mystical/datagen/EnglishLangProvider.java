@@ -71,15 +71,17 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
 
         // Other
-        tb.add("text.mystical.events.spellsChange", "The world shifts...");
-        tb.add("text.mystical.events.cureSpell", "1 spell was cured this night.");
-        tb.add("text.mystical.events.cureSpells", "%d spells were cured this night.");
-        tb.add("text.mystical.events.newSpell", "1 new spell fell over the world.");
-        tb.add("text.mystical.events.newSpells", "%d new spells fell over the world.");
+        addTextTranslation(tb, "events.spellsChange", "The world shifts...");
+        addTextTranslation(tb, "events.cureSpell", "1 spell was cured this night.");
+        addTextTranslation(tb, "events.cureSpells", "%d spells were cured this night.");
+        addTextTranslation(tb, "events.newSpell", "1 new spell fell over the world.");
+        addTextTranslation(tb, "events.newSpells", "%d new spells fell over the world.");
         addTextTranslation(tb, "classSerializer.failedDeserializeName", "Couldn't deserialize class of name %s.");
         addTextTranslation(tb, "spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
         addTextTranslation(tb, "text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         addTextTranslation(tb, "cure.kill", "Kill %ss");
+        addTextTranslation(tb, "advancement.make_haven.title", "A Regular-Looking Fortress");
+        addTextTranslation(tb, "advancement.make_haven.description", "Ward a chunk from unknown forces");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {

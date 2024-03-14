@@ -155,6 +155,8 @@
   "text.config.mysticalConfig.section.Logging": "Logging",
   "text.config.mysticalConfig.section.Spells": "Spells",
   "text.config.mysticalConfig.title": "Mystical Config",
+  "text.mystical.advancement.make_haven.description": "Ward a chunk from unknown forces",
+  "text.mystical.advancement.make_haven.title": "A Regular-Looking Fortress",
   "text.mystical.classSerializer.failedDeserializeName": "Couldn't deserialize class of name %s.",
   "text.mystical.command.mystical.reload.success": "Successfully reloaded config and set night timer.",
   "text.mystical.command.mystical.spell.delete.deleteButton": " [X]",

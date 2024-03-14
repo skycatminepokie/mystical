@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "mystical:make_haven": {
+      "conditions": {},
+      "trigger": "mystical:make_haven"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/block/purpur_block.png",
+    "description": {
+      "translate": "text.mystical.advancement.make_haven.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:acacia_sapling"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "text.mystical.advancement.make_haven.title"
+    }
+  },
+  "requirements": [
+    [
+      "mystical:make_haven"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
