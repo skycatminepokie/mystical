@@ -1,2 +1,2 @@
-- Fixed nighttime events happening twice (actually this time)
-- Added soundSwap spell
+- Fixed release
+  - My GitHub Actions broke :(

@@ -11,7 +11,7 @@ on:
 env:
   MINECRAFT_VERSION: 1.20.1
   JAVA_VERSION: 17
-  VERSION: 5.0.1+1.20.1
+  VERSION: 5.0.2+1.20.1
   VERSION_TYPE: alpha
 
 permissions:
