@@ -13,7 +13,7 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
 
     @Override
     protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        return new Conditions();
+        return new Conditions(playerPredicate);
     }
 
     @Override
@@ -26,12 +26,12 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
     }
 
     public static class Conditions extends AbstractCriterionConditions {
-        public Conditions() {
-            super(ID, LootContextPredicate.EMPTY);
+        public Conditions(LootContextPredicate playerPredicate) {
+            super(ID, playerPredicate);
         }
 
         public boolean requirementsMet() {
-            return true; // No requirements
+            return true; // No requirements (player predicate is handled by AbstractCriterion#trigger)
         }
     }
 }

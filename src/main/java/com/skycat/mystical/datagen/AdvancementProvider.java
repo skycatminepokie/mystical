@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.item.Items;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
@@ -31,7 +32,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true,
                         false
                 )
-                .criterion(String.valueOf(Mystical.MAKE_HAVEN_CRITERION.getId()), new MakeHavenCriterion.Conditions())
+                .criterion(String.valueOf(Mystical.MAKE_HAVEN_CRITERION.getId()), new MakeHavenCriterion.Conditions(LootContextPredicate.EMPTY))
                 .build(consumer, MAKE_HAVEN_ADVANCEMENT_ID);
     }
 }
