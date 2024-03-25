@@ -46,6 +46,7 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final TagKey<EntityType<?>> EVOKER_SUMMONABLE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:evoker_summonable"));
     public static final TagKey<Block> GLAZED_TERRACOTTA = TagKey.of(RegistryKeys.BLOCK, new Identifier("mystical:glazed_terracotta"));
     public static final MakeHavenCriterion MAKE_HAVEN_CRITERION = Criteria.register(new MakeHavenCriterion());
+    public static final String MOD_ID = "mystical"; // TODO: Use this everywhere it makes sense
     public static SaveState save;
     private static boolean isClientWorld = true;
 
