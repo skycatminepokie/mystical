@@ -19,27 +19,11 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
 
     /**
      * Do all the nighttime events - changing spells and setting the night timer.
-     * @deprecated Use {@link MysticalEventHandler#doNighttimeEvents(MinecraftServer)} instead.
-     */
-    @Deprecated(forRemoval = true)
-    public void doNighttimeEvents() {
-        Mystical.getSpellHandler().removeCuredSpells();
-        if (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
-            Mystical.getSpellHandler().activateNewSpell();
-        }
-        while (Mystical.getSpellHandler().getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
-            Mystical.getSpellHandler().activateNewSpell();
-        }
-        setNightTimer();
-    }
-
-    /**
-     * Do all the nighttime events - changing spells and setting the night timer.
      */
     public void doNighttimeEvents(MinecraftServer server) {
         SpellHandler spellHandler = Mystical.getSpellHandler();
         spellHandler.decaySpells();
-        int spellsCured = spellHandler.removeCuredSpells();
+        int spellsCured = spellHandler.removeCuredSpells(server);
         Stack<Text> messageStack = new Stack<>(); // Done this way because it seemed best to get the spell changing message out on top
         if (spellsCured == 1) {
             messageStack.push(Utils.translatable("text.mystical.events.cureSpell"));

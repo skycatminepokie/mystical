@@ -79,30 +79,12 @@ public abstract class SpellCure {
         return contributionTotal >= contributionGoal;
     }
 
-    /**
-     * Award power to players based on their contributions.
-     * @param totalPower The total amount of power to distribute among the players
-     * @implNote Simple overload of {@link #awardPower(int, int)}.
-     */
-    public void awardPower(int totalPower) {
-        awardPower(totalPower, Integer.MAX_VALUE);
-    }
-
-    /**
-     * Award power to players based on their contributions.
-     * @param totalPower The total power to distribute among contributors.
-     * @param max The maximum power to give to any one contributor.
-     */
-    public void awardPower(int totalPower, int max) {
-        for (UUID uuid : contributions.keySet()) {
-            if (contributions.get(uuid) <= 0) continue;
-            // Formula: min(totalPower * percentContributed, max)
-            Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / contributionTotal), max));
-        }
-    }
-
     public int getContributionsLeft() {
         return getContributionGoal() - getContributionTotal();
+    }
+
+    public int getContributionsOf(UUID contributor) {
+        return contributions.get(contributor);
     }
 
 }
