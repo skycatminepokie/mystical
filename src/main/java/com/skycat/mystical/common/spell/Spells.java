@@ -73,7 +73,6 @@ public class Spells {
                 (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.SKELETON))),
                 (random) -> (new StatBackedSpellCure(25, Stats.KILLED.getOrCreateStat(EntityType.ZOMBIE))),
                 (random) -> (new StatBackedSpellCure(256, Stats.MINED.getOrCreateStat(Blocks.STONE))), // 4 stacks
-                (random) -> (new StatBackedSpellCure(64, Stats.CUSTOM.getOrCreateStat(Stats.BELL_RING))),
                 (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.FALL_ONE_CM))), // 100 blocks
                 (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD))),
                 (random) -> (new StatBackedSpellCure(10, Stats.KILLED.getOrCreateStat(EntityType.DROWNED))),
