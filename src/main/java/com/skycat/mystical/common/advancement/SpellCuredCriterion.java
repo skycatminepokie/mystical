@@ -2,6 +2,7 @@ package com.skycat.mystical.common.advancement;
 
 import com.google.gson.JsonObject;
 import com.skycat.mystical.common.spell.Spell;
+import com.skycat.mystical.common.spell.cure.SpellCure;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.NumberRange;
@@ -16,8 +17,9 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
 
     @Override
     protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        NumberRange.FloatRange contributionPercentage = NumberRange.FloatRange.fromJson(obj.get("contributionPercentage"));
-        return new Conditions(playerPredicate, contributionPercentage);
+        NumberRange.FloatRange contributionPercentage = NumberRange.FloatRange.fromJson(obj.get("contributionPercentage")); // Ends up with NumberRange.FloatRange.ANY if obj.get(...) returns null.
+        NumberRange.IntRange participants = NumberRange.IntRange.fromJson(obj.get("participants")); // Ends up with NumberRange.IntRange.ANY if obj.get(...) returns null.
+        return new Conditions(playerPredicate, contributionPercentage, participants);
     }
 
     @Override
@@ -34,19 +36,29 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
         // protected int goal;
         // protected int contributionTotal;
         protected NumberRange.FloatRange contributionPercentage;
+        protected NumberRange.IntRange participants;
+
         public Conditions(LootContextPredicate entity, NumberRange.FloatRange contributionPercentage) {
+            this(entity, contributionPercentage, NumberRange.IntRange.ANY);
+        }
+
+        public Conditions(LootContextPredicate entity, NumberRange.FloatRange contributionPercentage, NumberRange.IntRange participants) {
             super(ID, entity);
             this.contributionPercentage = contributionPercentage;
+            this.participants = participants;
         }
 
         public boolean requirementsMet(ServerPlayerEntity player, Spell spell) {
-            return contributionPercentage.test(spell.getCure().getContributionsOf(player.getUuid()));
+            SpellCure cure = spell.getCure();
+            return contributionPercentage.test(cure.getContributionsOf(player.getUuid())) &&
+                    participants.test(cure.getContributorCount());
         }
 
         @Override
         public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
             JsonObject json = super.toJson(predicateSerializer);
             json.add("contributionPercentage", contributionPercentage.toJson());
+            json.add("participants", participants.toJson());
             return json;
         }
     }

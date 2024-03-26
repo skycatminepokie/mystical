@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 public class AdvancementProvider extends FabricAdvancementProvider {
     public static final String MAKE_HAVEN_ADVANCEMENT_ID = "mystical:make_haven";
     private static final String SPELL_CURED_ADVANCEMENT_ID = "mystical:spell_cured";
+    private static final String SOLO_SPELL_ADVANCEMENT_ID = "mystical:solo_spell";
 
     protected AdvancementProvider(FabricDataOutput output) {
         super(output);
@@ -43,7 +44,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         Items.STONE_BRICKS,
                         Utils.translatable("text.mystical.advancement.make_haven.title"),
                         Utils.translatable("text.mystical.advancement.make_haven.description"),
-                        Identifier.of("minecraft", "textures/block/purpur_block.png"),
+                        null,
                         AdvancementFrame.TASK,
                         true,
                         true,
@@ -52,5 +53,20 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 .criterion(String.valueOf(Mystical.MAKE_HAVEN_CRITERION.getId()), new MakeHavenCriterion.Conditions(LootContextPredicate.EMPTY))
                 .parent(cureSpell)
                 .build(consumer, MAKE_HAVEN_ADVANCEMENT_ID);
+        Advancement soloSpell = Advancement.Builder.createUntelemetered()
+                .display(
+                        Items.FIREWORK_ROCKET,
+                        Utils.translatable("text.mystical.advancement.solo_spell.title"),
+                        Utils.translatable("text.mystical.advancement.solo_spell.description"),
+                        null,
+                        AdvancementFrame.GOAL,
+                        true,
+                        true,
+                        false
+                )
+                .criterion(String.valueOf(Mystical.SPELL_CURED_CRITERION.getId()),
+                        new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(100), NumberRange.IntRange.exactly(1)))
+                .parent(cureSpell)
+                .build(consumer, SOLO_SPELL_ADVANCEMENT_ID);
     }
 }

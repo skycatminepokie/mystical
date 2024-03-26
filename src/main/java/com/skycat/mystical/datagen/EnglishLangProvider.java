@@ -71,8 +71,9 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
 
         // Advancements
-        addAdvancementTranslation(tb, "cure_spell", "Watch your step!", "Not everything is as it seems...");
+        addAdvancementTranslation(tb, "cure_spell", "Watch Your Step!", "Not everything is as it seems...");
         addAdvancementTranslation(tb, "make_haven", "An Invisible Fortress", "Ward a chunk from unknown forces");
+        addAdvancementTranslation(tb, "solo_spell", "Flying Solo", "Cure a spell all on your own");
 
         // Other
         addTextTranslation(tb, "events.spellsChange", "The world shifts...");

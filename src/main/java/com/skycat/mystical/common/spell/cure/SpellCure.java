@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("rawtypes")
 public abstract class SpellCure {
     @Getter protected int contributionGoal;
     @Getter protected final Class cureType;
@@ -85,6 +86,10 @@ public abstract class SpellCure {
 
     public int getContributionsOf(UUID contributor) {
         return contributions.get(contributor);
+    }
+
+    public int getContributorCount() {
+        return contributions.size();
     }
 
 }
