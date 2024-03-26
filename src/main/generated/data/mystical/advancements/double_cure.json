@@ -1,28 +1,28 @@
 {
+  "parent": "mystical:solo_spell",
   "criteria": {
     "mystical:spell_cured": {
       "conditions": {
         "contributionPercentage": {
-          "min": 0.2
+          "min": 200.0
         }
       },
       "trigger": "mystical:spell_cured"
     }
   },
   "display": {
-    "announce_to_chat": false,
-    "background": "minecraft:textures/block/purpur_block.png",
+    "announce_to_chat": true,
     "description": {
-      "translate": "text.mystical.advancement.cure_spell.description"
+      "translate": "text.mystical.advancement.double_cure.description"
     },
-    "frame": "task",
-    "hidden": false,
+    "frame": "challenge",
+    "hidden": true,
     "icon": {
-      "item": "minecraft:dragon_breath"
+      "item": "minecraft:spectral_arrow"
     },
-    "show_toast": false,
+    "show_toast": true,
     "title": {
-      "translate": "text.mystical.advancement.cure_spell.title"
+      "translate": "text.mystical.advancement.double_cure.title"
     }
   },
   "requirements": [

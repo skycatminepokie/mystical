@@ -1,4 +1,5 @@
 {
+  "parent": "mystical:spell_cured",
   "criteria": {
     "mystical:make_haven": {
       "conditions": {},
@@ -7,14 +8,13 @@
   },
   "display": {
     "announce_to_chat": true,
-    "background": "minecraft:textures/block/purpur_block.png",
     "description": {
       "translate": "text.mystical.advancement.make_haven.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "minecraft:acacia_sapling"
+      "item": "minecraft:stone_bricks"
     },
     "show_toast": true,
     "title": {
