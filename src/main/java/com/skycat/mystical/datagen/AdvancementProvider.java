@@ -19,6 +19,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     public static final String MAKE_HAVEN_ADVANCEMENT_ID = "mystical:make_haven";
     private static final String SPELL_CURED_ADVANCEMENT_ID = "mystical:spell_cured";
     private static final String SOLO_SPELL_ADVANCEMENT_ID = "mystical:solo_spell";
+    private static final String DOUBLE_CURE_ADVANCEMENT_ID = "mystical:double_cure";
 
     protected AdvancementProvider(FabricDataOutput output) {
         super(output);
@@ -68,5 +69,20 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(100), NumberRange.IntRange.exactly(1)))
                 .parent(cureSpell)
                 .build(consumer, SOLO_SPELL_ADVANCEMENT_ID);
+        Advancement doubleCure = Advancement.Builder.createUntelemetered()
+                .display(
+                        Items.SPECTRAL_ARROW,
+                        Utils.translatable("text.mystical.advancement.double_cure.title"),
+                        Utils.translatable("text.mystical.advancement.double_cure.description"),
+                        null,
+                        AdvancementFrame.CHALLENGE,
+                        true,
+                        true,
+                        true
+                )
+                .criterion(String.valueOf(Mystical.SPELL_CURED_CRITERION.getId()),
+                        new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(200)))
+                .parent(soloSpell)
+                .build(consumer, DOUBLE_CURE_ADVANCEMENT_ID);
     }
 }

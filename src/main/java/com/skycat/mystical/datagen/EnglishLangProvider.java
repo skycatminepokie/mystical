@@ -53,7 +53,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigOption(tb, "bigCreeperExplosion.multiplier", "Multiplier");
         addConfigOption(tb, "fishingRodLaunch.multiplier", "Multiplier");
         addConfigOption(tb, "turboChickens.speed", "Speed multiplier");
-        addConfigOptionTooltip(tb, "turboChickens.speed", "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
+        addConfigOptionTooltip(tb, "turboChickens.speed", "Actually this is a duration divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
         addConfigOption(tb, "randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
         addConfigOption(tb, "randomCreeperEffectClouds.effectAmplifier", "Effect amplifier");
         addConfigOptionTooltip(tb, "randomCreeperEffectClouds.effectAmplifier", "0 = level one, just like the /effect command");
@@ -74,6 +74,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addAdvancementTranslation(tb, "cure_spell", "Watch Your Step!", "Not everything is as it seems...");
         addAdvancementTranslation(tb, "make_haven", "An Invisible Fortress", "Ward a chunk from unknown forces");
         addAdvancementTranslation(tb, "solo_spell", "Flying Solo", "Cure a spell all on your own");
+        addAdvancementTranslation(tb, "double_cure", "Shoot the Moon", "Cure a spell, then do it again");
 
         // Other
         addTextTranslation(tb, "events.spellsChange", "The world shifts...");
