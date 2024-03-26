@@ -8,6 +8,7 @@ import com.skycat.mystical.common.spell.cure.SpellCure;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Map;
 import java.util.UUID;
@@ -36,7 +37,10 @@ public class Spell {
         Map<UUID, Integer> contributions = cure.getContributionCopy();
         for (UUID uuid : contributions.keySet()) {
             if (contributions.get(uuid) <= 0) continue;
-            Mystical.SPELL_CURED_CRITERION.trigger(server.getPlayerManager().getPlayer(uuid), this);
+            ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
+            if (player != null) {
+                Mystical.SPELL_CURED_CRITERION.trigger(player, this);
+            }
             // Formula: min(totalPower * percentContributed, max)
             Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / cure.getContributionTotal()), max));
         }
