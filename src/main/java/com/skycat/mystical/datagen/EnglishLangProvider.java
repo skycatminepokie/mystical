@@ -70,18 +70,19 @@ class EnglishLangProvider extends FabricLanguageProvider {
         // Additional spells
         addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
 
+        // Advancements
+        addAdvancementTranslation(tb, "cure_spell", "Watch your step!", "Not everything is as it seems...");
+        addAdvancementTranslation(tb, "make_haven", "An Invisible Fortress", "Ward a chunk from unknown forces");
+
         // Other
         addTextTranslation(tb, "events.spellsChange", "The world shifts...");
         addTextTranslation(tb, "events.cureSpell", "1 spell was cured this night.");
         addTextTranslation(tb, "events.cureSpells", "%d spells were cured this night.");
         addTextTranslation(tb, "events.newSpell", "1 new spell fell over the world.");
         addTextTranslation(tb, "events.newSpells", "%d new spells fell over the world.");
-        addTextTranslation(tb, "classSerializer.failedDeserializeName", "Couldn't deserialize class of name %s.");
         addTextTranslation(tb, "spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
         addTextTranslation(tb, "text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         addTextTranslation(tb, "cure.kill", "Kill %ss");
-        addTextTranslation(tb, "advancement.make_haven.title", "A Regular-Looking Fortress");
-        addTextTranslation(tb, "advancement.make_haven.description", "Ward a chunk from unknown forces");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {
@@ -163,5 +164,10 @@ class EnglishLangProvider extends FabricLanguageProvider {
      */
     private void addTextTranslation(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical." + key, value);
+    }
+
+    private void addAdvancementTranslation(TranslationBuilder tb, String key, String title, String description) {
+        addTextTranslation(tb, "advancement." + key + ".title", title);
+        addTextTranslation(tb, "advancement." + key + ".description", description);
     }
 }
