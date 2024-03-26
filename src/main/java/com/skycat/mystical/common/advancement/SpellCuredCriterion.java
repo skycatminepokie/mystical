@@ -50,7 +50,7 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
 
         public boolean requirementsMet(ServerPlayerEntity player, Spell spell) {
             SpellCure cure = spell.getCure();
-            return contributionPercentage.test(cure.getContributionsOf(player.getUuid())) &&
+            return contributionPercentage.test(((double) cure.getContributionsOf(player.getUuid()) /cure.getContributionGoal()) * 100) &&
                     participants.test(cure.getContributorCount());
         }
 

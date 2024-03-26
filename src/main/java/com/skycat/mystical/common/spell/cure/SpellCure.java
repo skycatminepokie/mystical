@@ -61,6 +61,9 @@ public abstract class SpellCure {
     }
 
     public void contribute(@Nullable UUID uuid, int amount) {
+        if (amount == 0) {
+            return;
+        }
         if (uuid == null) {
             uuid = UUID.fromString("09b4c37c-1dd6-4eb4-8adf-f660dd111410"); // This better not collide with anything.
         }
