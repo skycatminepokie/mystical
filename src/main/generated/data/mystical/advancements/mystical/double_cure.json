@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:mystical/solo_spell",
+  "parent": "mystical:mystical/solo_spell",
   "criteria": {
     "mystical:spell_cured": {
       "conditions": {
@@ -30,5 +30,8 @@
       "mystical:spell_cured"
     ]
   ],
+  "rewards": {
+    "experience": 50
+  },
   "sends_telemetry_event": false
 }

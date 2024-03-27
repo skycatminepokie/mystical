@@ -1,8 +1,24 @@
 {
-  "parent": "minecraft:mystical",
+  "parent": "mystical:mystical",
   "criteria": {
     "mystical:prevented_breaking": {
-      "conditions": {},
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:any_of",
+            "terms": [
+              {
+                "block": "minecraft:stone",
+                "condition": "minecraft:block_state_property"
+              },
+              {
+                "block": "minecraft:grass_block",
+                "condition": "minecraft:block_state_property"
+              }
+            ]
+          }
+        ]
+      },
       "trigger": "mystical:prevented_breaking"
     }
   },
@@ -16,7 +32,7 @@
     "icon": {
       "item": "minecraft:bedrock"
     },
-    "show_toast": false,
+    "show_toast": true,
     "title": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.title"
     }

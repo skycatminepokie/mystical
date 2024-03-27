@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.advancement.criterion.ItemCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -20,12 +21,13 @@ import net.minecraft.util.Identifier;
 import java.util.function.Consumer;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
-    public static final String CURE_SPELL_ADVANCEMENT_ID = "mystical";
-    public static final String MAKE_HAVEN_ADVANCEMENT_ID = "mystical/make_haven";
-    public static final String SOLO_SPELL_ADVANCEMENT_ID = "mystical/solo_spell";
-    public static final String DOUBLE_CURE_ADVANCEMENT_ID = "mystical/double_cure";
-    public static final String PREVENTED_BREAKING_ADVANCEMENT_ID = "mystical/prevented_breaking";
-    public static final String PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID = "mystical/prevented_breaking/ancient_debris";
+    public static final String CURE_SPELL_ADVANCEMENT_ID = "mystical:mystical";
+    public static final String MAKE_HAVEN_ADVANCEMENT_ID = "mystical:mystical/make_haven";
+    public static final String SOLO_SPELL_ADVANCEMENT_ID = "mystical:mystical/solo_spell";
+    public static final String DOUBLE_CURE_ADVANCEMENT_ID = "mystical:mystical/double_cure";
+    public static final String PREVENTED_BREAKING_ADVANCEMENT_ID = "mystical:mystical/prevented_breaking";
+    public static final String PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID = "mystical:mystical/prevented_breaking/ancient_debris";
+    public static final String PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID = "mystical:mystical/prevented_breaking/diamond_ore";
 
     protected AdvancementProvider(FabricDataOutput output) {
         super(output);
@@ -88,6 +90,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 )
                 .criterion(String.valueOf(Mystical.SPELL_CURED_CRITERION.getId()),
                         new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(200)))
+                .rewards(AdvancementRewards.Builder.experience(50))
                 .parent(soloSpell)
                 .build(consumer, DOUBLE_CURE_ADVANCEMENT_ID);
         Advancement preventedBreaking = Advancement.Builder.createUntelemetered()
@@ -97,11 +100,12 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         Utils.translatable(EnglishLangProvider.getKeyForAdvancementTranslation(PREVENTED_BREAKING_ADVANCEMENT_ID) + ".description"),
                         null,
                         AdvancementFrame.TASK,
-                        false,
+                        true,
                         false,
                         false
                 )
-                .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID), new ItemCriterion.Conditions(Mystical.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.EMPTY))
+                .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID),
+                        new ItemCriterion.Conditions(Mystical.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.STONE).or(BlockStatePropertyLootCondition.builder(Blocks.GRASS_BLOCK)).build()))) // TODO: Make this work for anything
                 .parent(cureSpell)
                 .build(consumer, PREVENTED_BREAKING_ADVANCEMENT_ID);
         Advancement preventedBreakingAncientDebris = Advancement.Builder.createUntelemetered()
@@ -118,6 +122,21 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID), createPreventedBreakingCriterion(Blocks.ANCIENT_DEBRIS))
                 .parent(preventedBreaking)
                 .build(consumer, PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID);
+        Advancement preventedBreakingDiamondOre = Advancement.Builder.createUntelemetered()
+                .display(
+                        Items.DIAMOND_ORE,
+                        Utils.translatable(EnglishLangProvider.getKeyForAdvancementTranslation(PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID) + ".title"),
+                        Utils.translatable(EnglishLangProvider.getKeyForAdvancementTranslation(PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID) + ".description"),
+                        null,
+                        AdvancementFrame.TASK,
+                        true,
+                        true,
+                        true
+                )
+                .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID),
+                        new ItemCriterion.Conditions(Mystical.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.DIAMOND_ORE).or(BlockStatePropertyLootCondition.builder(Blocks.DEEPSLATE_DIAMOND_ORE)).build()))) // TODO: Make this use a tag instead, then make one for shulker boxes
+                .parent(preventedBreaking)
+                .build(consumer, PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID);
     }
 
     /**

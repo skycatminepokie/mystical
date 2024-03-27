@@ -77,6 +77,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addAdvancementTranslation(tb, AdvancementProvider.DOUBLE_CURE_ADVANCEMENT_ID, "Shoot the Moon", "Now do it blindfolded");
         addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ADVANCEMENT_ID, "No Trespassing", "Be magically blocked from mining");
         addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID, "Hidden in the Depths of Despair", "Be magically prevented from mining Ancient Debris");
+        addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID, "Worse than Glow Lichen", "Find diamonds, only to be unable to mine them");
 
         // Other
         addTextTranslation(tb, "events.spellsChange", "The world shifts...");
@@ -172,11 +173,11 @@ class EnglishLangProvider extends FabricLanguageProvider {
 
     private void addAdvancementTranslation(TranslationBuilder tb, String advancementKey, String title, String description) {
         String key = getKeyForAdvancementTranslation(advancementKey);
-        tb.add(advancementKey + ".title", title);
-        tb.add(advancementKey + ".description", description);
+        tb.add(key + ".title", title);
+        tb.add(key + ".description", description);
     }
 
     public static String getKeyForAdvancementTranslation(String advancementKey) {
-        return "text.mystical.advancement." + advancementKey.replace('/', '.');
+        return "text.mystical.advancement." + advancementKey.substring(advancementKey.indexOf(':') + 1).replace('/', '.'); // Trim off "mystical:" and replace "/" with "."
     }
 }

@@ -2,5 +2,5 @@
 - Added criterion "mystical:spell_cured"
 - Added criterion "mystical:make_haven"
 - Added criterion "mystical:prevented_breaking"
-- Added six advancements
+- Added seven advancements
 - Removed bell ringing cure

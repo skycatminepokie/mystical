@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:mystical/prevented_breaking",
+  "parent": "mystical:mystical/prevented_breaking",
   "criteria": {
     "mystical:prevented_breaking": {
       "conditions": {

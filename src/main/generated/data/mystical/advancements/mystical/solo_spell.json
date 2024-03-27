@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:mystical",
+  "parent": "mystical:mystical",
   "criteria": {
     "mystical:spell_cured": {
       "conditions": {

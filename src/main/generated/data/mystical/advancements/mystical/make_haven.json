@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:mystical",
+  "parent": "mystical:mystical",
   "criteria": {
     "mystical:make_haven": {
       "conditions": {},
