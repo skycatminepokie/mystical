@@ -1,5 +1,6 @@
 package com.skycat.mystical.common.util;
 
+import com.demonwav.mcdev.annotations.Translatable;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
@@ -274,27 +275,27 @@ public class Utils {
         return list.get(random.nextInt(0, list.size()));
     }
 
-    public static MutableText translatable(String path) {
+    public static MutableText translatable(@Translatable String path) {
         return Text.translatable(path);
     }
 
-    public static MutableText translatable(String path, Object... args) {
+    public static MutableText translatable(@Translatable String path, @Translatable Object... args) {
         return Text.translatable(path, args);
     }
 
-    public static Supplier<Text> translatableSupplier(String path) {
+    public static Supplier<Text> translatableSupplier(@Translatable String path) {
         return () -> Text.translatable(path);
     }
 
-    public static Supplier<Text> translatableSupplier(String path, Object... args) {
+    public static Supplier<Text> translatableSupplier(@Translatable String path, @Translatable Object... args) {
         return () -> Text.translatable(path, args);
     }
 
-    public static String translateString(String path) {
+    public static String translateString(@Translatable String path) {
         return translatable(path).getString();
     }
 
-    public static String translateString(String path, Object... args) {
+    public static String translateString(@Translatable String path, @Translatable Object... args) {
         return translatable(path, args).getString();
     }
 

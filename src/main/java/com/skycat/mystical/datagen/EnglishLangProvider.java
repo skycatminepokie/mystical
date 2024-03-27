@@ -85,7 +85,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addTextTranslation(tb, "events.newSpell", "1 new spell fell over the world.");
         addTextTranslation(tb, "events.newSpells", "%d new spells fell over the world.");
         addTextTranslation(tb, "spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
-        addTextTranslation(tb, "text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
+        addTextTranslation(tb, "spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         addTextTranslation(tb, "cure.kill", "Kill %ss");
     }
 
@@ -145,7 +145,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
     }
 
     /**
-     * Adds translation for logging options. Prepends `"text.mystical.logging"` and adds a config option.
+     * Adds translation for logging options. Prepends "{@code text.mystical.logging}" and adds a config option.
      * @param tb      The TranslationBuilder to use.
      * @param key     The key under the logging section.
      * @param console The translation for console output.
@@ -157,14 +157,14 @@ class EnglishLangProvider extends FabricLanguageProvider {
     }
 
     /**
-     * Add command translation. Prepends `"text.mystical.command."`.
+     * Add command translation. Prepends "{@code text.mystical.command.}".
      */
     private void addCommandText(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical.command." + key, value);
     }
 
     /**
-     * Add text translations. Prepends `"text.mystical."`.
+     * Add text translations. Prepends "{@code text.mystical.}".
      */
     private void addTextTranslation(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical." + key, value);
