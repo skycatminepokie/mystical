@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -42,13 +43,16 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
 
     @Override
     public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) { // The actual spell part
-        if ((Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(pos))) return ActionResult.PASS;
+        if (Mystical.isClientWorld() || Mystical.getHavenManager().isInHaven(pos)) return ActionResult.PASS;
+        ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
         RANDOM.setSeed(seed * pos.hashCode());
         boolean preventBreaking = Utils.percentChance(Mystical.CONFIG.unbreakableLocation.chance(), RANDOM);
         if (preventBreaking) {
-            Utils.sendMessageToPlayer(player, Utils.translatable("text.mystical.consequence.unbreakableLocation.noBreaking"), true);
+            Utils.sendMessageToPlayer(serverPlayer, Utils.translatable("text.mystical.consequence.unbreakableLocation.noBreaking"), true);
+            Mystical.PREVENTED_BREAKING_CRITERION.trigger(serverPlayer, pos, serverPlayer.getStackInHand(hand));
+            return ActionResult.FAIL;
         }
-        return preventBreaking ? ActionResult.FAIL : ActionResult.PASS;
+        return ActionResult.PASS;
     }
 
     public static class Factory extends ConsequenceFactory<UnbreakableLocationConsequence> {

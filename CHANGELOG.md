@@ -1,2 +1,6 @@
-- Fixed nighttime events happening twice (actually this time)
-- Added soundSwap spell
+- Fixed unbreakableLocation working in havens
+- Added criterion "mystical:spell_cured"
+- Added criterion "mystical:make_haven"
+- Added criterion "mystical:prevented_breaking"
+- Added six advancements
+- Removed bell ringing cure

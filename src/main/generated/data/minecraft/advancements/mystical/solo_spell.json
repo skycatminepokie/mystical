@@ -1,11 +1,12 @@
 {
-  "parent": "mystical:solo_spell",
+  "parent": "minecraft:mystical",
   "criteria": {
     "mystical:spell_cured": {
       "conditions": {
         "contributionPercentage": {
-          "min": 200.0
-        }
+          "min": 100.0
+        },
+        "participants": 1
       },
       "trigger": "mystical:spell_cured"
     }
@@ -13,16 +14,16 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "text.mystical.advancement.double_cure.description"
+      "translate": "text.mystical.advancement.mystical.solo_spell.description"
     },
-    "frame": "challenge",
-    "hidden": true,
+    "frame": "goal",
+    "hidden": false,
     "icon": {
-      "item": "minecraft:spectral_arrow"
+      "item": "minecraft:firework_rocket"
     },
     "show_toast": true,
     "title": {
-      "translate": "text.mystical.advancement.double_cure.title"
+      "translate": "text.mystical.advancement.mystical.solo_spell.title"
     }
   },
   "requirements": [

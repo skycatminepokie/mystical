@@ -71,10 +71,12 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
 
         // Advancements
-        addAdvancementTranslation(tb, "cure_spell", "Watch Your Step!", "Not everything is as it seems...");
-        addAdvancementTranslation(tb, "make_haven", "An Invisible Fortress", "Ward a chunk from unknown forces");
-        addAdvancementTranslation(tb, "solo_spell", "Flying Solo", "Cure a spell all on your own");
-        addAdvancementTranslation(tb, "double_cure", "Shoot the Moon", "Cure a spell, then do it again");
+        addAdvancementTranslation(tb, AdvancementProvider.CURE_SPELL_ADVANCEMENT_ID, "Watch Your Step!", "Not everything is as it seems...");
+        addAdvancementTranslation(tb, AdvancementProvider.MAKE_HAVEN_ADVANCEMENT_ID, "An Invisible Fortress", "Ward a chunk from unknown forces");
+        addAdvancementTranslation(tb, AdvancementProvider.SOLO_SPELL_ADVANCEMENT_ID, "Flying Solo", "Cure a spell all on your own");
+        addAdvancementTranslation(tb, AdvancementProvider.DOUBLE_CURE_ADVANCEMENT_ID, "Shoot the Moon", "Now do it blindfolded");
+        addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ADVANCEMENT_ID, "No Trespassing", "Be magically blocked from mining");
+        addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID, "Hidden in the Depths of Despair", "Be magically prevented from mining Ancient Debris");
 
         // Other
         addTextTranslation(tb, "events.spellsChange", "The world shifts...");
@@ -168,8 +170,13 @@ class EnglishLangProvider extends FabricLanguageProvider {
         tb.add("text.mystical." + key, value);
     }
 
-    private void addAdvancementTranslation(TranslationBuilder tb, String key, String title, String description) {
-        addTextTranslation(tb, "advancement." + key + ".title", title);
-        addTextTranslation(tb, "advancement." + key + ".description", description);
+    private void addAdvancementTranslation(TranslationBuilder tb, String advancementKey, String title, String description) {
+        String key = getKeyForAdvancementTranslation(advancementKey);
+        tb.add(advancementKey + ".title", title);
+        tb.add(advancementKey + ".description", description);
+    }
+
+    public static String getKeyForAdvancementTranslation(String advancementKey) {
+        return "text.mystical.advancement." + advancementKey.replace('/', '.');
     }
 }

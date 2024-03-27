@@ -13,7 +13,7 @@
     "announce_to_chat": false,
     "background": "minecraft:textures/block/purpur_block.png",
     "description": {
-      "translate": "text.mystical.advancement.cure_spell.description"
+      "translate": "text.mystical.advancement.mystical.description"
     },
     "frame": "task",
     "hidden": false,
@@ -22,7 +22,7 @@
     },
     "show_toast": false,
     "title": {
-      "translate": "text.mystical.advancement.cure_spell.title"
+      "translate": "text.mystical.advancement.mystical.title"
     }
   },
   "requirements": [

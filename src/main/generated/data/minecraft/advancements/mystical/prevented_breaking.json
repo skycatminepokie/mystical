@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:mystical",
+  "criteria": {
+    "mystical:prevented_breaking": {
+      "conditions": {},
+      "trigger": "mystical:prevented_breaking"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "text.mystical.advancement.mystical.prevented_breaking.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bedrock"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "text.mystical.advancement.mystical.prevented_breaking.title"
+    }
+  },
+  "requirements": [
+    [
+      "mystical:prevented_breaking"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
