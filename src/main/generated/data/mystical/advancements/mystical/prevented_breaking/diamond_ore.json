@@ -1,0 +1,46 @@
+{
+  "parent": "mystical:mystical/prevented_breaking",
+  "criteria": {
+    "mystical:prevented_breaking": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:any_of",
+            "terms": [
+              {
+                "block": "minecraft:diamond_ore",
+                "condition": "minecraft:block_state_property"
+              },
+              {
+                "block": "minecraft:deepslate_diamond_ore",
+                "condition": "minecraft:block_state_property"
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "mystical:prevented_breaking"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "text.mystical.advancement.mystical.prevented_breaking.diamond_ore.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:diamond_ore"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "text.mystical.advancement.mystical.prevented_breaking.diamond_ore.title"
+    }
+  },
+  "requirements": [
+    [
+      "mystical:prevented_breaking"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,2 +1,6 @@
-- Fixed release
-  - My GitHub Actions broke :(
+- Fixed unbreakableLocation working in havens
+- Added criterion "mystical:spell_cured"
+- Added criterion "mystical:make_haven"
+- Added criterion "mystical:prevented_breaking"
+- Added seven advancements
+- Removed bell ringing cure

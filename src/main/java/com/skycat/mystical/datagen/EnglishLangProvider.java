@@ -53,7 +53,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigOption(tb, "bigCreeperExplosion.multiplier", "Multiplier");
         addConfigOption(tb, "fishingRodLaunch.multiplier", "Multiplier");
         addConfigOption(tb, "turboChickens.speed", "Speed multiplier");
-        addConfigOptionTooltip(tb, "turboChickens.speed", "Actually this is a speed divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
+        addConfigOptionTooltip(tb, "turboChickens.speed", "Actually this is a duration divisor. The egg-laying cooldown will be divided by this.\nAccepts positive, nonzero numbers.");
         addConfigOption(tb, "randomCreeperEffectClouds.effectDuration", "Effect duration (s)");
         addConfigOption(tb, "randomCreeperEffectClouds.effectAmplifier", "Effect amplifier");
         addConfigOptionTooltip(tb, "randomCreeperEffectClouds.effectAmplifier", "0 = level one, just like the /effect command");
@@ -70,15 +70,23 @@ class EnglishLangProvider extends FabricLanguageProvider {
         // Additional spells
         addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
 
+        // Advancements
+        addAdvancementTranslation(tb, AdvancementProvider.CURE_SPELL_ADVANCEMENT_ID, "Watch Your Step!", "Not everything is as it seems...");
+        addAdvancementTranslation(tb, AdvancementProvider.MAKE_HAVEN_ADVANCEMENT_ID, "An Invisible Fortress", "Ward a chunk from unknown forces");
+        addAdvancementTranslation(tb, AdvancementProvider.SOLO_SPELL_ADVANCEMENT_ID, "Flying Solo", "Cure a spell all on your own");
+        addAdvancementTranslation(tb, AdvancementProvider.DOUBLE_CURE_ADVANCEMENT_ID, "Shoot the Moon", "Now do it blindfolded");
+        addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ADVANCEMENT_ID, "No Trespassing", "Be magically blocked from mining");
+        addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID, "Hidden in the Depths of Despair", "Be magically prevented from mining Ancient Debris");
+        addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID, "Worse than Glow Lichen", "Find diamonds, only to be unable to mine them");
+
         // Other
-        tb.add("text.mystical.events.spellsChange", "The world shifts...");
-        tb.add("text.mystical.events.cureSpell", "1 spell was cured this night.");
-        tb.add("text.mystical.events.cureSpells", "%d spells were cured this night.");
-        tb.add("text.mystical.events.newSpell", "1 new spell fell over the world.");
-        tb.add("text.mystical.events.newSpells", "%d new spells fell over the world.");
-        addTextTranslation(tb, "classSerializer.failedDeserializeName", "Couldn't deserialize class of name %s.");
+        addTextTranslation(tb, "events.spellsChange", "The world shifts...");
+        addTextTranslation(tb, "events.cureSpell", "1 spell was cured this night.");
+        addTextTranslation(tb, "events.cureSpells", "%d spells were cured this night.");
+        addTextTranslation(tb, "events.newSpell", "1 new spell fell over the world.");
+        addTextTranslation(tb, "events.newSpells", "%d new spells fell over the world.");
         addTextTranslation(tb, "spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
-        addTextTranslation(tb, "text.mystical.spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
+        addTextTranslation(tb, "spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         addTextTranslation(tb, "cure.kill", "Kill %ss");
     }
 
@@ -138,7 +146,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
     }
 
     /**
-     * Adds translation for logging options. Prepends `"text.mystical.logging"` and adds a config option.
+     * Adds translation for logging options. Prepends "{@code text.mystical.logging}" and adds a config option.
      * @param tb      The TranslationBuilder to use.
      * @param key     The key under the logging section.
      * @param console The translation for console output.
@@ -150,16 +158,26 @@ class EnglishLangProvider extends FabricLanguageProvider {
     }
 
     /**
-     * Add command translation. Prepends `"text.mystical.command."`.
+     * Add command translation. Prepends "{@code text.mystical.command.}".
      */
     private void addCommandText(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical.command." + key, value);
     }
 
     /**
-     * Add text translations. Prepends `"text.mystical."`.
+     * Add text translations. Prepends "{@code text.mystical.}".
      */
     private void addTextTranslation(TranslationBuilder tb, String key, String value) {
         tb.add("text.mystical." + key, value);
+    }
+
+    private void addAdvancementTranslation(TranslationBuilder tb, String advancementKey, String title, String description) {
+        String key = getKeyForAdvancementTranslation(advancementKey);
+        tb.add(key + ".title", title);
+        tb.add(key + ".description", description);
+    }
+
+    public static String getKeyForAdvancementTranslation(String advancementKey) {
+        return "text.mystical.advancement." + advancementKey.substring(advancementKey.indexOf(':') + 1).replace('/', '.'); // Trim off "mystical:" and replace "/" with "."
     }
 }

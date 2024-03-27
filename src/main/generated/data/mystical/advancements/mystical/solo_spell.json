@@ -1,0 +1,35 @@
+{
+  "parent": "mystical:mystical",
+  "criteria": {
+    "mystical:spell_cured": {
+      "conditions": {
+        "contributionPercentage": {
+          "min": 100.0
+        },
+        "participants": 1
+      },
+      "trigger": "mystical:spell_cured"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "text.mystical.advancement.mystical.solo_spell.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:firework_rocket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "text.mystical.advancement.mystical.solo_spell.title"
+    }
+  },
+  "requirements": [
+    [
+      "mystical:spell_cured"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -22,6 +22,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stat;
@@ -249,13 +250,14 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
      * Removes all spells that have met their cure condition
      * @return The number of spells cured
      */
-    public int removeCuredSpells() {
+    public int removeCuredSpells(MinecraftServer server) {
         ListIterator<Spell> li = activeSpells.listIterator();
         int removed = 0;
         while (li.hasNext()) {
-            SpellCure cure = li.next().getCure();
+            Spell spell = li.next();
+            SpellCure cure = spell.getCure();
             if (cure.isSatisfied()) {
-                cure.awardPower(200, 100); // TODO: modify based on cure difficulty
+                spell.onCured(200, 100, server); // TODO: modify based on cure difficulty
                 li.remove();
                 removed ++;
             }

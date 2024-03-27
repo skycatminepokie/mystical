@@ -1,0 +1,37 @@
+{
+  "parent": "mystical:mystical/solo_spell",
+  "criteria": {
+    "mystical:spell_cured": {
+      "conditions": {
+        "contributionPercentage": {
+          "min": 200.0
+        }
+      },
+      "trigger": "mystical:spell_cured"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "text.mystical.advancement.mystical.double_cure.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:spectral_arrow"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "text.mystical.advancement.mystical.double_cure.title"
+    }
+  },
+  "requirements": [
+    [
+      "mystical:spell_cured"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

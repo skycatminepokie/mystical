@@ -1,5 +1,7 @@
 package com.skycat.mystical;
 
+import com.skycat.mystical.common.advancement.MakeHavenCriterion;
+import com.skycat.mystical.common.advancement.SpellCuredCriterion;
 import com.skycat.mystical.common.spell.SpellHandler;
 import com.skycat.mystical.server.HavenManager;
 import com.skycat.mystical.server.MysticalEventHandler;
@@ -15,6 +17,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.advancement.criterion.ItemCriterion;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryKeys;
@@ -28,8 +32,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
-// WARNING: Package structure looks like split-sources structure. It's not. I'm working on it.
+// WARNING: Package structure in common looks like split-sources structure, which is weird. I'm working on it.
 public class Mystical implements ModInitializer, ServerWorldEvents.Load {
+    public static final String MOD_ID = "mystical"; // TODO: Use this everywhere it makes sense
     public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
     public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     public static final Random RANDOM = new Random();
@@ -43,6 +48,10 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final TagKey<EntityType<?>> ENDERMAN_VARIANTS = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:enderman_variants"));
     public static final TagKey<EntityType<?>> EVOKER_SUMMONABLE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:evoker_summonable"));
     public static final TagKey<Block> GLAZED_TERRACOTTA = TagKey.of(RegistryKeys.BLOCK, new Identifier("mystical:glazed_terracotta"));
+    public static final MakeHavenCriterion MAKE_HAVEN_CRITERION = Criteria.register(new MakeHavenCriterion());
+    public static final SpellCuredCriterion SPELL_CURED_CRITERION = Criteria.register(new SpellCuredCriterion());
+    public static final Identifier PREVENTED_BREAKING_CRITERION_ID = Identifier.of(Mystical.MOD_ID, "prevented_breaking");
+    public static final ItemCriterion PREVENTED_BREAKING_CRITERION = Criteria.register(new ItemCriterion(PREVENTED_BREAKING_CRITERION_ID));
     public static SaveState save;
     private static boolean isClientWorld = true;
 

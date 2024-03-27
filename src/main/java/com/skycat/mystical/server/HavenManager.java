@@ -2,6 +2,7 @@ package com.skycat.mystical.server;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.common.util.Utils;
 import lombok.Getter;
 import lombok.Setter;
@@ -128,6 +129,7 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
         if (hasPower(player, cost) && havenChunk(chunk)) { // Maintain order, lazy boolean operations used.
             // Player has enough power and the haven succeeded
             removePower(player, cost);
+            Mystical.MAKE_HAVEN_CRITERION.trigger(player);
             return true;
         }
         return false;
