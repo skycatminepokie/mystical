@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityMixin {
     // Scuffed? Maybe.
     @Inject(method = "applyDamage", at = @At("TAIL"))
-    public void applyDamage(DamageSource damageSource, float damage, CallbackInfo ci) {
+    public void mystical_onApplyDamage(DamageSource damageSource, float damage, CallbackInfo ci) {
         if (damageSource.isOf(DamageTypes.OUT_OF_WORLD) || Mystical.isClientWorld()) { // Require damage to be from normal source and in server world
             return;
         }

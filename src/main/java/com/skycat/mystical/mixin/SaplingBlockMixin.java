@@ -24,7 +24,7 @@ public abstract class SaplingBlockMixin {
     public static IntProperty STAGE;
 
     @Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-    public void generate(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) { // TODO: MixinExtras this
+    public void mystical_newSaplingType(ServerWorld world, BlockPos pos, BlockState state, Random random, CallbackInfo ci) { // TODO: MixinExtras this
         if (!Mystical.isClientWorld() &&
                 state.get(STAGE) != 0 &&
                 !Mystical.getHavenManager().isInHaven(pos) &&

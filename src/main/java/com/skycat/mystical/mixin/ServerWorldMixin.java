@@ -32,24 +32,29 @@ public abstract class ServerWorldMixin {
     @Shadow public abstract @NotNull MinecraftServer getServer();
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.BEFORE))
-    private void beforeSkippingNight(CallbackInfo ci) {
+    private void mystical_beforeSkippingNight(CallbackInfo ci) {
         if (worldProperties.getTimeOfDay() % 24000 <= MysticalEventHandler.NIGHT_TIME) { // If the time to do night things hasn't passed, do them now
             Mystical.EVENT_HANDLER.doNighttimeEvents(getServer());
         }
     }
 
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
+    private void mystical_afterSkippingNight(CallbackInfo ci) {
+        Mystical.EVENT_HANDLER.setNightTimer();
+    }
+
     @ModifyVariable(method = "playSound", at = @At(value = "HEAD"), argsOnly = true, ordinal = 0)
-    private RegistryEntry<SoundEvent> changeSound(RegistryEntry<SoundEvent> original, @Local(ordinal = 0) double x, @Local(ordinal = 1) double y, @Local(ordinal = 2) double z) {
-        return modifySoundIfRequired(original, x, y, z);
+    private RegistryEntry<SoundEvent> mystical_changeSound(RegistryEntry<SoundEvent> original, @Local(ordinal = 0) double x, @Local(ordinal = 1) double y, @Local(ordinal = 2) double z) {
+        return mystical_modifySoundIfRequired(original, x, y, z);
     }
 
     @ModifyVariable(method = "playSoundFromEntity", at = @At(value = "HEAD"), argsOnly = true, ordinal = 0)
-    private RegistryEntry<SoundEvent> changeEntitySound(RegistryEntry<SoundEvent> original, @Local Entity entity) { // get rid of: weather, ui, music, music_disk, ambient
-        return modifySoundIfRequired(original, entity.getX(), entity.getY(), entity.getZ());
+    private RegistryEntry<SoundEvent> mystical_changeEntitySound(RegistryEntry<SoundEvent> original, @Local Entity entity) { // get rid of: weather, ui, music, music_disk, ambient
+        return mystical_modifySoundIfRequired(original, entity.getX(), entity.getY(), entity.getZ());
     }
 
     @Unique
-    private RegistryEntry<SoundEvent> modifySoundIfRequired(RegistryEntry<SoundEvent> original, double x, double y, double z) {
+    private RegistryEntry<SoundEvent> mystical_modifySoundIfRequired(RegistryEntry<SoundEvent> original, double x, double y, double z) {
         ArrayList<Spell> matchingSpells = Mystical.getSpellHandler().spellsOfConsequenceType(SoundSwapConsequence.class);
         if (matchingSpells.isEmpty() || Mystical.getHavenManager().isInHaven(new BlockPos((int) x, (int) y, (int) z))) { // If there's no soundSwap spells or we're in a haven
             return original;
@@ -66,10 +71,5 @@ public abstract class ServerWorldMixin {
         }
 
         return newSound;
-    }
-
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setTimeOfDay(J)V", shift = At.Shift.AFTER))
-    private void afterSkippingNight(CallbackInfo ci) {
-        Mystical.EVENT_HANDLER.setNightTimer();
     }
 }

@@ -35,7 +35,7 @@ public class TestUtils {
      */
     public static void havenAll(TestContext context) {
         // Find chunks corresponding to opposite corners
-        Box box = ((TestContextMixin) context).pleaseGetTestBox();
+        Box box = ((TestContextMixin) context).mystical_getTestBox();
         Utils.log("Box: " + box);
         ChunkPos min = new ChunkPos(new BlockPos((int) box.minX, 0, (int) box.minZ));
         ChunkPos max = new ChunkPos(new BlockPos((int) box.maxX, 0, (int) box.maxZ));

@@ -16,7 +16,7 @@ public abstract class CatEntityMixin {
      * Fire the {@link CatEntityEvents.Eat} event.
      */
     @Inject(method = "eat", at = @At("HEAD"))
-    public void eat(PlayerEntity entity, Hand hand, ItemStack stack, CallbackInfo ci) {
+    public void mystical_eat(PlayerEntity entity, Hand hand, ItemStack stack, CallbackInfo ci) {
         CatEntityEvents.EAT.invoker().onEat((CatEntity) (Object) this, entity, hand, stack);
     }
 }

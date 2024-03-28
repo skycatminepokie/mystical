@@ -15,18 +15,19 @@ import java.util.function.BooleanSupplier;
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerTimer implements MinecraftServerTimerAccess {
     @Unique
-    private long ticksUntilNight;
+    private long mystical_ticksUntilNight;
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void onTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-        if (--this.ticksUntilNight <= 0L) {
+    private void mystical_onTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+        if (--this.mystical_ticksUntilNight <= 0L) {
             Mystical.EVENT_HANDLER.doNighttimeEvents((MinecraftServer) (Object) this);
         }
     }
 
+    @Unique
     @Override
     public void mystical_setTimer(long ticksUntilNight) {
-        this.ticksUntilNight = ticksUntilNight;
+        this.mystical_ticksUntilNight = ticksUntilNight;
     }
 
 }

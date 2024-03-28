@@ -25,7 +25,7 @@ public abstract class ExplosionMixin {
     @Shadow @Final private World world;
 
     @Inject(method = "affectWorld", at = @At("HEAD"))
-    private void infestBlocks(boolean particles, CallbackInfo ci) {
+    private void mystical_infestBlocks(boolean particles, CallbackInfo ci) {
         if (!Mystical.isClientWorld() &&
                 Mystical.getSpellHandler().isConsequenceActive(ExplosionsInfestConsequence.class)) {
             ListIterator<BlockPos> it = getAffectedBlocks().listIterator();

@@ -12,8 +12,8 @@ public abstract class TntBlockMixin {
      * @param bound The previously chosen bound.
      * @return 1 or bound, whichever is greater.
      */
-    @ModifyArg(method = "onDestroyedByExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/random/Random;nextInt(I)I"), index = 0)
-    private int minRandomOne(int bound) {
+    @ModifyArg(method = "onDestroyedByExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/random/Random;nextInt(I)I"), index = 0) // TODO ModifyReturnValue instead
+    private int mystical_minRandomOne(int bound) {
         return Math.max(1, bound);
     }
 }

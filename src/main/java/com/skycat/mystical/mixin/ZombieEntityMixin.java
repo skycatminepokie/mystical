@@ -15,9 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ZombieEntity.class)
 public abstract class ZombieEntityMixin { // TODO: move to LivingEntityMixin
-
     @Inject(method = "damage", at = @At("RETURN"))
-    public void onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    public void mystical_onDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         ZombieEntity dis = (ZombieEntity) (Object) this;
         // If the spell is not active, the damage didn't go through, or we roll too low, don't do anything
         if (Mystical.isClientWorld() ||
@@ -35,6 +34,4 @@ public abstract class ZombieEntityMixin { // TODO: move to LivingEntityMixin
             newEntity.damage(dis.getDamageSources().outOfWorld(), totalDamage);
         }
     }
-
-
 }

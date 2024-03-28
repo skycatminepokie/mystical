@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(IronGolemEntity.class)
 public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Credit MattiDragon#8944 on discord for extension info
     @Unique
-    private static boolean targetPredicate(LivingEntity entity) {
+    private static boolean mystical_targetPredicate(LivingEntity entity) {
         return (!Mystical.isClientWorld() &&
                 Mystical.getSpellHandler().isConsequenceActive(AggressiveGolemsConsequence.class)) &&
                 !Mystical.getHavenManager().isInHaven(entity); // Don't attack things that are in a haven
     }
 
     @Inject(method = "initGoals", at = @At("TAIL"))
-    private void addGoal(CallbackInfo ci) {
-        targetSelector.add(5, new ActiveTargetGoal<>(((IronGolemEntity) (Object) this), LivingEntity.class, false, IronGolemEntityMixin::targetPredicate));
+    private void mystical_addGoal(CallbackInfo ci) {
+        targetSelector.add(5, new ActiveTargetGoal<>(((IronGolemEntity) (Object) this), LivingEntity.class, false, IronGolemEntityMixin::mystical_targetPredicate));
     }
 }
