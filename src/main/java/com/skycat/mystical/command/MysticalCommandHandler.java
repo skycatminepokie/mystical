@@ -30,6 +30,7 @@ import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec2f;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,7 +42,11 @@ import static net.minecraft.server.command.CommandManager.literal;
 public class MysticalCommandHandler implements CommandRegistrationCallback {
     private static final SimpleCommandExceptionType NO_SPELLS_TO_DELETE_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
     private static final DynamicCommandExceptionType SPELL_DOES_NOT_EXIST_EXCEPTION = new DynamicCommandExceptionType((spellNum) -> Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
-    private static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.textOf("This must be called by an entity.")); // TODO: Translate
+    private static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAnEntity"));
+    private static final SimpleCommandExceptionType EXECUTOR_NOT_PLAYER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAPlayer"));
+    private static final DynamicCommandExceptionType EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION = new DynamicCommandExceptionType((solutionString) -> Utils.translatable("text.mystical.command.generic.notAPlayer.solution", solutionString));
+    private static final SimpleCommandExceptionType ALREADY_HAVENED_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.alreadyHavened"));
+    private static final SimpleCommandExceptionType HAVEN_NOT_ENOUGH_POWER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.haven.pos.confirm.notEnoughPower"));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
@@ -171,7 +176,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         int successCount = 0;
         for (ServerPlayerEntity player : players) {
             int power = Mystical.getHavenManager().getPower(player);
-            context.getSource().sendFeedback(() -> player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate
+            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.get.player", player.getDisplayName().getString(), power), true);
             successCount++;
         }
         return successCount;
@@ -185,7 +190,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             Mystical.getHavenManager().removePower(player.getUuid(), amount);
             successCount++;
         }
-        context.getSource().sendFeedback(Utils.textSupplierOf("Successfully removed " + amount + " power from " + successCount + " players."), true); // TODO: Translate
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.remove.player.amount.success", amount, successCount), true);
         return successCount;
     }
 
@@ -197,7 +202,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             Mystical.getHavenManager().addPower(player.getUuid(), amount);
             successCount++;
         }
-        context.getSource().sendFeedback(Utils.textSupplierOf("Successfully added " + amount + " power to " + successCount + " players."), true); // TODO: Translate
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.add.player.amount.success", amount, successCount), true);
         return successCount;
     }
 
@@ -226,11 +231,11 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         if (entity == null) {
             throw EXECUTOR_NOT_ENTITY_EXCEPTION.create();
         }
-        if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(entity)) { // TODO: Translate, make better
-            context.getSource().sendFeedback(Utils.textSupplierOf("This is in a haven"), false);
+        if (Mystical.getHavenManager().isInHaven(entity)) {
+            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.info.inHaven"), false);
             return 1;
         }
-        context.getSource().sendFeedback(Utils.textSupplierOf("This chunk is not havened"), false);
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.info.notInHaven"), false);
         return 0;
     }
 
@@ -242,11 +247,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      * @param context The context (fails if source is not ServerPlayerEntity)
      * @return The return of {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)}
      */
-    private int havenHereCommand(CommandContext<ServerCommandSource> context) {
+    private int havenHereCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         if (entity == null) {
-            context.getSource().sendFeedback(Utils.textSupplierOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
-            return 0;
+            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
         }
         BlockPos pos = entity.getBlockPos();
         return havenPos(context, pos);
@@ -260,19 +264,18 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      * @param block   The position to haven
      * @return 1 When the message is successfully send
      */
-    private int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) {
+    private int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         if (!(entity instanceof ServerPlayerEntity player)) {
-            context.getSource().sendFeedback(Utils.textSupplierOf("Only a player can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
-            return 0;
+            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
         }
+
         player.sendMessage(
-                Utils.mutableTextOf("Having chunk at [" + block.getX() + ", " + block.getZ() + "] for " + Mystical.getHavenManager().getHavenCost(block) + " power. ")
-                        .append(Utils.mutableTextOf("[Confirm]").setStyle(
+                Utils.translatable("text.mystical.command.mystical.haven.pos.action", block.getX(), block.getZ(), Mystical.getHavenManager().getHavenCost(block))
+                        .append(Utils.translatable("text.mystical.command.mystical.haven.pos.button")).setStyle(
                                 Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
-                                        .withColor(Formatting.GREEN)
-                        ))
-        ); // TODO: Translate
+                                        .withColor(Formatting.GREEN))
+        );
         return 1;
     }
 
@@ -282,13 +285,12 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      * @param context The context. Source must be ServerPlayerEntity
      * @return The return value of {@link #havenPos}.
      */
-    private int havenPosCommand(CommandContext<ServerCommandSource> context) {
+    private int havenPosCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
-            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.x.z.notAPlayer"), true); // This shouldn't be possible by regular players
-            return 0;
+            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
         }
-        var vec = Vec2ArgumentType.getVec2(context, "block");
+        Vec2f vec = Vec2ArgumentType.getVec2(context, "block");
         return havenPos(context, new BlockPos((int) vec.x, 0, (int) vec.y));
     }
 
@@ -299,29 +301,26 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
      * @param context The context. Source must be a player
      * @return 1 if successful, 0 if unsuccessful
      */
-    private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) {
+    private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         // Must be player
         if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
-            context.getSource().sendFeedback(Utils.textSupplierOf("This can only be called by a player."), false); // TODO: Translate
-            return 0;
+            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
         }
 
         var vec = Vec2ArgumentType.getVec2(context, "block");
         BlockPos blockPos = new BlockPos((int) vec.x, 0, (int) vec.y);
         if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player)) { // Must not already be havened. This check may not be needed, since we've got a ServerCommandSource?
-            context.getSource().sendFeedback(Utils.textSupplierOf("That location is already havened."), false); // TODO: Translate
-            return 0;
+            throw ALREADY_HAVENED_EXCEPTION.create();
         }
 
         ChunkPos chunk = new ChunkPos(blockPos);
         boolean success = Mystical.getHavenManager().tryHaven(chunk, player);
         if (success) {
-            player.sendMessage(Utils.textOf("Success!")); // TODO: Translate
+            player.sendMessage(Utils.translatable("text.mystical.command.generic.success"));
             return 1;
         } else {
-            player.sendMessage(Utils.textOf("You tried as hard as you could, but you couldn't haven the area. Do you have enough power?")); // TODO: Translate
-            return 0;
+            throw HAVEN_NOT_ENOUGH_POWER_EXCEPTION.create();
         }
     }
 
