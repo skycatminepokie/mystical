@@ -21,7 +21,7 @@ public class MobSpawnSwapConsequence extends SpellConsequence {  // TODO: Tests
 
     public static class Factory extends ConsequenceFactory<MobSpawnSwapConsequence> {
 
-        protected Factory() { // TODO: Localize Better firedMessage
+        protected Factory() {
             super("mobSpawnSwap",
                     "Swap Overworld Mobs With Nether Mobs",
                     "Hot guy cold, cold guy hot.",
