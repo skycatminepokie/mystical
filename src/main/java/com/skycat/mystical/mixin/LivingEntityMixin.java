@@ -42,7 +42,7 @@ public abstract class LivingEntityMixin {
                     // Convert
                     Entity newEntity = Utils.convertToRandomInTag(skeleton, MysticalTags.SKELETON_VARIANTS);
                     if (newEntity == null) {
-                        Utils.log("Whoops, something failed while converting skeleton."); // TODO: Config
+                        Utils.log("Whoops, something failed while converting skeleton.");
                         return; // Something failed, just ignore it
                     }
                     // Do the damage

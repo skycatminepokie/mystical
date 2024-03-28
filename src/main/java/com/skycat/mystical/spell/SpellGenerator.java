@@ -46,7 +46,7 @@ public class SpellGenerator {
      */
     public static SpellConsequence getConsequence() { // I think we're getting rid of the notion of points for now. This may be slow with many consequences
         if (Spells.getConsequenceFactories().isEmpty()) { // Should not happen
-            Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList")); // TODO: Config
+            Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyConsequenceList"));
             return LevitateConsequence.FACTORY.make(Mystical.RANDOM, 0);
         }
 
@@ -72,7 +72,7 @@ public class SpellGenerator {
 
     public static SpellCure getCure() {
         if (Spells.getCureFactories().isEmpty()) {
-            Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList")); // TODO: Config
+            Utils.log(Utils.translateString("text.mystical.spellGenerator.emptyCureList"));
             return new StatBackedSpellCure(10, Stats.MINED.getOrCreateStat(Blocks.CACTUS));
         }
         return Utils.chooseRandom(Mystical.RANDOM, Spells.getCureFactories()).make(Mystical.RANDOM);

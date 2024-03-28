@@ -171,7 +171,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         int successCount = 0;
         for (ServerPlayerEntity player : players) {
             int power = Mystical.getHavenManager().getPower(player);
-            context.getSource().sendFeedback(() -> player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate TODO: Config
+            context.getSource().sendFeedback(() -> player.getDisplayName().copy().append(Utils.textOf(" has " + power + " power.")), true); // TODO: Translate
             successCount++;
         }
         return successCount;
