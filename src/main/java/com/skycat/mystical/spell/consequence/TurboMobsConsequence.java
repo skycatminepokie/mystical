@@ -65,7 +65,7 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
         @Override
         public MutableText getDescriptionText(SpellConsequence consequence) throws IllegalArgumentException {
             if (!(consequence instanceof TurboMobsConsequence turboMobsConsequence)) {
-                throw new IllegalArgumentException("Consequence is not a TurboMobsConsequence: " + consequence); // TODO: Logging instead of crashing
+                throw new IllegalArgumentException("Consequence is not a TurboMobsConsequence: " + consequence);
             }
 
             return Utils.translatable(getDescription(), turboMobsConsequence.entityType.getName().getString());
