@@ -139,7 +139,6 @@ public class ConfigModel {
         public boolean enabled = true;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
-        // TODO: Config tree types
         public LogLevel logLevel = LogLevel.OFF; // Not implemented
         @PredicateConstraint("weightPredicate")
         public double weight = 1;

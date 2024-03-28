@@ -289,7 +289,7 @@ public class Utils {
         return translatable(path).getString();
     }
 
-    public static String translateString(@Translatable String path, @Translatable Object... args) {
+    public static String translateString(@Translatable String path, Object... args) {
         return translatable(path, args).getString();
     }
 

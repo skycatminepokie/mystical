@@ -51,7 +51,7 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
                     return make(random, points); // try again
                 }
             }
-            // TODO: Logging - couldn't get random EntityType
+            Utils.log(Utils.translateString("text.mystical.consequence.turboMobs.failedGetRandomEntityType"), LogLevel.ERROR);
             return new TurboMobsConsequence(EntityType.ZOMBIE);
         }
 

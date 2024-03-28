@@ -275,6 +275,7 @@
   "text.mystical.consequence.turboChickens.longName": "Chickens lay eggs faster",
   "text.mystical.consequence.turboChickens.shortName": "turboChickens",
   "text.mystical.consequence.turboMobs.description": "%s go zoom",
+  "text.mystical.consequence.turboMobs.failedGetRandomEntityType": "Failed to get a random entity type, using zombie instead.",
   "text.mystical.consequence.turboMobs.fired": "Spell turboMobs: Gave a mob extra speed..",
   "text.mystical.consequence.turboMobs.longName": "Turbo Mobs",
   "text.mystical.consequence.turboMobs.shortName": "turboMobs",
@@ -301,6 +302,7 @@
   "text.mystical.logging.newSpellCommand": "New spell created using command",
   "text.mystical.logging.spellContribution": "Spell contribution by %s. Amount: %d.",
   "text.mystical.logging.timeOfDayAtStartup": "Time of day at startup: %l.",
+  "text.mystical.spellGenerator.allConsequencesDisabled": "All spells are disabled, skipping making a spell",
   "text.mystical.spellGenerator.emptyConsequenceList": "SpellGenerator found an empty consequence supplier list. Using default consequence.",
   "text.mystical.spellGenerator.emptyCureList": "SpellGenerator found an empty cure list. Using default cure."
 }

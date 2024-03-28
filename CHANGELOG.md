@@ -1,2 +1,3 @@
 - A lot of internal changes
 - Haven cost is now configurable
+- Added a bunch of new translations

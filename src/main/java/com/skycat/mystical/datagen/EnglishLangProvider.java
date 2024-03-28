@@ -40,30 +40,6 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addLoggingOption(tb, "spellContribution", "Spell contribution by %s. Amount: %d.", "Spell contribution");
         addLoggingOption(tb, "timeOfDayAtStartup", "Time of day at startup: %l.", "Time of day at startup");
 
-        addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
-        addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
-        addCommandText(tb, "mystical.reload.success", "Successfully reloaded config and set night timer.");
-        addCommandText(tb, "mystical.spell.list.noSpells", "There are no active spells.");
-        addCommandText(tb, "mystical.spell.new.spell.warnDisabled", "Warning: Randomly generating this spell is disabled, or its weight is zero.");
-        addCommandText(tb, "mystical.spell.delete.deleteButton", " [X]");
-
-        addCommandText(tb, "mystical.power.add.player.amount.success", "Successfully added %d power to %d player(s).");
-        addCommandText(tb, "mystical.power.remove.player.amount.success", "Successfully removed %d power from %d player(s).");
-        addCommandText(tb, "mystical.power.get.player", "%s has %d power.");
-
-        addCommandText(tb, "mystical.haven.info.inHaven", "This is in a haven.");
-        addCommandText(tb, "mystical.haven.info.notInHaven", "This chunk is not havened.");
-        addCommandText(tb, "mystical.haven.pos.action", "Havening chunk at [%d, %d] for %d power.");
-        addCommandText(tb, "mystical.haven.pos.button", " [Confirm]");
-        addCommandText(tb, "mystical.haven.pos.confirm.notEnoughPower", "You tried as hard as you could, but you couldn't haven the area. Do you have enough power?");
-
-        addCommandText(tb, "generic.success", "Success!");
-
-        addCommandText(tb, "generic.notAPlayer", "This command must be run by a player.");
-        addCommandText(tb, "generic.notAPlayer.solution", "This command must be run by a player. Try %s.");
-        addCommandText(tb, "generic.alreadyHavened", "This chunk is already havened.");
-        addCommandText(tb, "generic.notAnEntity", "This must be called by an entity.");
-
         addConfigSection(tb, "Spells");
         // Config + spells
         for (ConsequenceFactory<?> factory : Spells.getShortNameToFactory().values()) {
@@ -88,6 +64,32 @@ class EnglishLangProvider extends FabricLanguageProvider {
 
         // Additional spells
         addConsequenceTranslation(tb, "unbreakableLocation", "noBreaking", "A mystical force prevents you from breaking that block.");
+        addConsequenceTranslation(tb, "turboMobs", "failedGetRandomEntityType", "Failed to get a random entity type, using zombie instead.");
+
+        // Commands
+        addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
+        addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
+        addCommandText(tb, "mystical.reload.success", "Successfully reloaded config and set night timer.");
+        addCommandText(tb, "mystical.spell.list.noSpells", "There are no active spells.");
+        addCommandText(tb, "mystical.spell.new.spell.warnDisabled", "Warning: Randomly generating this spell is disabled, or its weight is zero.");
+        addCommandText(tb, "mystical.spell.delete.deleteButton", " [X]");
+
+        addCommandText(tb, "mystical.power.add.player.amount.success", "Successfully added %d power to %d player(s).");
+        addCommandText(tb, "mystical.power.remove.player.amount.success", "Successfully removed %d power from %d player(s).");
+        addCommandText(tb, "mystical.power.get.player", "%s has %d power.");
+
+        addCommandText(tb, "mystical.haven.info.inHaven", "This is in a haven.");
+        addCommandText(tb, "mystical.haven.info.notInHaven", "This chunk is not havened.");
+        addCommandText(tb, "mystical.haven.pos.action", "Havening chunk at [%d, %d] for %d power.");
+        addCommandText(tb, "mystical.haven.pos.button", " [Confirm]");
+        addCommandText(tb, "mystical.haven.pos.confirm.notEnoughPower", "You tried as hard as you could, but you couldn't haven the area. Do you have enough power?");
+
+        addCommandText(tb, "generic.success", "Success!");
+
+        addCommandText(tb, "generic.notAPlayer", "This command must be run by a player.");
+        addCommandText(tb, "generic.notAPlayer.solution", "This command must be run by a player. Try %s.");
+        addCommandText(tb, "generic.alreadyHavened", "This chunk is already havened.");
+        addCommandText(tb, "generic.notAnEntity", "This must be called by an entity.");
 
         // Advancements
         addAdvancementTranslation(tb, AdvancementProvider.CURE_SPELL_ADVANCEMENT_ID, "Watch Your Step!", "Not everything is as it seems...");
@@ -105,6 +107,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addTextTranslation(tb, "events.newSpell", "1 new spell fell over the world.");
         addTextTranslation(tb, "events.newSpells", "%d new spells fell over the world.");
         addTextTranslation(tb, "spellGenerator.emptyConsequenceList", "SpellGenerator found an empty consequence supplier list. Using default consequence.");
+        addTextTranslation(tb, "spellGenerator.allConsequencesDisabled", "All spells are disabled, skipping making a spell");
         addTextTranslation(tb, "spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         addTextTranslation(tb, "cure.kill", "Kill %ss");
     }

@@ -6,6 +6,7 @@ import com.skycat.mystical.spell.consequence.LevitateConsequence;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
 import com.skycat.mystical.spell.cure.StatBackedSpellCure;
+import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -66,8 +67,8 @@ public class SpellGenerator {
                 // assert rand >= 0;
             }
         }
-
-        return null; // This should only happen if all consequences are disabled TODO: Logging
+        Utils.log(Utils.translateString("text.mystical.spellGenerator.allConsequencesDisabled"), LogLevel.WARN);
+        return null; // This should only happen if all consequences are disabled
     }
 
     public static SpellCure getCure() {
