@@ -1,6 +1,7 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalTags;
 import com.skycat.mystical.spell.consequence.ZombieTypeChangeConsequence;
 import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.Entity;
@@ -28,7 +29,7 @@ public abstract class ZombieEntityMixin { // TODO: move to LivingEntityMixin
         }
         float totalDamage = dis.getMaxHealth() - dis.getHealth();
         if (!source.isOf(DamageTypes.OUT_OF_WORLD) && !dis.isDead()) {
-            Entity newEntity = Utils.convertToRandomInTag(dis, Mystical.ZOMBIE_VARIANTS);
+            Entity newEntity = Utils.convertToRandomInTag(dis, MysticalTags.ZOMBIE_VARIANTS);
             if (newEntity == null) return;
             Utils.log(Utils.translateString("text.mystical.consequence.zombieTypeChange.fired"), Mystical.CONFIG.zombieTypeChange.logLevel());
             newEntity.damage(dis.getDamageSources().outOfWorld(), totalDamage);

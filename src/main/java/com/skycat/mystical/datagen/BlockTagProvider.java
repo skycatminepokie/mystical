@@ -1,6 +1,6 @@
 package com.skycat.mystical.datagen;
 
-import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
@@ -19,7 +19,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         Iterator<Block> it = Registries.BLOCK.iterator();
-        FabricTagProvider<Block>.FabricTagBuilder tagBuilder = getOrCreateTagBuilder(Mystical.GLAZED_TERRACOTTA);
+        FabricTagProvider<Block>.FabricTagBuilder tagBuilder = getOrCreateTagBuilder(MysticalTags.GLAZED_TERRACOTTA);
         while (it.hasNext()) { // For all the blocks that exist
             Block block = it.next();
             if (block instanceof GlazedTerracottaBlock) { // If it's glazed terracotta

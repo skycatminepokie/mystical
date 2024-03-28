@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell;
 
-import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalTags;
 import com.skycat.mystical.spell.consequence.*;
 import com.skycat.mystical.spell.cure.CureFactory;
 import com.skycat.mystical.spell.cure.StatBackedSpellCure;
@@ -82,7 +82,7 @@ public class Spells {
                 (random) -> (new StatBackedSpellCure(10000, Stats.CUSTOM.getOrCreateStat(Stats.PIG_ONE_CM))), // 100 blocks
                 (random) -> (new StatBackedSpellCure(50, Stats.USED.getOrCreateStat(Items.BREAD))),
                 (random) -> (new StatBackedSpellCure(64, Stats.CRAFTED.getOrCreateStat(Items.GOLDEN_CARROT))),
-                (random) -> (new StatBackedSpellCure(32, Stats.CRAFTED.getOrCreateStat(Utils.getRandomEntryFromTag(Registries.BLOCK, Mystical.GLAZED_TERRACOTTA).asItem()))) // Chooses a random item from the tag GLAZED_TERRACOTTA
+                (random) -> (new StatBackedSpellCure(32, Stats.CRAFTED.getOrCreateStat(Utils.getRandomEntryFromTag(Registries.BLOCK, MysticalTags.GLAZED_TERRACOTTA).asItem()))) // Chooses a random item from the tag GLAZED_TERRACOTTA
 
         );
     }

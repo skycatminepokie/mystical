@@ -1,6 +1,7 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalTags;
 import com.skycat.mystical.spell.consequence.EnderTypeChangeConsequence;
 import com.skycat.mystical.spell.consequence.SkeletonTypeChangeConsequence;
 import com.skycat.mystical.util.Utils;
@@ -39,7 +40,7 @@ public abstract class LivingEntityMixin {
                     float totalDamage = dis.getHealth();
                     Utils.log(Utils.translateString("text.mystical.consequence.skeletonTypeChange.fired"), Mystical.CONFIG.skeletonTypeChange.logLevel());
                     // Convert
-                    Entity newEntity = Utils.convertToRandomInTag(skeleton, Mystical.SKELETON_VARIANTS);
+                    Entity newEntity = Utils.convertToRandomInTag(skeleton, MysticalTags.SKELETON_VARIANTS);
                     if (newEntity == null) {
                         Utils.log("Whoops, something failed while converting skeleton."); // TODO: Config
                         return; // Something failed, just ignore it
@@ -48,12 +49,12 @@ public abstract class LivingEntityMixin {
                     newEntity.damage(dis.getDamageSources().outOfWorld(), totalDamage);
                 }
             } else {
-                if (dis.getType().isIn(Mystical.ENDERMAN_VARIANTS) && dis instanceof MobEntity enderEntity) {
+                if (dis.getType().isIn(MysticalTags.ENDERMAN_VARIANTS) && dis instanceof MobEntity enderEntity) {
                     if (Mystical.getSpellHandler().isConsequenceActive(EnderTypeChangeConsequence.class) && // Spell is active
                             Utils.percentChance(Mystical.CONFIG.enderTypeChange.chance())) { // Roll the dice
                         float totalDamage = (dis.getMaxHealth() - originalHealth) + damage;
                         // Convert
-                        MobEntity newEntity = Utils.convertToRandomInTag(enderEntity, Mystical.ENDERMAN_VARIANTS);
+                        MobEntity newEntity = Utils.convertToRandomInTag(enderEntity, MysticalTags.ENDERMAN_VARIANTS);
                         if (newEntity == null) {
                             return;
                         }

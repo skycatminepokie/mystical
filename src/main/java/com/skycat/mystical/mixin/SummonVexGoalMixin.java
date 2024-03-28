@@ -3,6 +3,7 @@ package com.skycat.mystical.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalTags;
 import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.spell.consequence.RandomEvokerSummonsConsequence;
 import com.skycat.mystical.util.Utils;
@@ -38,7 +39,7 @@ public abstract class SummonVexGoalMixin {
             return original.call(instance, world);
         }
         ServerWorld serverWorld = (ServerWorld) world;
-        EntityType<?> mobType = Utils.getRandomEntryFromTag(Registries.ENTITY_TYPE, Mystical.EVOKER_SUMMONABLE);
+        EntityType<?> mobType = Utils.getRandomEntryFromTag(Registries.ENTITY_TYPE, MysticalTags.EVOKER_SUMMONABLE);
         if (mobType == null) {
             Utils.log("Warning: Could not choose random mobType in SummonVexGoalMixin. Consider checking mystical:evoker_summonable tag.", LogLevel.WARN);
             return original.call(instance, world); // Let it run normally

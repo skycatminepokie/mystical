@@ -3,6 +3,7 @@ package com.skycat.mystical.spell;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
 import lombok.Getter;
@@ -39,7 +40,7 @@ public class Spell {
             if (contributions.get(uuid) <= 0) continue;
             ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
             if (player != null) {
-                Mystical.SPELL_CURED_CRITERION.trigger(player, this);
+                MysticalCriteria.SPELL_CURED_CRITERION.trigger(player, this);
             }
             // Formula: min(totalPower * percentContributed, max)
             Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / cure.getContributionTotal()), max));

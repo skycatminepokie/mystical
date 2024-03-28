@@ -2,6 +2,7 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -49,7 +50,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         boolean preventBreaking = Utils.percentChance(Mystical.CONFIG.unbreakableLocation.chance(), RANDOM);
         if (preventBreaking) {
             Utils.sendMessageToPlayer(serverPlayer, Utils.translatable("text.mystical.consequence.unbreakableLocation.noBreaking"), true);
-            Mystical.PREVENTED_BREAKING_CRITERION.trigger(serverPlayer, pos, serverPlayer.getStackInHand(hand));
+            MysticalCriteria.PREVENTED_BREAKING_CRITERION.trigger(serverPlayer, pos, serverPlayer.getStackInHand(hand));
             return ActionResult.FAIL;
         }
         return ActionResult.PASS;

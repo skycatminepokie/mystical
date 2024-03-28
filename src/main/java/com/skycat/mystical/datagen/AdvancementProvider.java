@@ -1,6 +1,6 @@
 package com.skycat.mystical.datagen;
 
-import com.skycat.mystical.Mystical;
+import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.advancement.MakeHavenCriterion;
 import com.skycat.mystical.advancement.SpellCuredCriterion;
 import com.skycat.mystical.util.Utils;
@@ -46,7 +46,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         false,
                         false
                 )
-                .criterion(String.valueOf(Mystical.SPELL_CURED_CRITERION.getId()), new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(0.2)))
+                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()), new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(0.2)))
                 .build(consumer, CURE_SPELL_ADVANCEMENT_ID);
         Advancement makeHaven = Advancement.Builder.createUntelemetered()
                 .display(
@@ -59,7 +59,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true,
                         false
                 )
-                .criterion(String.valueOf(Mystical.MAKE_HAVEN_CRITERION.getId()), new MakeHavenCriterion.Conditions(LootContextPredicate.EMPTY))
+                .criterion(String.valueOf(MysticalCriteria.MAKE_HAVEN_CRITERION.getId()), new MakeHavenCriterion.Conditions(LootContextPredicate.EMPTY))
                 .parent(cureSpell)
                 .build(consumer, MAKE_HAVEN_ADVANCEMENT_ID);
         Advancement soloSpell = Advancement.Builder.createUntelemetered()
@@ -73,7 +73,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true,
                         false
                 )
-                .criterion(String.valueOf(Mystical.SPELL_CURED_CRITERION.getId()),
+                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()),
                         new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(100), NumberRange.IntRange.exactly(1)))
                 .parent(cureSpell)
                 .build(consumer, SOLO_SPELL_ADVANCEMENT_ID);
@@ -88,7 +88,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true,
                         true
                 )
-                .criterion(String.valueOf(Mystical.SPELL_CURED_CRITERION.getId()),
+                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()),
                         new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(200)))
                 .rewards(AdvancementRewards.Builder.experience(50))
                 .parent(soloSpell)
@@ -104,8 +104,8 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         false,
                         false
                 )
-                .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID),
-                        new ItemCriterion.Conditions(Mystical.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.STONE).or(BlockStatePropertyLootCondition.builder(Blocks.GRASS_BLOCK)).build()))) // TODO: Make this work for anything
+                .criterion(String.valueOf(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID),
+                        new ItemCriterion.Conditions(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.STONE).or(BlockStatePropertyLootCondition.builder(Blocks.GRASS_BLOCK)).build()))) // TODO: Make this work for anything
                 .parent(cureSpell)
                 .build(consumer, PREVENTED_BREAKING_ADVANCEMENT_ID);
         Advancement preventedBreakingAncientDebris = Advancement.Builder.createUntelemetered()
@@ -119,7 +119,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true,
                         true
                 )
-                .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID), createPreventedBreakingCriterion(Blocks.ANCIENT_DEBRIS))
+                .criterion(String.valueOf(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID), createPreventedBreakingCriterion(Blocks.ANCIENT_DEBRIS))
                 .parent(preventedBreaking)
                 .build(consumer, PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID);
         Advancement preventedBreakingDiamondOre = Advancement.Builder.createUntelemetered()
@@ -133,8 +133,8 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true,
                         true
                 )
-                .criterion(String.valueOf(Mystical.PREVENTED_BREAKING_CRITERION_ID),
-                        new ItemCriterion.Conditions(Mystical.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.DIAMOND_ORE).or(BlockStatePropertyLootCondition.builder(Blocks.DEEPSLATE_DIAMOND_ORE)).build()))) // TODO: Make this use a tag instead, then make one for shulker boxes
+                .criterion(String.valueOf(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID),
+                        new ItemCriterion.Conditions(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.DIAMOND_ORE).or(BlockStatePropertyLootCondition.builder(Blocks.DEEPSLATE_DIAMOND_ORE)).build()))) // TODO: Make this use a tag instead, then make one for shulker boxes
                 .parent(preventedBreaking)
                 .build(consumer, PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID);
     }
@@ -146,6 +146,6 @@ public class AdvancementProvider extends FabricAdvancementProvider {
      * @see ItemCriterion.Conditions#createPlacedBlock(Block)
      */
     public static ItemCriterion.Conditions createPreventedBreakingCriterion(Block block) {
-        return new ItemCriterion.Conditions(Mystical.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(block).build()));
+        return new ItemCriterion.Conditions(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID, LootContextPredicate.EMPTY, LootContextPredicate.create(BlockStatePropertyLootCondition.builder(block).build()));
     }
 }
