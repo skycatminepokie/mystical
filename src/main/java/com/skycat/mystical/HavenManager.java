@@ -26,7 +26,6 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
     @Getter private static final File SAVE_FILE = new File("config/havenManager.json");
     @Getter @Setter
     private boolean dirty = false;
-    public static int baseHavenCost = 1000;
 
     public HavenManager(HashSet<ChunkPos> havenedChunks, HashMap<UUID, Integer> powerMap) {
         this.havenedChunks = havenedChunks;
@@ -76,7 +75,7 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
      * @return The cost
      */
     public int getHavenCost(ChunkPos chunkPos) {
-        return baseHavenCost;
+        return Mystical.CONFIG.baseHavenCost();
     }
 
     /**

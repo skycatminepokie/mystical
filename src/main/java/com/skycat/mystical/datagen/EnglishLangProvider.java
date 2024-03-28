@@ -26,6 +26,8 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConfigOptionTooltip(tb, "spellDecay", "How much spells will decay each night.");
         addConfigOption(tb, "spellDecayLinear", "Decay spells linearly?");
         addConfigOptionTooltip(tb, "spellDecayLinear", "If true, spells will decay based on the full requirement of the spell.\nIf false, they will decay based on what's left.");
+        addConfigOption(tb, "baseHavenCost", "Haven cost");
+        addConfigOptionTooltip(tb, "baseHavenCost", "The amount of power required to haven a chunk.");
 
         addConfigSection(tb, "Logging");
         addLoggingOption(tb, "newSpellCommand", "New spell created using command", "New spell command (console)");

@@ -13,6 +13,7 @@ public class ConfigModel {
     public int spellMinHard = 0;
     public double spellDecay = 10.0;
     public boolean spellDecayLinear = false;
+    public int baseHavenCost = 1000;
 
     @SectionHeader("Spells")
     @Nest public BigCreeperExplosionConfig bigCreeperExplosion = new BigCreeperExplosionConfig();

@@ -1,1 +1,2 @@
 - A lot of internal changes
+- Haven cost is now configurable
