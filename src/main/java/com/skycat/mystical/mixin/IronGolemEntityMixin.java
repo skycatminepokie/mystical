@@ -22,6 +22,6 @@ public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Cre
 
     @Inject(method = "initGoals", at = @At("TAIL"))
     private void addGoal(CallbackInfo ci) {
-        targetSelector.add(5, new ActiveTargetGoal<LivingEntity>(((IronGolemEntity) (Object) this), LivingEntity.class, false, IronGolemEntityMixin::targetPredicate));
+        targetSelector.add(5, new ActiveTargetGoal<>(((IronGolemEntity) (Object) this), LivingEntity.class, false, IronGolemEntityMixin::targetPredicate));
     }
 }

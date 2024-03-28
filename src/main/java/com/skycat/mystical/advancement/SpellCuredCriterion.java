@@ -32,11 +32,8 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
     }
 
     public static class Conditions extends AbstractCriterionConditions { // TODO: Turn this into a full-fledged matching system?
-        // protected Pattern consequencePattern;
-        // protected int goal;
-        // protected int contributionTotal;
-        protected NumberRange.FloatRange contributionPercentage;
-        protected NumberRange.IntRange participants;
+        protected final NumberRange.FloatRange contributionPercentage;
+        protected final NumberRange.IntRange participants;
 
         public Conditions(LootContextPredicate entity, NumberRange.FloatRange contributionPercentage) {
             this(entity, contributionPercentage, NumberRange.IntRange.ANY);

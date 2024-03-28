@@ -85,6 +85,7 @@ processResources {
 	}
 }
 
+//noinspection ConfigurationAvoidance That's above my paygrade
 configurations.all {
 	resolutionStrategy {
 		force("net.fabricmc:fabric-loader:$loader_version")

@@ -193,7 +193,6 @@ public class Utils {
      *
      * @param toConvert The mob to convert
      * @param tag       The tag to choose from
-     * @param random
      * @return The converted mob
      */
     @Nullable
@@ -286,7 +285,7 @@ public class Utils {
         return () -> Text.translatable(path);
     }
 
-    public static Supplier<Text> translatableSupplier(@Translatable String path, @Translatable Object... args) {
+    public static Supplier<Text> translatableSupplier(@Translatable String path, Object... args) {
         return () -> Text.translatable(path, args);
     }
 
@@ -347,7 +346,7 @@ public class Utils {
     /**
      * Get a random value from a {@link Registry}. Simple addition to {@link Utils#getRandomRegistryEntry(Registry)}
      * @param registry The registry to get from.
-     * @return A random value, or {@code null} if the registry is empty (see {@link Registry#getRandom(net.minecraft.util.math.random.Random)}.
+     * @return A random value, or {@code null} if the registry is empty (see {@link Registry#getRandom(net.minecraft.util.math.random.Random)}).
      * @param <T> The type parameter of the registry.
      */
     public static <T> @Nullable T getRandomRegistryValue(Registry<T> registry) {
@@ -359,14 +358,11 @@ public class Utils {
     /**
      * Get a random entry from a {@link Registry}.
      * @param registry The registry to get from.
-     * @return A random entry, or {@code null} if the registry is empty (see {@link Registry#getRandom(net.minecraft.util.math.random.Random)}.
+     * @return A random entry, or {@code null} if the registry is empty (see {@link Registry#getRandom(net.minecraft.util.math.random.Random)}).
      * @param <T> The type parameter of the registry.
      */
     public static <T> @Nullable RegistryEntry<T> getRandomRegistryEntry(Registry<T> registry) {
         Optional<RegistryEntry.Reference<T>> optionalEntry = registry.getRandom(Mystical.MC_RANDOM);
-        if (optionalEntry.isEmpty()) {
-            return null;
-        }
-        return optionalEntry.get();
+        return optionalEntry.orElse(null);
     }
 }

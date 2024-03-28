@@ -11,8 +11,8 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 public class StatCodec implements Codec<Stat<?>> {
-    public static StatCodec INSTANCE = new StatCodec();
-    public static Codec<Pair<StatType<?>, Identifier>> TYPE_IDENTIFIER_CODEC = Codec.pair(
+    public static final StatCodec INSTANCE = new StatCodec();
+    public static final Codec<Pair<StatType<?>, Identifier>> TYPE_IDENTIFIER_CODEC = Codec.pair(
             Registries.STAT_TYPE.getCodec().fieldOf("type").codec(),
             Identifier.CODEC.fieldOf("id").codec()
     );

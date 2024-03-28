@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class DisableDaylightBurningConsequence extends SpellConsequence {
-    public static Factory FACTORY = new Factory();
+    public static final Factory FACTORY = new Factory();
 
     protected DisableDaylightBurningConsequence() {
         super(DisableDaylightBurningConsequence.class, null, 15d);

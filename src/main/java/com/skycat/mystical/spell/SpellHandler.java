@@ -53,7 +53,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
      * @implNote Saving/loading does not ensure that the order of spells will be retained.
      */
     // This saves the active spells by taking the spell codec, turning it into a list codec, then maps List<Spell> and SpellHandler
-    public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(spellList -> new SpellHandler(spellList), SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
+    public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(SpellHandler::new, SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
     @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
 
     @Getter private final ArrayList<Spell> activeSpells;

@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Raid.class)
 public abstract class RaidMixin {
+    @SuppressWarnings("rawtypes")
     @WrapOperation(method = "spawnNextWave", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;"))
     public Entity illusion(EntityType instance, World world, Operation<RaiderEntity> original) { // WARN: Not affected by havens
         if (!Mystical.isClientWorld() &&

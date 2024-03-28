@@ -30,6 +30,7 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
             super(ID, playerPredicate);
         }
 
+        @SuppressWarnings("SameReturnValue")
         public boolean requirementsMet() {
             return true; // No requirements (player predicate is handled by AbstractCriterion#trigger)
         }

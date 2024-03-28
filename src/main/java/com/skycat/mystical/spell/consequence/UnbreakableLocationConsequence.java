@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback { // TODO: Tests
     public static final Factory FACTORY = new Factory();
-    private static final Function<Double, Double> DIFFICULTY_FUNCTION = chance -> {return 10*chance;};
+    private static final Function<Double, Double> DIFFICULTY_FUNCTION = chance -> 10*chance;
     @Getter private final long seed;
     /**
      * The seed will be set every time we pull from this. That needs to be done anyway, so we have a single object to do it.

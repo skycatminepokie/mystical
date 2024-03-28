@@ -29,6 +29,7 @@ public abstract class SummonVexGoalMixin {
         return pos;
     }
 
+    @SuppressWarnings("rawtypes")
     @WrapOperation(method = "castSpell", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;"))
     public Entity overrideVexSpawning(EntityType instance, World world, Operation<VexEntity> original) { // TODO: Make things not spawn in walls
         if (Mystical.isClientWorld() || // world.isClient() ||
