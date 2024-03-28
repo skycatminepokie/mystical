@@ -30,6 +30,10 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
     public static SaveState save;
     private static boolean isClientWorld = true;
+    static {
+        MysticalTags.init();
+        MysticalCriteria.init();
+    }
 
     public static HavenManager getHavenManager() {
         if (save == null) {

@@ -11,4 +11,5 @@ public class MysticalCriteria {
     public static final SpellCuredCriterion SPELL_CURED_CRITERION = Criteria.register(new SpellCuredCriterion());
     public static final Identifier PREVENTED_BREAKING_CRITERION_ID = Identifier.of(Mystical.MOD_ID, "prevented_breaking");
     public static final ItemCriterion PREVENTED_BREAKING_CRITERION = Criteria.register(new ItemCriterion(PREVENTED_BREAKING_CRITERION_ID));
+    public static void init() {}
 }
