@@ -46,7 +46,7 @@ public class TestUtils {
         // Haven all chunks in that square
         while (x <= max.x) {
             while (z <= max.z) {
-                Mystical.getHavenManager().havenChunk(new ChunkPos(x, z));
+                Mystical.getHavenManager().addHaven(new ChunkPos(x, z));
                 Utils.log("Havening " + x + ", " + z);
                 z++;
             }

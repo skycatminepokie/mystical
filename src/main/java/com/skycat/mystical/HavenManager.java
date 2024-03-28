@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class HavenManager { // TODO: Rename havening methods to make more sense
+public class HavenManager {
     public static final Codec<HavenManager> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
             Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
             Utils.hashMapCodec(Uuids.CODEC, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
@@ -84,7 +84,7 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
      * @param chunkPos The position of the chunk to haven
      * @return {@code true} if the chunk was not already havened
      */
-    public boolean havenChunk(ChunkPos chunkPos) {
+    public boolean addHaven(ChunkPos chunkPos) {
         markDirty();
         return havenedChunks.add(chunkPos);
     }
@@ -94,10 +94,10 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
      *
      * @param blockPos The position of a block inside the targeted chunk
      * @return {@code true} if the chunk was not already havened
-     * @implNote Simple overload of {@link #havenChunk(ChunkPos)}.
+     * @implNote Simple overload of {@link #addHaven(ChunkPos)}.
      */
-    public boolean havenChunk(BlockPos blockPos) {
-        return havenChunk(new ChunkPos(blockPos));
+    public boolean addHaven(BlockPos blockPos) {
+        return addHaven(new ChunkPos(blockPos));
     }
 
     /**
@@ -106,10 +106,10 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
      * @param blockX The x position of a block contained in the chunk
      * @param blockZ The z position of a block contained in the chunk
      * @return {@code true} if the chunk was not already havened
-     * @implNote Simple overload of {@link #havenChunk(BlockPos)}.
+     * @implNote Simple overload of {@link #addHaven(BlockPos)}.
      */
-    public boolean havenChunk(int blockX, int blockZ) {
-        return havenChunk(new BlockPos(blockX, 0, blockZ));
+    public boolean addHaven(int blockX, int blockZ) {
+        return addHaven(new BlockPos(blockX, 0, blockZ));
     }
     
     public void markDirty() {
@@ -124,7 +124,7 @@ public class HavenManager { // TODO: Rename havening methods to make more sense
      */
     public boolean tryHaven(ChunkPos chunk, ServerPlayerEntity player) {
         int cost = getHavenCost(chunk);
-        if (hasPower(player, cost) && havenChunk(chunk)) { // Maintain order, lazy boolean operations used.
+        if (hasPower(player, cost) && addHaven(chunk)) { // Maintain order, lazy boolean operations used.
             // Player has enough power and the haven succeeded
             removePower(player, cost);
             MysticalCriteria.MAKE_HAVEN_CRITERION.trigger(player);

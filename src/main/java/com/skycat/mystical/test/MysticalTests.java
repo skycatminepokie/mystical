@@ -50,7 +50,7 @@ public class MysticalTests implements FabricGameTest {
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
     public void checkHavenSerialization(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
-        havenManager.havenChunk(0, 0);
+        havenManager.addHaven(0, 0);
         context.getWorld().save(null, true, false);
         HavenManager newHavenManager = SaveState.loadSave(context.getWorld().getServer()).getHavenManager();
         context.assertTrue(newHavenManager.equals(havenManager), "Serialization comparison failed.");
