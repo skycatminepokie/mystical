@@ -1,7 +1,7 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.AggressiveGolemsConsequence;
+import com.skycat.mystical.spell.consequence.AggressiveGolemsConsequence;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.passive.IronGolemEntity;

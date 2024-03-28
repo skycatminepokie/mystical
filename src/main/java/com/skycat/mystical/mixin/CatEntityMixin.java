@@ -1,6 +1,6 @@
 package com.skycat.mystical.mixin;
 
-import com.skycat.mystical.event.CatEntityEvents;
+import com.skycat.mystical.util.event.CatEntityEvents;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

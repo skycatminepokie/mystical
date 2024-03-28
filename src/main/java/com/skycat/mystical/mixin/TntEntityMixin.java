@@ -1,7 +1,7 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.NoFuseConsequence;
+import com.skycat.mystical.spell.consequence.NoFuseConsequence;
 import net.minecraft.entity.TntEntity;
 import net.minecraft.world.entity.EntityLike;
 import org.spongepowered.asm.mixin.Mixin;

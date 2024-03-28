@@ -1,8 +1,8 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.SheepColorChangeConsequence;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.spell.consequence.SheepColorChangeConsequence;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;

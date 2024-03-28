@@ -1,9 +1,9 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.EnderTypeChangeConsequence;
-import com.skycat.mystical.common.spell.consequence.SkeletonTypeChangeConsequence;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.spell.consequence.EnderTypeChangeConsequence;
+import com.skycat.mystical.spell.consequence.SkeletonTypeChangeConsequence;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

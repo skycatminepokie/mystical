@@ -1,12 +1,12 @@
 package com.skycat.mystical.test;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.LogLevel;
-import com.skycat.mystical.common.spell.Spells;
-import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
-import com.skycat.mystical.common.util.Utils;
-import com.skycat.mystical.server.HavenManager;
-import com.skycat.mystical.server.SaveState;
+import com.skycat.mystical.util.LogLevel;
+import com.skycat.mystical.spell.Spells;
+import com.skycat.mystical.spell.consequence.ConsequenceFactory;
+import com.skycat.mystical.util.Utils;
+import com.skycat.mystical.HavenManager;
+import com.skycat.mystical.SaveState;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.*;

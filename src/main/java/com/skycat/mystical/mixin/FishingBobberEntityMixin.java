@@ -1,8 +1,8 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.FishingRodLaunchConsequence;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.spell.consequence.FishingRodLaunchConsequence;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;

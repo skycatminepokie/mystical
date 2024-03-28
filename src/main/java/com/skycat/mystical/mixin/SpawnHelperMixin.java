@@ -1,10 +1,10 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.Spell;
-import com.skycat.mystical.common.spell.consequence.MobSpawnSwapConsequence;
-import com.skycat.mystical.common.spell.consequence.TurboMobsConsequence;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.spell.Spell;
+import com.skycat.mystical.spell.consequence.MobSpawnSwapConsequence;
+import com.skycat.mystical.spell.consequence.TurboMobsConsequence;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;

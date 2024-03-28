@@ -1,10 +1,10 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.BigCreeperExplosionConsequence;
-import com.skycat.mystical.common.spell.consequence.NoFuseConsequence;
-import com.skycat.mystical.common.spell.consequence.RandomCreeperEffectCloudsConsequence;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.spell.consequence.BigCreeperExplosionConsequence;
+import com.skycat.mystical.spell.consequence.NoFuseConsequence;
+import com.skycat.mystical.spell.consequence.RandomCreeperEffectCloudsConsequence;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
 import org.objectweb.asm.Opcodes;

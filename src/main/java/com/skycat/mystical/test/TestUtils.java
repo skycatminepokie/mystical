@@ -1,9 +1,9 @@
 package com.skycat.mystical.test;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.util.Utils;
 import com.skycat.mystical.mixin.TestContextMixin;
-import com.skycat.mystical.server.HavenManager;
+import com.skycat.mystical.HavenManager;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;

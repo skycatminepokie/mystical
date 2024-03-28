@@ -1,7 +1,7 @@
 package com.skycat.mystical.datagen;
 
-import com.skycat.mystical.common.spell.Spells;
-import com.skycat.mystical.common.spell.consequence.ConsequenceFactory;
+import com.skycat.mystical.spell.Spells;
+import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 

@@ -1,7 +1,7 @@
 package com.skycat.mystical.mixin;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.consequence.TurboChickensConsequence;
+import com.skycat.mystical.spell.consequence.TurboChickensConsequence;
 import net.minecraft.entity.passive.ChickenEntity;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,9 +1,9 @@
 package com.skycat.mystical.datagen;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.advancement.MakeHavenCriterion;
-import com.skycat.mystical.common.advancement.SpellCuredCriterion;
-import com.skycat.mystical.common.util.Utils;
+import com.skycat.mystical.advancement.MakeHavenCriterion;
+import com.skycat.mystical.advancement.SpellCuredCriterion;
+import com.skycat.mystical.util.Utils;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;

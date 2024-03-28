@@ -1,12 +1,9 @@
 package com.skycat.mystical;
 
-import com.skycat.mystical.common.advancement.MakeHavenCriterion;
-import com.skycat.mystical.common.advancement.SpellCuredCriterion;
-import com.skycat.mystical.common.spell.SpellHandler;
-import com.skycat.mystical.server.HavenManager;
-import com.skycat.mystical.server.MysticalEventHandler;
-import com.skycat.mystical.server.SaveState;
-import com.skycat.mystical.server.command.MysticalCommandHandler;
+import com.skycat.mystical.advancement.MakeHavenCriterion;
+import com.skycat.mystical.advancement.SpellCuredCriterion;
+import com.skycat.mystical.command.MysticalCommandHandler;
+import com.skycat.mystical.spell.SpellHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
@@ -32,16 +29,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
-// WARNING: Package structure in common looks like split-sources structure, which is weird. I'm working on it.
 public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final String MOD_ID = "mystical"; // TODO: Use this everywhere it makes sense
     public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
     public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     public static final Random RANDOM = new Random();
     public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong());
-    public static final com.skycat.mystical.common.MysticalConfig CONFIG = com.skycat.mystical.common.MysticalConfig.createAndLoad();
+    public static final com.skycat.mystical.MysticalConfig CONFIG = com.skycat.mystical.MysticalConfig.createAndLoad();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
-    // Using tags like this will make startup time a bit longer, but will allow for compatibility
     public static final TagKey<EntityType<?>> BOSSES = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:bosses"));
     public static final TagKey<EntityType<?>> ZOMBIE_VARIANTS = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:zombie_variants"));
     public static final TagKey<EntityType<?>> SKELETON_VARIANTS = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("mystical:skeleton_variants"));

@@ -2,10 +2,10 @@ package com.skycat.mystical.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.common.spell.Spell;
-import com.skycat.mystical.common.spell.consequence.SoundSwapConsequence;
-import com.skycat.mystical.common.util.Utils;
-import com.skycat.mystical.server.MysticalEventHandler;
+import com.skycat.mystical.spell.Spell;
+import com.skycat.mystical.spell.consequence.SoundSwapConsequence;
+import com.skycat.mystical.util.Utils;
+import com.skycat.mystical.MysticalEventHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.MinecraftServer;
