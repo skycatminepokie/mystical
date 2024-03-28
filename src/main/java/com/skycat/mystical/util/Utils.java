@@ -136,10 +136,6 @@ public class Utils {
     }
 
     public static <T> T getRandomEntryFromTag(Registry<T> registry, TagKey<T> tag) {
-        return getRandomEntryFromTag(registry, tag, Mystical.MC_RANDOM);
-    }
-
-    public static <T> T getRandomEntryFromTag(Registry<T> registry, TagKey<T> tag, net.minecraft.util.math.random.Random random) {
         var entryListOptional = registry.getEntryList(tag);
         if (entryListOptional.isEmpty()) return null;
         var entryList = entryListOptional.get();
