@@ -17,7 +17,7 @@ public abstract class SkulkShriekerBlockEntityMixin extends BlockEntityMixin {
                 Mystical.getSpellHandler().isConsequenceActive(OneStrikeWardensConsequence.class) &&
                 !Mystical.getHavenManager().isInHaven(getPos())) {
             Utils.log(Utils.translateString(OneStrikeWardensConsequence.FACTORY.getDescriptionKey()), Mystical.CONFIG.oneStrikeWardens.logLevel());
-            return 1; // TODO: Logging
+            return 1;
         }
         return constant;
     }
