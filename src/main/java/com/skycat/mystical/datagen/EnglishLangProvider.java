@@ -44,6 +44,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "mystical.spell.list.noSpells", "There are no active spells.");
         addCommandText(tb, "mystical.spell.new.spell.warnDisabled", "Warning: Randomly generating this spell is disabled, or its weight is zero.");
         addCommandText(tb, "mystical.spell.delete.deleteButton", " [X]");
+        addCommandText(tb, "mystical.haven.x.z.notAPlayer", "Only a player entity can haven this way! Try /mystical haven add.");
 
         addConfigSection(tb, "Spells");
         // Config + spells

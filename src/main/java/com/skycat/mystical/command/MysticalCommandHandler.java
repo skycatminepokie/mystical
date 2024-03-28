@@ -285,7 +285,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private int havenPosCommand(CommandContext<ServerCommandSource> context) {
         var entity = context.getSource().getEntity();
         if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
-            context.getSource().sendFeedback(Utils.textSupplierOf("Only a player entity can haven this way! Try /mystical haven add."), true); // This shouldn't be possible by regular players // TODO: Translate
+            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.x.z.notAPlayer"), true); // This shouldn't be possible by regular players
             return 0;
         }
         var vec = Vec2ArgumentType.getVec2(context, "block");
