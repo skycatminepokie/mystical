@@ -23,7 +23,7 @@ public abstract class SaplingBlockMixin {
                 !Mystical.getHavenManager().isInHaven(pos) &&
                 Mystical.getSpellHandler().isConsequenceActive(RandomTreeTypeConsequence.class) &&
                 Utils.percentChance(Mystical.CONFIG.randomTreeType.chance())) {
-            Utils.log("text.mystical.consequence.randomTreeType.fired", Mystical.CONFIG.randomTreeType.logLevel());
+            Utils.log(Utils.translateString("text.mystical.consequence.randomTreeType.fired"), Mystical.CONFIG.randomTreeType.logLevel());
             return Util.getRandom(RandomTreeTypeConsequence.SAPLING_GENERATORS, random);
         }
         return instance;
