@@ -27,6 +27,10 @@ public class TestUtils {
      * In the center, just below the 3rd layer is a sculk shrieker (6, 6, 6). The one sculk above it is removed.
      */
     public static final String WARDEN_SUMMON_BOX = "mystical:warden_summon_box_13x17x13";
+    /**
+     * A 3x6x8 box of barriers, outlined with tinted glass. The bottom layer of air is replaced with lava, and the two ends of that replaced with bottom smooth stone slabs.
+     */
+    public static final String FISHING_ROD_DEATH_BOX = "mystical:fishing_rod_death_box_3x6x8";
 
     /**
      * Haven all chunks inside the bounding box of {@code context}.

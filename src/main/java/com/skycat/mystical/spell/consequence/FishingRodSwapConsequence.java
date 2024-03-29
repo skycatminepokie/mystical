@@ -24,7 +24,7 @@ public class FishingRodSwapConsequence extends SpellConsequence {
             super("fishingRodSwap",
                     "Fishing Rods Pull User",
                     "Fish fish fishers.",
-                    "Fishing rod pulling user", // TODO Logging
+                    "Fishing rod pulling user",
                     FishingRodSwapConsequence.class,
                     Codec.unit(new FishingRodSwapConsequence()));
         }

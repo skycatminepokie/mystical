@@ -13,6 +13,7 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(FishingBobberEntity.class)
@@ -28,27 +29,33 @@ public abstract class FishingBobberEntityMixin implements Ownable {
         }
 
         int velocityMultiplier = 1;
+        if (!Mystical.getHavenManager().isInHaven(hooked) &&
+                Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) &&
+                Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) { // fishingRodLaunch
+            velocityMultiplier *= Mystical.CONFIG.fishingRodLaunch.multiplier();
+            Utils.log(FishingRodLaunchConsequence.FACTORY.getFiredMessage(), Mystical.CONFIG.fishingRodLaunch.logLevel());
+        }
+
         if (!Mystical.getHavenManager().isInHaven(owner) &&
                 Mystical.getSpellHandler().isConsequenceActive(FishingRodSwapConsequence.class) &&
-                Utils.percentChance(Mystical.CONFIG.fishingRodSwap.chance())) {
-            velocityMultiplier *= -1; // fishingRodSwap
+                Utils.percentChance(Mystical.CONFIG.fishingRodSwap.chance())) { // fishingRodSwap
+            velocityMultiplier *= -1;
+            owner.setVelocity(owner.getVelocity().add(velocity.multiply(velocityMultiplier))); // If fishingRodSwap is active, swap who's moving and the direction
+            Utils.log(FishingRodSwapConsequence.FACTORY.getFiredMessage(), Mystical.CONFIG.fishingRodSwap.logLevel());
+            if (owner instanceof ServerPlayerEntity player) {
+                mystical_sendUpdatePacket(player);
+            }
+        } else {
+            original.call(hooked, velocity.multiply(velocityMultiplier)); // Otherwise, don't swap, but apply potential changes from fishingRodLaunch
+            if (velocityMultiplier != 1 && hooked instanceof ServerPlayerEntity player) { // If it wasn't vanilla behavior and the hooked entity was a player
+                mystical_sendUpdatePacket(player);
+            }
         }
 
-        if (!Mystical.getHavenManager().isInHaven(hooked) &&
-        Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) &&
-        Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) {
-            velocityMultiplier *= Mystical.CONFIG.fishingRodLaunch.multiplier();
-        }
+    }
 
-        if (velocityMultiplier != 1) { // If neither consequence activated, might as well keep compatibility in mind.
-            original.call(hooked, velocity);
-            return;
-        }
-
-        owner.setVelocity(owner.getVelocity().add(velocity.multiply(velocityMultiplier)));
-
-        if (owner instanceof ServerPlayerEntity player) {
-            player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player)); // Thanks @Wesley1808#9858 :)
-        }
+    @Unique
+    private static void mystical_sendUpdatePacket(ServerPlayerEntity player) {
+        player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player)); // Thanks @Wesley1808#9858 :)
     }
 }
