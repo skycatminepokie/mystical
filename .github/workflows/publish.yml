@@ -51,7 +51,7 @@ jobs:
         with:
           name: GeneratedData
           path: src/main/generated/
-          override: true
+          overwrite: true
 
       - name: Build
         run: ./gradlew build
