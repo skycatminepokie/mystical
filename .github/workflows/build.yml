@@ -40,7 +40,7 @@ jobs:
           path: src/main/generated/
 
       - name: Build
-        run: ./gradlew clean build
+        run: ./gradlew build
 
       - name: Upload JARs
         uses: actions/upload-artifact@v4
