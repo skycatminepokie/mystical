@@ -3,3 +3,4 @@
 - Added a bunch of new translations
 - Removed unused "chance" config for soundSwap
 - Added fishingRodSwap
+- Fixed my release system, I should stop publishing broken versions now
