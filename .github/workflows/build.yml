@@ -39,9 +39,6 @@ jobs:
           name: GeneratedData
           path: src/main/generated/
 
-      - name: Game Test
-        run: mkdir build/gametest && echo "eula=true" >> build/gametest/eula.txt && ./gradlew runGameTest # ty modmuss
-
       - name: Build
         run: ./gradlew clean build
 
@@ -50,3 +47,6 @@ jobs:
         with:
           name: JARs
           path: build/libs/*
+
+      - name: Game Test
+        run: mkdir build/gametest && echo "eula=true" >> build/gametest/eula.txt && ./gradlew runGameTest # ty modmuss
