@@ -22,16 +22,15 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(targets = "net.minecraft.entity.mob.EvokerEntity$SummonVexGoal")
 public abstract class SummonVexGoalMixin {
     @Unique BlockPos spawningPos;
-
     @ModifyVariable(method = "castSpell", at = @At("STORE"), ordinal = 0)
-    public BlockPos grabSpawnLocation(BlockPos pos) {
+    public BlockPos mystical_grabSpawnLocation(BlockPos pos) {
         spawningPos = pos;
         return pos;
     }
 
     @SuppressWarnings("rawtypes")
     @WrapOperation(method = "castSpell", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;"))
-    public Entity overrideVexSpawning(EntityType instance, World world, Operation<VexEntity> original) { // TODO: Make things not spawn in walls
+    public Entity mystical_overrideVexSpawning(EntityType instance, World world, Operation<VexEntity> original) { // TODO: Make things not spawn in walls
         if (Mystical.isClientWorld() || // world.isClient() ||
                 Mystical.getHavenManager().isInHaven(spawningPos) ||
                 spawningPos == null ||

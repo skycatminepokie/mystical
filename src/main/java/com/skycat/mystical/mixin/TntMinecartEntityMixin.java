@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 @Mixin(TntMinecartEntity.class)
 public abstract class TntMinecartEntityMixin implements EntityLike {
     @ModifyConstant(method = "prime", constant = @Constant(intValue = 80))
-    private int modifyFuse(int fuse) {
+    private int mystical_modifyFuse(int fuse) {
         if (!Mystical.isClientWorld() &&
                 !Mystical.getHavenManager().isInHaven(getBlockPos()) &&
                 Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {

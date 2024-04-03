@@ -10,9 +10,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(TntEntity.class)
 public abstract class TntEntityMixin implements EntityLike {
-
     @ModifyArg(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/entity/LivingEntity;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/TntEntity;setFuse(I)V"))
-    private int modifyFuse(int fuse) {
+    private int mystical_modifyFuse(int fuse) {
         if (!Mystical.isClientWorld() &&
                 !Mystical.getHavenManager().isInHaven(getBlockPos()) &&
                 Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {

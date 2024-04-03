@@ -1,13 +1,15 @@
 package com.skycat.mystical.test;
 
+import com.skycat.mystical.HavenManager;
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.util.LogLevel;
+import com.skycat.mystical.MysticalTags;
+import com.skycat.mystical.SaveState;
 import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
+import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
-import com.skycat.mystical.HavenManager;
-import com.skycat.mystical.SaveState;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.*;
 
@@ -66,7 +68,7 @@ public class MysticalTests implements FabricGameTest {
         FabricGameTest.super.invokeTestMethod(context, method);
     }
 
-    private static void getSpellTests(ArrayList<TestFunction> testFunctions) {
+    private static void addSpellTests(ArrayList<TestFunction> testFunctions) {
         for (ConsequenceFactory<?> factory : Spells.getConsequenceFactories()) {
             for (Method method : factory.getClass().getMethods()) {
                 GameTest testInfo = method.getAnnotation(GameTest.class);
@@ -101,7 +103,7 @@ public class MysticalTests implements FabricGameTest {
     @CustomTestProvider
     public Collection<TestFunction> getTestFunctions() {
         ArrayList<TestFunction> testFunctions = new ArrayList<>();
-        getSpellTests(testFunctions);
+        addSpellTests(testFunctions);
         testFunctions.sort(Comparator.comparing(TestFunction::getTemplateName));
         return testFunctions;
     }
@@ -116,8 +118,24 @@ public class MysticalTests implements FabricGameTest {
             if (!havenManager.isInHaven(blockPos)) {
                 throw new GameTestException("Block pos " + blockPos + " was expected to be havened.");
             }
-            // context.assertTrue(havenManager.isInHaven(blockPos), "Block pos " + blockPos + " was expected to be havened.");
         });
+        context.complete();
+    }
+
+    /**
+     * Verify that a few tags are not empty in order to prevent <br>
+     * massive failure by publishing jars without generated data...<br>
+     * <br>
+     * ...again.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent") // Don't care, just fail please ty
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    public static void testTags(TestContext context) { // TODO: Move this to MysticalTags if a good way can be found
+        var bosses = Registries.ENTITY_TYPE.getEntryList(MysticalTags.BOSSES).get();
+        bosses.get(0); // Throws IndexOutOfBoundsException if empty.
+
+        var terracotta = Registries.BLOCK.getEntryList(MysticalTags.GLAZED_TERRACOTTA).get();
+        terracotta.get(0); // Throws IndexOutOfBoundsException if empty.
         context.complete();
     }
 }

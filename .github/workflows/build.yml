@@ -1,25 +1,12 @@
-name: Publish
+name: Build
 on:
   pull_request:
     types:
-      - closed
-    branches:
-      - master
-      - 1_20_1
+      - opened
   workflow_dispatch:
-
-env:
-  MINECRAFT_VERSION: 1.20.1
-  JAVA_VERSION: 17
-  VERSION: 5.1.0+1.20.1
-  VERSION_TYPE: alpha
-
-permissions:
-  contents: write
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' # @AnthonyWC on GH, https://github.com/orgs/community/discussions/26724#discussioncomment-3253096
     runs-on: ubuntu-latest
     steps:
       - name: Check Environment Variables
@@ -34,7 +21,7 @@ jobs:
         uses: actions/setup-java@v3.12.0
         with:
           distribution: "temurin"
-          java-version: ${{ env.JAVA_VERSION }}
+          java-version: 17
 
       - name: Make Gradle Wrapper Executable
         if: ${{ runner.os != 'Windows' }}
@@ -56,7 +43,7 @@ jobs:
       - name: Build
         run: ./gradlew build
 
-      - name: Upload JAR Artifacts
+      - name: Upload JARs
         uses: actions/upload-artifact@v4
         with:
           name: JARs
@@ -64,19 +51,3 @@ jobs:
 
       - name: Game Test
         run: mkdir build/gametest && echo "eula=true" >> build/gametest/eula.txt && ./gradlew runGameTest # ty modmuss
-
-      - name: Publish
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          version-type: ${{ env.VERSION_TYPE }}
-
-          modrinth-id: ibmeD85j
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-
-          github-tag: "v${{ env.VERSION }}"
-          github-token: ${{ secrets.GH_TOKEN }}
-
-          changelog-file: CHANGELOG.md
-
-          game-versions: "${{ env.MINECRAFT_VERSION }}"
-          java: "${{ env.JAVA_VERSION }}"

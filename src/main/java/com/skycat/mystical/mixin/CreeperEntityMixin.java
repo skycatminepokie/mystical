@@ -10,6 +10,7 @@ import net.minecraft.entity.mob.CreeperEntity;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -23,8 +24,8 @@ public abstract class CreeperEntityMixin {
 
     @Shadow private int fuseTime;
 
-    @Redirect(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/mob/CreeperEntity;fuseTime:I", opcode = Opcodes.GETFIELD))
-    private int changeFuseTime(CreeperEntity instance) {
+    @Redirect(method = "tick", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/mob/CreeperEntity;fuseTime:I", opcode = Opcodes.GETFIELD)) // TODO: Don't redirect
+    private int mystical_changeFuseTime(CreeperEntity instance) {
         if (!Mystical.isClientWorld() &&
                 !Mystical.getHavenManager().isInHaven(instance) &&
                 Mystical.getSpellHandler().isConsequenceActive(NoFuseConsequence.class)) {
@@ -34,7 +35,7 @@ public abstract class CreeperEntityMixin {
     }
 
     @ModifyVariable(method = "spawnEffectsCloud", at = @At("STORE"), index = 1)
-    private Collection<StatusEffectInstance> makeEffectsCloud(Collection<StatusEffectInstance> oldEffects) {
+    private Collection<StatusEffectInstance> mystical_extraEffectsCloud(Collection<StatusEffectInstance> oldEffects) {
         if (!Mystical.isClientWorld() &&
                 Mystical.getSpellHandler().isConsequenceActive(RandomCreeperEffectCloudsConsequence.class)) { // TODO: Config (chance, allowed effects)
             LinkedList<StatusEffectInstance> newStatusEffects = new LinkedList<>(oldEffects);
@@ -46,7 +47,7 @@ public abstract class CreeperEntityMixin {
     }
 
     @Redirect(method = "explode", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/mob/CreeperEntity;explosionRadius:I", opcode = Opcodes.GETFIELD))
-    int modifyExplosionRadius(CreeperEntity instance) {
+    int mystical_modifyExplosionRadius(CreeperEntity instance) {
         if (!Mystical.isClientWorld() &&
                 Mystical.getSpellHandler().isConsequenceActive(BigCreeperExplosionConsequence.class) &&
                 !Mystical.getHavenManager().isInHaven(instance) &&
