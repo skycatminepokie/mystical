@@ -136,5 +136,6 @@ public class MysticalTests implements FabricGameTest {
 
         var terracotta = Registries.BLOCK.getEntryList(MysticalTags.GLAZED_TERRACOTTA).get();
         terracotta.get(0); // Throws IndexOutOfBoundsException if empty.
+        context.complete();
     }
 }
