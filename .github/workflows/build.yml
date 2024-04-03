@@ -40,13 +40,13 @@ jobs:
         run: ./gradlew clean build
 
       - name: Upload Generated Data
-        uses: actions/upload-artifact@4
+        uses: actions/upload-artifact@v4
         with:
           name: GeneratedData
           path: src/main/generated/
 
       - name: Upload JARs
-        uses: actions/upload-artifact@4
+        uses: actions/upload-artifact@v4
         with:
           name: JARs
           path: build/libs/*
