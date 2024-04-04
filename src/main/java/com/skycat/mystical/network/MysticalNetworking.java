@@ -20,7 +20,7 @@ public class MysticalNetworking {
     public static final @NotNull Identifier ACTIVE_SPELLS = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "active_spells"));
     public static final String SPELLS_KEY = "spells";
 
-    public static void sendActiveSpells(MinecraftServer server) {
+    public static void sendActiveSpells(MinecraftServer server) { // TODO: Send on join and change
         PacketByteBuf packetBuf = PacketByteBufs.create();
         NbtCompound nbtSpells = new NbtCompound();
         NbtElement spells = Spell.CODEC

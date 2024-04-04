@@ -17,7 +17,6 @@ public abstract class StatusEffectSpriteManagerMixin {
     public Identifier mystical_modifyId(Registry<StatusEffect> registry, Object lookupKey, Operation<@Nullable Identifier> original) { // Can't ModifyArg, we need to stop it from executing so that it doesn't fail.
         if (lookupKey instanceof FakeStatusEffect effect) {
             return effect.getSpriteId();
-
         } else {
             return original.call(registry, lookupKey);
         }

@@ -28,7 +28,7 @@ public class ClientNetworkHandler implements ClientPlayNetworking.PlayChannelHan
         NbtElement nbtSpells = nbt.get(MysticalNetworking.SPELLS_KEY);
         Optional<Pair<List<Spell>, NbtElement>> decodedSpells = Spell.CODEC.listOf().decode(NbtOps.INSTANCE, nbtSpells).result();
         if (decodedSpells.isPresent()) {
-            MysticalClient.HUD_MANAGER.updateHud(decodedSpells.get().getFirst());
+            MysticalClient.HUD_MANAGER.updateCachedSpells(decodedSpells.get().getFirst());
         } else {
             Utils.log("Spells from active spell packet could not be deserialized. Skipping.", LogLevel.WARN); // TODO: Translate
         }
