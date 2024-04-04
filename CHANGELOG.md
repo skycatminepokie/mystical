@@ -1,6 +1,1 @@
-- A lot of internal changes
-- Haven cost is now configurable
-- Added a bunch of new translations
-- Removed unused "chance" config for soundSwap
-- Added fishingRodSwap
-- Fixed my release system, I should stop publishing broken versions now
+- Added /mystical spell delete all
