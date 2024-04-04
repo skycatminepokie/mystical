@@ -11,5 +11,6 @@ public class MysticalClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(MysticalNetworking.ACTIVE_SPELLS, CLIENT_NETWORK_HANDLER);
+        // Registry.register(Registries.STATUS_EFFECT, new Identifier(Mystical.MOD_ID, "fake_status_effect"), FakeStatusEffect.INSTANCE);
     }
 }
