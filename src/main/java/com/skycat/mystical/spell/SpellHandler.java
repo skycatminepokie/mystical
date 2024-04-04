@@ -58,7 +58,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(SpellHandler::new, SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
     @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
 
-    @Getter private final ArrayList<Spell> activeSpells;
+    @Getter private final ArrayList<Spell> activeSpells; // TODO: Refactor out the getter, use wrappers instead
     @Getter @Setter
     private boolean dirty;
 
@@ -269,5 +269,14 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return removed;
     }
 
+    public Spell removeSpell(int index) {
+        this.onChanged();
+        return activeSpells.remove(index);
+    }
+
+    public boolean removeSpell(Spell spell) {
+        this.onChanged();
+        return activeSpells.remove(spell);
+    }
 
 }

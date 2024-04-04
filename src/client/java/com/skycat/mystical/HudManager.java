@@ -16,6 +16,7 @@ public class HudManager {
     protected List<Spell> cachedSpells = Collections.emptyList();
     protected List<StatusEffectInstance> fakeStatusEffects = Collections.emptyList();
     private static final String SPELL_EFFECT_PREFIX = "spell/";
+    public static final Identifier SPELL_OUTLINE = Identifier.of(Mystical.MOD_ID, "textures/mob_effect/spell/outline.png");
     protected StatusEffectCategory difficultyToStatusEffectCategory(double difficulty) {
         if (difficulty > 0) return StatusEffectCategory.HARMFUL;
         if (difficulty < 0) return StatusEffectCategory.BENEFICIAL;
