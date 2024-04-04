@@ -53,7 +53,6 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
                 server.getPlayerManager().broadcast(messageStack.pop(), false);
             }
         }
-        MysticalNetworking.sendActiveSpells(server);
         setNightTimer();
     }
 

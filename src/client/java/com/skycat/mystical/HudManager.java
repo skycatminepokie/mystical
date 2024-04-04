@@ -42,7 +42,7 @@ public class HudManager {
             ConsequenceFactory<?> consequenceFactory = consequence.getFactory();
             newList.add(new StatusEffectInstance(FakeStatusEffect.getOrCreate(
                     Identifier.of(Mystical.MOD_ID, Utils.camelCaseToSnakeCase(SPELL_EFFECT_PREFIX + consequenceFactory.shortName)), // TODO: Gametest that these all exist TODO: Credit @trevorskullcrafter help diagnosing problem
-                    difficultyToStatusEffectCategory(consequence.getDifficulty()))));
+                    difficultyToStatusEffectCategory(consequence.getDifficulty())), -1));
         }
         fakeStatusEffects = newList;
     }

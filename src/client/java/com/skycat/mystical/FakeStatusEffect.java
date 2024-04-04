@@ -15,7 +15,7 @@ public class FakeStatusEffect extends StatusEffect {
 
     protected final Identifier spriteId;
     protected FakeStatusEffect(Identifier spriteId, StatusEffectCategory category) {
-        super(category, 0xad93f3);
+        super(category, 0x000000);
         this.spriteId = spriteId;
     }
 

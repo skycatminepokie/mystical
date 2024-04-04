@@ -1,6 +1,7 @@
 package com.skycat.mystical.spell;
 
 import com.mojang.serialization.Codec;
+import com.skycat.mystical.network.MysticalNetworking;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import static com.skycat.mystical.Mystical.CONFIG;
+import static com.skycat.mystical.Mystical.EVENT_HANDLER;
 
 public class SpellHandler implements EntitySleepEvents.StartSleeping,
         EntitySleepEvents.StopSleeping,
@@ -60,8 +62,9 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     @Getter @Setter
     private boolean dirty;
 
-    public void markDirty() {
+    public void onChanged() {
         dirty = true;
+        MysticalNetworking.sendActiveSpells(EVENT_HANDLER.getServer());
     }
 
     public SpellHandler() {
@@ -119,12 +122,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void activateNewSpell() {
         activeSpells.add(SpellGenerator.get());
-        markDirty();
+        onChanged();
     }
 
     public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
         activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
-        markDirty();
+        onChanged();
     }
 
     @Override
@@ -213,7 +216,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void removeAllSpells() {
         activeSpells.clear();
-        markDirty();
+        onChanged();
     }
 
     /**
@@ -262,7 +265,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 removed ++;
             }
         }
-        markDirty();
+        onChanged();
         return removed;
     }
 
