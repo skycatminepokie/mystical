@@ -22,7 +22,7 @@ public class ClientNetworkHandler implements ClientPlayNetworking.PlayChannelHan
     public void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) { // Active spells packet
         NbtCompound nbt = buf.readNbt();
         if (nbt == null) {
-            Utils.log("Nbt from active spell packet was null. Skipping.", LogLevel.WARN); // TODO: Translate
+            Utils.log(Utils.translateString("text.mystical.client.networkHandler.spellPacket.null"), LogLevel.WARN);
             return;
         }
         NbtElement nbtSpells = nbt.get(MysticalNetworking.SPELLS_KEY);
@@ -30,7 +30,7 @@ public class ClientNetworkHandler implements ClientPlayNetworking.PlayChannelHan
         if (decodedSpells.isPresent()) {
             MysticalClient.HUD_MANAGER.updateCachedSpells(decodedSpells.get().getFirst());
         } else {
-            Utils.log("Spells from active spell packet could not be deserialized. Skipping.", LogLevel.WARN); // TODO: Translate
+            Utils.log(Utils.translateString("text.mystical.client.networkHandler.spellPacket.failedDeserialize"), LogLevel.WARN);
         }
     }
 }
