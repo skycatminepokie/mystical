@@ -1,7 +1,7 @@
 package com.skycat.mystical.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.skycat.mystical.FakeStatusEffect;
+import com.skycat.mystical.SpellStatusEffect;
 import com.skycat.mystical.HudManager;
 import com.skycat.mystical.MysticalClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -28,7 +28,7 @@ public abstract class InGameHudMixin {
 
     @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V"))
     public Identifier mystical_useSpellOutline(Identifier original, @Local StatusEffectInstance statusEffectInstance) {
-        if (statusEffectInstance.getEffectType() instanceof FakeStatusEffect) {
+        if (statusEffectInstance.getEffectType() instanceof SpellStatusEffect) {
             return HudManager.SPELL_OUTLINE;
         }
         return original;

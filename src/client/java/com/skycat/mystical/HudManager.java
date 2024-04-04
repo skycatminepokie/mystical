@@ -41,7 +41,7 @@ public class HudManager {
         for (Spell spell : cachedSpells) {
             SpellConsequence consequence = spell.getConsequence();
             ConsequenceFactory<?> consequenceFactory = consequence.getFactory();
-            newList.add(new StatusEffectInstance(FakeStatusEffect.getOrCreate(
+            newList.add(new StatusEffectInstance(SpellStatusEffect.getOrCreate(
                     Identifier.of(Mystical.MOD_ID, Utils.camelCaseToSnakeCase(SPELL_EFFECT_PREFIX + consequenceFactory.shortName)), // TODO: Gametest that these all exist TODO: Credit @trevorskullcrafter help diagnosing problem
                     difficultyToStatusEffectCategory(consequence.getDifficulty())), -1));
         }
