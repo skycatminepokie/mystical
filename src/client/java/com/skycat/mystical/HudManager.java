@@ -3,6 +3,7 @@ package com.skycat.mystical;
 import com.skycat.mystical.spell.Spell;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.Identifier;
@@ -40,7 +41,7 @@ public class HudManager {
             SpellConsequence consequence = spell.getConsequence();
             ConsequenceFactory<?> consequenceFactory = consequence.getFactory();
             newList.add(new StatusEffectInstance(FakeStatusEffect.getOrCreate(
-                    Identifier.of(Mystical.MOD_ID, SPELL_EFFECT_PREFIX + consequenceFactory.shortName), // TODO: Gametest that these all exist
+                    Identifier.of(Mystical.MOD_ID, Utils.camelCaseToSnakeCase(SPELL_EFFECT_PREFIX + consequenceFactory.shortName)), // TODO: Gametest that these all exist TODO: Credit @trevorskullcrafter help diagnosing problem
                     difficultyToStatusEffectCategory(consequence.getDifficulty()))));
         }
         fakeStatusEffects = newList;
