@@ -5,13 +5,10 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.spell.Spell;
 import com.skycat.mystical.spell.Spells;
-import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.util.Utils;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -20,31 +17,17 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.command.argument.Vec2ArgumentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec2f;
-
-import java.util.ArrayList;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 @SuppressWarnings("SameReturnValue")
 public class MysticalCommandHandler implements CommandRegistrationCallback {
-    private static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAnEntity"));
-    private static final SimpleCommandExceptionType EXECUTOR_NOT_PLAYER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAPlayer"));
-    private static final DynamicCommandExceptionType EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION = new DynamicCommandExceptionType((solutionString) -> Utils.translatable("text.mystical.command.generic.notAPlayer.solution", solutionString));
-    private static final SimpleCommandExceptionType ALREADY_HAVENED_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.alreadyHavened"));
-    private static final SimpleCommandExceptionType HAVEN_NOT_ENOUGH_POWER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.haven.pos.confirm.notEnoughPower"));
+    protected static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAnEntity"));
+    protected static final SimpleCommandExceptionType EXECUTOR_NOT_PLAYER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAPlayer"));
+    protected static final DynamicCommandExceptionType EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION = new DynamicCommandExceptionType((solutionString) -> Utils.translatable("text.mystical.command.generic.notAPlayer.solution", solutionString));
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
@@ -57,19 +40,19 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var spellNew = literal("new")
                 .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
-                .executes(this::newRandomSpellCommand)
+                .executes(SpellCommandHandler::newRandomSpellCommand)
                 .build();
         var spellNewSpell = argument("spell", StringArgumentType.word())
                 .suggests(((context, builder) -> CommandSource.suggestMatching(Spells.getShortNameToFactory().keySet(), builder)))
-                .executes(this::newSpellCommand)
+                .executes(SpellCommandHandler::newSpellCommand)
                 .build();
         var spellList = literal("list")
                 .requires(Permissions.require("mystical.command.mystical.spell.list", true))
-                .executes(this::listSpellsCommand)
+                .executes(SpellCommandHandler::listSpellsCommand)
                 .build();
         var spellDelete = literal("delete")
                 .requires(Permissions.require("mystical.command.mystical.spell.delete", 4))
-                .executes(this::deleteSpellsCommand)
+                .executes(SpellCommandHandler::deleteSpellsCommand)
                 .build();
         var spellDeleteSpell = argument("spell", IntegerArgumentType.integer(0))
                 .executes(SpellCommandHandler::deleteSpellWithArgCommand)
@@ -83,23 +66,23 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var haven = literal("haven")
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                .executes(this::havenHereCommand)
+                .executes(HavenCommandHandler::havenHereCommand)
                 .build();
         var havenBlock = argument("block", Vec2ArgumentType.vec2())
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                .executes(this::havenPosCommand)
+                .executes(HavenCommandHandler::havenPosCommand)
                 .build();
         var havenBlockConfirm = literal("confirm")
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
-                .executes(this::havenPosConfirmCommand)
+                .executes(HavenCommandHandler::havenPosConfirmCommand)
                 .build();
         var havenInfo = literal("info")
                 .requires(Permissions.require("mystical.command.mystical.haven.info", 0))
-                .executes(this::havenInfoCommand)
+                .executes(HavenCommandHandler::havenInfoCommand)
                 .build();
         var power = literal("power")
                 .requires(Permissions.require("mystical.command.mystical.power", 0))
-                .executes(SpellCommandHandler::myPowerCommand)
+                .executes(PowerCommandHandler::myPowerCommand)
                 .build();
         var powerAdd = literal("add")
                 .requires(Permissions.require("mystical.command.mystical.power.add", 4))
@@ -108,7 +91,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var powerAddPlayersAmount = argument("amount", IntegerArgumentType.integer(1))
                 .requires(Permissions.require("mystical.command.mystical.power.add", 4))
-                .executes(SpellCommandHandler::addPowerPlayerAmountCommand)
+                .executes(PowerCommandHandler::addPowerPlayerAmountCommand)
                 .build();
         var powerRemove = literal("remove")
                 .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
@@ -118,7 +101,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var powerRemovePlayersAmount = argument("amount", IntegerArgumentType.integer(1))
                 .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
-                .executes(SpellCommandHandler::removePowerPlayerAmountCommand)
+                .executes(PowerCommandHandler::removePowerPlayerAmountCommand)
                 .build();
         var powerGet = literal("get")
                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
@@ -126,7 +109,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var powerGetPlayers = argument("players", GameProfileArgumentType.gameProfile())
                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
-                .executes(SpellCommandHandler::getPowerPlayerCommand)
+                .executes(PowerCommandHandler::getPowerPlayerCommand)
                 .build();
         //@formatter:off
         dispatcher.getRoot().addChild(mystical);
@@ -171,164 +154,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         */
 
 
-    }
-
-    /**
-     * /mystical info
-     * Returns feedback telling if the executing entity is in a haven.
-     * @return 1 if the entity is in a haven, 0 otherwise.
-     */
-    private int havenInfoCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        Entity entity = context.getSource().getEntity();
-        if (entity == null) {
-            throw EXECUTOR_NOT_ENTITY_EXCEPTION.create();
-        }
-        if (Mystical.getHavenManager().isInHaven(entity)) {
-            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.info.inHaven"), false);
-            return 1;
-        }
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.info.notInHaven"), false);
-        return 0;
-    }
-
-    /**
-     * /mystical haven
-     * Redirects to {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)} with the entity's position
-     * Source must be an entity (a player entity for the redirect to pass)
-     *
-     * @param context The context (fails if source is not ServerPlayerEntity)
-     * @return The return of {@link MysticalCommandHandler#havenPos(CommandContext, BlockPos)}
-     */
-    private int havenHereCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        var entity = context.getSource().getEntity();
-        if (entity == null) {
-            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
-        }
-        BlockPos pos = entity.getBlockPos();
-        return havenPos(context, pos);
-    }
-
-    /**
-     * Sends a chat message prompting /mystical haven x z confirm
-     * Note this is not a Command. See {@link #havenPosCommand}
-     *
-     * @param context Context - fails if source is not ServerPlayerEntity
-     * @param block   The position to haven
-     * @return 1 When the message is successfully send
-     */
-    private int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) throws CommandSyntaxException {
-        var entity = context.getSource().getEntity();
-        if (!(entity instanceof ServerPlayerEntity player)) {
-            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
-        }
-
-        player.sendMessage(
-                Utils.translatable("text.mystical.command.mystical.haven.pos.action", block.getX(), block.getZ(), Mystical.getHavenManager().getHavenCost(block))
-                        .append(Utils.translatable("text.mystical.command.mystical.haven.pos.button")).setStyle(
-                                Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
-                                        .withColor(Formatting.GREEN))
-        );
-        return 1;
-    }
-
-    /**
-     * /mystical haven x z
-     *
-     * @param context The context. Source must be ServerPlayerEntity
-     * @return The return value of {@link #havenPos}.
-     */
-    private int havenPosCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        var entity = context.getSource().getEntity();
-        if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
-            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
-        }
-        Vec2f vec = Vec2ArgumentType.getVec2(context, "block");
-        return havenPos(context, new BlockPos((int) vec.x, 0, (int) vec.y));
-    }
-
-    /**
-     * /mystical haven x z confirm - Havens a chunk at the player's expense.
-     * This is the end case for havening
-     *
-     * @param context The context. Source must be a player
-     * @return 1 if successful, 0 if unsuccessful
-     */
-    private int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        var entity = context.getSource().getEntity();
-        // Must be player
-        if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
-            throw EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
-        }
-
-        var vec = Vec2ArgumentType.getVec2(context, "block");
-        BlockPos blockPos = new BlockPos((int) vec.x, 0, (int) vec.y);
-        if (!Mystical.isClientWorld() && Mystical.getHavenManager().isInHaven(player)) { // Must not already be havened. This check may not be needed, since we've got a ServerCommandSource?
-            throw ALREADY_HAVENED_EXCEPTION.create();
-        }
-
-        ChunkPos chunk = new ChunkPos(blockPos);
-        boolean success = Mystical.getHavenManager().tryHaven(chunk, player);
-        if (success) {
-            player.sendMessage(Utils.translatable("text.mystical.command.generic.success"));
-            return 1;
-        } else {
-            throw HAVEN_NOT_ENOUGH_POWER_EXCEPTION.create();
-        }
-    }
-
-
-    private int listSpellsCommand(CommandContext<ServerCommandSource> context) {
-        return sendSpellList(context, false);
-    }
-
-    private int deleteSpellsCommand(CommandContext<ServerCommandSource> context) {
-        return sendSpellList(context, true);
-    }
-
-    /**
-     * Sends a list of active spells to the command source.
-     * @param context The context in which the command is being called
-     * @param showDeleteButton Whether to include the delete button (true). This works even if the context has no permission to delete spells.
-     * @return Success (1)/failure (0)
-     */
-    private int sendSpellList(CommandContext<ServerCommandSource> context, boolean showDeleteButton) {
-        ArrayList<Spell> activeSpells = Mystical.getSpellHandler().getActiveSpells();
-        if (activeSpells.size() == 0) {
-            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.list.noSpells"), false);
-            return 1;
-        }
-        for (int i = 0; i < activeSpells.size(); i++) {
-            Spell spell = activeSpells.get(i);
-            MutableText spellDescription = spell.getConsequence().getFactory().getDescriptionText(spell.getConsequence()); // getDescriptionText should never throw IllegalArgumentException if consequence has a factory that makes itself (should be so for all)
-            if (showDeleteButton) {
-                MutableText deleteButton = Utils.translatable("text.mystical.command.mystical.spell.delete.deleteButton");
-                Style style = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/mystical spell delete " + i));
-                deleteButton.setStyle(style);
-                spellDescription.append(deleteButton);
-            }
-            spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription())));
-            context.getSource().sendFeedback(() -> spellDescription, false);
-        }
-        return Command.SINGLE_SUCCESS;
-    }
-
-    private int newSpellCommand(CommandContext<ServerCommandSource> context) {
-        String spell = context.getArgument("spell", String.class);
-        Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
-        ConsequenceFactory<?> factory = Spells.getShortNameToFactory().get(spell);
-        if (factory.getWeight() == 0) {
-            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
-        }
-        Mystical.getSpellHandler().activateNewSpellWithConsequence(factory);
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
-        return Command.SINGLE_SUCCESS;
-    }
-
-    private int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
-        Mystical.getSpellHandler().activateNewSpell();
-        Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
-        return Command.SINGLE_SUCCESS;
     }
 
     private int reloadCommand(CommandContext<ServerCommandSource> context) {
