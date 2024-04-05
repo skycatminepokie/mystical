@@ -44,21 +44,22 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         var mystical = /*CommandManager.*/literal("mystical")
-                .requires(Permissions.require("mystical.command.mystical", true))
-                // TODO: send some info
+                .requires(Permissions.require("mystical.command.mystical.help", true))
+                .executes(MysticalCommandHandler::helpCommand)
+                .build();
+        var mysticalHelp = literal("help")
+                .requires(Permissions.require("mystical.command.mystical.help", true))
+                .executes(MysticalCommandHandler::helpCommand)
                 .build();
         var credits = literal("credits")
-                .executes(this::creditsCommand)
+                .executes(MysticalCommandHandler::creditsCommand)
                 .build();
         var spellHelp = literal("help")
                 .requires(Permissions.require("mystical.command.mystical.spell.help", true))
                 .executes(SpellCommandHandler::helpCommand)
                 .build();
-        var spellQuestionMark = literal("?")
-                .redirect(spellHelp)
-                .build();
         var spell = literal("spell")
-                .redirect(spellHelp)
+                .executes(SpellCommandHandler::helpCommand)
                 .build();
         var spellNew = literal("new")
                 .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
@@ -84,7 +85,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var reload = literal("reload")
                 .requires(Permissions.require("mystical.command.mystical.reload", 4))
-                .executes(this::reloadCommand)
+                .executes(MysticalCommandHandler::reloadCommand)
                 .build();
         var haven = literal("haven")
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
@@ -93,9 +94,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         var havenHelp = literal("help")
                 .requires(Permissions.require("mystical.command.mystical.haven.help", true))
                 .executes(HavenCommandHandler::havenHelpCommand)
-                .build();
-        var havenQuestionMark = literal("?")
-                .redirect(havenHelp)
                 .build();
         var havenBlock = argument("block", Vec2ArgumentType.vec2())
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
@@ -116,9 +114,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         var powerHelp = literal("help")
                 .requires(Permissions.require("mystical.command.mystical.power.help", true))
                 .executes(PowerCommandHandler::powerHelpCommand)
-                .build();
-        var powerQuestionMark = literal("?")
-                .redirect(powerHelp)
                 .build();
         var powerAdd = literal("add")
                 .requires(Permissions.require("mystical.command.mystical.power.add", 4))
@@ -141,7 +136,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var powerGet = literal("get")
                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
-                // .executes(this::myPowerCommand) // Done by base power command
                 .build();
         var powerGetPlayers = argument("players", GameProfileArgumentType.gameProfile())
                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
@@ -149,10 +143,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         //@formatter:off
         dispatcher.getRoot().addChild(mystical);
+            mystical.addChild(mysticalHelp);
             mystical.addChild(credits);
             mystical.addChild(spell);
                 spell.addChild(spellHelp);
-                spell.addChild(spellQuestionMark);
                 spell.addChild(spellList);
                 spell.addChild(spellNew);
                     spellNew.addChild(spellNewSpell);
@@ -162,7 +156,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             mystical.addChild(reload);
             mystical.addChild(power);
                 power.addChild(powerHelp);
-                power.addChild(powerQuestionMark);
                 power.addChild(powerAdd);
                     powerAdd.addChild(powerAddPlayers);
                         powerAddPlayers.addChild(powerAddPlayersAmount);
@@ -174,7 +167,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             mystical.addChild(haven);
                 // TODO: Haven add, haven remove
                 haven.addChild(havenHelp);
-                haven.addChild(havenQuestionMark);
                 haven.addChild(havenInfo);
                     // TODO: Haven info pos
                 haven.addChild(havenBlock);
@@ -184,7 +176,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         /*
          TODO: Commands
             /mystical haven info position
-            /mystical haven ?
             /mystical haven add
             /mystical haven add position
             /mystical haven remove
@@ -195,12 +186,20 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
 
     }
 
-    private int creditsCommand(CommandContext<ServerCommandSource> context) {
+    private static int helpCommand(CommandContext<ServerCommandSource> context) {
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.help",
+                Utils.mutableTextOf("/mystical spell help").setStyle(MysticalCommandHandler.MYSTICAL_SPELL_HELP_CLICKABLE),
+                Utils.mutableTextOf("/mystical haven help").setStyle(MysticalCommandHandler.MYSTICAL_HAVEN_HELP_CLICKABLE),
+                Utils.mutableTextOf("/mystical power help")), false);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int creditsCommand(CommandContext<ServerCommandSource> context) {
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.credits"), false);
         return Command.SINGLE_SUCCESS;
     }
 
-    private int reloadCommand(CommandContext<ServerCommandSource> context) {
+    private static int reloadCommand(CommandContext<ServerCommandSource> context) {
         Mystical.EVENT_HANDLER.setNightTimer();
         Mystical.CONFIG.load();
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.reload.success"), true);

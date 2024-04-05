@@ -67,7 +67,10 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addConsequenceTranslation(tb, "turboMobs", "failedGetRandomEntityType", "Failed to get a random entity type, using zombie instead.");
 
         // Commands
+        addCommandText(tb, "mystical.help", "Mystical is a mod about spells cast by otherworldly beings. To learn more, click on one of the following commands (any path will teach you what you need to know):\n%s\n%s\n%s");
+
         addCommandText(tb, "mystical.credits", """
+                ---
                 CREDITS:
                 skycatminepokie - Author
                 SuperiorTabby - Code & texture contributor
@@ -78,6 +81,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
                 Lucko - Permissions API""");
 
         addCommandText(tb, "mystical.spell.help", """
+                ---
                 Spells are cast by otherworldly beings, changing the world in strange ways.
                 Sometimes, spells are beneficial. Sometimes, they are not.
                 See the currently active spells with %s. Hover over them to discover the cure.
@@ -92,14 +96,16 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "mystical.spell.delete.success", "Deleted %d spells.");
 
         addCommandText(tb, "mystical.power.help", """
+                ---
                 Power can be used to haven chunks, protecting them from the influence of spells.
                 Gain power by contributing to curing a spell (see %s for more info).
-                Spend it with %s.""");
+                Spend it on havens (see %s for more info).""");
         addCommandText(tb, "mystical.power.add.player.amount.success", "Successfully added %d power to %d player(s).");
         addCommandText(tb, "mystical.power.remove.player.amount.success", "Successfully removed %d power from %d player(s).");
         addCommandText(tb, "mystical.power.get.player", "%s has %d power.");
 
         addCommandText(tb, "mystical.haven.help", """
+                ---
                 A haven is a place of safety from spells.
                 You can create a chunk-wide haven with power by using %s.
                 To learn more about power, see %s

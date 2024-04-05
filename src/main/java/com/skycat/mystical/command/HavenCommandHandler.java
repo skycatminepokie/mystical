@@ -70,7 +70,7 @@ public class HavenCommandHandler {
 
         player.sendMessage(
                 Utils.translatable("text.mystical.command.mystical.haven.pos.action", block.getX(), block.getZ(), Mystical.getHavenManager().getHavenCost(block))
-                        .append(Utils.translatable("text.mystical.command.mystical.haven.pos.button")).setStyle(MysticalCommandHandler.makeClickableCommandStyle("/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
+                        .append(Utils.translatable("text.mystical.command.mystical.haven.pos.button").setStyle(MysticalCommandHandler.makeClickableCommandStyle("/mystical haven " + block.getX() + " " + block.getZ() + " confirm")))
         );
         return 1;
     }
