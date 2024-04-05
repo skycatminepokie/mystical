@@ -72,6 +72,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
                 skycatminepokie - Author
                 SuperiorTabby - Code & texture contributor
                 Phaserock - Texture contributor
+                Implement - Texture contributor
                 Members of the Fabric Discord - Lots of programming help, and too many people to name. Thank you guys!
                 modmuss, player50, and the rest of the Fabric team - Fabric
                 Patbox @ Nucleoid - Server Translations API
