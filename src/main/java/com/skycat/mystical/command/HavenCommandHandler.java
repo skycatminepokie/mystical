@@ -26,7 +26,7 @@ public class HavenCommandHandler {
      * @param context The context (fails if source is not ServerPlayerEntity)
      * @return The return of {@link HavenCommandHandler#havenPos(CommandContext, BlockPos)}
      */
-    static int havenHereCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int havenHereCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         if (entity == null) {
             throw MysticalCommandHandler.EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
@@ -41,7 +41,7 @@ public class HavenCommandHandler {
      *
      * @return 1 if the entity is in a haven, 0 otherwise.
      */
-    static int havenInfoCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int havenInfoCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Entity entity = context.getSource().getEntity();
         if (entity == null) {
             throw MysticalCommandHandler.EXECUTOR_NOT_ENTITY_EXCEPTION.create();
@@ -81,7 +81,7 @@ public class HavenCommandHandler {
      * @param context The context. Source must be ServerPlayerEntity
      * @return The return value of {@link #havenPos}.
      */
-    static int havenPosCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int havenPosCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         if (!(entity instanceof ServerPlayerEntity)) { // Also deals with null entity
             throw MysticalCommandHandler.EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION.create("/mystical haven add");
@@ -97,7 +97,7 @@ public class HavenCommandHandler {
      * @param context The context. Source must be a player
      * @return 1 if successful, 0 if unsuccessful
      */
-    static int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int havenPosConfirmCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
         // Must be player
         if (!(entity instanceof ServerPlayerEntity player)) { // OK now defining player in an instanceof? That's cool.
@@ -120,7 +120,7 @@ public class HavenCommandHandler {
         }
     }
 
-    public static int havenHelpCommand(CommandContext<ServerCommandSource> context) {
+    protected static int havenHelpCommand(CommandContext<ServerCommandSource> context) {
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.help",
                 Utils.mutableTextOf("/mystical haven").setStyle(MysticalCommandHandler.MYSTICAL_HAVEN_CLICKABLE),
                 Utils.mutableTextOf("/mystical power help").setStyle(MysticalCommandHandler.MYSTICAL_POWER_HELP_CLICKABLE),

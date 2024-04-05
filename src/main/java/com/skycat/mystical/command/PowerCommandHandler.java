@@ -68,7 +68,7 @@ public class PowerCommandHandler {
         return successCount;
     }
 
-    public static int powerHelpCommand(CommandContext<ServerCommandSource> context) {
+    protected static int powerHelpCommand(CommandContext<ServerCommandSource> context) {
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.help",
                 Utils.mutableTextOf("/mystical spell help").setStyle(MysticalCommandHandler.MYSTICAL_SPELL_HELP_CLICKABLE),
                 Utils.mutableTextOf("/mystical haven help").setStyle(MysticalCommandHandler.MYSTICAL_HAVEN_HELP_CLICKABLE)), false);

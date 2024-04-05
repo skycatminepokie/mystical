@@ -19,10 +19,10 @@ import net.minecraft.text.Style;
 import java.util.ArrayList;
 
 public class SpellCommandHandler {
-    static final SimpleCommandExceptionType NO_SPELLS_TO_DELETE_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
-    static final DynamicCommandExceptionType SPELL_DOES_NOT_EXIST_EXCEPTION = new DynamicCommandExceptionType((spellNum) -> Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
+    protected static final SimpleCommandExceptionType NO_SPELLS_TO_DELETE_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
+    protected static final DynamicCommandExceptionType SPELL_DOES_NOT_EXIST_EXCEPTION = new DynamicCommandExceptionType((spellNum) -> Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
 
-    static int deleteSpellAllCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int deleteSpellAllCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
             throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
         }
@@ -31,7 +31,7 @@ public class SpellCommandHandler {
         return Command.SINGLE_SUCCESS;
     }
 
-    static int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         int spellNum = context.getArgument("spell", Integer.class);
         if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
             throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
@@ -44,22 +44,22 @@ public class SpellCommandHandler {
         return Command.SINGLE_SUCCESS;
     }
 
-    static int deleteSpellsCommand(CommandContext<ServerCommandSource> context) {
+    protected static int deleteSpellsCommand(CommandContext<ServerCommandSource> context) {
         return sendSpellList(context, true);
     }
 
-    static int listSpellsCommand(CommandContext<ServerCommandSource> context) {
+    protected static int listSpellsCommand(CommandContext<ServerCommandSource> context) {
         return sendSpellList(context, false);
     }
 
-    static int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
+    protected static int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
         Mystical.getSpellHandler().activateNewSpell();
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
         return Command.SINGLE_SUCCESS;
     }
 
-    static int newSpellCommand(CommandContext<ServerCommandSource> context) {
+    protected static int newSpellCommand(CommandContext<ServerCommandSource> context) {
         String spell = context.getArgument("spell", String.class);
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         ConsequenceFactory<?> factory = Spells.getShortNameToFactory().get(spell);
@@ -99,7 +99,7 @@ public class SpellCommandHandler {
         return Command.SINGLE_SUCCESS;
     }
 
-    public static int helpCommand(CommandContext<ServerCommandSource> context) {
+    protected static int helpCommand(CommandContext<ServerCommandSource> context) {
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.help",
                 Utils.mutableTextOf("/mystical spell list").setStyle(MysticalCommandHandler.MYSTICAL_SPELL_LIST_CLICKABLE),
                 Utils.mutableTextOf("/mystical power help").setStyle(MysticalCommandHandler.MYSTICAL_POWER_HELP_CLICKABLE)), false);
