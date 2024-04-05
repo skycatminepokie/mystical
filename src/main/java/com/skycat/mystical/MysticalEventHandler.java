@@ -73,7 +73,6 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
      * @return Number of ticks until night, or -1 on failure
      */
     public long setNightTimer() {
-        // CREDIT: Daomephsta#0044 for help on fabric discord
         if (server == null) {
             throw new NullPointerException(Utils.translateString("text.mystical.logging.failedToSetNightTimer", "server was null."));
         }

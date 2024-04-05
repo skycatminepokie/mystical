@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(IronGolemEntity.class)
-public abstract class IronGolemEntityMixin extends MobEntityMixin { // TODO: Credit MattiDragon#8944 on discord for extension info
+public abstract class IronGolemEntityMixin extends MobEntityMixin {
     @Unique
     private static boolean mystical_targetPredicate(LivingEntity entity) {
         return (!Mystical.isClientWorld() &&
