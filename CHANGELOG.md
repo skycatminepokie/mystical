@@ -1,1 +1,2 @@
 - Added /mystical spell delete all
+- Added /mystical credits
