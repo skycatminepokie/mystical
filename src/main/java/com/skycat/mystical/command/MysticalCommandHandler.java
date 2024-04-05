@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.command.argument.Vec2ArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
@@ -33,15 +34,12 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec2f;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 @SuppressWarnings("SameReturnValue")
 public class MysticalCommandHandler implements CommandRegistrationCallback {
-    private static final SimpleCommandExceptionType NO_SPELLS_TO_DELETE_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
-    private static final DynamicCommandExceptionType SPELL_DOES_NOT_EXIST_EXCEPTION = new DynamicCommandExceptionType((spellNum) -> Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
     private static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAnEntity"));
     private static final SimpleCommandExceptionType EXECUTOR_NOT_PLAYER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAPlayer"));
     private static final DynamicCommandExceptionType EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION = new DynamicCommandExceptionType((solutionString) -> Utils.translatable("text.mystical.command.generic.notAPlayer.solution", solutionString));
@@ -74,10 +72,10 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .executes(this::deleteSpellsCommand)
                 .build();
         var spellDeleteSpell = argument("spell", IntegerArgumentType.integer(0))
-                .executes(this::deleteSpellWithArgCommand)
+                .executes(SpellCommandHandler::deleteSpellWithArgCommand)
                 .build();
         var spellDeleteAll = literal("all")
-                .executes(this::deleteSpellAllCommand)
+                .executes(SpellCommandHandler::deleteSpellAllCommand)
                 .build();
         var reload = literal("reload")
                 .requires(Permissions.require("mystical.command.mystical.reload", 4))
@@ -101,7 +99,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var power = literal("power")
                 .requires(Permissions.require("mystical.command.mystical.power", 0))
-                .executes(this::myPowerCommand)
+                .executes(SpellCommandHandler::myPowerCommand)
                 .build();
         var powerAdd = literal("add")
                 .requires(Permissions.require("mystical.command.mystical.power.add", 4))
@@ -110,7 +108,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var powerAddPlayersAmount = argument("amount", IntegerArgumentType.integer(1))
                 .requires(Permissions.require("mystical.command.mystical.power.add", 4))
-                .executes(this::addPowerPlayerAmountCommand)
+                .executes(SpellCommandHandler::addPowerPlayerAmountCommand)
                 .build();
         var powerRemove = literal("remove")
                 .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
@@ -120,15 +118,15 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var powerRemovePlayersAmount = argument("amount", IntegerArgumentType.integer(1))
                 .requires(Permissions.require("mystical.command.mystical.power.remove", 4))
-                .executes(this::removePowerPlayerAmountCommand)
+                .executes(SpellCommandHandler::removePowerPlayerAmountCommand)
                 .build();
         var powerGet = literal("get")
                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
                 // .executes(this::myPowerCommand) // Done by base power command
                 .build();
-        var powerGetPlayers = argument("players", EntityArgumentType.players())
+        var powerGetPlayers = argument("players", GameProfileArgumentType.gameProfile())
                 .requires(Permissions.require("mystical.command.mystical.power.get", 3))
-                .executes(this::getPowerPlayerCommand)
+                .executes(SpellCommandHandler::getPowerPlayerCommand)
                 .build();
         //@formatter:off
         dispatcher.getRoot().addChild(mystical);
@@ -173,65 +171,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         */
 
 
-    }
-
-    private int deleteSpellAllCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
-            throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
-        }
-        int spellsDeleted = Mystical.getSpellHandler().removeAllSpells();
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.delete.success", spellsDeleted), true);
-        return Command.SINGLE_SUCCESS;
-    }
-
-    private int getPowerPlayerCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
-        int successCount = 0;
-        for (ServerPlayerEntity player : players) {
-            int power = Mystical.getHavenManager().getPower(player);
-            context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.get.player", player.getDisplayName().getString(), power), true);
-            successCount++;
-        }
-        return successCount;
-    }
-
-    private int removePowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
-        int amount = IntegerArgumentType.getInteger(context, "amount");
-        int successCount = 0;
-        for (ServerPlayerEntity player : players) {
-            Mystical.getHavenManager().removePower(player.getUuid(), amount);
-            successCount++;
-        }
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.remove.player.amount.success", amount, successCount), true);
-        return successCount;
-    }
-
-    private int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
-        int amount = IntegerArgumentType.getInteger(context, "amount");
-        int successCount = 0;
-        for (ServerPlayerEntity player : players) {
-            Mystical.getHavenManager().addPower(player.getUuid(), amount);
-            successCount++;
-        }
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.add.player.amount.success", amount, successCount), true);
-        return successCount;
-    }
-
-    /**
-     * /mystical power
-     * Sends a message to the source telling them how much power they have.
-     * @param context The context - must be a ServerPlayerEntity.
-     * @return 1 on success, 0 if the sender is not a ServerPlayerEntity.
-     */
-    private int myPowerCommand(CommandContext<ServerCommandSource> context) {
-        if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
-            context.getSource().sendFeedback(Utils.textSupplierOf("This command must be used by a player!"), true);
-            return 0;
-        }
-        player.sendMessage(Utils.textOf("You have " + Mystical.getHavenManager().getPower(player) + " power."));
-        return 1;
     }
 
     /**
@@ -337,19 +276,6 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         }
     }
 
-
-    private int deleteSpellWithArgCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        int spellNum = context.getArgument("spell", Integer.class);
-        if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
-            throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
-        }
-        if (spellNum > Mystical.getSpellHandler().getActiveSpells().size()) {
-            throw SPELL_DOES_NOT_EXIST_EXCEPTION.create(spellNum);
-        }
-        Mystical.getSpellHandler().getActiveSpells().remove(spellNum);
-        Mystical.saveUpdated();
-        return Command.SINGLE_SUCCESS;
-    }
 
     private int listSpellsCommand(CommandContext<ServerCommandSource> context) {
         return sendSpellList(context, false);
