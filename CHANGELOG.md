@@ -1,2 +1,3 @@
 - Added /mystical spell delete all
 - Added some translations
+- illusionersReplaceEvokers checks for havens now
