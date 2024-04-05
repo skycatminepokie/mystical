@@ -192,6 +192,7 @@
   "text.mystical.command.mystical.reload.success": "Successfully reloaded config and set night timer.",
   "text.mystical.command.mystical.spell.delete.deleteButton": " [X]",
   "text.mystical.command.mystical.spell.delete.noSpells": "There are no active spells.",
+  "text.mystical.command.mystical.spell.delete.success": "Deleted %d spells.",
   "text.mystical.command.mystical.spell.list.noSpells": "There are no active spells.",
   "text.mystical.command.mystical.spell.new.spell.warnDisabled": "Warning: Randomly generating this spell is disabled, or its weight is zero.",
   "text.mystical.command.mystical.spell.new.success": "Successfully created new %s spell.",

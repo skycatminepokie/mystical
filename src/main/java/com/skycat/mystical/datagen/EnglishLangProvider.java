@@ -73,6 +73,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "mystical.spell.list.noSpells", "There are no active spells.");
         addCommandText(tb, "mystical.spell.new.spell.warnDisabled", "Warning: Randomly generating this spell is disabled, or its weight is zero.");
         addCommandText(tb, "mystical.spell.delete.deleteButton", " [X]");
+        addCommandText(tb, "mystical.spell.delete.success", "Deleted %d spells.");
 
         addCommandText(tb, "mystical.power.add.player.amount.success", "Successfully added %d power to %d player(s).");
         addCommandText(tb, "mystical.power.remove.player.amount.success", "Successfully removed %d power from %d player(s).");

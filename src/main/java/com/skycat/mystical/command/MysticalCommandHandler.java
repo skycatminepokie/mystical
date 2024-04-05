@@ -179,7 +179,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
         }
         int spellsDeleted = Mystical.getSpellHandler().removeAllSpells();
-        context.getSource().sendFeedback(Utils.textSupplierOf("Deleted " + spellsDeleted + " spells."), true); // TODO: Translate
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.delete.success", spellsDeleted), true);
         return Command.SINGLE_SUCCESS;
     }
 
