@@ -123,6 +123,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         //@formatter:off
         dispatcher.getRoot().addChild(mystical);
+            mystical.addChild(credits);
             mystical.addChild(spell);
                 spell.addChild(spellList);
                 spell.addChild(spellNew);
