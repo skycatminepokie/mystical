@@ -47,7 +47,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .requires(Permissions.require("mystical.command.mystical.help", true))
                 .executes(MysticalCommandHandler::helpCommand)
                 .build();
-        var mysticalHelp = literal("help")
+        var help = literal("help")
                 .requires(Permissions.require("mystical.command.mystical.help", true))
                 .executes(MysticalCommandHandler::helpCommand)
                 .build();
@@ -143,7 +143,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         //@formatter:off
         dispatcher.getRoot().addChild(mystical);
-            mystical.addChild(mysticalHelp);
+            mystical.addChild(help);
             mystical.addChild(credits);
             mystical.addChild(spell);
                 spell.addChild(spellHelp);
