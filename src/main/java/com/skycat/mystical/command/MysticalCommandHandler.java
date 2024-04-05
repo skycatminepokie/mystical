@@ -138,6 +138,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                     spellNew.addChild(spellNewSpell);
                 spell.addChild(spellDelete);
                     spellDelete.addChild(spellDeleteSpell);
+                    spellDelete.addChild(spellDeleteAll);
             mystical.addChild(reload);
             mystical.addChild(power);
                 power.addChild(powerAdd);
@@ -151,7 +152,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
             mystical.addChild(haven);
                 // TODO: Haven add, haven remove
                 haven.addChild(havenInfo);
-                    // TODO: Haven pos
+                    // TODO: Haven info pos
                 haven.addChild(havenBlock);
                     havenBlock.addChild(havenBlockConfirm);
         //@formatter:on
