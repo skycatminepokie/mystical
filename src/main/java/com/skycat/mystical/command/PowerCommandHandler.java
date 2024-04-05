@@ -1,6 +1,7 @@
 package com.skycat.mystical.command;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -10,11 +11,20 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.Style;
 
 import java.util.Collection;
 
+@SuppressWarnings("SameReturnValue")
 public class PowerCommandHandler {
-    static int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static final Style MYSTICAL_HAVEN_HELP_CLICKABLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven help"))
+            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));
+    protected static final Style MYSTICAL_SPELL_HELP_CLICKABLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical spell help"))
+            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));;
+
+    protected static int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
         int amount = IntegerArgumentType.getInteger(context, "amount");
         int successCount = 0;
@@ -26,7 +36,7 @@ public class PowerCommandHandler {
         return successCount;
     }
 
-    static int getPowerPlayerCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int getPowerPlayerCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<GameProfile> players = GameProfileArgumentType.getProfileArgument(context, "players");
         int successCount = 0;
         for (GameProfile player : players) {
@@ -44,7 +54,7 @@ public class PowerCommandHandler {
      * @param context The context - must be a ServerPlayerEntity.
      * @return 1 on success, 0 if the sender is not a ServerPlayerEntity.
      */
-    static int myPowerCommand(CommandContext<ServerCommandSource> context) {
+    protected static int myPowerCommand(CommandContext<ServerCommandSource> context) {
         if (!(context.getSource().getEntity() instanceof ServerPlayerEntity player)) {
             context.getSource().sendFeedback(Utils.textSupplierOf("This command must be used by a player!"), true);
             return 0;
@@ -53,7 +63,7 @@ public class PowerCommandHandler {
         return 1;
     }
 
-    static int removePowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    protected static int removePowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
         int amount = IntegerArgumentType.getInteger(context, "amount");
         int successCount = 0;
@@ -63,5 +73,10 @@ public class PowerCommandHandler {
         }
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.remove.player.amount.success", amount, successCount), true);
         return successCount;
+    }
+
+    public static int powerHelpCommand(CommandContext<ServerCommandSource> context) {
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.help", Utils.mutableTextOf("/mystical spell help").setStyle(MYSTICAL_SPELL_HELP_CLICKABLE), Utils.mutableTextOf("/mystical haven help").setStyle(MYSTICAL_HAVEN_HELP_CLICKABLE)), false);
+        return Command.SINGLE_SUCCESS;
     }
 }

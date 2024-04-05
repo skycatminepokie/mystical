@@ -86,6 +86,10 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "mystical.spell.delete.deleteButton", " [X]");
         addCommandText(tb, "mystical.spell.delete.success", "Deleted %d spells.");
 
+        addCommandText(tb, "mystical.power.help", """
+                Power can be used to haven chunks, protecting them from the influence of spells.
+                Gain power by contributing to curing a spell (see %s for more info).
+                Spend it with %s.""");
         addCommandText(tb, "mystical.power.add.player.amount.success", "Successfully added %d power to %d player(s).");
         addCommandText(tb, "mystical.power.remove.player.amount.success", "Successfully removed %d power from %d player(s).");
         addCommandText(tb, "mystical.power.get.player", "%s has %d power.");
@@ -102,6 +106,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "generic.notAPlayer.solution", "This command must be run by a player. Try %s.");
         addCommandText(tb, "generic.alreadyHavened", "This chunk is already havened.");
         addCommandText(tb, "generic.notAnEntity", "This must be called by an entity.");
+        addCommandText(tb, "generic.clickToRunTheCommand", "Click to run the command!");
 
         // Advancements
         addAdvancementTranslation(tb, AdvancementProvider.CURE_SPELL_ADVANCEMENT_ID, "Watch Your Step!", "Not everything is as it seems...");

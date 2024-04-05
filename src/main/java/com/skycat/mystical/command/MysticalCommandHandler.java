@@ -87,6 +87,13 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .requires(Permissions.require("mystical.command.mystical.power", 0))
                 .executes(PowerCommandHandler::myPowerCommand)
                 .build();
+        var powerHelp = literal("help")
+                .requires(Permissions.require("mystical.command.mystical.power.help", 0))
+                .executes(PowerCommandHandler::powerHelpCommand)
+                .build();
+        var powerQuestionMark = literal("?")
+                .redirect(powerHelp)
+                .build();
         var powerAdd = literal("add")
                 .requires(Permissions.require("mystical.command.mystical.power.add", 4))
                 .build(); // TODO: Usage info
@@ -125,6 +132,8 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                     spellDelete.addChild(spellDeleteAll);
             mystical.addChild(reload);
             mystical.addChild(power);
+                power.addChild(powerHelp);
+                power.addChild(powerQuestionMark);
                 power.addChild(powerAdd);
                     powerAdd.addChild(powerAddPlayers);
                         powerAddPlayers.addChild(powerAddPlayersAmount);
@@ -141,12 +150,8 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                     havenBlock.addChild(havenBlockConfirm);
         //@formatter:on
 
-        // TODO: Haven add, haven remove, haven info pos
-
         /*
          TODO: Commands
-            /mystical power help
-            /mystical power ?
             /mystical haven info position
             /mystical haven ?
             /mystical haven add
