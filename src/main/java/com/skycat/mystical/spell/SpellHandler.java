@@ -214,9 +214,14 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         }
     }
 
-    public void removeAllSpells() {
+    /**
+     * @return Number of spells deleted.
+     */
+    public int removeAllSpells() {
+        int numberOfSpells = activeSpells.size();
         activeSpells.clear();
         onChanged();
+        return numberOfSpells;
     }
 
     /**

@@ -54,6 +54,9 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .requires(Permissions.require("mystical.command.mystical", true))
                 // TODO: send some info
                 .build();
+        var credits = literal("credits")
+                .executes(this::creditsCommand)
+                .build();
         var spell = literal("spell")
                 .requires(Permissions.require("mystical.command.mystical.spell", true))
                 .build();
@@ -75,6 +78,9 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .build();
         var spellDeleteSpell = argument("spell", IntegerArgumentType.integer(0))
                 .executes(this::deleteSpellWithArgCommand)
+                .build();
+        var spellDeleteAll = literal("all")
+                .executes(this::deleteSpellAllCommand)
                 .build();
         var reload = literal("reload")
                 .requires(Permissions.require("mystical.command.mystical.reload", 4))
@@ -169,6 +175,20 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         */
 
 
+    }
+
+    private int creditsCommand(CommandContext<ServerCommandSource> context) {
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.credits"), false);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private int deleteSpellAllCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
+            throw NO_SPELLS_TO_DELETE_EXCEPTION.create();
+        }
+        int spellsDeleted = Mystical.getSpellHandler().removeAllSpells();
+        context.getSource().sendFeedback(Utils.textSupplierOf("Deleted " + spellsDeleted + " spells."), true); // TODO: Translate
+        return Command.SINGLE_SUCCESS;
     }
 
     private int getPowerPlayerCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {

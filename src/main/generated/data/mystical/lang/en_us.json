@@ -183,6 +183,7 @@
   "text.mystical.command.generic.notAPlayer.solution": "This command must be run by a player. Try %s.",
   "text.mystical.command.generic.notAnEntity": "This must be called by an entity.",
   "text.mystical.command.generic.success": "Success!",
+  "text.mystical.command.mystical.credits": "CREDITS:\nskycatminepokie - Author\nSuperiorTabby - Code & texture contributor\nPhaserock - Texture contributor\nMembers of the Fabric Discord - Lots of programming help, and too many people to name. Thank you guys!\nmodmuss, player50, and the rest of the Fabric team - Fabric\nPatbox @ Nucleoid - Server Translations API\nLucko - Permissions API\n",
   "text.mystical.command.mystical.haven.info.inHaven": "This is in a haven.",
   "text.mystical.command.mystical.haven.info.notInHaven": "This chunk is not havened.",
   "text.mystical.command.mystical.haven.pos.action": "Havening chunk at [%d, %d] for %d power.",
