@@ -75,9 +75,14 @@ class EnglishLangProvider extends FabricLanguageProvider {
                 Members of the Fabric Discord - Lots of programming help, and too many people to name. Thank you guys!
                 modmuss, player50, and the rest of the Fabric team - Fabric
                 Patbox @ Nucleoid - Server Translations API
-                Lucko - Permissions API
-                """);
+                Lucko - Permissions API""");
 
+        addCommandText(tb, "mystical.spell.help", """
+                Spells are cast by otherworldly beings, changing the world in strange ways.
+                Sometimes, spells are beneficial. Sometimes, they are not.
+                See the currently active spells with %s. Hover over them to discover the cure.
+                To learn more about curing spells, use %s.
+                If you have the mod installed, you can look at the effect HUD to see active spells.""");
         addCommandText(tb, "mystical.spell.delete.noSpells", "There are no active spells.");
         addCommandText(tb, "mystical.spell.new.success", "Successfully created new %s spell.");
         addCommandText(tb, "mystical.reload.success", "Successfully reloaded config and set night timer.");

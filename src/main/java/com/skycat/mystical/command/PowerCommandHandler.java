@@ -22,7 +22,7 @@ public class PowerCommandHandler {
     protected static final Style MYSTICAL_HAVEN_HELP_CLICKABLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven help"))
             .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));
     protected static final Style MYSTICAL_SPELL_HELP_CLICKABLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical spell help"))
-            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));;
+            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));
 
     protected static int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");

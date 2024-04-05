@@ -19,6 +19,10 @@ import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.command.argument.Vec2ArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
+import net.minecraft.text.Style;
+import net.minecraft.util.Formatting;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -28,6 +32,9 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     protected static final SimpleCommandExceptionType EXECUTOR_NOT_ENTITY_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAnEntity"));
     protected static final SimpleCommandExceptionType EXECUTOR_NOT_PLAYER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAPlayer"));
     protected static final DynamicCommandExceptionType EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION = new DynamicCommandExceptionType((solutionString) -> Utils.translatable("text.mystical.command.generic.notAPlayer.solution", solutionString));
+    private static final Style CLICKABLE_TEMPLATE_STYLE = Style.EMPTY
+            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")))
+            .withColor(Formatting.GREEN);
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
@@ -38,8 +45,15 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         var credits = literal("credits")
                 .executes(this::creditsCommand)
                 .build();
+        var spellHelp = literal("help")
+                .requires(Permissions.require("mystical.command.mystical.spell.help", true))
+                .executes(SpellCommandHandler::helpCommand)
+                .build();
+        var spellQuestionMark = literal("?")
+                .redirect(spellHelp)
+                .build();
         var spell = literal("spell")
-                .requires(Permissions.require("mystical.command.mystical.spell", true))
+                .redirect(spellHelp)
                 .build();
         var spellNew = literal("new")
                 .requires(Permissions.require("mystical.command.mystical.spell.new", 4))
@@ -68,27 +82,27 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                 .executes(this::reloadCommand)
                 .build();
         var haven = literal("haven")
-                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
                 .executes(HavenCommandHandler::havenHereCommand)
                 .build();
         var havenBlock = argument("block", Vec2ArgumentType.vec2())
-                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
                 .executes(HavenCommandHandler::havenPosCommand)
                 .build();
         var havenBlockConfirm = literal("confirm")
-                .requires(Permissions.require("mystical.command.mystical.haven.haven", 0))
+                .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
                 .executes(HavenCommandHandler::havenPosConfirmCommand)
                 .build();
         var havenInfo = literal("info")
-                .requires(Permissions.require("mystical.command.mystical.haven.info", 0))
+                .requires(Permissions.require("mystical.command.mystical.haven.info", true))
                 .executes(HavenCommandHandler::havenInfoCommand)
                 .build();
         var power = literal("power")
-                .requires(Permissions.require("mystical.command.mystical.power", 0))
+                .requires(Permissions.require("mystical.command.mystical.power", true))
                 .executes(PowerCommandHandler::myPowerCommand)
                 .build();
         var powerHelp = literal("help")
-                .requires(Permissions.require("mystical.command.mystical.power.help", 0))
+                .requires(Permissions.require("mystical.command.mystical.power.help", true))
                 .executes(PowerCommandHandler::powerHelpCommand)
                 .build();
         var powerQuestionMark = literal("?")
@@ -125,6 +139,8 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         dispatcher.getRoot().addChild(mystical);
             mystical.addChild(credits);
             mystical.addChild(spell);
+                spell.addChild(spellHelp);
+                spell.addChild(spellQuestionMark);
                 spell.addChild(spellList);
                 spell.addChild(spellNew);
                     spellNew.addChild(spellNewSpell);
@@ -175,5 +191,14 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         Mystical.CONFIG.load();
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.reload.success"), true);
         return Command.SINGLE_SUCCESS;
+    }
+
+    /**
+     * Make a clickable command style.
+     * @param command The command to run, including "/"
+     * @return A new style.
+     */
+    public static Style makeClickableCommandStyle(String command) {
+        return CLICKABLE_TEMPLATE_STYLE.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
     }
 }

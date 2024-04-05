@@ -21,6 +21,8 @@ import java.util.ArrayList;
 public class SpellCommandHandler {
     static final SimpleCommandExceptionType NO_SPELLS_TO_DELETE_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.mystical.spell.delete.noSpells"));
     static final DynamicCommandExceptionType SPELL_DOES_NOT_EXIST_EXCEPTION = new DynamicCommandExceptionType((spellNum) -> Utils.textOf("Spell #" + spellNum + " does not exist (must be from 0 - " + (Mystical.getSpellHandler().getActiveSpells().size() - 1) + ")"));
+    private static final Style MYSTICAL_SPELL_LIST_CLICKABLE = MysticalCommandHandler.makeClickableCommandStyle("/mystical spell list");
+    private static final Style MYSTICAL_POWER_HELP_CLICKABLE =  MysticalCommandHandler.makeClickableCommandStyle("/mystical power help");
 
     static int deleteSpellAllCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         if (Mystical.getSpellHandler().getActiveSpells().isEmpty()) {
@@ -96,6 +98,11 @@ public class SpellCommandHandler {
             spellDescription.setStyle(Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, spell.getCure().getDescription())));
             context.getSource().sendFeedback(() -> spellDescription, false);
         }
+        return Command.SINGLE_SUCCESS;
+    }
+
+    public static int helpCommand(CommandContext<ServerCommandSource> context) {
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.help", Utils.mutableTextOf("/mystical spell list").setStyle(MYSTICAL_SPELL_LIST_CLICKABLE), Utils.mutableTextOf("/mystical power help").setStyle(MYSTICAL_POWER_HELP_CLICKABLE)), false);
         return Command.SINGLE_SUCCESS;
     }
 }

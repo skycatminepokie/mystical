@@ -9,9 +9,6 @@ import net.minecraft.command.argument.Vec2ArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.Style;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec2f;
@@ -72,9 +69,7 @@ public class HavenCommandHandler {
 
         player.sendMessage(
                 Utils.translatable("text.mystical.command.mystical.haven.pos.action", block.getX(), block.getZ(), Mystical.getHavenManager().getHavenCost(block))
-                        .append(Utils.translatable("text.mystical.command.mystical.haven.pos.button")).setStyle(
-                                Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
-                                        .withColor(Formatting.GREEN))
+                        .append(Utils.translatable("text.mystical.command.mystical.haven.pos.button")).setStyle(MysticalCommandHandler.makeClickableCommandStyle("/mystical haven " + block.getX() + " " + block.getZ() + " confirm"))
         );
         return 1;
     }
