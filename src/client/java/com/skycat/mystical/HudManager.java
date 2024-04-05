@@ -2,6 +2,7 @@ package com.skycat.mystical;
 
 import com.skycat.mystical.spell.Spell;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
+import com.skycat.mystical.spell.consequence.LevitateConsequence;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -42,9 +43,16 @@ public class HudManager {
             SpellConsequence consequence = spell.getConsequence();
             ConsequenceFactory<?> consequenceFactory = consequence.getFactory();
             newList.add(new StatusEffectInstance(SpellStatusEffect.getOrCreate( // TODO: Don't have multiple of the same?
-                    Identifier.of(Mystical.MOD_ID, Utils.camelCaseToSnakeCase(SPELL_EFFECT_PREFIX + consequenceFactory.shortName)), // TODO: Gametest that these all exist TODO: Credit @trevorskullcrafter help diagnosing problem
+                    iconForSpell(consequenceFactory), // TODO: Gametest that these all exist
                     difficultyToStatusEffectCategory(consequence.getDifficulty())), -1));
         }
         fakeStatusEffects = newList;
+    }
+
+    protected Identifier iconForSpell(ConsequenceFactory<?> consequenceFactory) {
+        if (consequenceFactory.equals(LevitateConsequence.FACTORY)) {
+            return Identifier.of("minecraft", "levitation"); // It'll be differentiated by the spell border
+        }
+        return Identifier.of(Mystical.MOD_ID, Utils.camelCaseToSnakeCase(SPELL_EFFECT_PREFIX + consequenceFactory.shortName));
     }
 }
