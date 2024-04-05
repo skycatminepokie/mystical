@@ -60,7 +60,7 @@ public class HavenCommandHandler {
      *
      * @param context Context - fails if source is not ServerPlayerEntity
      * @param block   The position to haven
-     * @return 1 When the message is successfully send
+     * @return 1 When the message is successfully sent
      */
     private static int havenPos(CommandContext<ServerCommandSource> context, BlockPos block) throws CommandSyntaxException {
         var entity = context.getSource().getEntity();
