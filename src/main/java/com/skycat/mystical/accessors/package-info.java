@@ -1,1 +1,0 @@
-package com.skycat.mystical.accessors; // TODO: Rename to accessor in next minor patch

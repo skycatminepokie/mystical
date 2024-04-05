@@ -1,6 +1,6 @@
 package com.skycat.mystical;
 
-import com.skycat.mystical.accessors.MinecraftServerTimerAccess;
+import com.skycat.mystical.accessor.MinecraftServerTimerAccess;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
