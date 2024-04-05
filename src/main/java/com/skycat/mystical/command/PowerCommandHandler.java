@@ -11,18 +11,11 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.ClickEvent;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.Style;
 
 import java.util.Collection;
 
 @SuppressWarnings("SameReturnValue")
 public class PowerCommandHandler {
-    protected static final Style MYSTICAL_HAVEN_HELP_CLICKABLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical haven help"))
-            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));
-    protected static final Style MYSTICAL_SPELL_HELP_CLICKABLE = Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mystical spell help"))
-            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")));
 
     protected static int addPowerPlayerAmountCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         Collection<ServerPlayerEntity> players = EntityArgumentType.getPlayers(context, "players");
@@ -76,7 +69,9 @@ public class PowerCommandHandler {
     }
 
     public static int powerHelpCommand(CommandContext<ServerCommandSource> context) {
-        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.help", Utils.mutableTextOf("/mystical spell help").setStyle(MYSTICAL_SPELL_HELP_CLICKABLE), Utils.mutableTextOf("/mystical haven help").setStyle(MYSTICAL_HAVEN_HELP_CLICKABLE)), false);
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.power.help",
+                Utils.mutableTextOf("/mystical spell help").setStyle(MysticalCommandHandler.MYSTICAL_SPELL_HELP_CLICKABLE),
+                Utils.mutableTextOf("/mystical haven help").setStyle(MysticalCommandHandler.MYSTICAL_HAVEN_HELP_CLICKABLE)), false);
         return Command.SINGLE_SUCCESS;
     }
 }

@@ -35,6 +35,11 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     private static final Style CLICKABLE_TEMPLATE_STYLE = Style.EMPTY
             .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")))
             .withColor(Formatting.GREEN);
+    protected static final Style MYSTICAL_HAVEN_HELP_CLICKABLE = makeClickableCommandStyle("/mystical haven help");
+    protected static final Style MYSTICAL_SPELL_HELP_CLICKABLE = makeClickableCommandStyle("/mystical spell help");
+    protected static final Style MYSTICAL_POWER_HELP_CLICKABLE =  makeClickableCommandStyle("/mystical power help");
+    protected static final Style MYSTICAL_SPELL_LIST_CLICKABLE = makeClickableCommandStyle("/mystical spell list");
+    protected static final Style MYSTICAL_HAVEN_CLICKABLE = makeClickableCommandStyle("/mystical haven");
 
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
@@ -84,6 +89,13 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
         var haven = literal("haven")
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
                 .executes(HavenCommandHandler::havenHereCommand)
+                .build();
+        var havenHelp = literal("help")
+                .requires(Permissions.require("mystical.command.mystical.haven.help", true))
+                .executes(HavenCommandHandler::havenHelpCommand)
+                .build();
+        var havenQuestionMark = literal("?")
+                .redirect(havenHelp)
                 .build();
         var havenBlock = argument("block", Vec2ArgumentType.vec2())
                 .requires(Permissions.require("mystical.command.mystical.haven.haven", true))
@@ -161,6 +173,8 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
                     powerGet.addChild(powerGetPlayers);
             mystical.addChild(haven);
                 // TODO: Haven add, haven remove
+                haven.addChild(havenHelp);
+                haven.addChild(havenQuestionMark);
                 haven.addChild(havenInfo);
                     // TODO: Haven info pos
                 haven.addChild(havenBlock);

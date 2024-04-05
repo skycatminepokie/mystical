@@ -99,6 +99,11 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "mystical.power.remove.player.amount.success", "Successfully removed %d power from %d player(s).");
         addCommandText(tb, "mystical.power.get.player", "%s has %d power.");
 
+        addCommandText(tb, "mystical.haven.help", """
+                A haven is a place of safety from spells.
+                You can create a chunk-wide haven with power by using %s.
+                To learn more about power, see %s
+                To learn more about spells, see %s""");
         addCommandText(tb, "mystical.haven.info.inHaven", "This is in a haven.");
         addCommandText(tb, "mystical.haven.info.notInHaven", "This chunk is not havened.");
         addCommandText(tb, "mystical.haven.pos.action", "Havening chunk at [%d, %d] for %d power.");

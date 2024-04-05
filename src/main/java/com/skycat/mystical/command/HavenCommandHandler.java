@@ -1,5 +1,6 @@
 package com.skycat.mystical.command;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
@@ -117,5 +118,13 @@ public class HavenCommandHandler {
         } else {
             throw HAVEN_NOT_ENOUGH_POWER_EXCEPTION.create();
         }
+    }
+
+    public static int havenHelpCommand(CommandContext<ServerCommandSource> context) {
+        context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.haven.help",
+                Utils.mutableTextOf("/mystical haven").setStyle(MysticalCommandHandler.MYSTICAL_HAVEN_CLICKABLE),
+                Utils.mutableTextOf("/mystical power help").setStyle(MysticalCommandHandler.MYSTICAL_POWER_HELP_CLICKABLE),
+                Utils.mutableTextOf("/mystical spell help").setStyle(MysticalCommandHandler.MYSTICAL_SPELL_HELP_CLICKABLE)), false);
+        return Command.SINGLE_SUCCESS;
     }
 }
