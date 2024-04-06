@@ -39,7 +39,7 @@ public class SpellCommandHandler {
         if (spellNum > Mystical.getSpellHandler().getActiveSpells().size()) {
             throw SPELL_DOES_NOT_EXIST_EXCEPTION.create(spellNum);
         }
-        Mystical.getSpellHandler().getActiveSpells().remove(spellNum);
+        Mystical.getSpellHandler().removeSpell(spellNum);
         Mystical.saveUpdated();
         return Command.SINGLE_SUCCESS;
     }
