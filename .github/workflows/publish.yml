@@ -12,7 +12,7 @@ env:
   MINECRAFT_VERSION: 1.20.1
   JAVA_VERSION: 17
   VERSION: 5.2.0+1.20.1
-  VERSION_TYPE: alpha
+  VERSION_TYPE: release
 
 permissions:
   contents: write
