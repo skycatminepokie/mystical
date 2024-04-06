@@ -1,6 +1,7 @@
 package com.skycat.mystical;
 
 import com.skycat.mystical.command.MysticalCommandHandler;
+import com.skycat.mystical.network.MysticalNetworking;
 import com.skycat.mystical.spell.SpellHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -28,6 +30,7 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong());
     public static final com.skycat.mystical.MysticalConfig CONFIG = com.skycat.mystical.MysticalConfig.createAndLoad();
     public static final MysticalCommandHandler COMMAND_HANDLER = new MysticalCommandHandler();
+    public static final MysticalNetworking NETWORKING_HANDLER = new MysticalNetworking();
     public static SaveState save;
     private static boolean isClientWorld = true;
     static {
@@ -81,5 +84,6 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(getSpellHandler());
         AttackBlockCallback.EVENT.register(getSpellHandler());
         ServerEntityEvents.EQUIPMENT_CHANGE.register(getSpellHandler());
+        ServerPlayConnectionEvents.JOIN.register(NETWORKING_HANDLER);
     }
 }

@@ -1,6 +1,7 @@
 package com.skycat.mystical;
 
-import com.skycat.mystical.accessors.MinecraftServerTimerAccess;
+import com.skycat.mystical.accessor.MinecraftServerTimerAccess;
+import com.skycat.mystical.network.MysticalNetworking;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
@@ -73,7 +74,6 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
      * @return Number of ticks until night, or -1 on failure
      */
     public long setNightTimer() {
-        // CREDIT: Daomephsta#0044 for help on fabric discord
         if (server == null) {
             throw new NullPointerException(Utils.translateString("text.mystical.logging.failedToSetNightTimer", "server was null."));
         }

@@ -1,7 +1,6 @@
 package com.skycat.mystical.util;
 
 public enum LogLevel {
-    // CREDIT: https://www.baeldung.com/java-enum-values
     OFF(0),
     INFO(1),
     DEBUG(2),

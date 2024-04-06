@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
-import java.util.function.Function;
 
 public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback { // TODO: Tests
     public static final Factory FACTORY = new Factory();
