@@ -75,6 +75,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
                 skycatminepokie - Author
                 SuperiorTabby - Code & texture contributor
                 Phaserock - Texture contributor
+                Implement - Texture contributor
                 Members of the Fabric Discord - Lots of programming help, and too many people to name. Thank you guys!
                 modmuss, player50, and the rest of the Fabric team - Fabric
                 Patbox @ Nucleoid - Server Translations API
@@ -143,6 +144,8 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addTextTranslation(tb, "spellGenerator.allConsequencesDisabled", "All spells are disabled, skipping making a spell");
         addTextTranslation(tb, "spellGenerator.emptyCureList", "SpellGenerator found an empty cure list. Using default cure.");
         addTextTranslation(tb, "cure.kill", "Kill %ss");
+        addTextTranslation(tb, "client.networkHandler.spellPacket.null", "Nbt from active spell packet was null. Skipping.");
+        addTextTranslation(tb, "client.networkHandler.spellPacket.failedDeserialize", "Spells from active spell packet could not be deserialized. Skipping.");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {

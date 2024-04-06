@@ -1,6 +1,7 @@
 package com.skycat.mystical.spell;
 
 import com.mojang.serialization.Codec;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import static com.skycat.mystical.Mystical.CONFIG;
+import static com.skycat.mystical.Mystical.EVENT_HANDLER;
 
 public class SpellHandler implements EntitySleepEvents.StartSleeping,
         EntitySleepEvents.StopSleeping,
@@ -56,12 +58,13 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(SpellHandler::new, SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
     @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
 
-    @Getter private final ArrayList<Spell> activeSpells;
+    @Getter private final ArrayList<Spell> activeSpells; // TODO: Refactor out the getter, use wrappers instead
     @Getter @Setter
     private boolean dirty;
 
-    public void markDirty() {
+    public void onChanged() {
         dirty = true;
+        Mystical.NETWORKING_HANDLER.sendActiveSpells(EVENT_HANDLER.getServer());
     }
 
     public SpellHandler() {
@@ -119,12 +122,12 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void activateNewSpell() {
         activeSpells.add(SpellGenerator.get());
-        markDirty();
+        onChanged();
     }
 
     public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
         activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
-        markDirty();
+        onChanged();
     }
 
     @Override
@@ -217,7 +220,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     public int removeAllSpells() {
         int numberOfSpells = activeSpells.size();
         activeSpells.clear();
-        markDirty();
+        onChanged();
         return numberOfSpells;
     }
 
@@ -267,9 +270,18 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
                 removed ++;
             }
         }
-        markDirty();
+        onChanged();
         return removed;
     }
 
+    public Spell removeSpell(int index) {
+        this.onChanged();
+        return activeSpells.remove(index);
+    }
+
+    public boolean removeSpell(Spell spell) {
+        this.onChanged();
+        return activeSpells.remove(spell);
+    }
 
 }

@@ -176,6 +176,8 @@
   "text.mystical.advancement.mystical.solo_spell.description": "Cure a spell all on your own",
   "text.mystical.advancement.mystical.solo_spell.title": "Flying Solo",
   "text.mystical.advancement.mystical.title": "Watch Your Step!",
+  "text.mystical.client.networkHandler.spellPacket.failedDeserialize": "Spells from active spell packet could not be deserialized. Skipping.",
+  "text.mystical.client.networkHandler.spellPacket.null": "Nbt from active spell packet was null. Skipping.",
   "text.mystical.command.generic.alreadyHavened": "This chunk is already havened.",
   "text.mystical.command.generic.clickToRunTheCommand": "Click to run the command!",
   "text.mystical.command.generic.notAPlayer": "This command must be run by a player.",

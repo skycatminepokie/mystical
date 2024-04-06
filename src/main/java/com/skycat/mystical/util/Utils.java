@@ -361,4 +361,16 @@ public class Utils {
         Optional<RegistryEntry.Reference<T>> optionalEntry = registry.getRandom(Mystical.MC_RANDOM);
         return optionalEntry.orElse(null);
     }
+
+    public static String camelCaseToSnakeCase(String camelCase) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < camelCase.length(); i++) {
+            char c = camelCase.charAt(i);
+            if (Character.isUpperCase(c)) {
+                result.append('_');
+            }
+            result.append(Character.toLowerCase(c));
+        }
+        return result.toString();
+    }
 }
