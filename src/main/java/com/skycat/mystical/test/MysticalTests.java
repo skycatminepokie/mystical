@@ -22,8 +22,9 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 public class MysticalTests implements FabricGameTest {
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = "mystical.playerCanHaven")
     public void checkHavenWorks(TestContext context) {
+        TestUtils.resetMystical(context);
         HavenManager havenManager = Mystical.getHavenManager();
         ServerPlayerEntity player = Utils.createMockCreativeServerPlayerEntity(context);
         havenManager.setPower(player, Integer.MAX_VALUE);
@@ -33,8 +34,9 @@ public class MysticalTests implements FabricGameTest {
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = "mystical.playerCantHaven")
     public void checkHavenFails(TestContext context) {
+        TestUtils.resetMystical(context);
         HavenManager havenManager = Mystical.getHavenManager();
         ServerPlayerEntity player = Utils.createMockCreativeServerPlayerEntity(context);
 
@@ -49,7 +51,7 @@ public class MysticalTests implements FabricGameTest {
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = "mystical.checkHavenSerialization")
     public void checkHavenSerialization(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
         havenManager.addHaven(0, 0);
@@ -108,7 +110,10 @@ public class MysticalTests implements FabricGameTest {
         return testFunctions;
     }
 
-    @GameTest(templateName = TestUtils.EMPTY)
+    /**
+     * Verify that {@link TestUtils#havenAll(TestContext)} works as expected.
+     */
+    @GameTest(templateName = TestUtils.EMPTY, batchId = "mystical.havenAll")
     public void testHavenAll(TestContext context) {
         TestUtils.resetMystical(context);
         TestUtils.havenAll(context);
