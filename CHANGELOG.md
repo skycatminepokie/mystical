@@ -1,7 +1,1 @@
-- Internal changes
-- Added a spell HUD for players with the mod installed on the client
-- Added /mystical spell delete all
-- Added some translations
-- illusionersReplaceEvokers checks for havens now
-- Added /mystical credits
-- Added help commands
+- Changed some advancement names
