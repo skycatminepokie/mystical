@@ -1,1 +1,2 @@
 - Changed some advancement names
+- Fixed nighttime events happening at the wrong times
