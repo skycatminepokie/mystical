@@ -42,5 +42,15 @@ public class EntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvid
                 .add(EntityType.ENDERMITE)
                 .add(EntityType.FOX)
                 .add(EntityType.PARROT);
+        getOrCreateTagBuilder(MysticalTags.RANDOM_EGG_SPAWNABLE)
+                .add(EntityType.FOX)
+                .add(EntityType.PARROT)
+                .add(EntityType.FROG)
+                .add(EntityType.BEE)
+                .add(EntityType.COD)
+                .add(EntityType.BAT)
+                .add(EntityType.RABBIT)
+                .add(EntityType.SILVERFISH)
+                .add(EntityType.ENDERMITE);
     }
 }
