@@ -1,2 +1,3 @@
 - Changed some advancement names
 - Fixed nighttime events happening at the wrong times
+- Fixed levitation spell not respecting havens

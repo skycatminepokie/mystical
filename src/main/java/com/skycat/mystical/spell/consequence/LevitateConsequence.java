@@ -47,7 +47,6 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
 
     static {
         Collections.addAll(supportedEvents,
-                EntitySleepEvents.StopSleeping.class,
                 ServerEntityCombatEvents.AfterKilledOtherEntity.class,
                 PlayerBlockBreakEvents.After.class);
     }
@@ -67,12 +66,14 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
 
     @Override
     public void afterBlockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        levitate(player);
+        if (!Mystical.getHavenManager().isInHaven(player)) {
+            levitate(player);
+        }
     }
 
     @Override
     public void afterKilledOtherEntity(ServerWorld world, Entity entity, LivingEntity killedEntity) {
-        if (entity.isLiving()) {
+        if (entity.isLiving() && Mystical.getHavenManager().isInHaven(entity)) {
             levitate((LivingEntity) entity);
         }
     }
@@ -80,10 +81,13 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
     @Deprecated
     @Override
     public void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
-        levitate(newPlayer);
+        if (!Mystical.getHavenManager().isInHaven(newPlayer)) {
+            levitate(newPlayer);
+        }
     }
 
     @Override
+    @Deprecated
     public void onStopSleeping(LivingEntity entity, BlockPos sleepingPos) {
         levitate(entity);
     }
