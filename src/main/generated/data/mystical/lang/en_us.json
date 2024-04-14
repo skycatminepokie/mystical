@@ -262,6 +262,7 @@
   "text.mystical.consequence.mobSpawnSwap.longName": "Swap Overworld Mobs With Nether Mobs",
   "text.mystical.consequence.mobSpawnSwap.shortName": "mobSpawnSwap",
   "text.mystical.consequence.mysteryEggs.description": "Which came first, the fox or the egg?",
+  "text.mystical.consequence.mysteryEggs.failedSpawn": "Unable to spawn a random egg mob.",
   "text.mystical.consequence.mysteryEggs.fired": "Spell mysteryEggs: Egg spawned a random mob..",
   "text.mystical.consequence.mysteryEggs.longName": "Mystery Eggs",
   "text.mystical.consequence.mysteryEggs.shortName": "mysteryEggs",

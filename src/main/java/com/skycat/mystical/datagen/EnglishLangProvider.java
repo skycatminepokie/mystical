@@ -146,6 +146,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addTextTranslation(tb, "cure.kill", "Kill %ss");
         addTextTranslation(tb, "client.networkHandler.spellPacket.null", "Nbt from active spell packet was null. Skipping.");
         addTextTranslation(tb, "client.networkHandler.spellPacket.failedDeserialize", "Spells from active spell packet could not be deserialized. Skipping.");
+        addTextTranslation(tb, "consequence.mysteryEggs.failedSpawn", "Unable to spawn a random egg mob.");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {
