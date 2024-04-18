@@ -4,12 +4,10 @@ As you play, a mysterious force casts spells over the world, changing game mecha
 
 Mystical is **highly configurable**, **open-source**, and **awesome**.
 
-Mystical is currently in beta - things are likely to change, and more polish and documentation is yet to come. Please feel free to ask questions or contribute to the project on [GitHub](https://github.com/skycatminepokie/mystical). Known issues, bugs, and future plans are also on GitHub.
+Please feel free to ask questions or contribute to the project on [GitHub](https://github.com/skycatminepokie/mystical). Known issues, bugs, and future plans are also on GitHub.
 
 ### Warnings/known bugs
-- Major updates (the x in version x.y.z) indicate BREAKING changes - your game MAY CRASH if proper steps aren't taken when updating.
-  - Updating from 4.x.x -> 5.x.x: Make sure to run and load your worlds with 4.1.12 before running 5.x.x or higher.
-- Illusioner/evoker swapping is not affected by havens
+- Major updates (the x in version x.y.z) indicate BREAKING changes - your game WILL CRASH if proper steps aren't taken when updating.
 
 | Command                            | Effect                                       | Permission                               | Default requirement |
 |------------------------------------|----------------------------------------------|------------------------------------------|---------------------|
@@ -33,7 +31,3 @@ Requires OwO-lib and Fabric API
 
 #### Can I use this in a modpack?
 Yes! Just don't rehost it without permission. And if you feel like it, let me know - I'm excited to see where this project goes!
-
-#### Contributing
-You want to contribute? Awesome! Check out some of the later feature commits to see how the framework works (I'll maybe remember to add info here later). Please branch from `development` - I use PRs to master for publishing.
-When running datagen, use the Gradle task `runDatagenClient`, NOT the run configuration. The Gradle task will make sure the translations make it to `server-translations-api`.
