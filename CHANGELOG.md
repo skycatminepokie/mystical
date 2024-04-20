@@ -2,3 +2,4 @@
 - Fixed nighttime events happening at the wrong times
 - Fixed levitation spell not respecting havens
 - Added mysteryEggs spell
+- Added evilBees spell
