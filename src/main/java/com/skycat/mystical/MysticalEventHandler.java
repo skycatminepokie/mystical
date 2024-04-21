@@ -1,7 +1,6 @@
 package com.skycat.mystical;
 
 import com.skycat.mystical.accessor.MinecraftServerTimerAccess;
-import com.skycat.mystical.network.MysticalNetworking;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
@@ -84,13 +83,14 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
         long currentTime = server.getOverworld().getTimeOfDay() % 24000;
         if (currentTime > NIGHT_TIME) { // If we've passed NIGHT_TIME
             timerLength = (24000 - currentTime) + NIGHT_TIME; // (time left in this day) + (time from morning til NIGHT_TIME) = time until tomorrow's NIGHT_TIME
-        } else { // It's before midnight
-             timerLength = NIGHT_TIME - currentTime; // NIGHT_TIME - (current time) = time until midnight
+        } else {
+            if (currentTime == 0) { // It's midnight
+                timerLength = 24000;
+            } else { // It's before midnight
+                timerLength = NIGHT_TIME - currentTime; // NIGHT_TIME - (current time) = time until midnight
+            }
         }
 
-        if (timerLength == 0) { // So that we don't get repeating events if this is fired twice in a tick.
-            timerLength = NIGHT_TIME;
-        }
         timerAccess.mystical_setTimer(timerLength);
         return timerLength;
     }

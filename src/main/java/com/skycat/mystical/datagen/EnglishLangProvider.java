@@ -126,10 +126,10 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addCommandText(tb, "generic.clickToRunTheCommand", "Click to run the command!");
 
         // Advancements
-        addAdvancementTranslation(tb, AdvancementProvider.CURE_SPELL_ADVANCEMENT_ID, "Watch Your Step!", "Not everything is as it seems...");
+        addAdvancementTranslation(tb, AdvancementProvider.CURE_SPELL_ADVANCEMENT_ID, "Mystical", "Not everything is as it seems...");
         addAdvancementTranslation(tb, AdvancementProvider.MAKE_HAVEN_ADVANCEMENT_ID, "An Invisible Fortress", "Ward a chunk from unknown forces");
         addAdvancementTranslation(tb, AdvancementProvider.SOLO_SPELL_ADVANCEMENT_ID, "Flying Solo", "Cure a spell all on your own");
-        addAdvancementTranslation(tb, AdvancementProvider.DOUBLE_CURE_ADVANCEMENT_ID, "Shoot the Moon", "Now do it blindfolded");
+        addAdvancementTranslation(tb, AdvancementProvider.DOUBLE_CURE_ADVANCEMENT_ID, "Shoot the Moon", "Cure a spell a little too much");
         addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ADVANCEMENT_ID, "No Trespassing", "Be magically blocked from mining");
         addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID, "Hidden in the Depths of Despair", "Be magically prevented from mining Ancient Debris");
         addAdvancementTranslation(tb, AdvancementProvider.PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID, "Worse than Glow Lichen", "Find diamonds, only to be unable to mine them");
@@ -146,6 +146,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
         addTextTranslation(tb, "cure.kill", "Kill %ss");
         addTextTranslation(tb, "client.networkHandler.spellPacket.null", "Nbt from active spell packet was null. Skipping.");
         addTextTranslation(tb, "client.networkHandler.spellPacket.failedDeserialize", "Spells from active spell packet could not be deserialized. Skipping.");
+        addTextTranslation(tb, "consequence.mysteryEggs.failedSpawn", "Unable to spawn a random egg mob.");
     }
 
     private void addConfig(TranslationBuilder tb, String key, String value) {

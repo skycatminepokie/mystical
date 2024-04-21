@@ -50,7 +50,8 @@ public class Spells {
                 BoldSlimesConsequence.FACTORY,
                 ChangingArmorHurtsConsequence.FACTORY,
                 SoundSwapConsequence.FACTORY,
-                FishingRodSwapConsequence.FACTORY
+                FishingRodSwapConsequence.FACTORY,
+                MysteryEggsConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
