@@ -2,10 +2,7 @@ package com.skycat.mystical.network;
 
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.Spell;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
@@ -41,7 +38,7 @@ public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
         nbtSpells.put(SPELLS_KEY, spells);
 
         packetBuf.writeNbt(nbtSpells);
-        return new CustomPayloadS2CPacket(ACTIVE_SPELLS, packetBuf);
+        return new CustomPayloadS2CPacket(packetBuf);
     }
 
     @Override
