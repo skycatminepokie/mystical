@@ -17,7 +17,7 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
 
     @Override
     protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        NumberRange.FloatRange contributionPercentage = NumberRange.FloatRange.fromJson(obj.get("contributionPercentage")); // Ends up with NumberRange.FloatRange.ANY if obj.get(...) returns null.
+        NumberRange.DoubleRange contributionPercentage = NumberRange.DoubleRange.fromJson(obj.get("contributionPercentage")); // Ends up with NumberRange.FloatRange.ANY if obj.get(...) returns null.
         NumberRange.IntRange participants = NumberRange.IntRange.fromJson(obj.get("participants")); // Ends up with NumberRange.IntRange.ANY if obj.get(...) returns null.
         return new Conditions(playerPredicate, contributionPercentage, participants);
     }
@@ -32,14 +32,14 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
     }
 
     public static class Conditions extends AbstractCriterionConditions { // TODO: Turn this into a full-fledged matching system?
-        protected final NumberRange.FloatRange contributionPercentage;
+        protected final NumberRange.DoubleRange contributionPercentage;
         protected final NumberRange.IntRange participants;
 
-        public Conditions(LootContextPredicate entity, NumberRange.FloatRange contributionPercentage) {
+        public Conditions(LootContextPredicate entity, NumberRange.DoubleRange contributionPercentage) {
             this(entity, contributionPercentage, NumberRange.IntRange.ANY);
         }
 
-        public Conditions(LootContextPredicate entity, NumberRange.FloatRange contributionPercentage, NumberRange.IntRange participants) {
+        public Conditions(LootContextPredicate entity, NumberRange.DoubleRange contributionPercentage, NumberRange.IntRange participants) {
             super(ID, entity);
             this.contributionPercentage = contributionPercentage;
             this.participants = participants;

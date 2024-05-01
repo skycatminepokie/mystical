@@ -46,7 +46,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         false,
                         false
                 )
-                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()), new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(0.2)))
+                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()), new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.DoubleRange.atLeast(0.2)))
                 .build(consumer, CURE_SPELL_ADVANCEMENT_ID);
         Advancement makeHaven = Advancement.Builder.createUntelemetered()
                 .display(
@@ -74,7 +74,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         false
                 )
                 .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()),
-                        new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(100), NumberRange.IntRange.exactly(1)))
+                        new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.DoubleRange.atLeast(100), NumberRange.IntRange.exactly(1)))
                 .parent(cureSpell)
                 .build(consumer, SOLO_SPELL_ADVANCEMENT_ID);
         Advancement doubleCure = Advancement.Builder.createUntelemetered()
@@ -89,7 +89,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true
                 )
                 .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()),
-                        new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.FloatRange.atLeast(200)))
+                        new SpellCuredCriterion.Conditions(LootContextPredicate.EMPTY, NumberRange.DoubleRange.atLeast(200)))
                 .rewards(AdvancementRewards.Builder.experience(50))
                 .parent(soloSpell)
                 .build(consumer, DOUBLE_CURE_ADVANCEMENT_ID);

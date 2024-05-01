@@ -10,6 +10,7 @@ import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.*;
 
