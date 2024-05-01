@@ -7,24 +7,20 @@ import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
-import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.Optional;
+
 public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.Conditions> {
-    public static final Identifier ID = Identifier.of("mystical", "spell_cured");
+    public static final Identifier ID = Identifier.of("mystical", "spell_cured"); // TODO: Figure out where this goes
 
     @Override
-    protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+    protected Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         NumberRange.DoubleRange contributionPercentage = NumberRange.DoubleRange.fromJson(obj.get("contributionPercentage")); // Ends up with NumberRange.FloatRange.ANY if obj.get(...) returns null.
         NumberRange.IntRange participants = NumberRange.IntRange.fromJson(obj.get("participants")); // Ends up with NumberRange.IntRange.ANY if obj.get(...) returns null.
         return new Conditions(playerPredicate, contributionPercentage, participants);
-    }
-
-    @Override
-    public Identifier getId() {
-        return ID;
     }
 
     public void trigger(ServerPlayerEntity player, Spell spell) {
@@ -35,12 +31,12 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
         protected final NumberRange.DoubleRange contributionPercentage;
         protected final NumberRange.IntRange participants;
 
-        public Conditions(LootContextPredicate entity, NumberRange.DoubleRange contributionPercentage) {
+        public Conditions(Optional<LootContextPredicate> entity, NumberRange.DoubleRange contributionPercentage) {
             this(entity, contributionPercentage, NumberRange.IntRange.ANY);
         }
 
-        public Conditions(LootContextPredicate entity, NumberRange.DoubleRange contributionPercentage, NumberRange.IntRange participants) {
-            super(ID, entity);
+        public Conditions(Optional<LootContextPredicate> entity, NumberRange.DoubleRange contributionPercentage, NumberRange.IntRange participants) {
+            super(entity);
             this.contributionPercentage = contributionPercentage;
             this.participants = participants;
         }
@@ -52,8 +48,8 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
         }
 
         @Override
-        public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-            JsonObject json = super.toJson(predicateSerializer);
+        public JsonObject toJson() {
+            JsonObject json = super.toJson();
             json.add("contributionPercentage", contributionPercentage.toJson());
             json.add("participants", participants.toJson());
             return json;
