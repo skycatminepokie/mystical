@@ -1,7 +1,6 @@
 package com.skycat.mystical;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
@@ -19,6 +18,7 @@ public class SaveState extends PersistentState {
             HavenManager.CODEC.fieldOf("havenManager").forGetter(SaveState::getHavenManager),
             SpellHandler.CODEC.fieldOf("spellHandler").forGetter(SaveState::getSpellHandler)
     ).apply(instance, SaveState::new));
+    public static final Type<SaveState> TYPE = new Type<>(SaveState::new, SaveState::readFromNbt, null);
 
     public SaveState() {
         this(new HavenManager(), new SpellHandler());
@@ -36,7 +36,7 @@ public class SaveState extends PersistentState {
 
     public static SaveState loadSave(MinecraftServer server) {
         PersistentStateManager stateManager = server.getOverworld().getPersistentStateManager();
-        return stateManager.getOrCreate(SaveState::readFromNbt, SaveState::new, "mystical");
+        return stateManager.getOrCreate(TYPE, "mystical");
     }
 
     private static SaveState readFromNbt(NbtCompound save) {
