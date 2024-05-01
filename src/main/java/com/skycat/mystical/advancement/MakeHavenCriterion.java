@@ -7,15 +7,21 @@ import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Conditions> {
-    public static final Identifier ID = Identifier.of("mystical", "make_haven"); // TODO: Figure out where this goes
+    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "make_haven")); // TODO: Figure out where this goes
 
     @Override
     protected Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         return new Conditions(playerPredicate);
+    }
+
+    public Identifier getId() {
+        return ID;
     }
 
     public void trigger(ServerPlayerEntity player) {
