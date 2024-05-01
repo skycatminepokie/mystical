@@ -8,17 +8,14 @@ import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.Optional;
+
 public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Conditions> {
-    public static final Identifier ID = Identifier.of("mystical", "make_haven");
+    public static final Identifier ID = Identifier.of("mystical", "make_haven"); // TODO: Figure out where this goes
 
     @Override
-    protected Conditions conditionsFromJson(JsonObject obj, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+    protected Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         return new Conditions(playerPredicate);
-    }
-
-    @Override
-    public Identifier getId() {
-        return ID;
     }
 
     public void trigger(ServerPlayerEntity player) {
@@ -26,8 +23,9 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
     }
 
     public static class Conditions extends AbstractCriterionConditions {
-        public Conditions(LootContextPredicate playerPredicate) {
-            super(ID, playerPredicate);
+        @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+        public Conditions(Optional<LootContextPredicate> playerPredicate) {
+            super(playerPredicate);
         }
 
         @SuppressWarnings("SameReturnValue")
