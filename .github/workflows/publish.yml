@@ -5,14 +5,14 @@ on:
       - closed
     branches:
       - master
-      - 1_20_1
+      - 1_20_2
   workflow_dispatch:
 
 env:
-  MINECRAFT_VERSION: 1.20.1
+  MINECRAFT_VERSION: 1.20.2
   JAVA_VERSION: 17
-  VERSION: 5.2.1+1.20.1
-  VERSION_TYPE: release
+  VERSION: 5.2.1+1.20.2
+  VERSION_TYPE: alpha
 
 permissions:
   contents: write
