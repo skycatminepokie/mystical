@@ -2,8 +2,7 @@
   "parent": "mystical:mystical",
   "criteria": {
     "mystical:make_haven": {
-      "conditions": {},
-      "trigger": "mystical:make_haven"
+      "trigger": "minecraft:mystical.make_haven"
     }
   },
   "display": {

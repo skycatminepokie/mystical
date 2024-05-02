@@ -6,7 +6,7 @@
           "min": 0.2
         }
       },
-      "trigger": "mystical:spell_cured"
+      "trigger": "minecraft:mystical.spell_cured"
     }
   },
   "display": {

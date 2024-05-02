@@ -10,7 +10,7 @@
           }
         ]
       },
-      "trigger": "mystical:prevented_breaking"
+      "trigger": "minecraft:mystical.prevented_breaking"
     }
   },
   "display": {
