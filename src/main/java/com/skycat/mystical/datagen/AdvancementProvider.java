@@ -105,8 +105,9 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                 )
                 .criterion(String.valueOf(MysticalCriteria.PREVENTED_BREAKING_CRITERION_ID),
                         MysticalCriteria.PREVENTED_BREAKING_CRITERION.create(
-                                new ItemCriterion.Conditions(Optional.of(LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.STONE).or(BlockStatePropertyLootCondition.builder(Blocks.GRASS_BLOCK)).build())),
-                                Optional.empty()))
+                                new ItemCriterion.Conditions(Optional.empty(),
+                                        Optional.of(LootContextPredicate.create(BlockStatePropertyLootCondition.builder(Blocks.STONE).or(BlockStatePropertyLootCondition.builder(Blocks.GRASS_BLOCK)).build()))
+                                )) // Note: names of arguments seem to swapped in Yarn
                         ) // TODO: Make this work for anything
                 .parent(cureSpell)
                 .build(consumer, PREVENTED_BREAKING_ADVANCEMENT_ID);
