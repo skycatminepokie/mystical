@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
-    public static final @NotNull Identifier ACTIVE_SPELLS = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "active_spells"));
+    public static final @NotNull Identifier ACTIVE_SPELLS_PACKET_ID = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "active_spells"));
     public static final String SPELLS_KEY = "spells";
 
     public void sendActiveSpells(MinecraftServer server) { // TODO: Send on join and change
@@ -37,6 +37,7 @@ public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
 
         nbtSpells.put(SPELLS_KEY, spells);
 
+        packetBuf.writeIdentifier(ACTIVE_SPELLS_PACKET_ID);
         packetBuf.writeNbt(nbtSpells);
         return new CustomPayloadS2CPacket(packetBuf);
     }

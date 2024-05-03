@@ -10,6 +10,6 @@ public class MysticalClient implements ClientModInitializer {
     public static final HudManager HUD_MANAGER = new HudManager();
     @Override
     public void onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(MysticalNetworking.ACTIVE_SPELLS, CLIENT_NETWORK_HANDLER);
+        ClientPlayNetworking.registerGlobalReceiver(MysticalNetworking.ACTIVE_SPELLS_PACKET_ID, CLIENT_NETWORK_HANDLER);
     }
 }
