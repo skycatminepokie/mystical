@@ -1,4 +1,1 @@
-- Changed some advancement names
-- Fixed nighttime events happening at the wrong times
-- Fixed levitation spell not respecting havens
-- Added mysteryEggs spell
+- Updated to 1.20.2

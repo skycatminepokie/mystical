@@ -3,7 +3,7 @@
   "criteria": {
     "mystical:prevented_breaking": {
       "conditions": {
-        "player": [
+        "location": [
           {
             "condition": "minecraft:any_of",
             "terms": [
