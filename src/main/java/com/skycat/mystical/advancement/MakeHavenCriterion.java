@@ -16,8 +16,8 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
     public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "make_haven")); // TODO: Figure out where this goes
 
     @Override
-    protected Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
-        return new Conditions(playerPredicate);
+    protected com.skycat.mystical.advancement.MakeHavenCriterion.Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+        return new com.skycat.mystical.advancement.MakeHavenCriterion.Conditions(playerPredicate);
     }
 
     public Identifier getId() {
@@ -25,7 +25,7 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
     }
 
     public void trigger(ServerPlayerEntity player) {
-        super.trigger(player, Conditions::requirementsMet);
+        super.trigger(player, com.skycat.mystical.advancement.MakeHavenCriterion.Conditions::requirementsMet);
     }
 
     public static class Conditions extends AbstractCriterionConditions {

@@ -19,10 +19,10 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
     public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "spell_cured")); // TODO: Figure out where this goes
 
     @Override
-    protected Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+    protected com.skycat.mystical.advancement.SpellCuredCriterion.Conditions conditionsFromJson(JsonObject obj, Optional<LootContextPredicate> playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
         NumberRange.DoubleRange contributionPercentage = NumberRange.DoubleRange.fromJson(obj.get("contributionPercentage")); // Ends up with NumberRange.FloatRange.ANY if obj.get(...) returns null.
         NumberRange.IntRange participants = NumberRange.IntRange.fromJson(obj.get("participants")); // Ends up with NumberRange.IntRange.ANY if obj.get(...) returns null.
-        return new Conditions(playerPredicate, contributionPercentage, participants);
+        return new com.skycat.mystical.advancement.SpellCuredCriterion.Conditions(playerPredicate, contributionPercentage, participants);
     }
 
     public Identifier getId() {
