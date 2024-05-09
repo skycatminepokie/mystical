@@ -17,6 +17,7 @@
     "MobEntityMixin",
     "RaidMixin",
     "SaplingBlockMixin",
+    "SaplingGeneratorMixin",
     "ServerWorldMixin",
     "SheepEntityMixin",
     "SkulkShriekerBlockEntityMixin",

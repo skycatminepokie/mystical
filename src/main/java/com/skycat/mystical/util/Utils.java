@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
@@ -45,6 +44,24 @@ public class Utils {
         }
     }, Class::getName); // Arguments are essentially Class::forNameOrThrow, Class::getName (forNameOrThrow doesn't exist, but that's what this is)
     public static final Codec<ChunkPos> CHUNK_POS_CODEC = Codec.LONG.xmap(ChunkPos::new, ChunkPos::toLong);
+
+    /**
+     * Get a random entry from a collection.
+     * @param values The collection to get from.
+     * @return A random entry, or {@code null} if the collection is empty (or it fails)
+     * @param <T> The type of object to get.
+     * @implNote Things are sorted by hash code, then a random is used to select one.
+     */
+    public static <T> @Nullable T getRandom(Collection<T> values) {
+        if (values.size() == 0) {
+            return null;
+        }
+        Optional<T> optionalT = values.stream() // Convert to stream
+                .sorted(Comparator.comparing(Object::hashCode)) // Sort it
+                .skip(Mystical.RANDOM.nextInt(values.size()) - 1) // Skip all before a random one
+                .findFirst(); // And grab the random one
+        return optionalT.orElse(null);
+    }
 
     /**
      * Create a Codec to store HashMaps as a List of Pairs.
