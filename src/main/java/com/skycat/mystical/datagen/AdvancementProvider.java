@@ -45,7 +45,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         false,
                         false
                 )
-                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()), MysticalCriteria.SPELL_CURED_CRITERION.create(new SpellCuredCriterion.Conditions(Optional.empty(), NumberRange.DoubleRange.atLeast(0.2))))
+                .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()), MysticalCriteria.SPELL_CURED_CRITERION.create(new SpellCuredCriterion.Conditions(null, NumberRange.DoubleRange.atLeast(0.2), null)))
                 .build(consumer, CURE_SPELL_ADVANCEMENT_ID);
         AdvancementEntry makeHaven = Advancement.Builder.createUntelemetered()
                 .display(
@@ -73,7 +73,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         false
                 )
                 .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()),
-                        MysticalCriteria.SPELL_CURED_CRITERION.create(new SpellCuredCriterion.Conditions(Optional.empty(), NumberRange.DoubleRange.atLeast(100), NumberRange.IntRange.exactly(1))))
+                        MysticalCriteria.SPELL_CURED_CRITERION.create(new SpellCuredCriterion.Conditions(null, NumberRange.DoubleRange.atLeast(100), NumberRange.IntRange.exactly(1))))
                 .parent(cureSpell)
                 .build(consumer, SOLO_SPELL_ADVANCEMENT_ID);
         AdvancementEntry doubleCure = Advancement.Builder.createUntelemetered()
@@ -88,7 +88,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         true
                 )
                 .criterion(String.valueOf(MysticalCriteria.SPELL_CURED_CRITERION.getId()),
-                        MysticalCriteria.SPELL_CURED_CRITERION.create(new SpellCuredCriterion.Conditions(Optional.empty(), NumberRange.DoubleRange.atLeast(200))))
+                        MysticalCriteria.SPELL_CURED_CRITERION.create(new SpellCuredCriterion.Conditions(null, NumberRange.DoubleRange.atLeast(200), null)))
                 .rewards(AdvancementRewards.Builder.experience(50))
                 .parent(soloSpell)
                 .build(consumer, DOUBLE_CURE_ADVANCEMENT_ID);
