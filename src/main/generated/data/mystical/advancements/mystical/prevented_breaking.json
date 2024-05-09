@@ -27,12 +27,9 @@
     "description": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:bedrock"
     },
-    "show_toast": true,
     "title": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.title"
     }
@@ -41,6 +38,5 @@
     [
       "mystical:prevented_breaking"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

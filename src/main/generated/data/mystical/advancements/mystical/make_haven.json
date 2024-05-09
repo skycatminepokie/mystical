@@ -6,16 +6,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "text.mystical.advancement.mystical.make_haven.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:stone_bricks"
     },
-    "show_toast": true,
     "title": {
       "translate": "text.mystical.advancement.mystical.make_haven.title"
     }
@@ -24,6 +20,5 @@
     [
       "mystical:make_haven"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

@@ -23,16 +23,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.diamond_ore.description"
     },
-    "frame": "task",
     "hidden": true,
     "icon": {
       "item": "minecraft:diamond_ore"
     },
-    "show_toast": true,
     "title": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.diamond_ore.title"
     }
@@ -41,6 +38,5 @@
     [
       "mystical:prevented_breaking"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

@@ -12,16 +12,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "text.mystical.advancement.mystical.solo_spell.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "minecraft:firework_rocket"
     },
-    "show_toast": true,
     "title": {
       "translate": "text.mystical.advancement.mystical.solo_spell.title"
     }
@@ -30,6 +27,5 @@
     [
       "mystical:spell_cured"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }

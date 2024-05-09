@@ -15,8 +15,6 @@
     "description": {
       "translate": "text.mystical.advancement.mystical.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:dragon_breath"
     },
@@ -29,6 +27,5 @@
     [
       "mystical:spell_cured"
     ]
-  ],
-  "sends_telemetry_event": false
+  ]
 }
