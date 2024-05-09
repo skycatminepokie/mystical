@@ -7,8 +7,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import com.mojang.brigadier.tree.ArgumentCommandNode;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.util.Utils;
@@ -35,7 +33,7 @@ public class MysticalCommandHandler implements CommandRegistrationCallback {
     protected static final SimpleCommandExceptionType EXECUTOR_NOT_PLAYER_EXCEPTION = new SimpleCommandExceptionType(Utils.translatable("text.mystical.command.generic.notAPlayer"));
     protected static final DynamicCommandExceptionType EXECUTOR_NOT_PLAYER_SOLUTION_EXCEPTION = new DynamicCommandExceptionType((solutionString) -> Utils.translatable("text.mystical.command.generic.notAPlayer.solution", solutionString));
     private static final Style CLICKABLE_TEMPLATE_STYLE = Style.EMPTY
-            .withHoverEvent(HoverEvent.Action.SHOW_TEXT.buildHoverEvent(Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")))
+            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Utils.translatable("text.mystical.command.generic.clickToRunTheCommand")))
             .withColor(Formatting.GREEN);
     protected static final Style MYSTICAL_HAVEN_HELP_CLICKABLE = makeClickableCommandStyle("/mystical haven help");
     protected static final Style MYSTICAL_SPELL_HELP_CLICKABLE = makeClickableCommandStyle("/mystical spell help");
