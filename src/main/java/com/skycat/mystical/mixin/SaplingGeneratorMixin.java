@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.Map;
 
 @Mixin(SaplingGenerator.class)
-public abstract class SaplingGeneratorMixin {
+public interface SaplingGeneratorMixin {
     @Accessor("GENERATORS")
-    public static Map<String, SaplingGenerator> getGenerators() {
+    static Map<String, SaplingGenerator> getGenerators() {
         throw new AssertionError();
     }
 }

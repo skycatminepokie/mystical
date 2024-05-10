@@ -58,7 +58,7 @@ public class Utils {
         }
         Optional<T> optionalT = values.stream() // Convert to stream
                 .sorted(Comparator.comparing(Object::hashCode)) // Sort it
-                .skip(Mystical.RANDOM.nextInt(values.size()) - 1) // Skip all before a random one
+                .skip(Mystical.RANDOM.nextInt(values.size() - 1)) // Skip all before a random one
                 .findFirst(); // And grab the random one
         return optionalT.orElse(null);
     }
