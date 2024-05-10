@@ -19,8 +19,8 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
     public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "spell_cured")); // TODO: Figure out where this goes
 
     @Override
-    public Codec<Conditions> getConditionsCodec() {
-        return Conditions.CODEC;
+    public Codec<com.skycat.mystical.advancement.SpellCuredCriterion.Conditions> getConditionsCodec() {
+        return com.skycat.mystical.advancement.SpellCuredCriterion.Conditions.CODEC;
     }
 
     public Identifier getId() {
@@ -32,11 +32,11 @@ public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.C
     }
 
     public static class Conditions implements AbstractCriterion.Conditions { // TODO: Turn this into a full-fledged matching system?
-        public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
-                LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player),
-                NumberRange.DoubleRange.CODEC.optionalFieldOf("contributionPercentage").forGetter(Conditions::getContributionPercentage),
-                NumberRange.IntRange.CODEC.optionalFieldOf("participants").forGetter(Conditions::getParticipants)
-        ).apply(instance, Conditions::new)));
+        public static final Codec<com.skycat.mystical.advancement.SpellCuredCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> (instance.group(
+                LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(com.skycat.mystical.advancement.SpellCuredCriterion.Conditions::player),
+                NumberRange.DoubleRange.CODEC.optionalFieldOf("contributionPercentage").forGetter(com.skycat.mystical.advancement.SpellCuredCriterion.Conditions::getContributionPercentage),
+                NumberRange.IntRange.CODEC.optionalFieldOf("participants").forGetter(com.skycat.mystical.advancement.SpellCuredCriterion.Conditions::getParticipants)
+        ).apply(instance, com.skycat.mystical.advancement.SpellCuredCriterion.Conditions::new)));
         protected final @Nullable NumberRange.DoubleRange contributionPercentage;
         protected final @Nullable NumberRange.IntRange participants;
         protected final @Nullable LootContextPredicate player;

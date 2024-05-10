@@ -15,8 +15,8 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
     public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "make_haven"));
 
     @Override
-    public Codec<Conditions> getConditionsCodec() {
-        return Conditions.CODEC;
+    public Codec<com.skycat.mystical.advancement.MakeHavenCriterion.Conditions> getConditionsCodec() {
+        return com.skycat.mystical.advancement.MakeHavenCriterion.Conditions.CODEC;
     }
 
     public Identifier getId() {
@@ -29,7 +29,7 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static class Conditions implements AbstractCriterion.Conditions {
-        public static final Codec<Conditions> CODEC = Codecs.createStrictOptionalFieldCodec(LootContextPredicate.CODEC, "player").xmap(Conditions::new, Conditions::player).codec();
+        public static final Codec<com.skycat.mystical.advancement.MakeHavenCriterion.Conditions> CODEC = Codecs.createStrictOptionalFieldCodec(LootContextPredicate.CODEC, "player").xmap(com.skycat.mystical.advancement.MakeHavenCriterion.Conditions::new, com.skycat.mystical.advancement.MakeHavenCriterion.Conditions::player).codec();
          protected Optional<LootContextPredicate> playerPredicate;
         public Conditions(Optional<LootContextPredicate> playerPredicate) {
             this.playerPredicate = playerPredicate;
