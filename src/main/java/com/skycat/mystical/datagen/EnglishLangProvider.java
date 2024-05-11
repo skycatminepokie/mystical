@@ -4,15 +4,18 @@ import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.registry.RegistryWrapper;
+
+import java.util.concurrent.CompletableFuture;
 
 class EnglishLangProvider extends FabricLanguageProvider {
 
-    protected EnglishLangProvider(FabricDataOutput dataOutput) {
-        super(dataOutput, "en_us");
+    protected EnglishLangProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperFuture) {
+        super(dataOutput, "en_us", wrapperFuture);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder tb) {
+    public void generateTranslations(RegistryWrapper.WrapperLookup wrapperFuture, TranslationBuilder tb) {
         // Config
         addConfig(tb, "title", "Mystical Config");
 

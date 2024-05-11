@@ -14,9 +14,11 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.entity.LootContextPredicate;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
@@ -28,12 +30,12 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     public static final String PREVENTED_BREAKING_ANCIENT_DEBRIS_ADVANCEMENT_ID = "mystical:mystical/prevented_breaking/ancient_debris";
     public static final String PREVENTED_BREAKING_DIAMOND_ORE_ADVANCEMENT_ID = "mystical:mystical/prevented_breaking/diamond_ore";
 
-    protected AdvancementProvider(FabricDataOutput output) {
-        super(output);
+    protected AdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> wrapperFuture) {
+        super(output, wrapperFuture);
     }
 
     @Override
-    public void generateAdvancement(Consumer<AdvancementEntry> consumer) {
+    public void generateAdvancement(RegistryWrapper.WrapperLookup wrapperLookup, Consumer<AdvancementEntry> consumer) {
         AdvancementEntry cureSpell = Advancement.Builder.createUntelemetered()
                 .display(
                         Items.DRAGON_BREATH,
