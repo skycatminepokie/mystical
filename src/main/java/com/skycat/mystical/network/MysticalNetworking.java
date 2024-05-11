@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -28,22 +29,11 @@ public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
     }
 
     private static CustomPayloadS2CPacket makeActiveSpellPacket(MinecraftServer server) {
-        PacketByteBuf packetBuf = PacketByteBufs.create();
-        NbtCompound nbtSpells = new NbtCompound();
-        NbtElement spells = Spell.CODEC
-                .listOf()
-                .encode(Mystical.getSpellHandler().getActiveSpells(), NbtOps.INSTANCE, NbtOps.INSTANCE.empty())
-                .getOrThrow();
-
-        nbtSpells.put(SPELLS_KEY, spells);
-
-        packetBuf.writeIdentifier(ACTIVE_SPELLS_PACKET_ID);
-        packetBuf.writeNbt(nbtSpells);
-        return new CustomPayloadS2CPacket(packetBuf);
+        return new CustomPayloadS2CPacket(new ActiveSpellsPacket(Mystical.getSpellHandler().getActiveSpells()));
     }
 
     @Override
     public void onPlayReady(ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server) {
-        handler.sendPacket(makeActiveSpellPacket(server));
+        handler.sendPacket(new CustomPayloadS2CPacket(new ActiveSpellsPacket(Mystical.getSpellHandler().getActiveSpells())););
     }
 }
