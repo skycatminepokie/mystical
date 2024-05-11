@@ -54,7 +54,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
@@ -64,7 +64,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true)
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
@@ -75,7 +75,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true)
         public void testSpell(TestContext context) {
             setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
@@ -85,7 +85,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true)
         public void testVanilla(TestContext context) {
             setUpTest(context);
             context.waitAndRun(75, () -> {

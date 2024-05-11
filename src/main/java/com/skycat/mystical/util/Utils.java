@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
@@ -242,7 +241,7 @@ public class Utils {
      * @param length       The length of the effect
      * @param level        The level (amplifier) of the effect.
      */
-    public static void giveStatusEffect(LivingEntity entity, StatusEffect statusEffect, int length, int level) {
+    public static void giveStatusEffect(LivingEntity entity, RegistryEntry<StatusEffect> statusEffect, int length, int level) {
         entity.addStatusEffect(new StatusEffectInstance(statusEffect, length, level));
     }
 
@@ -257,7 +256,7 @@ public class Utils {
      * @param addLevel If true and the entity already has the effect, it will increase the effect level by {@code level}
      *                 If false, the largest level (either new or old) will be kept
      */
-    public static void giveStatusEffect(LivingEntity entity, StatusEffect statusEffect, int length, boolean addLength, int level, boolean addLevel) {
+    public static void giveStatusEffect(LivingEntity entity, RegistryEntry<StatusEffect> statusEffect, int length, boolean addLength, int level, boolean addLevel) {
         StatusEffectInstance currentEffect = entity.getStatusEffect(statusEffect);
         if (currentEffect != null) {
             int currentEffectLength = currentEffect.getDuration();
@@ -344,10 +343,10 @@ public class Utils {
         return stat.getType().getName().copy();
     }
 
-    public static StatusEffect getRandomStatusEffect() {
+    public static RegistryEntry<StatusEffect> getRandomStatusEffect() {
         Optional<RegistryEntry.Reference<StatusEffect>> entry =  Registries.STATUS_EFFECT.getRandom(Mystical.MC_RANDOM);
         if (entry.isPresent()) {
-            return entry.get().value();
+            return entry.get();
         }
         log("Couldn't get a random status effect, using absorption instead. This probably shouldn't happen. Dumping stack.", LogLevel.ERROR);
         Thread.dumpStack(); // https://stackoverflow.com/a/945020

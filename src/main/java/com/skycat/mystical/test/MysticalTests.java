@@ -10,7 +10,6 @@ import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.*;
 
@@ -107,7 +106,7 @@ public class MysticalTests implements FabricGameTest {
     public Collection<TestFunction> getTestFunctions() {
         ArrayList<TestFunction> testFunctions = new ArrayList<>();
         addSpellTests(testFunctions);
-        testFunctions.sort(Comparator.comparing(TestFunction::getTemplateName));
+        testFunctions.sort(Comparator.comparing(TestFunction::templateName));
         return testFunctions;
     }
 

@@ -21,6 +21,8 @@ public class TestFunctionBuilder {
     private int requiredSuccesses = 1;
     private int maxAttempts = 1;
     private Consumer<TestContext> starter;
+    private boolean manualOnly = false;
+    private boolean skyAccess = false;
 
     /**
      * @param templatePath The name of the test.
@@ -42,11 +44,21 @@ public class TestFunctionBuilder {
     }
 
     public TestFunction build() {
-        return new TestFunction(batchId, templatePath, templateName, rotation, tickLimit, duration, required, requiredSuccesses, maxAttempts, starter);
+        return new TestFunction(batchId, templatePath, templateName, rotation, tickLimit, duration, required, manualOnly, maxAttempts, requiredSuccesses, skyAccess, starter);
     }
 
     public TestFunctionBuilder rotation(BlockRotation rotation) {
         this.rotation = rotation;
+        return this;
+    }
+
+    public TestFunctionBuilder manualOnly(boolean manualOnly) {
+        this.manualOnly = manualOnly;
+        return this;
+    }
+
+    public TestFunctionBuilder skyAccess(boolean skyAccess) {
+        this.skyAccess = skyAccess;
         return this;
     }
 

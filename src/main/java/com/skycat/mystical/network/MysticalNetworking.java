@@ -33,7 +33,7 @@ public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
         NbtElement spells = Spell.CODEC
                 .listOf()
                 .encode(Mystical.getSpellHandler().getActiveSpells(), NbtOps.INSTANCE, NbtOps.INSTANCE.empty())
-                .getOrThrow(false, (s) -> {throw new RuntimeException(s);});
+                .getOrThrow();
 
         nbtSpells.put(SPELLS_KEY, spells);
 
