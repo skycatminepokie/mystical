@@ -58,11 +58,11 @@ dependencies {
 	modImplementation include("xyz.nucleoid:server-translations-api:${project.server_translations_version}")
 
 	// Lombok
-	compileOnly 'org.projectlombok:lombok:1.18.24'
-	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	compileOnly 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-	testCompileOnly 'org.projectlombok:lombok:1.18.24'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+	testCompileOnly 'org.projectlombok:lombok:1.18.32'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 
 	// owo-lib
 	annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
