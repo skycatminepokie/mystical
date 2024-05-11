@@ -1,6 +1,5 @@
 package com.skycat.mystical.mixin;
 
-import F;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.MysticalTags;
 import com.skycat.mystical.spell.consequence.EnderTypeChangeConsequence;
