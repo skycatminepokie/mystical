@@ -1,6 +1,7 @@
 package com.skycat.mystical;
 
 import com.skycat.mystical.command.MysticalCommandHandler;
+import com.skycat.mystical.network.ActiveSpellsPacket;
 import com.skycat.mystical.network.MysticalNetworking;
 import com.skycat.mystical.spell.SpellHandler;
 import net.fabricmc.api.ModInitializer;
@@ -13,6 +14,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
@@ -66,6 +68,8 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
 
         ServerWorldEvents.LOAD.register(this);
         ServerLifecycleEvents.SERVER_STOPPING.register(EVENT_HANDLER);
+
+        PayloadTypeRegistry.playS2C().register(ActiveSpellsPacket.ID, ActiveSpellsPacket.CODEC);
     }
 
     @Override
