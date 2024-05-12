@@ -1,13 +1,9 @@
 package com.skycat.mystical.network;
 
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.spell.Spell;
-import net.fabricmc.fabric.api.networking.v1.*;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodecs;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -34,6 +30,6 @@ public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
 
     @Override
     public void onPlayReady(ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server) {
-        handler.sendPacket(new CustomPayloadS2CPacket(new ActiveSpellsPacket(Mystical.getSpellHandler().getActiveSpells())););
+        handler.sendPacket(new CustomPayloadS2CPacket(new ActiveSpellsPacket(Mystical.getSpellHandler().getActiveSpells())));
     }
 }
