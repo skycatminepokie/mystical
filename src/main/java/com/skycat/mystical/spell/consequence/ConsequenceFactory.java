@@ -1,7 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
@@ -28,8 +27,7 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
     @Getter public final String description;
     @Getter public final String firedMessage;
     @Getter public final Class<T> consequenceType;
-    @Getter public final MapCodec<T> codec;
-
+    @Getter public final Codec<T> codec;
 
     protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, Codec<T> codec) {
         this.shortName = shortName;
@@ -37,7 +35,7 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
         this.description = description;
         this.firedMessage = firedMessage;
         this.consequenceType = consequenceType;
-        this.codec = codec.fieldOf("consequenceType");
+        this.codec = codec;
     }
 
     public String getDescriptionKey() {
