@@ -79,6 +79,7 @@ class EnglishLangProvider extends FabricLanguageProvider {
                 SuperiorTabby - Code & texture contributor
                 Phaserock - Texture contributor
                 Implement - Texture contributor
+                lukebemish - DFU Master (basically fixed half my 1.20.5 porting problems)
                 Members of the Fabric Discord - Lots of programming help, and too many people to name. Thank you guys!
                 modmuss, player50, and the rest of the Fabric team - Fabric
                 Patbox @ Nucleoid - Server Translations API

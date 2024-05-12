@@ -28,7 +28,8 @@
       "translate": "text.mystical.advancement.mystical.prevented_breaking.description"
     },
     "icon": {
-      "item": "minecraft:bedrock"
+      "count": 1,
+      "id": "minecraft:bedrock"
     },
     "title": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.title"

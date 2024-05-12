@@ -16,7 +16,8 @@
       "translate": "text.mystical.advancement.mystical.description"
     },
     "icon": {
-      "item": "minecraft:dragon_breath"
+      "count": 1,
+      "id": "minecraft:dragon_breath"
     },
     "show_toast": false,
     "title": {

@@ -10,7 +10,8 @@
       "translate": "text.mystical.advancement.mystical.make_haven.description"
     },
     "icon": {
-      "item": "minecraft:stone_bricks"
+      "count": 1,
+      "id": "minecraft:stone_bricks"
     },
     "title": {
       "translate": "text.mystical.advancement.mystical.make_haven.title"

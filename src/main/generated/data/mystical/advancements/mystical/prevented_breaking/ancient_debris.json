@@ -19,7 +19,8 @@
     },
     "hidden": true,
     "icon": {
-      "item": "minecraft:ancient_debris"
+      "count": 1,
+      "id": "minecraft:ancient_debris"
     },
     "title": {
       "translate": "text.mystical.advancement.mystical.prevented_breaking.ancient_debris.title"

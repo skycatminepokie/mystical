@@ -17,7 +17,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "minecraft:firework_rocket"
+      "count": 1,
+      "id": "minecraft:firework_rocket"
     },
     "title": {
       "translate": "text.mystical.advancement.mystical.solo_spell.title"
