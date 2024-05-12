@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +25,7 @@ public class TurboChickensConsequence extends SpellConsequence { // TODO: Tests
                     "Turbo chickens",
                     "Turbo chicken activated",
                     TurboChickensConsequence.class,
-                    Codec.unit(TurboChickensConsequence::new));
+                    MapCodec.unit(TurboChickensConsequence::new));
         }
 
         @Override

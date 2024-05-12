@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +26,7 @@ public class FishingRodSwapConsequence extends SpellConsequence {
                     "Fish fish fishers.",
                     "Fishing rod pulling user",
                     FishingRodSwapConsequence.class,
-                    Codec.unit(new FishingRodSwapConsequence()));
+                    MapCodec.unit(new FishingRodSwapConsequence()));
         }
 
         @Override

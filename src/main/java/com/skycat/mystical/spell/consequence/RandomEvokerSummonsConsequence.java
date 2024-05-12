@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,12 @@ public class RandomEvokerSummonsConsequence extends SpellConsequence { // TODO: 
 
     public static class Factory extends ConsequenceFactory<RandomEvokerSummonsConsequence> {
         protected Factory() {
-            super("randomEvokerSummons", "Evokers Summon Random Mobs", "Evokers found some new friends!", "Evoker summoned random mob", RandomEvokerSummonsConsequence.class, Codec.unit(new RandomEvokerSummonsConsequence()));
+            super("randomEvokerSummons",
+                    "Evokers Summon Random Mobs",
+                    "Evokers found some new friends!",
+                    "Evoker summoned random mob",
+                    RandomEvokerSummonsConsequence.class,
+                    MapCodec.unit(new RandomEvokerSummonsConsequence()));
         }
 
         @Override

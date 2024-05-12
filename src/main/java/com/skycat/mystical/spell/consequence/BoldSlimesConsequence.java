@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +25,7 @@ public class BoldSlimesConsequence extends SpellConsequence { // TODO: Tests
                     "Slimes don't have social anxiety!",
                     "Allowing a slime to spawn somewhere",
                     BoldSlimesConsequence.class,
-                    Codec.unit(BoldSlimesConsequence::new));
+                    MapCodec.unit(BoldSlimesConsequence::new));
         }
 
         @Override

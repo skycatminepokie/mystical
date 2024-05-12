@@ -99,7 +99,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
                     "Are you a balloon?",
                     "Levitating entity",
                     LevitateConsequence.class,
-                    RecordCodecBuilder.create(instance -> instance.group(
+                    RecordCodecBuilder.mapCodec(instance -> instance.group(
                             Codec.INT.fieldOf("length").forGetter(LevitateConsequence::getLength),
                             Codec.INT.fieldOf("level").forGetter(LevitateConsequence::getLevel),
                             Utils.CLASS_CODEC.fieldOf("callbackType").forGetter(LevitateConsequence::getCallbackType)

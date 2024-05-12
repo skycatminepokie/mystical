@@ -10,7 +10,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
-import java.util.Optional;
+
 import java.util.Random;
 
 public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
@@ -35,7 +35,7 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
                     "%s go zoom",
                     "Gave a mob extra speed.",
                     TurboMobsConsequence.class,
-                    Registries.ENTITY_TYPE.getCodec().xmap(TurboMobsConsequence::new, TurboMobsConsequence::getEntityType));
+                    Registries.ENTITY_TYPE.getCodec().xmap(TurboMobsConsequence::new, TurboMobsConsequence::getEntityType).fieldOf("value"));
         }
 
         @Override

@@ -91,7 +91,7 @@ public class SoundSwapConsequence extends SpellConsequence {
                     "Ears broken",
                     "Swapped a sound",
                     SoundSwapConsequence.class,
-                    Codec.unboundedMap(Identifier.CODEC, Identifier.CODEC).xmap(SoundSwapConsequence::new, SoundSwapConsequence::getMap)
+                    Codec.unboundedMap(Identifier.CODEC, Identifier.CODEC).xmap(SoundSwapConsequence::new, SoundSwapConsequence::getMap).fieldOf("value")
             );
         }
 

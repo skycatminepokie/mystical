@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +26,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence { // TODO: Test
                     "Of mites and men",
                     "Swapped ender entity type",
                     EnderTypeChangeConsequence.class,
-                    Codec.unit(EnderTypeChangeConsequence::new));
+                    MapCodec.unit(EnderTypeChangeConsequence::new));
         }
 
         @Override

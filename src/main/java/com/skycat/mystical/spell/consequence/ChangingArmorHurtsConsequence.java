@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
 import lombok.NonNull;
@@ -42,7 +42,7 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
                     "Reverse thorns",
                     "Armor changed, applying damage",
                     ChangingArmorHurtsConsequence.class,
-                    Codec.unit(ChangingArmorHurtsConsequence::new));
+                    MapCodec.unit(ChangingArmorHurtsConsequence::new));
         }
 
         @Override

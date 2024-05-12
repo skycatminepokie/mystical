@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +26,7 @@ public class NoFuseConsequence extends SpellConsequence { // TODO: Tests
                     "Creepers don't hesitate anymore.",
                     "Destroyed a fuse",
                     NoFuseConsequence.class,
-                    Codec.unit(NoFuseConsequence::new));
+                    MapCodec.unit(NoFuseConsequence::new));
         }
 
         @Override

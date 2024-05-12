@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
 import lombok.NonNull;
@@ -30,7 +30,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
                     "Iron + Pumpkin says \"Here, have pain!\"",
                     "Golem is aggressive",
                     AggressiveGolemsConsequence.class,
-                    Codec.unit(AggressiveGolemsConsequence::new));
+                    MapCodec.unit(AggressiveGolemsConsequence::new));
         }
 
         @Override

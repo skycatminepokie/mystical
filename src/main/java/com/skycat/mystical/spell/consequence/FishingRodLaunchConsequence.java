@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,7 @@ public class FishingRodLaunchConsequence extends SpellConsequence { // TODO: Tes
                     "Hehe. Rod make cow go zoom.",
                     "Fishing rod power multiplied",
                     FishingRodLaunchConsequence.class,
-                    Codec.unit(FishingRodLaunchConsequence::new));
+                    MapCodec.unit(FishingRodLaunchConsequence::new));
         }
 
         @Override

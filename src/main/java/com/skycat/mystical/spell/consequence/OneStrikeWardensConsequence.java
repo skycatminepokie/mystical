@@ -1,9 +1,9 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
-import com.skycat.mystical.util.Utils;
 import com.skycat.mystical.test.TestUtils;
+import com.skycat.mystical.util.Utils;
 import lombok.NonNull;
 import net.minecraft.block.entity.SculkShriekerWarningManager;
 import net.minecraft.entity.EntityType;
@@ -39,7 +39,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
                     "Mr. Clompy Shoes returns!",
                     "Hah. New warden, nerd.",
                     OneStrikeWardensConsequence.class,
-                    Codec.unit(OneStrikeWardensConsequence::new));
+                    MapCodec.unit(OneStrikeWardensConsequence::new));
         }
 
         @Override

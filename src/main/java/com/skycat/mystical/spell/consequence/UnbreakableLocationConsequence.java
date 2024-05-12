@@ -61,7 +61,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
                     "WorldGuard but awful",
                     "Prevented a block from being broken.",
                     UnbreakableLocationConsequence.class,
-                    Codec.LONG.xmap(UnbreakableLocationConsequence::new, UnbreakableLocationConsequence::getSeed));
+                    Codec.LONG.xmap(UnbreakableLocationConsequence::new, UnbreakableLocationConsequence::getSeed).fieldOf("value"));
         }
 
         @Override

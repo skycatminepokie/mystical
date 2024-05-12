@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +29,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: Tests
                     "The saplings are spies!",
                     "Random tree generated",
                     RandomTreeTypeConsequence.class,
-                    Codec.unit(RandomTreeTypeConsequence::new));
+                    MapCodec.unit(RandomTreeTypeConsequence::new));
         }
 
         @Override

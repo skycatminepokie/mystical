@@ -28,7 +28,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence { // TODO: 
                     "Creepers go boom. But more.",
                     "Creeper explosion multiplied.",
                     BigCreeperExplosionConsequence.class,
-                    Codec.DOUBLE.xmap(BigCreeperExplosionConsequence::new, BigCreeperExplosionConsequence::getDifficulty));
+                    Codec.DOUBLE.xmap(BigCreeperExplosionConsequence::new, BigCreeperExplosionConsequence::getDifficulty).fieldOf("value"));
         }
 
         @NotNull

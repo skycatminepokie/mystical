@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
 import lombok.NonNull;
@@ -32,7 +32,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
                     "Mobs bought some sunscreen",
                     "Said no this mob doesn't burn",
                     DisableDaylightBurningConsequence.class,
-                    Codec.unit(DisableDaylightBurningConsequence::new));
+                    MapCodec.unit(DisableDaylightBurningConsequence::new));
         }
 
         @Override

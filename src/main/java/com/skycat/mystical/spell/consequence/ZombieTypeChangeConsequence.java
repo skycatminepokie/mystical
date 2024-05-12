@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence { // TODO: Tes
                     "Zombies are having a wardrobe crisis",
                     "Zombie type changed.",
                     ZombieTypeChangeConsequence.class,
-                    Codec.unit(ZombieTypeChangeConsequence::new));
+                    MapCodec.unit(ZombieTypeChangeConsequence::new));
         }
 
         @Override

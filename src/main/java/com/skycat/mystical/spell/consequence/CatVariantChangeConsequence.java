@@ -1,6 +1,6 @@
 package com.skycat.mystical.spell.consequence;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
 import com.skycat.mystical.util.event.CatEntityEvents;
@@ -44,7 +44,7 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
                     "We change coats, so why can't cats do the same?",
                     "Changed cat variant",
                     CatVariantChangeConsequence.class,
-                    Codec.unit(CatVariantChangeConsequence::new));
+                    MapCodec.unit(CatVariantChangeConsequence::new));
         }
 
         @Override
