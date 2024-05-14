@@ -40,11 +40,8 @@ public class TestUtils {
     public static void havenAll(TestContext context) {
         // Find chunks corresponding to opposite corners
         Box box = ((TestContextMixin) context).mystical_getTestBox();
-        Utils.log("Box: " + box);
         ChunkPos min = new ChunkPos(new BlockPos((int) box.minX, 0, (int) box.minZ));
         ChunkPos max = new ChunkPos(new BlockPos((int) box.maxX, 0, (int) box.maxZ));
-        Utils.log("Chunk min: " + min);
-        Utils.log("Chunk max: " + max);
         int x = min.x; // Starting at the min x
         int z = min.z; // Starting at the min z
         // Haven all chunks in that square
