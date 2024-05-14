@@ -28,7 +28,7 @@ public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Con
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static class Conditions implements AbstractCriterion.Conditions {
-        public static final Codec<MakeHavenCriterion.Conditions> CODEC = LootContextPredicate.CODEC.optionalFieldOf("player").xmap(Conditions::new, Conditions::player).codec();
+        public static final Codec<MakeHavenCriterion.Conditions> CODEC = LootContextPredicate.CODEC.optionalFieldOf("player").xmap(com.skycat.mystical.advancement.MakeHavenCriterion.Conditions::new, com.skycat.mystical.advancement.MakeHavenCriterion.Conditions::player).codec();
          protected Optional<LootContextPredicate> playerPredicate;
         public Conditions(Optional<LootContextPredicate> playerPredicate) {
             this.playerPredicate = playerPredicate;

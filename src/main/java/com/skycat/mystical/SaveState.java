@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
+import java.util.Optional;
 import lombok.Getter;
 import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.nbt.NbtCompound;

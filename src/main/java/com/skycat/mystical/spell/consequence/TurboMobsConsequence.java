@@ -10,7 +10,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
-
+import java.util.Optional;
 import java.util.Random;
 
 public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests

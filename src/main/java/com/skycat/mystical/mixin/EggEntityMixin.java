@@ -33,7 +33,7 @@ public abstract class EggEntityMixin extends ThrownItemEntity {
         Utils.percentChance(Mystical.CONFIG.mysteryEggs.chance())) {
             EntityType<?> randomType = Utils.getRandomEntryFromTag(Registries.ENTITY_TYPE, MysticalTags.RANDOM_EGG_SPAWNABLE);
             if (randomType != null) {
-                Entity randomEntity = randomType.create(chicken.getWorld());
+                Entity randomEntity = randomType.create(chicken.method_48926());
                 if (randomEntity != null) {
                     randomEntity.refreshPositionAndAngles(getX(), getY(), getZ(), getYaw(), 0);
                     chicken.discard();
