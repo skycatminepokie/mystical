@@ -1,2 +1,1 @@
-- Updated to 1.20.5 - big thanks to `@lukebemish`
-- Temporarily disabled spell display - it broke bad with the update
+- Updated to 1.20.6
