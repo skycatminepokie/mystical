@@ -1,7 +1,6 @@
 package com.skycat.mystical.spell.cure;
 
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -13,7 +12,6 @@ import net.minecraft.text.MutableText;
 import java.util.HashMap;
 import java.util.UUID;
 
-@Getter
 public class StatBackedSpellCure extends SpellCure {
     private final Stat stat;
 
@@ -58,5 +56,9 @@ public class StatBackedSpellCure extends SpellCure {
             text.append(((Item) statValue).getName());
             text.append(")");
         }
+    }
+
+    public Stat getStat() {
+        return this.stat;
     }
 }

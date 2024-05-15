@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.cure;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,10 +12,10 @@ import java.util.UUID;
 
 @SuppressWarnings("rawtypes")
 public abstract class SpellCure {
-    @Getter protected int contributionGoal;
-    @Getter protected final Class cureType;
-    @Getter public final CureType cureTypeId;
-    @Getter private int contributionTotal = 0;
+    protected int contributionGoal;
+    protected final Class cureType;
+    public final CureType cureTypeId;
+    private int contributionTotal = 0;
     public static final Codec<SpellCure> CODEC = CureTypes.TYPE_CODEC.dispatch("cureTypeID", SpellCure::getCureTypeId, CureType::getCodec);
 
     /**
@@ -95,4 +94,19 @@ public abstract class SpellCure {
         return contributions.size();
     }
 
+    public int getContributionGoal() {
+        return this.contributionGoal;
+    }
+
+    public Class getCureType() {
+        return this.cureType;
+    }
+
+    public CureType getCureTypeId() {
+        return this.cureTypeId;
+    }
+
+    public int getContributionTotal() {
+        return this.contributionTotal;
+    }
 }

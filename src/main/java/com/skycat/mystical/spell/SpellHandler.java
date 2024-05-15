@@ -7,8 +7,6 @@ import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
 import com.skycat.mystical.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.util.event.CatEntityEvents;
-import lombok.Getter;
-import lombok.Setter;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -49,18 +47,20 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         ServerEntityCombatEvents.AfterKilledOtherEntity,
         AttackBlockCallback,
         CatEntityEvents.Eat,
-        ServerEntityEvents.EquipmentChange
-{
+        ServerEntityEvents.EquipmentChange {
     /**
      * @implNote Saving/loading does not ensure that the order of spells will be retained.
      */
     // This saves the active spells by taking the spell codec, turning it into a list codec, then maps List<Spell> and SpellHandler
     public static final Codec<SpellHandler> CODEC = Spell.CODEC.listOf().xmap(SpellHandler::new, SpellHandler::getActiveSpells); // Using SpellHandler::new just feels wrong since there's multiple
-    @Getter private static final File SAVE_FILE = new File("config/spellHandler.json");
+    private static final File SAVE_FILE = new File("config/spellHandler.json");
 
-    @Getter private final ArrayList<Spell> activeSpells; // TODO: Refactor out the getter, use wrappers instead
-    @Getter @Setter
+    private final ArrayList<Spell> activeSpells; // TODO: Refactor out the getter, use wrappers instead
     private boolean dirty;
+
+    public static File getSAVE_FILE() {
+        return SpellHandler.SAVE_FILE;
+    }
 
     public void onChanged() {
         dirty = true;
@@ -106,6 +106,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
     /**
      * Used for finding active spells with a particular consequence type.
      * This is not the same as a handler.
+     *
      * @param clazz The class to check for
      * @return An ArrayList of matching spells
      * @see SpellHandler#spellsOfHandler
@@ -153,9 +154,10 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     /**
      * Applies spells of type {@link ServerPlayerEvents.AfterRespawn}
+     *
      * @param oldPlayer the old player
      * @param newPlayer the new player
-     * @param alive whether the old player is still alive
+     * @param alive     whether the old player is still alive
      */
     @Override
     public void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
@@ -166,10 +168,11 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     /**
      * Applies spells of type {@link PlayerBlockBreakEvents.Before}
-     * @param world the world in which the block is broken
-     * @param player the player breaking the block
-     * @param pos the position at which the block is broken
-     * @param state the block state <strong>before</strong> the block is broken
+     *
+     * @param world       the world in which the block is broken
+     * @param player      the player breaking the block
+     * @param pos         the position at which the block is broken
+     * @param state       the block state <strong>before</strong> the block is broken
      * @param blockEntity the block entity <strong>before</strong> the block is broken, can be {@code null}
      * @return {@code false} to cancel the breaking, {@code true} to leave it alone.
      * @implNote All spells will be run, even if it is cancelled in one of them.
@@ -179,7 +182,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         boolean returnValue = true;
         for (Spell spell : spellsOfHandler(PlayerBlockBreakEvents.Before.class)) {
             // Keep these in order. This way, the consequence triggers, even if returnValue is false. Otherwise, it gets short-circuited.
-            returnValue = ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity) && returnValue  ;
+            returnValue = ((PlayerBlockBreakEvents.Before) spell.getConsequence()).beforeBlockBreak(world, player, pos, state, blockEntity) && returnValue;
         }
         return returnValue;
     }
@@ -256,6 +259,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     /**
      * Removes all spells that have met their cure condition
+     *
      * @return The number of spells cured
      */
     public int removeCuredSpells(MinecraftServer server) {
@@ -267,7 +271,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
             if (cure.isSatisfied()) {
                 spell.onCured(200, 100, server); // TODO: modify based on cure difficulty
                 li.remove();
-                removed ++;
+                removed++;
             }
         }
         onChanged();
@@ -284,4 +288,15 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return activeSpells.remove(spell);
     }
 
+    public ArrayList<Spell> getActiveSpells() {
+        return this.activeSpells;
+    }
+
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
 }

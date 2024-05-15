@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
+import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.MinecraftServer;
@@ -13,8 +14,8 @@ import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 
 public class SaveState extends PersistentState {
-    @Getter protected HavenManager havenManager;
-    @Getter protected SpellHandler spellHandler;
+    protected HavenManager havenManager;
+    protected SpellHandler spellHandler;
     public static final Codec<SaveState> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             HavenManager.CODEC.fieldOf("havenManager").forGetter(SaveState::getHavenManager),
             SpellHandler.CODEC.fieldOf("spellHandler").forGetter(SaveState::getSpellHandler)
@@ -29,6 +30,7 @@ public class SaveState extends PersistentState {
         this.havenManager = havenManager;
         this.spellHandler = spellHandler;
     }
+
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
         nbt.put("mystical_save", CODEC.encode(this, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).getOrThrow(false, s -> Utils.log("Failed to save mystical data.")));
@@ -61,5 +63,13 @@ public class SaveState extends PersistentState {
             spellHandler.setDirty(false);
         }
         super.setDirty(dirty);
+    }
+
+    public HavenManager getHavenManager() {
+        return this.havenManager;
+    }
+
+    public SpellHandler getSpellHandler() {
+        return this.spellHandler;
     }
 }
