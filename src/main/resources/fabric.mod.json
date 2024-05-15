@@ -47,6 +47,7 @@
     "owo-lib": ">=0.12.8+1.20.5"
   },
   "suggests": {
-    "modmenu": "*"
+    "modmenu": "*",
+    "polymer-core": "*"
   }
 }
