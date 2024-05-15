@@ -3,19 +3,18 @@ package com.skycat.mystical.spell.consequence;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
-import java.util.Optional;
+
 import java.util.Random;
 
 public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
     public static final Factory FACTORY = new Factory();
-    @Getter public EntityType<?> entityType;
+    public EntityType<?> entityType;
 
     public TurboMobsConsequence(EntityType<?> entityType) {
         super(TurboMobsConsequence.class, null, 50d);
@@ -25,6 +24,10 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
     @Override
     public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
+    }
+
+    public EntityType<?> getEntityType() {
+        return this.entityType;
     }
 
     public static class Factory extends ConsequenceFactory<TurboMobsConsequence> {

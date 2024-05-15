@@ -6,15 +6,12 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Map;
 import java.util.UUID;
 
-@Getter @Setter
 public class Spell {
     // https://forge.gemwire.uk/wiki/Codecs
     public static final Codec<Spell> CODEC = RecordCodecBuilder.create(spellInstance -> spellInstance.group(
@@ -31,8 +28,9 @@ public class Spell {
 
     /**
      * Award power to players based on their contributions.
+     *
      * @param totalPower The total power to distribute among contributors.
-     * @param max The maximum power to give to any one contributor.
+     * @param max        The maximum power to give to any one contributor.
      */
     public void onCured(int totalPower, int max, MinecraftServer server) {
         Map<UUID, Integer> contributions = cure.getContributionCopy();
@@ -45,5 +43,21 @@ public class Spell {
             // Formula: min(totalPower * percentContributed, max)
             Mystical.getHavenManager().addPower(uuid, (int) Math.min(totalPower * ((double) contributions.get(uuid) / cure.getContributionTotal()), max));
         }
+    }
+
+    public SpellConsequence getConsequence() {
+        return this.consequence;
+    }
+
+    public SpellCure getCure() {
+        return this.cure;
+    }
+
+    public void setConsequence(SpellConsequence consequence) {
+        this.consequence = consequence;
+    }
+
+    public void setCure(SpellCure cure) {
+        this.cure = cure;
     }
 }

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import lombok.NonNull;
 import net.minecraft.test.GameTest;
 import net.minecraft.text.MutableText;
@@ -23,12 +22,12 @@ import java.util.Random;
 public abstract class ConsequenceFactory<T extends SpellConsequence> {
     public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName);
     public static final String CONSEQUENCE_TRANSLATION_PREFIX = "text.mystical.consequence.";
-    @Getter public final String shortName;
-    @Getter public final String longName;
-    @Getter public final String description;
-    @Getter public final String firedMessage;
-    @Getter public final Class<T> consequenceType;
-    @Getter public final MapCodec<T> codec;
+    public final String shortName;
+    public final String longName;
+    public final String description;
+    public final String firedMessage;
+    public final Class<T> consequenceType;
+    public final MapCodec<T> codec;
 
     protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, MapCodec<T> codec) {
         this.shortName = shortName;
@@ -99,5 +98,29 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
      */
     public String translationKey() {
         return CONSEQUENCE_TRANSLATION_PREFIX + getShortName();
+    }
+
+    public String getShortName() {
+        return this.shortName;
+    }
+
+    public String getLongName() {
+        return this.longName;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getFiredMessage() {
+        return this.firedMessage;
+    }
+
+    public Class<T> getConsequenceType() {
+        return this.consequenceType;
+    }
+
+    public MapCodec<T> getCodec() {
+        return this.codec;
     }
 }

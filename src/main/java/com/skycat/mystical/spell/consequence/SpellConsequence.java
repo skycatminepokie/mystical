@@ -1,11 +1,9 @@
 package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
-import lombok.Getter;
 import lombok.NonNull;
 
 @SuppressWarnings("rawtypes")
-@Getter
 public abstract class SpellConsequence {
     public static final Codec<SpellConsequence> CODEC = ConsequenceFactory.FACTORY_CODEC.dispatch("type", SpellConsequence::getFactory, ConsequenceFactory::getCodec);
     private final Class consequenceType;
@@ -29,8 +27,20 @@ public abstract class SpellConsequence {
      */
     @NonNull
     public abstract ConsequenceFactory<? extends SpellConsequence> getFactory(); // Finding a way to force ? to be this.getClass() would be nice
+
     public <T> boolean supportsEvent(Class<T> eventClass) {
         return eventClass.isInstance(this);
     }
 
+    public Class getConsequenceType() {
+        return this.consequenceType;
+    }
+
+    public Class getCallbackType() {
+        return this.callbackType;
+    }
+
+    public double getDifficulty() {
+        return this.difficulty;
+    }
 }

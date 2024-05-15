@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +19,7 @@ import java.util.Random;
 
 public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback { // TODO: Tests
     public static final Factory FACTORY = new Factory();
-    @Getter private final long seed;
+    private final long seed;
     /**
      * The seed will be set every time we pull from this. That needs to be done anyway, so we have a single object to do it.
      */
@@ -52,6 +51,10 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
             return ActionResult.FAIL;
         }
         return ActionResult.PASS;
+    }
+
+    public long getSeed() {
+        return this.seed;
     }
 
     public static class Factory extends ConsequenceFactory<UnbreakableLocationConsequence> {
