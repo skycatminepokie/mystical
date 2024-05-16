@@ -5,6 +5,7 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
 import com.skycat.mystical.util.event.CatEntityEvents;
 import lombok.NonNull;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -44,6 +45,7 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
                     "We change coats, so why can't cats do the same?",
                     "Changed cat variant",
                     CatVariantChangeConsequence.class,
+                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(CatVariantChangeConsequence::new));
         }
 

@@ -3,6 +3,7 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -26,6 +27,7 @@ public class EnderTypeChangeConsequence extends SpellConsequence { // TODO: Test
                     "Of mites and men",
                     "Swapped ender entity type",
                     EnderTypeChangeConsequence.class,
+                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(EnderTypeChangeConsequence::new));
         }
 

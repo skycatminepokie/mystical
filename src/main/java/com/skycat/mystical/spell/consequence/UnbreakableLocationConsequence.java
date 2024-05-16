@@ -7,6 +7,7 @@ import com.skycat.mystical.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -61,6 +62,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
                     "WorldGuard but awful",
                     "Prevented a block from being broken.",
                     UnbreakableLocationConsequence.class,
+                    StatusEffectCategory.HARMFUL,
                     Codec.LONG.xmap(UnbreakableLocationConsequence::new, UnbreakableLocationConsequence::getSeed).fieldOf("value"));
         }
 

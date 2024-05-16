@@ -8,6 +8,7 @@ import lombok.NonNull;
 import net.minecraft.block.entity.SculkShriekerWarningManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.GameTestException;
@@ -39,6 +40,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
                     "Mr. Clompy Shoes returns!",
                     "Hah. New warden, nerd.",
                     OneStrikeWardensConsequence.class,
+                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(OneStrikeWardensConsequence::new));
         }
 

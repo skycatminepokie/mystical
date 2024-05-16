@@ -3,6 +3,7 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -25,6 +26,7 @@ public class TurboChickensConsequence extends SpellConsequence { // TODO: Tests
                     "Turbo chickens",
                     "Turbo chicken activated",
                     TurboChickensConsequence.class,
+                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(TurboChickensConsequence::new));
         }
 

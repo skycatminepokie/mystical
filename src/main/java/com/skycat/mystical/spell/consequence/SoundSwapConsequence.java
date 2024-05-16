@@ -5,6 +5,7 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
 import lombok.NonNull;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
@@ -91,6 +92,7 @@ public class SoundSwapConsequence extends SpellConsequence {
                     "Ears broken",
                     "Swapped a sound",
                     SoundSwapConsequence.class,
+                    StatusEffectCategory.HARMFUL,
                     Codec.unboundedMap(Identifier.CODEC, Identifier.CODEC).xmap(SoundSwapConsequence::new, SoundSwapConsequence::getMap).fieldOf("value")
             );
         }
