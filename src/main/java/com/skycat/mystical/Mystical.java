@@ -3,6 +3,7 @@ package com.skycat.mystical;
 import com.skycat.mystical.command.MysticalCommandHandler;
 import com.skycat.mystical.network.ActiveSpellsPacket;
 import com.skycat.mystical.network.MysticalNetworking;
+import com.skycat.mystical.polymer.PolymerHelper;
 import com.skycat.mystical.spell.SpellHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -16,6 +17,7 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.CheckedRandom;
@@ -35,6 +37,7 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
     public static final MysticalNetworking NETWORKING_HANDLER = new MysticalNetworking();
     public static SaveState save;
     private static boolean isClientWorld = true;
+    private static final boolean IS_POLYMER_LOADED = FabricLoader.getInstance().isModLoaded("polymer-core");
     static {
         MysticalTags.init();
         MysticalCriteria.init();
@@ -64,6 +67,10 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
 
     @Override
     public void onInitialize() {
+        if (isPolymerLoaded()) {
+            PolymerHelper.init();
+        }
+
         CommandRegistrationCallback.EVENT.register(COMMAND_HANDLER);
 
         ServerWorldEvents.LOAD.register(this);
@@ -89,5 +96,13 @@ public class Mystical implements ModInitializer, ServerWorldEvents.Load {
         AttackBlockCallback.EVENT.register(getSpellHandler());
         ServerEntityEvents.EQUIPMENT_CHANGE.register(getSpellHandler());
         ServerPlayConnectionEvents.JOIN.register(NETWORKING_HANDLER);
+    }
+
+    /**
+     * Returns {@code true} if <a href="https://polymer.pb4.eu/">Polymer</a> is loaded. Avoid calling this until all mods are loaded.
+     * @return
+     */
+    public static boolean isPolymerLoaded() {
+        return IS_POLYMER_LOADED;
     }
 }

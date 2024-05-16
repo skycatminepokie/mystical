@@ -6,6 +6,7 @@ import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.test.GameTest;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
@@ -28,14 +29,16 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
     @Getter public final String description;
     @Getter public final String firedMessage;
     @Getter public final Class<T> consequenceType;
+    @Getter public final StatusEffectCategory statusEffectCategory;
     @Getter public final MapCodec<T> codec;
 
-    protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, MapCodec<T> codec) {
+    protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, StatusEffectCategory statusEffectCategory, MapCodec<T> codec) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.firedMessage = firedMessage;
         this.consequenceType = consequenceType;
+        this.statusEffectCategory = statusEffectCategory;
         this.codec = codec;
     }
 
