@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public abstract class InGameHudMixin {
     @ModifyArg(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V"))
     private Identifier mystical_useSpellOutline(Identifier original, @Local StatusEffectInstance statusEffectInstance) {
-        if (statusEffectInstance.getEffectType() instanceof ConsequenceStatusEffect) {
+        if (statusEffectInstance.getEffectType() instanceof ConsequenceStatusEffect) { // TODO: This doesn't work. Need to figure out why.
             return MysticalClient.SPELL_OUTLINE;
         }
         return original;
