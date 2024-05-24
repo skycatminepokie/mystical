@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
@@ -21,13 +20,13 @@ import java.util.Random;
  */
 public class SoundSwapConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
-    protected final Map<Identifier, @NonNull Identifier> soundToSoundMap;
+    protected final Map<Identifier, @NotNull Identifier> soundToSoundMap;
 
     protected SoundSwapConsequence(int swaps) {
         this(makeNewSoundMap(swaps));
     }
 
-    protected SoundSwapConsequence(Map<Identifier, @NonNull Identifier> soundToSoundMap) {
+    protected SoundSwapConsequence(Map<Identifier, @NotNull Identifier> soundToSoundMap) {
         super(SoundSwapConsequence.class, null, 1d);
         this.soundToSoundMap = soundToSoundMap;
     }
@@ -39,8 +38,8 @@ public class SoundSwapConsequence extends SpellConsequence {
      * @return A new map.
      * @implNote If a random sound cannot be retrieved (key or value), that entry will be skipped. This may result in a map of size < {@code size}.
      */
-    protected static HashMap<Identifier, @NonNull Identifier> makeNewSoundMap(int size) {
-        HashMap<Identifier, @NonNull Identifier> map = new HashMap<>(size);
+    protected static HashMap<Identifier, @NotNull Identifier> makeNewSoundMap(int size) {
+        HashMap<Identifier, @NotNull Identifier> map = new HashMap<>(size);
         for (int i = 0; i < size; i++) {
             RegistryEntry<SoundEvent> key = Utils.getRandomRegistryEntry(Registries.SOUND_EVENT);
             RegistryEntry<SoundEvent> value = Utils.getRandomRegistryEntry(Registries.SOUND_EVENT);
@@ -54,11 +53,11 @@ public class SoundSwapConsequence extends SpellConsequence {
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
-    protected Map<Identifier, @NonNull Identifier> getMap() {
+    protected Map<Identifier, @NotNull Identifier> getMap() {
         return soundToSoundMap;
     }
 
@@ -101,7 +100,7 @@ public class SoundSwapConsequence extends SpellConsequence {
         }
 
         @Override
-        public @NotNull SoundSwapConsequence make(@NonNull Random random, double points) {
+        public @NotNull SoundSwapConsequence make(@NotNull Random random, double points) {
             return new SoundSwapConsequence(Mystical.CONFIG.soundSwap.numberOfSwaps());
         }
     }

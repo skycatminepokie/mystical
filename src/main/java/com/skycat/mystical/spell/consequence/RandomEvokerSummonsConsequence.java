@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -14,7 +13,7 @@ public class RandomEvokerSummonsConsequence extends SpellConsequence { // TODO: 
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -24,7 +23,7 @@ public class RandomEvokerSummonsConsequence extends SpellConsequence { // TODO: 
         }
 
         @Override
-        public @NotNull RandomEvokerSummonsConsequence make(@NonNull Random random, double points) {
+        public @NotNull RandomEvokerSummonsConsequence make(@NotNull Random random, double points) {
             return new RandomEvokerSummonsConsequence();
         }
 

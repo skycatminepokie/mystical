@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -30,7 +29,7 @@ public class SkeletonTypeChangeConsequence extends SpellConsequence { // TODO: T
         }
 
         @Override
-        public @NotNull SkeletonTypeChangeConsequence make(@NonNull Random random, double points) {
+        public @NotNull SkeletonTypeChangeConsequence make(@NotNull Random random, double points) {
             return new SkeletonTypeChangeConsequence();
         }
 

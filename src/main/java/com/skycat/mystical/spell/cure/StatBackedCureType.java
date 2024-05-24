@@ -3,14 +3,14 @@ package com.skycat.mystical.spell.cure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.util.StatCodec;
-import lombok.NonNull;
 import net.minecraft.util.Uuids;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 public class StatBackedCureType implements CureType<StatBackedSpellCure> {
     @Override
-    public @NonNull Codec<StatBackedSpellCure> getCodec() {
+    public @NotNull Codec<StatBackedSpellCure> getCodec() {
         return RecordCodecBuilder.create(spellCureInstance -> spellCureInstance.group(
                 Codec.INT.fieldOf("contributionGoal").forGetter(StatBackedSpellCure::getContributionGoal),
                 StatCodec.INSTANCE.fieldOf("stat").forGetter(StatBackedSpellCure::getStat),

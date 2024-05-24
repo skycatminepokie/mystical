@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
 import com.skycat.mystical.util.event.CatEntityEvents;
-import lombok.NonNull;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.CatVariant;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,7 +56,7 @@ public class CatVariantChangeConsequence extends SpellConsequence implements Cat
         }
 
         @Override
-        public @NotNull CatVariantChangeConsequence make(@NonNull Random random, double points) {
+        public @NotNull CatVariantChangeConsequence make(@NotNull Random random, double points) {
             return new CatVariantChangeConsequence();
         }
 

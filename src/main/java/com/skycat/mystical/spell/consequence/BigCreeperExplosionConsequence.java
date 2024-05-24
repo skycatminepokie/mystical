@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -33,7 +32,7 @@ public class BigCreeperExplosionConsequence extends SpellConsequence { // TODO: 
 
         @NotNull
         @Override
-        public BigCreeperExplosionConsequence make(@NonNull Random random, double points) {
+        public BigCreeperExplosionConsequence make(@NotNull Random random, double points) {
             return new BigCreeperExplosionConsequence(DIFFICULTY_FUNCTION.apply(Mystical.CONFIG.bigCreeperExplosion.multiplier()));
         }
 

@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -31,7 +30,7 @@ public class ZombieTypeChangeConsequence extends SpellConsequence { // TODO: Tes
         }
 
         @Override
-        public @NotNull ZombieTypeChangeConsequence make(@NonNull Random random, double points) {
+        public @NotNull ZombieTypeChangeConsequence make(@NotNull Random random, double points) {
             return new ZombieTypeChangeConsequence();
         }
 

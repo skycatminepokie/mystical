@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
-import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
@@ -19,7 +18,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -34,7 +33,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         }
 
         @Override
-        public @NotNull AggressiveGolemsConsequence make(@NonNull Random random, double points) {
+        public @NotNull AggressiveGolemsConsequence make(@NotNull Random random, double points) {
             return new AggressiveGolemsConsequence();
         }
 
