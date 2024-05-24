@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -35,7 +34,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -68,7 +67,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         }
 
         @Override
-        public @NotNull UnbreakableLocationConsequence make(@NonNull Random random, double points) {
+        public @NotNull UnbreakableLocationConsequence make(@NotNull Random random, double points) {
             return new UnbreakableLocationConsequence();
         }
 

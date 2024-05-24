@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -22,7 +21,7 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -42,7 +41,7 @@ public class TurboMobsConsequence extends SpellConsequence { // TODO: Tests
         }
 
         @Override
-        public @NotNull TurboMobsConsequence make(@NonNull Random random, double points) {
+        public @NotNull TurboMobsConsequence make(@NotNull Random random, double points) {
             var entry = Registries.ENTITY_TYPE.getRandom(Mystical.MC_RANDOM);
             if (entry.isPresent()) {
                 EntityType<?> type = entry.get().value();

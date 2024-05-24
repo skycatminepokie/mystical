@@ -4,14 +4,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.util.StatCodec;
-import lombok.NonNull;
 import net.minecraft.util.Uuids;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 public class StatBackedCureType implements CureType<StatBackedSpellCure> {
     @Override
-    public @NonNull MapCodec<StatBackedSpellCure> getCodec() {
+    public @NotNull MapCodec<StatBackedSpellCure> getCodec() {
         return RecordCodecBuilder.mapCodec(spellCureInstance -> spellCureInstance.group(
                 Codec.INT.fieldOf("contributionGoal").forGetter(StatBackedSpellCure::getContributionGoal),
                 StatCodec.INSTANCE.fieldOf("stat").forGetter(StatBackedSpellCure::getStat),

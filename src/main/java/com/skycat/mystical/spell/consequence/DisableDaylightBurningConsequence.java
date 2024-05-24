@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
-import lombok.NonNull;
 import net.minecraft.entity.EntityType;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
@@ -36,7 +35,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         }
 
         @Override
-        public @NotNull DisableDaylightBurningConsequence make(@NonNull Random random, double points) {
+        public @NotNull DisableDaylightBurningConsequence make(@NotNull Random random, double points) {
             return new DisableDaylightBurningConsequence();
         }
 

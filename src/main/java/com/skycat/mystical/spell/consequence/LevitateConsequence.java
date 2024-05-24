@@ -5,7 +5,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
@@ -107,7 +106,7 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
         }
 
         @Override
-        public @NotNull LevitateConsequence make(@NonNull Random random, double points) {
+        public @NotNull LevitateConsequence make(@NotNull Random random, double points) {
             return new LevitateConsequence(20, 5, Utils.chooseRandom(random, supportedEvents));
         }
 

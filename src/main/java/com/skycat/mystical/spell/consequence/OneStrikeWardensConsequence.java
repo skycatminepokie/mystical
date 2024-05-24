@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.minecraft.block.entity.SculkShriekerWarningManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -27,7 +26,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -43,7 +42,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         }
 
         @Override
-        public @NotNull OneStrikeWardensConsequence make(@NonNull Random random, double points) {
+        public @NotNull OneStrikeWardensConsequence make(@NotNull Random random, double points) {
             return new OneStrikeWardensConsequence();
         }
 

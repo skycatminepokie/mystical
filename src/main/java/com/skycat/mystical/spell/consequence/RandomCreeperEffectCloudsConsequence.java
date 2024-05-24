@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -13,7 +12,7 @@ public class RandomCreeperEffectCloudsConsequence extends SpellConsequence { // 
         super(RandomCreeperEffectCloudsConsequence.class, null, 25);
     }
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -28,7 +27,7 @@ public class RandomCreeperEffectCloudsConsequence extends SpellConsequence { // 
         }
 
         @Override
-        public @NotNull RandomCreeperEffectCloudsConsequence make(@NonNull Random random, double points) {
+        public @NotNull RandomCreeperEffectCloudsConsequence make(@NotNull Random random, double points) {
             return new RandomCreeperEffectCloudsConsequence();
         }
 

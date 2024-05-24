@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.minecraft.test.GameTest;
 import net.minecraft.text.MutableText;
 import org.jetbrains.annotations.NotNull;
@@ -88,7 +87,7 @@ public abstract class ConsequenceFactory<T extends SpellConsequence> {
      * @return A new {@link T}.
      */
     @NotNull
-    public abstract T make(@NonNull Random random, double points);
+    public abstract T make(@NotNull Random random, double points);
 
     /**
      * Get the base translation "path" for this consequence
