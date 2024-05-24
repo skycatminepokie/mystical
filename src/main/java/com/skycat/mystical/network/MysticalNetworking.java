@@ -8,14 +8,8 @@ import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
-    public static final @NotNull Identifier ACTIVE_SPELLS_PACKET_ID = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "active_spells"));
-    public static final String SPELLS_KEY = "spells";
 
     public void sendActiveSpells(MinecraftServer server) { // TODO: Send on join and change
         CustomPayloadS2CPacket packet = makeActiveSpellPacket(server);
