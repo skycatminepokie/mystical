@@ -26,14 +26,9 @@ public class HudManager {
 
     public void updateCachedSpells(List<Spell> spells) {
         cachedSpells = spells;
-        updateFakeStatusEffects();
     }
 
-    protected void updateFakeStatusEffects() { // TODO Fix display
-
-    }
-
-    protected Identifier iconForSpell(ConsequenceFactory<?> consequenceFactory) {
+    public static Identifier iconForSpell(ConsequenceFactory<?> consequenceFactory) {
         if (consequenceFactory.equals(LevitateConsequence.FACTORY)) {
             return Identifier.of("minecraft", "levitation"); // It'll be differentiated by the spell border
         }
