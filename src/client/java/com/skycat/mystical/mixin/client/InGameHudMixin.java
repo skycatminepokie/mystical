@@ -1,5 +1,6 @@
 package com.skycat.mystical.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.skycat.mystical.HudManager;
 import com.skycat.mystical.MysticalClient;
@@ -45,5 +46,8 @@ public abstract class InGameHudMixin {
          }
      }
 
-
+    @ModifyExpressionValue(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Ljava/util/Collection;isEmpty()Z"))
+    private boolean mystical_alsoRenderIfSpells(boolean original) {
+         return original && MysticalClient.HUD_MANAGER.getCachedSpells().isEmpty();
+    }
 }
