@@ -2,15 +2,12 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.Spells;
 import com.skycat.mystical.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.test.GameTest;
 import net.minecraft.text.MutableText;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -24,26 +21,22 @@ import java.util.Random;
  * {@link GameTest#batchId()} is ignored - it will never be run in parallel. See {@link com.skycat.mystical.test.MysticalTests#getSpellTests(ArrayList)}.
  */
 public abstract class ConsequenceFactory<T extends SpellConsequence> {
-    public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName); // TODO: Save by id
+    public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName);
     public static final String CONSEQUENCE_TRANSLATION_PREFIX = "text.mystical.consequence.";
     @Getter public final String shortName;
     @Getter public final String longName;
     @Getter public final String description;
     @Getter public final String firedMessage;
     @Getter public final Class<T> consequenceType;
-    @Getter public final StatusEffectCategory statusEffectCategory;
-    @Getter public final Identifier id;
     @Getter public final MapCodec<T> codec;
 
-    protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, StatusEffectCategory statusEffectCategory, MapCodec<T> codec) {
+    protected ConsequenceFactory(String shortName, String longName, String description, String firedMessage, Class<T> consequenceType, MapCodec<T> codec) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.firedMessage = firedMessage;
         this.consequenceType = consequenceType;
-        this.statusEffectCategory = statusEffectCategory;
         this.codec = codec;
-        id = Identifier.of(Mystical.MOD_ID, Utils.camelCaseToSnakeCase(shortName));
     }
 
     public String getDescriptionKey() {

@@ -3,11 +3,13 @@
   "package": "com.skycat.mystical.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "StatusEffectSpriteManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "mixins": [
+    "StatusEffectMixin"
   ]
 }

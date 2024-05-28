@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -30,7 +29,6 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: Tests
                     "The saplings are spies!",
                     "Random tree generated",
                     RandomTreeTypeConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(RandomTreeTypeConsequence::new));
         }
 

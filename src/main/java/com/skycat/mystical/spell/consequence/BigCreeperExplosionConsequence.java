@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -29,7 +28,6 @@ public class BigCreeperExplosionConsequence extends SpellConsequence { // TODO: 
                     "Creepers go boom. But more.",
                     "Creeper explosion multiplied.",
                     BigCreeperExplosionConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     Codec.DOUBLE.xmap(BigCreeperExplosionConsequence::new, BigCreeperExplosionConsequence::getDifficulty).fieldOf("value"));
         }
 

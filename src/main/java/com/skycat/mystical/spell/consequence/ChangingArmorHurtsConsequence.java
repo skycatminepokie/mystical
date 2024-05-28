@@ -7,7 +7,6 @@ import lombok.NonNull;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +42,6 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
                     "Reverse thorns",
                     "Armor changed, applying damage",
                     ChangingArmorHurtsConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(ChangingArmorHurtsConsequence::new));
         }
 

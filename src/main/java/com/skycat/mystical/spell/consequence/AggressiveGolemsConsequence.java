@@ -5,7 +5,6 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +30,6 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
                     "Iron + Pumpkin says \"Here, have pain!\"",
                     "Golem is aggressive",
                     AggressiveGolemsConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(AggressiveGolemsConsequence::new));
         }
 

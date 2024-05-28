@@ -14,7 +14,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -100,7 +99,6 @@ public class LevitateConsequence extends SpellConsequence implements EntitySleep
                     "Are you a balloon?",
                     "Levitating entity",
                     LevitateConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     RecordCodecBuilder.mapCodec(instance -> instance.group(
                             Codec.INT.fieldOf("length").forGetter(LevitateConsequence::getLength),
                             Codec.INT.fieldOf("level").forGetter(LevitateConsequence::getLevel),

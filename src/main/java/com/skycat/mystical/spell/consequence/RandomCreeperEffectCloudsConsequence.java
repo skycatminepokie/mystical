@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -25,7 +24,6 @@ public class RandomCreeperEffectCloudsConsequence extends SpellConsequence { // 
                     "Hissss... Bubbles?",
                     "Random effect cloud made",
                     RandomCreeperEffectCloudsConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(RandomCreeperEffectCloudsConsequence::new));
         }
 

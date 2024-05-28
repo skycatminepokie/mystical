@@ -1,6 +1,7 @@
 package com.skycat.mystical.spell;
 
 import com.mojang.serialization.Codec;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.consequence.ConsequenceFactory;
 import com.skycat.mystical.spell.consequence.SpellConsequence;
 import com.skycat.mystical.spell.cure.SpellCure;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import static com.skycat.mystical.Mystical.CONFIG;
+import static com.skycat.mystical.Mystical.EVENT_HANDLER;
 
 public class SpellHandler implements EntitySleepEvents.StartSleeping,
         EntitySleepEvents.StopSleeping,
@@ -62,7 +64,7 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
 
     public void onChanged() {
         dirty = true;
-        // TODO: Update spell status effects
+        Mystical.NETWORKING_HANDLER.sendActiveSpells(EVENT_HANDLER.getServer());
     }
 
     public SpellHandler() {

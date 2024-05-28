@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import lombok.NonNull;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -28,7 +27,6 @@ public class ZombieTypeChangeConsequence extends SpellConsequence { // TODO: Tes
                     "Zombies are having a wardrobe crisis",
                     "Zombie type changed.",
                     ZombieTypeChangeConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(ZombieTypeChangeConsequence::new));
         }
 

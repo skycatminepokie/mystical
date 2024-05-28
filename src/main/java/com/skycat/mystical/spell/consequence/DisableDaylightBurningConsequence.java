@@ -5,7 +5,6 @@ import com.skycat.mystical.Mystical;
 import com.skycat.mystical.test.TestUtils;
 import lombok.NonNull;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.world.Difficulty;
@@ -33,7 +32,6 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
                     "Mobs bought some sunscreen",
                     "Said no this mob doesn't burn",
                     DisableDaylightBurningConsequence.class,
-                    StatusEffectCategory.HARMFUL,
                     MapCodec.unit(DisableDaylightBurningConsequence::new));
         }
 

@@ -71,10 +71,6 @@ dependencies {
 	// fabric-permissions-api
 	include(modImplementation('me.lucko:fabric-permissions-api:0.2-SNAPSHOT'))
 
-	// polymer
-	modCompileOnly "eu.pb4:polymer-core:${project.polymer_version}"
-	modRuntimeOnly "eu.pb4:polymer-core:${project.polymer_version}"
-
 	// Runtime:
 	// modRuntimeOnly("curse.maven:modmenu-308702:4100232")
 
