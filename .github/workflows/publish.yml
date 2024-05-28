@@ -11,8 +11,8 @@ on:
 env:
   MINECRAFT_VERSION: 1.20.6
   JAVA_VERSION: 21
-  VERSION: 5.2.1+1.20.6
-  VERSION_TYPE: alpha
+  VERSION: 5.2.2+1.20.6
+  VERSION_TYPE: beta
 
 permissions:
   contents: write

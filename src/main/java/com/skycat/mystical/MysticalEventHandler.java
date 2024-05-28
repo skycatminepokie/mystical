@@ -3,7 +3,6 @@ package com.skycat.mystical;
 import com.skycat.mystical.accessor.MinecraftServerTimerAccess;
 import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.server.MinecraftServer;
@@ -13,7 +12,7 @@ import net.minecraft.text.Text;
 import java.util.Stack;
 
 public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifecycleEvents.ServerStopping {
-    @Getter private MinecraftServer server;
+    private MinecraftServer server;
     private MinecraftServerTimerAccess timerAccess;
     public static final int NIGHT_TIME = 18000;
 
@@ -70,6 +69,7 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
 
     /**
      * Sets the nighttime timer to the next night
+     *
      * @return Number of ticks until night, or -1 on failure
      */
     public long setNightTimer() {
@@ -93,5 +93,9 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
 
         timerAccess.mystical_setTimer(timerLength);
         return timerLength;
+    }
+
+    public MinecraftServer getServer() {
+        return this.server;
     }
 }

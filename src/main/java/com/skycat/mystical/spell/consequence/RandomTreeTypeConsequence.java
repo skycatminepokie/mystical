@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -33,7 +32,7 @@ public class RandomTreeTypeConsequence extends SpellConsequence { // TODO: Tests
         }
 
         @Override
-        public @NotNull RandomTreeTypeConsequence make(@NonNull Random random, double points) {
+        public @NotNull RandomTreeTypeConsequence make(@NotNull Random random, double points) {
             return new RandomTreeTypeConsequence();
         }
 

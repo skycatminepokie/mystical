@@ -1,10 +1,11 @@
 package com.skycat.mystical.spell.cure;
 
 import com.mojang.serialization.MapCodec;
-import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 public interface CureType<T extends SpellCure> {
 
-    @NonNull MapCodec<? extends SpellCure> getCodec();
+    @NotNull
+    MapCodec<? extends SpellCure> getCodec();
 
 }

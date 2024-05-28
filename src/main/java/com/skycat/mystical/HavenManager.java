@@ -3,8 +3,6 @@ package com.skycat.mystical;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Uuids;
@@ -21,15 +19,18 @@ public class HavenManager {
             Utils.CHUNK_POS_CODEC.listOf().xmap(HashSet::new, Utils::setToList).fieldOf("havenedChunks").forGetter(HavenManager::getHavenedChunks),
             Utils.hashMapCodec(Uuids.CODEC, "player", Codec.INT, "power").fieldOf("powerMap").forGetter(HavenManager::getPowerMap)
     ).apply(instance, HavenManager::new)));
-    @Getter private final HashSet<ChunkPos> havenedChunks;
-    @Getter private final HashMap<UUID, Integer> powerMap;
-    @Getter private static final File SAVE_FILE = new File("config/havenManager.json");
-    @Getter @Setter
+    private final HashSet<ChunkPos> havenedChunks;
+    private final HashMap<UUID, Integer> powerMap;
+    private static final File SAVE_FILE = new File("config/havenManager.json");
     private boolean dirty = false;
 
     public HavenManager(HashSet<ChunkPos> havenedChunks, HashMap<UUID, Integer> powerMap) {
         this.havenedChunks = havenedChunks;
         this.powerMap = powerMap;
+    }
+
+    public static File getSAVE_FILE() {
+        return HavenManager.SAVE_FILE;
     }
 
     public void resetHavens() {
@@ -111,14 +112,15 @@ public class HavenManager {
     public boolean addHaven(int blockX, int blockZ) {
         return addHaven(new BlockPos(blockX, 0, blockZ));
     }
-    
+
     public void markDirty() {
         dirty = true;
     }
 
     /**
      * Havens a chunk at a player's expense.
-     * @param chunk The chunk to haven.
+     *
+     * @param chunk  The chunk to haven.
      * @param player The player to charge.
      * @return {@code true} on success, {@code false} if the havening fails or the player does not have enough power
      */
@@ -168,6 +170,7 @@ public class HavenManager {
 
     /**
      * Checks if an entity is inside a havened chunk.
+     *
      * @param entity The entity to check.
      * @return {@code true} if the entity is in a havened chunk.
      * @implNote Simple overload of {@link #isInHaven(ChunkPos)}.
@@ -178,8 +181,9 @@ public class HavenManager {
 
     /**
      * Gives power to a player.
+     *
      * @param player The player to grant power to.
-     * @param power The amount of power to grant.
+     * @param power  The amount of power to grant.
      * @return The amount of power the player has after adding.
      * @implNote Simple overload of {@link #addPower(UUID, int)}.
      */
@@ -189,8 +193,9 @@ public class HavenManager {
 
     /**
      * Gives power to a player.
+     *
      * @param playerUUID The UUID of a player.
-     * @param power The amount of power to grant.
+     * @param power      The amount of power to grant.
      * @return The total power the player has after adding power.
      */
     public int addPower(UUID playerUUID, int power) {
@@ -208,6 +213,7 @@ public class HavenManager {
 
     /**
      * Get how much power a player has.
+     *
      * @param playerUUID The UUID of the player.
      * @return The power a player has, or 0 if they have no power/power is not yet tracked for this player.
      * @implSpec Calling this ensures that {@code powerMap.get(playerUUID) != null}.
@@ -223,6 +229,7 @@ public class HavenManager {
 
     /**
      * Get how much power a player has.
+     *
      * @param player The player.
      * @return The power the player has, or 0 if they have no power/power is not yet tracked for this player.
      * @implSpec Calling this ensures that {@code powerMap.get(playerUUID) != null}.
@@ -234,8 +241,9 @@ public class HavenManager {
 
     /**
      * Removes power from a player, if and only if the player has enough power.
+     *
      * @param player The player to remove power from.
-     * @param power The amount of power to remove.
+     * @param power  The amount of power to remove.
      * @return {@code true} on success, {@code false} when the player does not have enough power (so nothing was done).
      * @implNote Simple overload of {@link #removePower(UUID, int)}.
      */
@@ -245,8 +253,9 @@ public class HavenManager {
 
     /**
      * Removes power from a player, if and only if the player has enough power.
+     *
      * @param playerUUID The uuid of the player to remove power from.
-     * @param power The amount of power to remove.
+     * @param power      The amount of power to remove.
      * @return {@code true} on success, {@code false} when the player does not have enough power (so nothing was done).
      */
     public boolean removePower(UUID playerUUID, int power) {
@@ -261,8 +270,9 @@ public class HavenManager {
 
     /**
      * Set the power that a player has.
+     *
      * @param player The UUID of the player to set the power of.
-     * @param power The power to set the player to.
+     * @param power  The power to set the player to.
      */
     public void setPower(ServerPlayerEntity player, int power) {
         setPower(player.getUuid(), power);
@@ -270,8 +280,9 @@ public class HavenManager {
 
     /**
      * Set the power that a player has.
+     *
      * @param playerUUID The UUID of the player to set the power of.
-     * @param power The power to set the player to.
+     * @param power      The power to set the player to.
      */
     public void setPower(UUID playerUUID, int power) {
         powerMap.put(playerUUID, power);
@@ -280,8 +291,9 @@ public class HavenManager {
 
     /**
      * Checks if a player has at least {@code power} power.
+     *
      * @param playerUUID The UUID of the player.
-     * @param power The amount of power required.
+     * @param power      The amount of power required.
      * @return {@code (player's power) >= power}.
      */
     public boolean hasPower(UUID playerUUID, int power) {
@@ -290,8 +302,9 @@ public class HavenManager {
 
     /**
      * Checks if a player has at least {@code power} power.
+     *
      * @param player The player.
-     * @param power The amount of power required.
+     * @param power  The amount of power required.
      * @return {@code (player's power) >= power}.
      * @implNote Simple overload of {@link #hasPower(UUID, int)}.
      */
@@ -307,4 +320,19 @@ public class HavenManager {
         return havenedChunks.equals(other.havenedChunks);
     }
 
+    public HashSet<ChunkPos> getHavenedChunks() {
+        return this.havenedChunks;
+    }
+
+    public HashMap<UUID, Integer> getPowerMap() {
+        return this.powerMap;
+    }
+
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
 }

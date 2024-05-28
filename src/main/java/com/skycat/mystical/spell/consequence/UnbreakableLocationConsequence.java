@@ -4,8 +4,6 @@ import com.mojang.serialization.Codec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.MysticalCriteria;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
-import lombok.NonNull;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,7 +18,7 @@ import java.util.Random;
 
 public class UnbreakableLocationConsequence extends SpellConsequence implements AttackBlockCallback { // TODO: Tests
     public static final Factory FACTORY = new Factory();
-    @Getter private final long seed;
+    private final long seed;
     /**
      * The seed will be set every time we pull from this. That needs to be done anyway, so we have a single object to do it.
      */
@@ -36,7 +34,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -54,6 +52,10 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         return ActionResult.PASS;
     }
 
+    public long getSeed() {
+        return this.seed;
+    }
+
     public static class Factory extends ConsequenceFactory<UnbreakableLocationConsequence> {
         protected Factory() {
             super("unbreakableLocation",
@@ -65,7 +67,7 @@ public class UnbreakableLocationConsequence extends SpellConsequence implements 
         }
 
         @Override
-        public @NotNull UnbreakableLocationConsequence make(@NonNull Random random, double points) {
+        public @NotNull UnbreakableLocationConsequence make(@NotNull Random random, double points) {
             return new UnbreakableLocationConsequence();
         }
 

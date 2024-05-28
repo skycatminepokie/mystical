@@ -5,7 +5,6 @@ import com.skycat.mystical.spell.consequence.*;
 import com.skycat.mystical.spell.cure.CureFactory;
 import com.skycat.mystical.spell.cure.StatBackedSpellCure;
 import com.skycat.mystical.util.Utils;
-import lombok.Getter;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
@@ -17,10 +16,11 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class Spells {
-    @SuppressWarnings("rawtypes") @Getter
+    @SuppressWarnings("rawtypes")
     private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
-    @SuppressWarnings("rawtypes") @Getter private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
-    @SuppressWarnings("rawtypes") @Getter
+    @SuppressWarnings("rawtypes")
+    private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
+    @SuppressWarnings("rawtypes")
     private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
 
     static {
@@ -91,5 +91,17 @@ public class Spells {
 
     public static ConsequenceFactory<?> getFactory(String shortName) {
         return shortNameToFactory.get(shortName);
+    }
+
+    public static ArrayList<ConsequenceFactory> getConsequenceFactories() {
+        return Spells.consequenceFactories;
+    }
+
+    public static HashMap<String, ConsequenceFactory> getShortNameToFactory() {
+        return Spells.shortNameToFactory;
+    }
+
+    public static ArrayList<CureFactory> getCureFactories() {
+        return Spells.cureFactories;
     }
 }

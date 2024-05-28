@@ -3,7 +3,6 @@ package com.skycat.mystical.spell.consequence;
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.util.Utils;
-import lombok.NonNull;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -23,7 +22,7 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -46,7 +45,7 @@ public class ChangingArmorHurtsConsequence extends SpellConsequence implements S
         }
 
         @Override
-        public @NotNull ChangingArmorHurtsConsequence make(@NonNull Random random, double points) {
+        public @NotNull ChangingArmorHurtsConsequence make(@NotNull Random random, double points) {
             return new ChangingArmorHurtsConsequence();
         }
 

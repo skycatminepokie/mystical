@@ -2,7 +2,6 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
-import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -14,7 +13,7 @@ public class FishingRodSwapConsequence extends SpellConsequence {
     }
 
     @Override
-    public @NonNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
+    public @NotNull ConsequenceFactory<? extends SpellConsequence> getFactory() {
         return FACTORY;
     }
 
@@ -35,7 +34,7 @@ public class FishingRodSwapConsequence extends SpellConsequence {
         }
 
         @Override
-        public @NotNull FishingRodSwapConsequence make(@NonNull Random random, double points) {
+        public @NotNull FishingRodSwapConsequence make(@NotNull Random random, double points) {
             return new FishingRodSwapConsequence();
         }
     }
