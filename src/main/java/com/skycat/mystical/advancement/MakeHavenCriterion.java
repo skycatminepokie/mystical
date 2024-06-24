@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Conditions> {
-    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "make_haven"));
+    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.tryParse("mystical", "make_haven"));
 
     @Override
     public Codec<MakeHavenCriterion.Conditions> getConditionsCodec() {

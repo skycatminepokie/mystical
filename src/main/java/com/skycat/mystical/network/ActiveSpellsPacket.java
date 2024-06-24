@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public record ActiveSpellsPacket(List<Spell> spells) implements CustomPayload {
-    public static final @NotNull Identifier IDENTIFIER = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "active_spells"));
+    public static final @NotNull Identifier IDENTIFIER = Objects.requireNonNull(Identifier.tryParse(Mystical.MOD_ID, "active_spells"));
     public static final CustomPayload.Id<ActiveSpellsPacket> ID = new CustomPayload.Id<>(IDENTIFIER);
     public static final PacketCodec<RegistryByteBuf, ActiveSpellsPacket> CODEC = PacketCodecs.codec(Spell.CODEC.listOf()).xmap(ActiveSpellsPacket::new, ActiveSpellsPacket::spells).cast();
 
