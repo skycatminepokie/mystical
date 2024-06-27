@@ -10,7 +10,6 @@ import com.skycat.mystical.util.LogLevel;
 import com.skycat.mystical.util.Utils;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.test.*;
 
@@ -136,7 +135,7 @@ public class MysticalTests implements FabricGameTest {
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent") // Don't care, just fail please ty
     @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public static void testTags(TestContext context) { // TODO: Move this to MysticalTags if a good way can be found
+    public static void testTags(TestContext context) {
         var bosses = Registries.ENTITY_TYPE.getEntryList(MysticalTags.BOSSES).get();
         bosses.get(0); // Throws IndexOutOfBoundsException if empty.
 

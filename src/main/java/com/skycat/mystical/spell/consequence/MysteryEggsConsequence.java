@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class MysteryEggsConsequence extends SpellConsequence { // TODO: Icon
+public class MysteryEggsConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
     public MysteryEggsConsequence() {
         super(MysteryEggsConsequence.class, null, 1d);

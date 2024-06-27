@@ -11,7 +11,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class MysticalNetworking implements ServerPlayConnectionEvents.Join {
 
-    public void sendActiveSpells(MinecraftServer server) { // TODO: Send on join and change
+    public void sendActiveSpells(MinecraftServer server) {
         CustomPayloadS2CPacket packet = makeActiveSpellPacket(server);
         for (ServerPlayerEntity player : PlayerLookup.all(server)) {
             player.networkHandler.sendPacket(packet);
