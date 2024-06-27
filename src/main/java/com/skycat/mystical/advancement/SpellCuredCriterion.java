@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.Conditions> {
-    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "spell_cured")); // TODO: Figure out where this goes
+    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.tryParse("mystical", "spell_cured")); // TODO: Figure out where this goes
 
     @Override
     public Codec<com.skycat.mystical.advancement.SpellCuredCriterion.Conditions> getConditionsCodec() {
