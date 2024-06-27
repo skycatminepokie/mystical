@@ -26,6 +26,10 @@ public class Spell {
         this.cure = cure;
     }
 
+    public void onActivated(MinecraftServer server) {
+        consequence.onActivated(server);
+    }
+
     /**
      * Award power to players based on their contributions.
      *

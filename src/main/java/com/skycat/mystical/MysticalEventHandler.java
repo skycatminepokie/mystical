@@ -32,11 +32,11 @@ public class MysticalEventHandler implements ServerWorldEvents.Load, ServerLifec
         }
         int newSpells = 0;
         if (spellHandler.getActiveSpells().size() < Mystical.CONFIG.spellMaxHard()) { // Make sure we don't go past the max number of spells
-            spellHandler.activateNewSpell();
+            spellHandler.activateNewSpell(server);
             newSpells++;
         }
         while (spellHandler.getActiveSpells().size() < Mystical.CONFIG.spellMinHard()) { // Make sure we have the minimum number of spells
-            spellHandler.activateNewSpell();
+            spellHandler.activateNewSpell(server);
             newSpells++;
         }
         if (newSpells == 1) {

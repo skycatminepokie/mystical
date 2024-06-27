@@ -67,7 +67,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
-            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(75, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
@@ -77,7 +77,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true)
         public void testSpell(TestContext context) {
             setUpTest(context);
-            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(75, () -> {
                 context.expectEntity(EntityType.ZOMBIE); // It shouldn't burn
                 context.complete();

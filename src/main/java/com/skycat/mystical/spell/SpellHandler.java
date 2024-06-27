@@ -121,13 +121,17 @@ public class SpellHandler implements EntitySleepEvents.StartSleeping,
         return results;
     }
 
-    public void activateNewSpell() {
-        activeSpells.add(SpellGenerator.get());
+    public void activateNewSpell(MinecraftServer server) { // TODO: Make this an overload of activateNewSpellWithConsequence
+        Spell spell = SpellGenerator.get();
+        activeSpells.add(spell);
+        spell.onActivated(server);
         onChanged();
     }
 
-    public void activateNewSpellWithConsequence(ConsequenceFactory<?> consequenceFactory) {
-        activeSpells.add(SpellGenerator.getWithConsequence(consequenceFactory));
+    public void activateNewSpellWithConsequence(MinecraftServer server, ConsequenceFactory<?> consequenceFactory) {
+        Spell spell = SpellGenerator.getWithConsequence(consequenceFactory);
+        activeSpells.add(spell);
+        spell.onActivated(server);
         onChanged();
     }
 

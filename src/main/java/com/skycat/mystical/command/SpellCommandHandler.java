@@ -53,7 +53,7 @@ public class SpellCommandHandler {
     }
 
     protected static int newRandomSpellCommand(CommandContext<ServerCommandSource> context) {
-        Mystical.getSpellHandler().activateNewSpell();
+        Mystical.getSpellHandler().activateNewSpell(context.getSource().getServer());
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", "random"), Mystical.CONFIG.newSpellCommandBroadcast());
         return Command.SINGLE_SUCCESS;
@@ -66,7 +66,7 @@ public class SpellCommandHandler {
         if (factory.getWeight() == 0) {
             context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
         }
-        Mystical.getSpellHandler().activateNewSpellWithConsequence(factory);
+        Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getSource().getServer(), factory);
         context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.success", spell), Mystical.CONFIG.newSpellCommandBroadcast());
         return Command.SINGLE_SUCCESS;
     }

@@ -1,6 +1,7 @@
 package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.server.MinecraftServer;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("rawtypes")
@@ -43,4 +44,6 @@ public abstract class SpellConsequence {
     public double getDifficulty() {
         return this.difficulty;
     }
+
+    public void onActivated(MinecraftServer server) {}
 }

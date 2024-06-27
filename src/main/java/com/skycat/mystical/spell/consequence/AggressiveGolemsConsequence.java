@@ -63,7 +63,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
-            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
@@ -73,7 +73,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testSpell(TestContext context) {
             setUpTest(context);
-            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(50, () -> {
                 context.dontExpectEntity(EntityType.VILLAGER);
                 context.complete();

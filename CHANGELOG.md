@@ -1,1 +1,1 @@
-- Brought back spell display
+- turboChickens spell now takes effect immediately

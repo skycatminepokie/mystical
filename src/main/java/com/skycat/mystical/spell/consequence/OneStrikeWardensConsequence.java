@@ -73,7 +73,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
-            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
 
             context.waitAndRun(125, () -> {
                 context.dontExpectEntity(EntityType.WARDEN);
@@ -84,7 +84,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 130)
         public void testSpell(TestContext context) {
             setUpTest(context);
-            Mystical.getSpellHandler().activateNewSpellWithConsequence(this);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
 
             context.waitAndRun(125, () -> {
                 context.expectEntity(EntityType.WARDEN);
