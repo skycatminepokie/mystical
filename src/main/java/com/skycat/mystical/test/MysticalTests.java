@@ -75,18 +75,20 @@ public class MysticalTests implements FabricGameTest {
             for (Method method : factory.getClass().getMethods()) {
                 GameTest testInfo = method.getAnnotation(GameTest.class);
                 if (testInfo != null) {
-                    testFunctions.add(
-                            new TestFunctionBuilder(factory.getShortName() + "." + method.getName(), methodToConsumer(method, factory))
-                                    .tickLimit(testInfo.tickLimit())
-                                    .batchId("mysticaltests.spell." + factory.getShortName() + "." + method.getName())
-                                    .rotation(StructureTestUtil.getRotation(testInfo.rotation()))
-                                    .required(testInfo.required())
-                                    .templateName(testInfo.templateName())
-                                    .duration(testInfo.duration())
-                                    .maxAttempts(testInfo.maxAttempts())
-                                    .requiredSuccesses(testInfo.requiredSuccesses())
-                                    .build()
-                    );
+                    TestFunctionBuilder functionBuilder = new TestFunctionBuilder(factory.getShortName() + "." + method.getName(), methodToConsumer(method, factory))
+                            .tickLimit(testInfo.tickLimit())
+                            .rotation(StructureTestUtil.getRotation(testInfo.rotation()))
+                            .required(testInfo.required())
+                            .templateName(testInfo.templateName())
+                            .duration(testInfo.duration())
+                            .maxAttempts(testInfo.maxAttempts())
+                            .requiredSuccesses(testInfo.requiredSuccesses());
+                    if  (testInfo.batchId().equals("defaultBatch")) {
+                        functionBuilder.batchId("mystical.spell." + factory.getShortName() + "." + method.getName());
+                    } else {
+                        functionBuilder.batchId(testInfo.batchId());
+                    }
+                    testFunctions.add(functionBuilder.build());
                 }
             }
         }
