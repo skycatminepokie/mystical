@@ -9,6 +9,7 @@
     "ChickenEntityMixin",
     "CreeperEntityMixin",
     "EggEntityMixin",
+    "EntityMixin",
     "ExplosionMixin",
     "FishingBobberEntityMixin",
     "IronGolemEntityMixin",

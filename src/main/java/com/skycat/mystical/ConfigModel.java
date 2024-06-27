@@ -42,6 +42,7 @@ public class ConfigModel {
     @Nest public SoundSwapConfig soundSwap = new SoundSwapConfig();
     @Nest public FishingRodSwapConfig fishingRodSwap = new FishingRodSwapConfig();
     @Nest public MysteryEggsConfig mysteryEggs = new MysteryEggsConfig();
+    @Nest public FireImmunitySwapConfig fireImmunitySwap = new FireImmunitySwapConfig();
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -420,6 +421,19 @@ public class ConfigModel {
         public double weight = 1;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class FireImmunitySwapConfig {
+        public boolean enabled = true;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
         }
