@@ -103,7 +103,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 145)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 145, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
 

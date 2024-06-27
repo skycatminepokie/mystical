@@ -84,7 +84,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
             context.waitAndRun(75, () -> {

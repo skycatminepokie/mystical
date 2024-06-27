@@ -80,7 +80,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
             context.waitAndRun(50, () -> {

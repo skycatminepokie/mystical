@@ -136,7 +136,7 @@ public class MysticalTests implements FabricGameTest {
      * ...again.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent") // Don't care, just fail please ty
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE, batchId = TestUtils.VANILLA_BATCH)
     public static void testTags(TestContext context) {
         var bosses = Registries.ENTITY_TYPE.getEntryList(MysticalTags.BOSSES).get();
         bosses.get(0); // Throws IndexOutOfBoundsException if empty.

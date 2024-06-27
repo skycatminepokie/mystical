@@ -84,7 +84,7 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
             context.complete();
         }
 
-        @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
+        @GameTest(templateName = TestUtils.LAVA_PIT_BOX, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
             context.waitAndRun(10, () -> {

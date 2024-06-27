@@ -35,6 +35,11 @@ public class TestUtils {
      * A 4x4x4 solid cube of barriers, with lava at 1,2,1 and 2,2,2 and one air block above the lava.
      */
     public static final String LAVA_PIT_BOX = "mystical:lava_pit_box_4x4x4";
+    /**
+     * To be in this batch, a test must call {@link TestUtils#resetMystical(TestContext)} at the beginning,<br>
+     * never haven anything, and never create a spell.
+     */
+    public static final String VANILLA_BATCH = "mystical.vanilla";
 
     /**
      * Haven all chunks inside the bounding box of {@code context}.
@@ -68,5 +73,15 @@ public class TestUtils {
         havenManager.resetHavens();
         havenManager.resetPower();
         Mystical.getSpellHandler().removeAllSpells();
+    }
+
+    public static void resetHavens(TestContext context) {
+        HavenManager havenManager = Mystical.getHavenManager();
+        havenManager.resetHavens();
+    }
+
+    public static void resetPower(TestContext context) {
+        HavenManager havenManager = Mystical.getHavenManager();
+        havenManager.resetPower();
     }
 }
