@@ -2,6 +2,7 @@ package com.skycat.mystical.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.skycat.mystical.Mystical;
 import com.skycat.mystical.spell.Spell;
 import com.skycat.mystical.spell.cure.SpellCure;
 import net.minecraft.advancement.criterion.AbstractCriterion;
@@ -16,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class SpellCuredCriterion extends AbstractCriterion<SpellCuredCriterion.Conditions> {
-    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "spell_cured")); // TODO: Figure out where this goes
+    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "spell_cured")); // TODO: Figure out where this goes
 
     @Override
     public Codec<com.skycat.mystical.advancement.SpellCuredCriterion.Conditions> getConditionsCodec() {

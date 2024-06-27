@@ -1,6 +1,7 @@
 package com.skycat.mystical.advancement;
 
 import com.mojang.serialization.Codec;
+import com.skycat.mystical.Mystical;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -11,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class MakeHavenCriterion extends AbstractCriterion<MakeHavenCriterion.Conditions> {
-    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of("mystical", "make_haven"));
+    public static final @NotNull Identifier ID = Objects.requireNonNull(Identifier.of(Mystical.MOD_ID, "make_haven"));
 
     @Override
     public Codec<MakeHavenCriterion.Conditions> getConditionsCodec() {

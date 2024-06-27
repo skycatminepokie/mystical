@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Random;
 
 public class Mystical implements ModInitializer, ServerWorldEvents.Load {
-    public static final String MOD_ID = "mystical"; // TODO: Use this everywhere it makes sense
-    public static final Logger LOGGER = LoggerFactory.getLogger("mystical");
+    public static final String MOD_ID = "mystical";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final MysticalEventHandler EVENT_HANDLER = new MysticalEventHandler();
     public static final Random RANDOM = new Random();
     public static final net.minecraft.util.math.random.Random MC_RANDOM = new CheckedRandom(RANDOM.nextLong());
