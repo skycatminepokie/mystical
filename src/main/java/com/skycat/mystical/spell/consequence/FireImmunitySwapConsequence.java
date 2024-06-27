@@ -2,12 +2,17 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.test.TestUtils;
+import net.minecraft.entity.EntityType;
+import net.minecraft.test.GameTest;
+import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class FireImmunitySwapConsequence extends SpellConsequence { // TODO: Tests, icon
+public class FireImmunitySwapConsequence extends SpellConsequence { // TODO: icon
     public static final Factory FACTORY = new Factory();
+
     public FireImmunitySwapConsequence() {
         super(FireImmunitySwapConsequence.class, null, -15d);
     }
@@ -36,6 +41,57 @@ public class FireImmunitySwapConsequence extends SpellConsequence { // TODO: Tes
         @Override
         public @NotNull FireImmunitySwapConsequence make(@NotNull Random random, double points) {
             return new FireImmunitySwapConsequence();
+        }
+
+        private void setUpTest(TestContext context) {
+            TestUtils.resetMystical(context);
+            context.killAllEntities();
+            context.setHealthLow(context.spawnEntity(EntityType.BLAZE, 1, 2, 1));
+            context.setHealthLow(context.spawnEntity(EntityType.CREEPER, 2, 2, 2));
+        }
+
+        @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
+        public void testHaven(TestContext context) {
+            setUpTest(context);
+            TestUtils.havenAll(context);
+            context.waitAndRun(10, () -> {
+                context.expectEntity(EntityType.BLAZE);
+                context.dontExpectEntity(EntityType.CREEPER);
+            });
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
+        public void testHavenAndSpell(TestContext context) {
+            setUpTest(context);
+            TestUtils.havenAll(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
+            context.waitAndRun(10, () -> {
+                context.expectEntity(EntityType.BLAZE);
+                context.dontExpectEntity(EntityType.CREEPER);
+            });
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
+        public void testSpell(TestContext context) {
+            setUpTest(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
+            context.waitAndRun(10, () -> {
+                context.dontExpectEntity(EntityType.BLAZE);
+                context.expectEntity(EntityType.CREEPER);
+            });
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
+        public void testVanilla(TestContext context) {
+            setUpTest(context);
+            context.waitAndRun(10, () -> {
+                context.expectEntity(EntityType.BLAZE);
+                context.dontExpectEntity(EntityType.CREEPER);
+            });
+            context.complete();
         }
     }
 }

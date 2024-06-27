@@ -1,9 +1,9 @@
 package com.skycat.mystical.test;
 
-import com.skycat.mystical.Mystical;
-import com.skycat.mystical.util.Utils;
-import com.skycat.mystical.mixin.TestContextMixin;
 import com.skycat.mystical.HavenManager;
+import com.skycat.mystical.Mystical;
+import com.skycat.mystical.mixin.TestContextMixin;
+import com.skycat.mystical.util.Utils;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -31,6 +31,10 @@ public class TestUtils {
      * A 3x6x8 box of barriers, outlined with tinted glass. The bottom layer of air is replaced with lava, and the two ends of that replaced with bottom smooth stone slabs.
      */
     public static final String FISHING_ROD_DEATH_BOX = "mystical:fishing_rod_death_box_3x6x8";
+    /**
+     * A 4x4x4 solid cube of barriers, with lava at 1,2,1 and 2,2,2 and one air block above the lava.
+     */
+    public static final String LAVA_PIT_BOX = "mystical:lava_pit_box_4x4x4";
 
     /**
      * Haven all chunks inside the bounding box of {@code context}.
