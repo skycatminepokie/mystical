@@ -62,7 +62,7 @@ public class SpellCommandHandler {
     protected static int newSpellCommand(CommandContext<ServerCommandSource> context) {
         String spell = context.getArgument("spell", String.class);
         Utils.log(Utils.translateString("text.mystical.logging.newSpellCommand"), Mystical.CONFIG.newSpellCommandLogLevel());
-        ConsequenceFactory<?> factory = Spells.getShortNameToFactory().get(spell);
+        ConsequenceFactory<?> factory = Spells.getShortNameToFactory().get(spell); // TODO: if spell null, error
         if (factory.getWeight() == 0) {
             context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.new.spell.warnDisabled"), false);
         }
