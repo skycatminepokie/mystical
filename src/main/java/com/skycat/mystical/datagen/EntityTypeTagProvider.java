@@ -22,7 +22,7 @@ public class EntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvid
                 .add(EntityType.WITHER)
                 .add(EntityType.WARDEN)
                 .add(EntityType.ELDER_GUARDIAN)
-                .addOptionalTag(new Identifier("c:bosses"));
+                .addOptionalTag(Identifier.of("c:bosses"));
         getOrCreateTagBuilder(MysticalTags.ZOMBIE_VARIANTS)
                 .add(EntityType.ZOMBIE)
                 .add(EntityType.HUSK)

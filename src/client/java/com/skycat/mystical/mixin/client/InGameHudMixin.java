@@ -9,6 +9,7 @@ import com.skycat.mystical.spell.consequence.SpellConsequence;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.StatusEffectSpriteManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +23,7 @@ import java.util.List;
 public abstract class InGameHudMixin {
 
      @Inject(method = "renderStatusEffectOverlay", at = @At(value = "INVOKE", target = "Ljava/util/List;forEach(Ljava/util/function/Consumer;)V", shift = At.Shift.BEFORE))
-     private void mystical_renderFakeStatusEffects(DrawContext context, float tickDelta, CallbackInfo ci, @Local(ordinal = 0) int beneficialEffects, @Local(ordinal = 1) int harmfulEffects, @Local(ordinal = 0) List<Runnable> list) {
+     private void mystical_renderFakeStatusEffects(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci, @Local(ordinal = 0) int beneficialEffects, @Local(ordinal = 1) int harmfulEffects, @Local(ordinal = 0) List<Runnable> list) {
          // Adapted from original method
          StatusEffectSpriteManager spriteManager = MinecraftClient.getInstance().getStatusEffectSpriteManager();
          for (Spell spell : MysticalClient.HUD_MANAGER.getCachedSpells()) {

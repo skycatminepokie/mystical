@@ -41,7 +41,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                         Items.DRAGON_BREATH,
                         Utils.translatable(EnglishLangProvider.getKeyForAdvancementTranslation(CURE_SPELL_ADVANCEMENT_ID) + ".title"), // Inefficient due to calculating the key multiple times? Yes. Do I care? Not really, no.
                         Utils.translatable(EnglishLangProvider.getKeyForAdvancementTranslation(CURE_SPELL_ADVANCEMENT_ID) + ".description"),
-                        Identifier.of("minecraft", "textures/block/purpur_block.png"),
+                        Identifier.tryParse("minecraft", "textures/block/purpur_block.png"),
                         AdvancementFrame.TASK,
                         false,
                         false,
