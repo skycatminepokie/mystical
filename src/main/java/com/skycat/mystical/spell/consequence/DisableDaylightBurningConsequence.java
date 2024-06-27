@@ -53,22 +53,22 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.HAVEN_ONLY_BATCH)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(20, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true)
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(20, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
             });
@@ -78,16 +78,16 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         public void testSpell(TestContext context) {
             setUpTest(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(20, () -> {
                 context.expectEntity(EntityType.ZOMBIE); // It shouldn't burn
                 context.complete();
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, maxAttempts = 3, skyAccess = true, batchId = TestUtils.VANILLA_BATCH)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
-            context.waitAndRun(75, () -> {
+            context.waitAndRun(20, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
             });

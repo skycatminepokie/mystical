@@ -69,7 +69,7 @@ public class OneStrikeWardensConsequence extends SpellConsequence {
             player.move(MovementType.SELF, new Vec3d(0, -0.1, 0));
         }
 
-        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 130)
+        @GameTest(templateName = TestUtils.WARDEN_SUMMON_BOX, tickLimit = 130, batchId = TestUtils.HAVEN_ONLY_BATCH)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);

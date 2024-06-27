@@ -40,6 +40,10 @@ public class TestUtils {
      * never haven anything, and never create a spell.
      */
     public static final String VANILLA_BATCH = "mystical.vanilla";
+    /**
+     * To be in this batch, a test must call {@link TestUtils#havenAll(TestContext)} at the beginning<br>and never unhaven anything.
+     */
+    public static final String HAVEN_ONLY_BATCH = "mystical.haven";
 
     /**
      * Haven all chunks inside the bounding box of {@code context}.

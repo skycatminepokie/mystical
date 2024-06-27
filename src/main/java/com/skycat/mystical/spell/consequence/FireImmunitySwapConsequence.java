@@ -50,7 +50,7 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
             context.setHealthLow(context.spawnEntity(EntityType.CREEPER, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
+        @GameTest(templateName = TestUtils.LAVA_PIT_BOX, batchId = TestUtils.HAVEN_ONLY_BATCH)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);

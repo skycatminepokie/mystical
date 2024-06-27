@@ -49,7 +49,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
             context.setHealthLow(context.spawnEntity(EntityType.VILLAGER, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, batchId = TestUtils.HAVEN_ONLY_BATCH)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
