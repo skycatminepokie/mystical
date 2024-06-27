@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class FireImmunitySwapConsequence extends SpellConsequence { // TODO: icon
+public class FireImmunitySwapConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public FireImmunitySwapConsequence() {
