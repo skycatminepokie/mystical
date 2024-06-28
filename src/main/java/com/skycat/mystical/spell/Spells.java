@@ -17,11 +17,11 @@ import java.util.HashMap;
 
 public class Spells {
     @SuppressWarnings("rawtypes")
-    private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>();
+    private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>(); // TODO: Make this a registry instead
     @SuppressWarnings("rawtypes")
     private static final HashMap<String, ConsequenceFactory> shortNameToFactory = new HashMap<>();
     @SuppressWarnings("rawtypes")
-    private static final ArrayList<CureFactory> cureFactories = new ArrayList<>();
+    private static final ArrayList<CureFactory> cureFactories = new ArrayList<>(); // TODO: Make this a registry instead
 
     static {
         // Initialize all the consequence factories
@@ -52,7 +52,8 @@ public class Spells {
                 SoundSwapConsequence.FACTORY,
                 FishingRodSwapConsequence.FACTORY,
                 MysteryEggsConsequence.FACTORY,
-                FireImmunitySwapConsequence.FACTORY
+                FireImmunitySwapConsequence.FACTORY,
+                NoPortalsConsequence.FACTORY
         );
 
         // For some reason, using "? extends SpellConsequence" gives a warning.
