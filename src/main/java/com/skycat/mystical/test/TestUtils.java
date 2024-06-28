@@ -36,6 +36,10 @@ public class TestUtils {
      */
     public static final String LAVA_PIT_BOX = "mystical:lava_pit_box_4x4x4";
     /**
+     * A 1x2x1 with air on the top and an end portal on the bottom (0,1,0).
+     */
+    public static final String PORTAL = "mystical:portal_1x2x1";
+    /**
      * To be in this batch, a test must call {@link TestUtils#resetMystical(TestContext)} at the beginning,<br>
      * never haven anything, and never create a spell.
      */

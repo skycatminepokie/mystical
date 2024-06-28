@@ -2,11 +2,15 @@ package com.skycat.mystical.spell.consequence;
 
 import com.mojang.serialization.MapCodec;
 import com.skycat.mystical.Mystical;
+import com.skycat.mystical.test.TestUtils;
+import net.minecraft.entity.EntityType;
+import net.minecraft.test.GameTest;
+import net.minecraft.test.TestContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class NoPortalsConsequence extends SpellConsequence { // TODO: Icon, tests
+public class NoPortalsConsequence extends SpellConsequence {
     public static final Factory FACTORY = new Factory();
 
     public NoPortalsConsequence() {
@@ -37,6 +41,44 @@ public class NoPortalsConsequence extends SpellConsequence { // TODO: Icon, test
         @Override
         public @NotNull NoPortalsConsequence make(@NotNull Random random, double points) {
             return new NoPortalsConsequence();
+        }
+
+        private void setUpTest(TestContext context) {
+            TestUtils.resetMystical(context);
+            context.killAllEntities();
+            context.spawnEntity(EntityType.CREEPER, 0, 1, 0);
+        }
+
+        @GameTest(templateName = TestUtils.PORTAL, batchId = TestUtils.VANILLA_BATCH)
+        public void testVanilla(TestContext context) {
+            setUpTest(context);
+            context.waitAndRun(2, () -> context.dontExpectEntity(EntityType.CREEPER));
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.PORTAL, batchId = TestUtils.HAVEN_ONLY_BATCH)
+        public void testHaven(TestContext context) {
+            setUpTest(context);
+            TestUtils.havenAll(context);
+            context.waitAndRun(2, () -> context.dontExpectEntity(EntityType.CREEPER));
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.PORTAL)
+        public void testHavenAndSpell(TestContext context) {
+            setUpTest(context);
+            TestUtils.havenAll(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
+            context.waitAndRun(2, () -> context.dontExpectEntity(EntityType.CREEPER));
+            context.complete();
+        }
+
+        @GameTest(templateName = TestUtils.PORTAL)
+        public void testSpell(TestContext context) {
+            setUpTest(context);
+            Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
+            context.waitAndRun(2, () -> context.expectEntity(EntityType.CREEPER));
+            context.complete();
         }
     }
 }
