@@ -44,6 +44,7 @@ public class ConfigModel {
     @Nest public MysteryEggsConfig mysteryEggs = new MysteryEggsConfig();
     @Nest public FireImmunitySwapConfig fireImmunitySwap = new FireImmunitySwapConfig();
     @Nest public NoPortalsConfig noPortals = new NoPortalsConfig();
+    @Nest public ExtraFallDamageConfig extraFallDamage = new ExtraFallDamageConfig();
 
     @SectionHeader("Logging") // Note: Logging as ERROR level does not always mean a critical error.
     public LogLevel failedToSetNightTimerLogLevel = LogLevel.WARN;
@@ -57,13 +58,13 @@ public class ConfigModel {
     public boolean newSpellCommandBroadcast = true;
 
     public static class BigCreeperExplosionConfig {
-        public boolean enabled = true; // Not implemented
+        public boolean enabled = true;
         public double multiplier = 2.0;
         @PredicateConstraint("chancePredicate")
         public double chance = 100.0;
         public LogLevel logLevel = LogLevel.OFF;
         @PredicateConstraint("weightPredicate")
-        public double weight = 1; // Not implemented
+        public double weight = 1;
 
         public static boolean chancePredicate(double value) {
             return ConfigModel.chancePredicate(value);
@@ -447,6 +448,27 @@ public class ConfigModel {
         public double weight = 1;
         public static boolean weightPredicate(double value) {
             return ConfigModel.weightPredicate(value);
+        }
+    }
+
+    public static class ExtraFallDamageConfig {
+        public boolean enabled = true;
+        @PredicateConstraint("positiveFloatPredicate")
+        public float multiplier = 3.0f; // TODO: Translation key
+        @PredicateConstraint("chancePredicate")
+        public double chance = 100.0;
+        public LogLevel logLevel = LogLevel.OFF;
+        @PredicateConstraint("weightPredicate")
+        public double weight = 1;
+
+        public static boolean chancePredicate(double value) {
+            return ConfigModel.chancePredicate(value);
+        }
+        public static boolean weightPredicate(double value) {
+            return ConfigModel.weightPredicate(value);
+        }
+        public static boolean positiveFloatPredicate(float value) {
+            return value >= 0;
         }
     }
 

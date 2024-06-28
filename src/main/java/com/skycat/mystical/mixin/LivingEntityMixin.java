@@ -1,9 +1,11 @@
 package com.skycat.mystical.mixin;
 
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.MysticalTags;
 import com.skycat.mystical.spell.consequence.EnderTypeChangeConsequence;
+import com.skycat.mystical.spell.consequence.ExtraFallDamageConsequence;
 import com.skycat.mystical.spell.consequence.SkeletonTypeChangeConsequence;
 import com.skycat.mystical.util.Utils;
 import net.minecraft.entity.Entity;
@@ -15,6 +17,7 @@ import net.minecraft.entity.mob.MobEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
@@ -66,5 +69,18 @@ public abstract class LivingEntityMixin {
                     }
                 }
             }
+    }
+
+    @ModifyVariable(method = "modifyAppliedDamage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float mystical_doubleFallDamage(float original, @Local(ordinal = 0, argsOnly = true) DamageSource source) {
+        // it doesn't like the casting I think
+        //noinspection ConstantValue
+        if (source.isOf(DamageTypes.FALL) &&
+        Mystical.getSpellHandler().isConsequenceActive(ExtraFallDamageConsequence.class) &&
+        !Mystical.getHavenManager().isInHaven((LivingEntity) (Object) this)) {
+            Utils.log(Utils.translateString("text.mystical.consequence.extraFallDamage.fired"), Mystical.CONFIG.extraFallDamage.logLevel());
+            return original * Mystical.CONFIG.extraFallDamage.multiplier();
+        }
+        return original;
     }
 }
