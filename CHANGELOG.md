@@ -1,1 +1,3 @@
 - turboChickens spell now takes effect immediately
+- Added fireImmunitySwap spell
+- Added noPortals spell
