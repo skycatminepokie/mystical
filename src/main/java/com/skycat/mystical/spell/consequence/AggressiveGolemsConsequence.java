@@ -43,7 +43,6 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         }
 
         private static void setUpTest(TestContext context) {
-            TestUtils.resetMystical(context);
             context.killAllEntities();
             context.spawnEntity(EntityType.IRON_GOLEM, 2, 2, 2);
             context.setHealthLow(context.spawnEntity(EntityType.VILLAGER, 2, 2, 2));
@@ -53,6 +52,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
+            TestUtils.resetSpells(context);
             context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();
@@ -73,6 +73,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX)
         public void testSpell(TestContext context) {
             setUpTest(context);
+            TestUtils.resetHavens(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(50, () -> {
                 context.dontExpectEntity(EntityType.VILLAGER);
@@ -83,6 +84,7 @@ public class AggressiveGolemsConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
+            TestUtils.resetMystical(context);
             context.waitAndRun(50, () -> {
                 context.expectEntity(EntityType.VILLAGER);
                 context.complete();

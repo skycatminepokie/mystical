@@ -46,7 +46,6 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         }
 
         private static void setUpTest(TestContext context) {
-            TestUtils.resetMystical(context);
             context.killAllEntities();
             context.getWorld().getServer().setDifficulty(Difficulty.EASY, true);
             context.setTime(1000); // Make it day
@@ -56,6 +55,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.HAVEN_ONLY_BATCH)
         public void testHaven(TestContext context) {
             setUpTest(context);
+            TestUtils.resetSpells(context);
             TestUtils.havenAll(context);
             context.waitAndRun(30, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
@@ -77,6 +77,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true)
         public void testSpell(TestContext context) {
             setUpTest(context);
+            TestUtils.resetHavens(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(30, () -> {
                 context.expectEntity(EntityType.ZOMBIE); // It shouldn't burn
@@ -87,6 +88,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
+            TestUtils.resetMystical(context);
             context.waitAndRun(30, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();

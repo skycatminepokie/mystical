@@ -50,7 +50,7 @@ public class TestUtils {
      */
     public static final String VANILLA_BATCH = "mystical.vanilla";
     /**
-     * To be in this batch, a test must call {@link TestUtils#havenAll(TestContext)} at the beginning<br>and never unhaven anything.
+     * To be in this batch, a test must call {@link TestUtils#resetSpells(TestContext)} and {@link TestUtils#havenAll(TestContext)} at the beginning<br>and never unhaven anything.
      */
     public static final String HAVEN_ONLY_BATCH = "mystical.haven";
 

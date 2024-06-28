@@ -29,7 +29,7 @@ public class TestFunctionBuilder {
      * @param starter      The method to run. {@link net.minecraft.test.GameTest} annotations are ignored.
      */
     public TestFunctionBuilder(String templatePath, Consumer<TestContext> starter) {
-        this.templatePath = "mysticaltests." + templatePath;
+        this.templatePath = "mystical." + templatePath;
         this.starter = starter;
     }
 
