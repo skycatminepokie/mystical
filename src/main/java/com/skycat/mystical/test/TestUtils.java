@@ -3,6 +3,7 @@ package com.skycat.mystical.test;
 import com.skycat.mystical.HavenManager;
 import com.skycat.mystical.Mystical;
 import com.skycat.mystical.mixin.TestContextMixin;
+import com.skycat.mystical.spell.SpellHandler;
 import com.skycat.mystical.util.Utils;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
@@ -39,6 +40,10 @@ public class TestUtils {
      * A 1x2x1 with air on the top and an end portal on the bottom (0,1,0).
      */
     public static final String PORTAL = "mystical:portal_1x2x1";
+    /**
+     * A vertical area with a bottom bedrock block. To summon a two block high entity at the top, use pos 0,13,0.
+     */
+    public static final String FALL_DAMAGE = "mystical:fall_damage_1x14x1";
     /**
      * To be in this batch, a test must call {@link TestUtils#resetMystical(TestContext)} at the beginning,<br>
      * never haven anything, and never create a spell.
@@ -91,5 +96,10 @@ public class TestUtils {
     public static void resetPower(TestContext context) {
         HavenManager havenManager = Mystical.getHavenManager();
         havenManager.resetPower();
+    }
+
+    public static void resetSpells(TestContext context) {
+        SpellHandler spellHandler = Mystical.getSpellHandler();
+        spellHandler.removeAllSpells();
     }
 }

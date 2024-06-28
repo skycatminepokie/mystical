@@ -44,7 +44,6 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
         }
 
         private void setUpTest(TestContext context) {
-            TestUtils.resetMystical(context);
             context.killAllEntities();
             context.setHealthLow(context.spawnEntity(EntityType.BLAZE, 1, 2, 1));
             context.setHealthLow(context.spawnEntity(EntityType.CREEPER, 2, 2, 2));
@@ -53,6 +52,7 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.LAVA_PIT_BOX, batchId = TestUtils.HAVEN_ONLY_BATCH)
         public void testHaven(TestContext context) {
             setUpTest(context);
+            TestUtils.resetSpells(context);
             TestUtils.havenAll(context);
             context.waitAndRun(10, () -> {
                 context.expectEntity(EntityType.BLAZE);
@@ -64,6 +64,7 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
+            TestUtils.resetSpells(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(10, () -> {
@@ -76,6 +77,7 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.LAVA_PIT_BOX)
         public void testSpell(TestContext context) {
             setUpTest(context);
+            TestUtils.resetMystical(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
             context.waitAndRun(10, () -> {
                 context.dontExpectEntity(EntityType.BLAZE);
@@ -87,6 +89,7 @@ public class FireImmunitySwapConsequence extends SpellConsequence {
         @GameTest(templateName = TestUtils.LAVA_PIT_BOX, batchId = TestUtils.VANILLA_BATCH)
         public void testVanilla(TestContext context) {
             setUpTest(context);
+            TestUtils.resetMystical(context);
             context.waitAndRun(10, () -> {
                 context.expectEntity(EntityType.BLAZE);
                 context.dontExpectEntity(EntityType.CREEPER);
