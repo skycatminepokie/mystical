@@ -31,3 +31,6 @@ Requires OwO-lib and Fabric API
 
 #### Can I use this in a modpack?
 Yes! Just don't rehost it without permission. And if you feel like it, let me know - I'm excited to see where this project goes!
+
+#### Disclaimer
+Most textures are adapted from Minecraft, copyright Mojang AB. Neither I nor this mod is affiliated with Mojang.
