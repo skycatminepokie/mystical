@@ -41,12 +41,12 @@ public abstract class ServerWorldMixin {
     }
 
     @ModifyVariable(method = "playSound", at = @At(value = "HEAD"), argsOnly = true, ordinal = 0)
-    private RegistryEntry<SoundEvent> mystical_changeSound(RegistryEntry<SoundEvent> original, @Local(ordinal = 0) double x, @Local(ordinal = 1) double y, @Local(ordinal = 2) double z) {
+    private RegistryEntry<SoundEvent> mystical_changeSound(RegistryEntry<SoundEvent> original, @Local(ordinal = 0, argsOnly = true) double x, @Local(ordinal = 1, argsOnly = true) double y, @Local(ordinal = 2, argsOnly = true) double z) {
         return mystical_modifySoundIfRequired(original, x, y, z);
     }
 
     @ModifyVariable(method = "playSoundFromEntity", at = @At(value = "HEAD"), argsOnly = true, ordinal = 0)
-    private RegistryEntry<SoundEvent> mystical_changeEntitySound(RegistryEntry<SoundEvent> original, @Local Entity entity) { // get rid of: weather, ui, music, music_disk, ambient
+    private RegistryEntry<SoundEvent> mystical_changeEntitySound(RegistryEntry<SoundEvent> original, @Local(argsOnly = true) Entity entity) { // get rid of: weather, ui, music, music_disk, ambient
         return mystical_modifySoundIfRequired(original, entity.getX(), entity.getY(), entity.getZ());
     }
 

@@ -2,7 +2,6 @@ package com.skycat.mystical.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
 
 public class DataGenerator implements DataGeneratorEntrypoint {
     @Override

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+@SuppressWarnings("rawtypes") // TODO: This is a bad way to define supported callbacks anyways. That's the real problem.
 public class LevitateConsequence extends SpellConsequence implements EntitySleepEvents.StopSleeping, ServerEntityCombatEvents.AfterKilledOtherEntity, ServerPlayerEvents.AfterRespawn, PlayerBlockBreakEvents.After {  // TODO: Tests
     private final int length;
     private final int level;

@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList.Named;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
@@ -54,7 +53,7 @@ public class Utils {
      * @implNote Things are sorted by hash code, then a random is used to select one.
      */
     public static <T> @Nullable T getRandom(Collection<T> values) {
-        if (values.size() == 0) {
+        if (values.isEmpty()) {
             return null;
         }
         Optional<T> optionalT = values.stream() // Convert to stream

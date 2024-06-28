@@ -32,7 +32,7 @@ public abstract class FishingBobberEntityMixin implements Ownable {
         if (!Mystical.getHavenManager().isInHaven(hooked) &&
                 Mystical.getSpellHandler().isConsequenceActive(FishingRodLaunchConsequence.class) &&
                 Utils.percentChance(Mystical.CONFIG.fishingRodLaunch.chance())) { // fishingRodLaunch
-            velocityMultiplier *= Mystical.CONFIG.fishingRodLaunch.multiplier();
+            velocityMultiplier = (int) (velocityMultiplier * Mystical.CONFIG.fishingRodLaunch.multiplier());
             Utils.log(FishingRodLaunchConsequence.FACTORY.getFiredMessage(), Mystical.CONFIG.fishingRodLaunch.logLevel());
         }
 

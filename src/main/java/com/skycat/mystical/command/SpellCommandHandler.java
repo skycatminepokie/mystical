@@ -80,7 +80,7 @@ public class SpellCommandHandler {
      */
     private static int sendSpellList(CommandContext<ServerCommandSource> context, boolean showDeleteButton) {
         ArrayList<Spell> activeSpells = Mystical.getSpellHandler().getActiveSpells();
-        if (activeSpells.size() == 0) {
+        if (activeSpells.isEmpty()) {
             context.getSource().sendFeedback(Utils.translatableSupplier("text.mystical.command.mystical.spell.list.noSpells"), false);
             return 1;
         }

@@ -13,18 +13,18 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class StatBackedSpellCure extends SpellCure {
-    private final Stat stat;
+    private final Stat<?> stat;
 
-    public StatBackedSpellCure(int contributionGoal, Stat stat) {
+    public StatBackedSpellCure(int contributionGoal, Stat<?> stat) {
         this(contributionGoal, stat, new HashMap<>());
     }
 
-    public StatBackedSpellCure(int contributionGoal, Stat stat, HashMap<UUID, Integer> contributions) {
+    public StatBackedSpellCure(int contributionGoal, Stat<?> stat, HashMap<UUID, Integer> contributions) {
         super(contributionGoal, StatBackedSpellCure.class, CureTypes.STAT_BACKED, contributions);
         this.stat = stat;
     }
 
-    public StatType getStatType() {
+    public StatType<?> getStatType() {
         return stat.getType();
     }
 
@@ -58,7 +58,7 @@ public class StatBackedSpellCure extends SpellCure {
         }
     }
 
-    public Stat getStat() {
+    public Stat<?> getStat() {
         return this.stat;
     }
 }

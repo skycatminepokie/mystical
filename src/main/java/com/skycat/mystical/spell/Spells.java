@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+@SuppressWarnings("rawtypes")
 public class Spells {
     @SuppressWarnings("rawtypes")
     private static final ArrayList<ConsequenceFactory> consequenceFactories = new ArrayList<>(); // TODO: Make this a registry instead

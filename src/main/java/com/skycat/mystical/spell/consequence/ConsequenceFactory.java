@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @implSpec Register in {@link Spells}<br>
  * Implement {@link GameTest} annotated methods for spell/no spell and haven/no haven.<br>
- * {@link GameTest#batchId()} is ignored - it will never be run in parallel. See {@link com.skycat.mystical.test.MysticalTests#getSpellTests(ArrayList)}.
+ * {@link GameTest#batchId()} is ignored - it will never be run in parallel. See {@link com.skycat.mystical.test.MysticalTests#addSpellTests(ArrayList)}.
  */
 public abstract class ConsequenceFactory<T extends SpellConsequence> {
     public static final Codec<ConsequenceFactory<?>> FACTORY_CODEC = Codec.STRING.xmap(Spells::getFactory, ConsequenceFactory::getShortName);
