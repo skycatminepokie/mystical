@@ -28,6 +28,7 @@ Please feel free to ask questions or contribute to the project on [GitHub](https
 
 
 Requires OwO-lib and Fabric API
+Russian translation by @ObKich
 
 #### Can I use this in a modpack?
 Yes! Just don't rehost it without permission. And if you feel like it, let me know - I'm excited to see where this project goes!
