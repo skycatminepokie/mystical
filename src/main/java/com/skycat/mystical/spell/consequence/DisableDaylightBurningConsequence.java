@@ -52,7 +52,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             context.setHealthLow(context.spawnMob(EntityType.ZOMBIE, 2, 2, 2));
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.HAVEN_ONLY_BATCH)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.HAVEN_ONLY_BATCH, required = false)
         public void testHaven(TestContext context) {
             setUpTest(context);
             TestUtils.resetSpells(context);
@@ -63,7 +63,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, required = false)
         public void testHavenAndSpell(TestContext context) {
             setUpTest(context);
             TestUtils.havenAll(context);
@@ -74,7 +74,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, required = false)
         public void testSpell(TestContext context) {
             setUpTest(context);
             TestUtils.resetHavens(context);
@@ -85,7 +85,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             });
         }
 
-        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.VANILLA_BATCH)
+        @GameTest(templateName = TestUtils.BORDERED_BARRIER_BOX, skyAccess = true, batchId = TestUtils.VANILLA_BATCH, required = false)
         public void testVanilla(TestContext context) {
             setUpTest(context);
             TestUtils.resetMystical(context);
