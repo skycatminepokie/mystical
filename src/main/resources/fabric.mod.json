@@ -43,9 +43,9 @@
   "depends": {
     "fabricloader": ">=0.15.0",
     "fabric": "*",
-    "minecraft": "1.21",
+    "minecraft": ">=1.21.1",
     "fabric-permissions-api-v0": "*",
-    "owo-lib": ">=0.12.10+1.21"
+    "owo-lib": ">=0.12.14+1.21"
   },
   "suggests": {
     "modmenu": "*"
