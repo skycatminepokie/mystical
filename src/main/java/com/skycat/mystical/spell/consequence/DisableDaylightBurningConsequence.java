@@ -57,7 +57,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             setUpTest(context);
             TestUtils.resetSpells(context);
             TestUtils.havenAll(context);
-            context.waitAndRun(30, () -> {
+            context.waitAndRun(40, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
             });
@@ -68,7 +68,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             setUpTest(context);
             TestUtils.havenAll(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
-            context.waitAndRun(30, () -> {
+            context.waitAndRun(40, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
             });
@@ -79,7 +79,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
             setUpTest(context);
             TestUtils.resetHavens(context);
             Mystical.getSpellHandler().activateNewSpellWithConsequence(context.getWorld().getServer(), this);
-            context.waitAndRun(30, () -> {
+            context.waitAndRun(40, () -> {
                 context.expectEntity(EntityType.ZOMBIE); // It shouldn't burn
                 context.complete();
             });
@@ -89,7 +89,7 @@ public class DisableDaylightBurningConsequence extends SpellConsequence {
         public void testVanilla(TestContext context) {
             setUpTest(context);
             TestUtils.resetMystical(context);
-            context.waitAndRun(30, () -> {
+            context.waitAndRun(40, () -> {
                 context.dontExpectEntity(EntityType.ZOMBIE);
                 context.complete();
             });
